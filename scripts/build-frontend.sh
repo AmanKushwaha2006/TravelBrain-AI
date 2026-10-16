@@ -15,4 +15,4 @@ cp "$ROOT/frontend/templates/index.html" "$DIST/index.html"
 cp -r "$ROOT/frontend/static/." "$DIST/static/"
 
 echo "built dist/:"
-find "$DIST" -type f | sed "s|$DIST|  dist|"
+find "$DIST" -type f 2>/dev/null | sed "s|$DIST|  dist|" || ls "$DIST"
