@@ -279,5 +279,6 @@ if __name__ == "__main__":
         "app:app",
         host=os.getenv("HOST", "127.0.0.1"),
         port=int(os.getenv("PORT", "8000")),
-        reload=os.getenv("RELOAD", "true").lower() not in ("false", "0", "no")
+        reload=os.getenv("RELOAD", "true").lower() not in ("false", "0", "no"),
+        reload_dirs=[str(BASE_DIR / "src"), str(BASE_DIR)],
     )
