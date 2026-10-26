@@ -11,6 +11,7 @@ class TravelState(TypedDict):
     user_query: str
     flight_results: str
     hotel_results: str
+    attractions_data: str
     itinerary: str
     llm_calls: int
     weather_results: str
@@ -26,6 +27,7 @@ def initial_state(user_query: str) -> TravelState:
         "user_query": user_query,
         "flight_results": "",
         "hotel_results": "",
+        "attractions_data": "",
         "weather_results": "",
         "itinerary": "",
         "llm_calls": 0,

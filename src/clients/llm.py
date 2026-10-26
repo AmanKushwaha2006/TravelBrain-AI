@@ -10,7 +10,7 @@ from src.config.settings import GROQ_MODEL
 
 @lru_cache(maxsize=8)
 def _build_llm(model: str, api_key: str) -> ChatGroq:
-    return ChatGroq(model=model, api_key=api_key)
+    return ChatGroq(model=model, api_key=api_key, temperature=0.1)
 
 
 def get_llm() -> ChatGroq:

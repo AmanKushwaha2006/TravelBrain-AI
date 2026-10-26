@@ -68,9 +68,17 @@ templates = Jinja2Templates(
 
 
 
+from src.agents.critic_agent import run_critic_evaluation
+
 class TravelRequest(BaseModel):
     message: str
     thread_id: str | None = None
+
+
+class EvaluateRequest(BaseModel):
+    query: str
+    plan_text: str
+    destination: str | None = None
 
 
 class ConfigRequest(BaseModel):
@@ -208,13 +216,14 @@ async def travel_planner(request: Request, request_data: TravelRequest):
         return JSONResponse(
             content={
                 "success": True,
-                "thread_id": result["thread_id"],
-                "answer": result["answer"],
-                "flight_results": result["flight_results"],
-                "hotel_results": result["hotel_results"],
+                "thread_id": result.get("thread_id", ""),
+                "answer": result.get("answer", ""),
+                "flight_results": result.get("flight_results", ""),
+                "hotel_results": result.get("hotel_results", ""),
                 "weather_results": result.get("weather_results", ""),
-                "itinerary": result["itinerary"],
-                "llm_calls": result["llm_calls"],
+                "attractions_data": result.get("attractions_data", ""),
+                "itinerary": result.get("itinerary", ""),
+                "llm_calls": result.get("llm_calls", 0),
             }
         )
 
@@ -231,6 +240,57 @@ async def travel_planner(request: Request, request_data: TravelRequest):
 
     except Exception as e:
         print("ERROR:", e)
+        traceback.print_exc()
+
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": str(e)
+            }
+        )
+
+
+@app.post("/api/evaluate")
+async def evaluate_plan(request: Request, body: EvaluateRequest):
+    credentials = get_credentials_for(_session_id(request))
+
+    try:
+        plan_content = body.plan_text.strip()
+        if not plan_content:
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "success": False,
+                    "error": "Plan text cannot be empty for evaluation."
+                }
+            )
+
+        with use_credentials(credentials):
+            eval_data = run_critic_evaluation(
+                user_query=body.query.strip(),
+                plan_text=plan_content,
+                destination=body.destination,
+            )
+
+        return JSONResponse(
+            content={
+                "success": True,
+                "evaluation": eval_data,
+            }
+        )
+
+    except MissingCredentialsError as e:
+        return JSONResponse(
+            status_code=428,
+            content={
+                "success": False,
+                "error": str(e),
+                "missing": e.missing,
+            }
+        )
+    except Exception as e:
+        print("CRITIC ERROR:", e)
         traceback.print_exc()
 
         return JSONResponse(
@@ -279,6 +339,5 @@ if __name__ == "__main__":
         "app:app",
         host=os.getenv("HOST", "127.0.0.1"),
         port=int(os.getenv("PORT", "8000")),
-        reload=os.getenv("RELOAD", "true").lower() not in ("false", "0", "no"),
-        reload_dirs=[str(BASE_DIR / "src"), str(BASE_DIR)],
+        reload=os.getenv("RELOAD", "true").lower() not in ("false", "0", "no")
     )

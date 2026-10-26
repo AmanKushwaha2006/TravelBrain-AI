@@ -1,5 +1,7 @@
 """Pulls the destination out of a free-form travel query."""
 
+import re
+
 from src.agents.prompts import DESTINATION_EXTRACTION_PROMPT
 from src.clients.cache import cached
 from src.clients.llm import get_llm
@@ -17,4 +19,7 @@ def extract_destination(query: str) -> str:
 
     response = get_llm().invoke(prompt)
 
-    return response.content.strip()
+    destination = response.content.strip().strip('"\'`').strip()
+    destination = re.sub(r"^(?:destination:\s*)+", "", destination, flags=re.IGNORECASE).strip()
+
+    return destination

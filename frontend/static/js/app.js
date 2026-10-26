@@ -480,20 +480,193 @@
       window.print();
     }));
 
+    /* Critic Agent Audit Button (runs on demand only) */
+    var auditHolder = el("div", "critic-audit-wrap");
+    auditHolder.hidden = true;
+
+    var auditBtn = el("button", "btn btn-soft btn-sm audit-btn");
+    auditBtn.type = "button";
+    auditBtn.title = "Evaluate plan quality and check for hallucinations";
+    auditBtn.appendChild(icon("M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"));
+    var auditLabel = el("span", "btn-label", "Audit with Critic");
+    auditBtn.appendChild(auditLabel);
+
+    auditBtn.addEventListener("click", function () {
+      if (auditBtn.disabled) return;
+      auditBtn.disabled = true;
+      auditLabel.textContent = "Auditing places...";
+      var auditSpinner = el("span", "spinner", "");
+      auditBtn.appendChild(auditSpinner);
+
+      fetch("/api/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: result.__query || "",
+          plan_text: result.answer || "",
+          destination: ""
+        })
+      })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        if (data.success && data.evaluation) {
+          auditHolder.hidden = false;
+          renderCriticEvaluation(auditHolder, data.evaluation);
+          auditBtn.remove();
+          auditHolder.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          toast(data.error || "Critic evaluation failed.");
+          auditBtn.disabled = false;
+          auditLabel.textContent = "Audit with Critic";
+          if (auditSpinner.parentNode) auditSpinner.remove();
+        }
+      })
+      .catch(function (err) {
+        toast("Critic audit failed: " + err.message);
+        auditBtn.disabled = false;
+        auditLabel.textContent = "Audit with Critic";
+        if (auditSpinner.parentNode) auditSpinner.remove();
+      });
+    });
+
+    tools.appendChild(auditBtn);
+
     head.appendChild(tools);
     card.appendChild(head);
 
-    /* one message: the final assembled plan. The per-agent flight, hotel,
-       weather and itinerary payloads still come back in the response and
-       feed this answer, they are just not surfaced as separate tabs. */
+    /* one message: the final assembled plan */
     var body = el("div", "card-body");
     body.appendChild(mdBlock(result.answer, "The agent returned an empty response."));
     card.appendChild(body);
+    card.appendChild(auditHolder);
 
     var wrap = el("div", "msg");
     wrap.appendChild(card);
     messages.appendChild(wrap);
     return wrap;
+  }
+
+  function renderCriticEvaluation(container, data) {
+    container.innerHTML = "";
+    var auditCard = el("div", "critic-card");
+
+    // Head
+    var head = el("div", "critic-head");
+    var titleBox = el("div", "critic-title-box");
+    var shieldIco = el("span", "critic-shield-ico");
+    shieldIco.appendChild(icon("M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"));
+    titleBox.appendChild(shieldIco);
+
+    var textWrap = el("div");
+    textWrap.appendChild(el("strong", "critic-title", "Critic Agent Quality & Hallucination Audit"));
+    textWrap.appendChild(el("p", "critic-subtitle", "Rigorous fact-checking of proper nouns, landmarks & travel logistics"));
+    titleBox.appendChild(textWrap);
+    head.appendChild(titleBox);
+
+    // Score Badge
+    var score = Number(data.overall_score) || 0;
+    var scoreClass = score >= 85 ? "score-high" : score >= 70 ? "score-med" : "score-low";
+    var badgeBox = el("div", "critic-score-box " + scoreClass);
+    var scoreNum = el("span", "critic-score-num", score + "/100");
+    var scoreVerdict = el("span", "critic-score-verdict", data.verdict || (score >= 85 ? "High Faithfulness" : "Hallucination Risk"));
+    badgeBox.appendChild(scoreNum);
+    badgeBox.appendChild(scoreVerdict);
+    head.appendChild(badgeBox);
+    auditCard.appendChild(head);
+
+    // Breakdown Bars
+    var breakdown = data.breakdown || {};
+    var metricsGrid = el("div", "critic-metrics-grid");
+
+    var metrics = [
+      { label: "Entity Factuality", val: breakdown.entity_factuality || 0, max: 40 },
+      { label: "Geographic Coherence", val: breakdown.geographic_coherence || 0, max: 30 },
+      { label: "Transit Realism", val: breakdown.transit_realism || 0, max: 20 },
+      { label: "Pacing & Practicality", val: breakdown.pacing_practicality || 0, max: 10 }
+    ];
+
+    metrics.forEach(function (m) {
+      var item = el("div", "critic-metric-item");
+      var topRow = el("div", "metric-top");
+      topRow.appendChild(el("span", "metric-label", m.label));
+      topRow.appendChild(el("span", "metric-val", m.val + " / " + m.max + " pts"));
+      item.appendChild(topRow);
+
+      var bar = el("div", "metric-bar");
+      var fill = el("div", "metric-fill " + scoreClass);
+      var pct = Math.min(Math.max((m.val / m.max) * 100, 0), 100);
+      fill.style.width = pct + "%";
+      bar.appendChild(fill);
+      item.appendChild(bar);
+      metricsGrid.appendChild(item);
+    });
+    auditCard.appendChild(metricsGrid);
+
+    // Flagged Issues (if any)
+    var flagged = data.flagged_issues || [];
+    if (flagged.length > 0) {
+      var flaggedSection = el("div", "critic-section flagged-section");
+      flaggedSection.appendChild(el("h4", "critic-section-title flagged-title", "⚠️ Flagged Hallucinations & Inaccuracies (" + flagged.length + ")"));
+      var flaggedList = el("div", "flagged-list");
+      flagged.forEach(function (issue) {
+        var fi = el("div", "flagged-item " + (issue.severity === "critical" ? "flag-crit" : "flag-warn"));
+        var headRow = el("div", "flag-head");
+        headRow.appendChild(el("strong", "flag-entity", issue.entity || "Unverified Element"));
+        headRow.appendChild(el("span", "flag-badge", (issue.severity || "warning").toUpperCase()));
+        fi.appendChild(headRow);
+        fi.appendChild(el("p", "flag-desc", issue.issue || issue.reason || ""));
+        flaggedList.appendChild(fi);
+      });
+      flaggedSection.appendChild(flaggedList);
+      auditCard.appendChild(flaggedSection);
+    }
+
+    // Verified Entities
+    var verified = data.verified_entities || [];
+    if (verified.length > 0) {
+      var verSection = el("div", "critic-section verified-section");
+      verSection.appendChild(el("h4", "critic-section-title verified-title", "✓ Verified Real-World Places & Landmarks (" + verified.length + ")"));
+      var verGrid = el("div", "verified-grid");
+      verified.forEach(function (v) {
+        var vi = el("div", "verified-chip");
+        vi.appendChild(el("span", "ver-check", "✓"));
+        var viText = el("div");
+        viText.appendChild(el("strong", "ver-name", v.name || ""));
+        if (v.note || v.type) {
+          viText.appendChild(el("small", "ver-type", (v.type ? v.type + " · " : "") + (v.note || "")));
+        }
+        vi.appendChild(viText);
+        verGrid.appendChild(vi);
+      });
+      verSection.appendChild(verGrid);
+      auditCard.appendChild(verSection);
+    }
+
+    // Critic Summary
+    if (data.critic_summary) {
+      var sumSection = el("div", "critic-section summary-section");
+      sumSection.appendChild(el("h4", "critic-section-title", "Critic Audit Analysis"));
+      sumSection.appendChild(el("p", "critic-summary-p", data.critic_summary));
+      auditCard.appendChild(sumSection);
+    }
+
+    // Recommendations
+    var recs = data.recommendations || [];
+    if (recs.length > 0) {
+      var recSection = el("div", "critic-section rec-section");
+      recSection.appendChild(el("h4", "critic-section-title", "Actionable Traveler Guidance"));
+      var ul = el("ul", "rec-list");
+      recs.forEach(function (r) {
+        ul.appendChild(el("li", null, r));
+      });
+      recSection.appendChild(ul);
+      auditCard.appendChild(recSection);
+    }
+
+    container.appendChild(auditCard);
   }
 
   function renderError(message, kind) {
