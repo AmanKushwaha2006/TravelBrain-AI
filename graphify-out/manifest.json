@@ -240,15 +240,15 @@
     "semantic_hash": ""
   },
   "frontend/templates/index.html": {
-    "mtime": 1793344400.1301966,
-    "seen": 1793344554.1471186,
+    "mtime": 1793344624.3839407,
+    "seen": 1793358214.2765024,
     "ast_hash": "cf6446cb5d287895543a4fb02e6d67f3",
     "semantic_hash": ""
   },
   "frontend/static/js/aviation-3d.js": {
-    "mtime": 1793344174.638523,
-    "seen": 1793344554.1470444,
-    "ast_hash": "8b7c4d5fdb71a239539976fa21fce734",
+    "mtime": 1793388376.0547163,
+    "seen": 1793388502.995503,
+    "ast_hash": "8e0ed11d99b2c9e2b26bcfbd8a4093b5",
     "semantic_hash": ""
   },
   "frontend/static/js/GLTFLoader.js": {
@@ -261,6 +261,42 @@
     "mtime": 1793343541.8242154,
     "seen": 1793344554.1471212,
     "ast_hash": "cbb25a9f04b60f93f45c72516609e2ea",
+    "semantic_hash": ""
+  },
+  "synopsis_updated.html": {
+    "mtime": 1793358228.671087,
+    "seen": 1793388502.9955645,
+    "ast_hash": "c096b85c5db60d27c9ac248a4211fb20",
+    "semantic_hash": ""
+  },
+  "TravelBrain_AI_Mini_Project_Synopsis_Group_14.pdf": {
+    "mtime": 1793358167.31349,
+    "seen": 1793358214.2765062,
+    "ast_hash": "3b3d3421427b036572e208b81489f73d",
+    "semantic_hash": ""
+  },
+  "frontend/static/test_model.html": {
+    "mtime": 1793387856.632851,
+    "seen": 1793388502.9955611,
+    "ast_hash": "48de9b3e9253fe099136c1dc6231651d",
+    "semantic_hash": ""
+  },
+  "frontend/static/TravelBrain_AI_Mini_Project_Synopsis_Group_14.pdf": {
+    "mtime": 1793358167.31349,
+    "seen": 1793388502.9955673,
+    "ast_hash": "3b3d3421427b036572e208b81489f73d",
+    "semantic_hash": ""
+  },
+  "A320_extracted_texture.jpg": {
+    "mtime": 1793387506.3041792,
+    "seen": 1793388502.9955688,
+    "ast_hash": "06fa4e2afb9d9e398959adadfa373ce3",
+    "semantic_hash": ""
+  },
+  "A350_extracted_texture.png": {
+    "mtime": 1793387513.4684837,
+    "seen": 1793388502.9955697,
+    "ast_hash": "bf137b18028409dd9396879d731a074f",
     "semantic_hash": ""
   }
 }

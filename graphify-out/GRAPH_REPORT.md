@@ -1,17 +1,17 @@
-# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-10-30)
+# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-10-31)
 
 ## Corpus Check
-- 41 files · ~55,808 words
+- 41 files · ~62,804 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: (none) 6, .glb 2, .example 1)
 
 ## Summary
-- 439 nodes · 991 edges · 22 communities (17 shown, 5 thin omitted)
+- 438 nodes · 990 edges · 22 communities (17 shown, 5 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 41 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f0d59370`
+- Built from commit: `5c87a943`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,14 +53,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `write_config()` --calls--> `check_database_url()`  [EXTRACTED]
   app.py → src/api/validation.py
+- `write_config()` --calls--> `check_groq_api_key()`  [EXTRACTED]
+  app.py → src/api/validation.py
 - `travel_planner()` --uses--> `MissingCredentialsError`  [INFERRED]
   app.py → src/config/session.py
 - `travel_planner()` --calls--> `run_travel_agent()`  [EXTRACTED]
   app.py → src/graph/runner.py
 - `evaluate_plan()` --calls--> `run_critic_evaluation()`  [EXTRACTED]
   app.py → src/agents/critic_agent.py
-- `evaluate_plan()` --uses--> `MissingCredentialsError`  [INFERRED]
-  app.py → src/config/session.py
 
 ## Import Cycles
 - None detected.
@@ -69,31 +69,31 @@
 
 ### Community 0 - "app.py"
 Cohesion: 0.06
-Nodes (28): ConfigRequest, evaluate_plan(), EvaluateRequest, favicon(), health_check(), home(), home_head(), read_config() (+20 more)
+Nodes (27): ConfigRequest, evaluate_plan(), EvaluateRequest, favicon(), health_check(), home(), home_head(), read_config() (+19 more)
 
 ### Community 1 - "critic_agent.py"
-Cohesion: 0.07
-Nodes (25): clean_json_output(), _compute_grade(), _compute_verdict(), critic_agent(), _dynamic_fallback_evaluation(), run_critic_evaluation(), _sanitize_json_text(), extract_destination() (+17 more)
+Cohesion: 0.08
+Nodes (22): clean_json_output(), _compute_grade(), _compute_verdict(), critic_agent(), _dynamic_fallback_evaluation(), run_critic_evaluation(), _sanitize_json_text(), extract_destination() (+14 more)
 
 ### Community 2 - "checkpointer.py"
 Cohesion: 0.12
-Nodes (11): get_checkpointer(), get_connection(), get_pool(), get_session_checkpointer(), require(), resolve_database_url(), _compiled_graph(), get_travel_graph() (+3 more)
+Nodes (10): get_checkpointer(), get_connection(), get_pool(), get_session_checkpointer(), require(), resolve_database_url(), get_travel_graph(), __getattr__() (+2 more)
 
 ### Community 3 - "local.py"
-Cohesion: 0.13
-Nodes (12): async_cached(), get_client(), load_tools(), check_servers(), get_all_tools(), _aviation_call(), _aviation_call_cached(), aviation_mcp_call() (+4 more)
+Cohesion: 0.09
+Nodes (16): async_cached(), _child_env(), get_client(), load_tools(), require_tools(), check_servers(), get_all_tools(), _aviation_call() (+8 more)
 
 ### Community 4 - "app.js"
 Cohesion: 0.22
 Nodes (24): applyConfig(), closeSettings(), el(), icon(), isReady(), markUnreachable(), mdBlock(), openSettings() (+16 more)
 
 ### Community 5 - "cache.py"
-Cohesion: 0.11
-Nodes (13): decorator(), wrapper(), build_key(), decorator(), wrapper(), clear(), drop_client(), get_client() (+5 more)
+Cohesion: 0.10
+Nodes (14): decorator(), wrapper(), build_key(), cached(), decorator(), wrapper(), clear(), drop_client() (+6 more)
 
 ### Community 6 - "settings.py"
-Cohesion: 0.11
-Nodes (7): check_database_url(), get_database_url(), get_groq_api_key(), normalize_database_url(), _child_env(), get_current_weather(), get_forecast()
+Cohesion: 0.14
+Nodes (7): check_database_url(), check_groq_api_key(), get_database_url(), get_groq_api_key(), normalize_database_url(), get_current_weather(), get_forecast()
 
 ### Community 7 - "README.md"
 Cohesion: 0.11
@@ -150,10 +150,10 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `travelbrain-multi-agent-ai-travel-planner` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `app.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.06010230179028133 - nodes in this community are weakly interconnected._
-- **Why does `run_critic_evaluation()` connect `critic_agent.py` to `app.py`?**
+  _Cohesion score 0.06057945566286216 - nodes in this community are weakly interconnected._
+- **Why does `run_critic_evaluation()` connect `critic_agent.py` to `app.py`, `local.py`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Should `critic_agent.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.06817513958272113 - nodes in this community are weakly interconnected._
-- **Why does `async_cached()` connect `local.py` to `critic_agent.py`, `checkpointer.py`, `cache.py`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+  _Cohesion score 0.07885968159940762 - nodes in this community are weakly interconnected._
+- **Why does `async_cached()` connect `local.py` to `checkpointer.py`, `cache.py`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._

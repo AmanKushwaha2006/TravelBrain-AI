@@ -509,18 +509,6 @@
       "source_location": "L71"
     },
     {
-      "id": "src_api_validation_check_groq_api_key",
-      "label": "check_groq_api_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "check_groq_api_key()",
-      "source_file": "src/api/validation.py",
-      "source_location": "L18"
-    },
-    {
       "id": "src_config_session_credential_status",
       "label": "credential_status()",
       "_callable": true,
@@ -749,18 +737,6 @@
       "source_location": "L12"
     },
     {
-      "id": "src_clients_cache_cached",
-      "label": "cached()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "cached()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L200"
-    },
-    {
       "id": "src_clients_llm_build_llm",
       "label": "_build_llm()",
       "_callable": true,
@@ -797,40 +773,16 @@
       "source_location": "L17"
     },
     {
-      "id": "src_mcp_servers_config_require_tools",
-      "label": "require_tools()",
+      "id": "src_graph_graph_compiled_graph",
+      "label": "_compiled_graph()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "critic_agent.py",
       "file_type": "code",
-      "norm_label": "require_tools()",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L115"
-    },
-    {
-      "id": "src_mcp_servers_remote_get_search_tool",
-      "label": "_get_search_tool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "_get_search_tool()",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L18"
-    },
-    {
-      "id": "src_mcp_servers_remote_tavily_mcp_search",
-      "label": "tavily_mcp_search()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "tavily_mcp_search()",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L35"
+      "norm_label": "_compiled_graph()",
+      "source_file": "src/graph/graph.py",
+      "source_location": "L39"
     },
     {
       "id": "src_utils_async_utils_bump_llm_calls",
@@ -1109,18 +1061,6 @@
       "source_location": "L1778"
     },
     {
-      "id": "frontend_static_js_aviation_3d_nextshot",
-      "label": "nextShot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "render",
-      "file_type": "code",
-      "norm_label": "nextshot()",
-      "source_file": "frontend/static/js/aviation-3d.js",
-      "source_location": "L696"
-    },
-    {
       "id": "frontend_static_js_aviation_3d_render",
       "label": "render()",
       "_callable": true,
@@ -1130,7 +1070,7 @@
       "file_type": "code",
       "norm_label": "render()",
       "source_file": "frontend/static/js/aviation-3d.js",
-      "source_location": "L788"
+      "source_location": "L498"
     },
     {
       "id": "frontend_static_js_gltfloader_computebounds",
@@ -1877,18 +1817,6 @@
       "source_location": "L69"
     },
     {
-      "id": "src_graph_graph_compiled_graph",
-      "label": "_compiled_graph()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "checkpointer.py",
-      "file_type": "code",
-      "norm_label": "_compiled_graph()",
-      "source_file": "src/graph/graph.py",
-      "source_location": "L39"
-    },
-    {
       "id": "src_graph_graph_get_travel_graph",
       "label": "get_travel_graph()",
       "_callable": true,
@@ -2105,6 +2033,18 @@
       "source_location": "L226"
     },
     {
+      "id": "src_mcp_servers_config_child_env",
+      "label": "_child_env()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "_child_env()",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L30"
+    },
+    {
       "id": "src_mcp_servers_config_get_client",
       "label": "get_client()",
       "_callable": true,
@@ -2127,6 +2067,18 @@
       "norm_label": "load_tools()",
       "source_file": "src/mcp_servers/config.py",
       "source_location": "L102"
+    },
+    {
+      "id": "src_mcp_servers_config_require_tools",
+      "label": "require_tools()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "require_tools()",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L115"
     },
     {
       "id": "src_mcp_servers_diagnostics_check_servers",
@@ -2235,6 +2187,30 @@
       "norm_label": "weather_mcp_search()",
       "source_file": "src/mcp_servers/local.py",
       "source_location": "L128"
+    },
+    {
+      "id": "src_mcp_servers_remote_get_search_tool",
+      "label": "_get_search_tool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "_get_search_tool()",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "src_mcp_servers_remote_tavily_mcp_search",
+      "label": "tavily_mcp_search()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "tavily_mcp_search()",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L35"
     },
     {
       "id": "frontend_static_js_app_applyconfig",
@@ -2573,6 +2549,18 @@
       "source_location": "L135"
     },
     {
+      "id": "src_clients_cache_cached",
+      "label": "cached()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "cached()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L200"
+    },
+    {
       "id": "src_clients_cache_cached_decorator",
       "label": "decorator()",
       "_callable": true,
@@ -2705,6 +2693,18 @@
       "source_location": "L37"
     },
     {
+      "id": "src_api_validation_check_groq_api_key",
+      "label": "check_groq_api_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "check_groq_api_key()",
+      "source_file": "src/api/validation.py",
+      "source_location": "L18"
+    },
+    {
       "id": "src_config_settings_get_database_url",
       "label": "get_database_url()",
       "_callable": true,
@@ -2739,18 +2739,6 @@
       "norm_label": "normalize_database_url()",
       "source_file": "src/config/settings.py",
       "source_location": "L125"
-    },
-    {
-      "id": "src_mcp_servers_config_child_env",
-      "label": "_child_env()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "_child_env()",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L30"
     },
     {
       "id": "src_mcp_servers_weather_server_get_current_weather",
@@ -3291,17 +3279,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_mcp_servers_remote",
-      "label": "remote.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "remote.py",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_utils_async_utils",
       "label": "async_utils.py",
       "_origin": "ast",
@@ -3544,17 +3521,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_clients_cache_rationale_201",
-      "label": "Cache the result of a synchronous function in Redis.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "cache the result of a synchronous function in redis.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L201"
-    },
-    {
       "id": "src_clients_llm_rationale_1",
       "label": "Groq chat model, resolved per session and cached per distinct key.",
       "_origin": "ast",
@@ -3608,50 +3574,6 @@
       "norm_label": "shared state passed between every node of the travel graph.",
       "source_file": "src/graph/state.py",
       "source_location": "L1"
-    },
-    {
-      "id": "src_mcp_servers_config_rationale_116",
-      "label": "Raise a readable error when a server is missing expected tools.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "raise a readable error when a server is missing expected tools.",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L116"
-    },
-    {
-      "id": "src_mcp_servers_remote_rationale_1",
-      "label": "Remote MCP servers, reached over HTTP. Currently: Tavily (hotel / general web\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "remote mcp servers, reached over http. currently: tavily (hotel / general web...",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_mcp_servers_remote_rationale_19",
-      "label": "Connect to Tavily once and keep the search tool handle.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "connect to tavily once and keep the search tool handle.",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L19"
-    },
-    {
-      "id": "src_mcp_servers_remote_rationale_36",
-      "label": "Search the web. Cached, because the same trip is asked about often.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "search the web. cached, because the same trip is asked about often.",
-      "source_file": "src/mcp_servers/remote.py",
-      "source_location": "L36"
     },
     {
       "id": "src_utils_async_utils_rationale_1",
@@ -3951,6 +3873,17 @@
       "source_location": ""
     },
     {
+      "id": "src_mcp_servers_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_mcp_servers_diagnostics",
       "label": "diagnostics.py",
       "_origin": "ast",
@@ -3984,6 +3917,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_mcp_servers_remote",
+      "label": "remote.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "code",
+      "norm_label": "remote.py",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_clients_cache_rationale_227",
       "label": "Cache the result of an async function in Redis.",
       "_origin": "ast",
@@ -3995,6 +3939,17 @@
       "source_location": "L227"
     },
     {
+      "id": "src_mcp_servers_config_rationale_1",
+      "label": "MCP server registry, split by where the server actually runs. REMOTE servers\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "mcp server registry, split by where the server actually runs. remote servers...",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_mcp_servers_config_rationale_103",
       "label": "Load one server's tools as {name: tool}. Deliberately loads a single server at\u2026",
       "_origin": "ast",
@@ -4004,6 +3959,28 @@
       "norm_label": "load one server's tools as {name: tool}. deliberately loads a single server at...",
       "source_file": "src/mcp_servers/config.py",
       "source_location": "L103"
+    },
+    {
+      "id": "src_mcp_servers_config_rationale_116",
+      "label": "Raise a readable error when a server is missing expected tools.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "raise a readable error when a server is missing expected tools.",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "src_mcp_servers_config_rationale_31",
+      "label": "Full copy of the current environment plus explicit overrides. stdio servers are\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "full copy of the current environment plus explicit overrides. stdio servers are...",
+      "source_file": "src/mcp_servers/config.py",
+      "source_location": "L31"
     },
     {
       "id": "src_mcp_servers_config_rationale_97",
@@ -4103,6 +4080,39 @@
       "norm_label": "call an aviationstack tool. reference lookups (airports, airlines) are cached...",
       "source_file": "src/mcp_servers/local.py",
       "source_location": "L82"
+    },
+    {
+      "id": "src_mcp_servers_remote_rationale_1",
+      "label": "Remote MCP servers, reached over HTTP. Currently: Tavily (hotel / general web\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "remote mcp servers, reached over http. currently: tavily (hotel / general web...",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_mcp_servers_remote_rationale_19",
+      "label": "Connect to Tavily once and keep the search tool handle.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "connect to tavily once and keep the search tool handle.",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "src_mcp_servers_remote_rationale_36",
+      "label": "Search the web. Cached, because the same trip is asked about often.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "local.py",
+      "file_type": "rationale",
+      "norm_label": "search the web. cached, because the same trip is asked about often.",
+      "source_file": "src/mcp_servers/remote.py",
+      "source_location": "L36"
     },
     {
       "id": "frontend_static_js_app",
@@ -4215,6 +4225,17 @@
       "source_location": "L178"
     },
     {
+      "id": "src_clients_cache_rationale_201",
+      "label": "Cache the result of a synchronous function in Redis.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "cache the result of a synchronous function in redis.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L201"
+    },
+    {
       "id": "src_clients_cache_rationale_253",
       "label": "Delete cached entries for one prefix. Returns how many were removed.",
       "_origin": "ast",
@@ -4292,17 +4313,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_mcp_servers_config",
-      "label": "config.py",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_mcp_servers_weather_server",
       "label": "weather_server.py",
       "_origin": "ast",
@@ -4356,28 +4366,6 @@
       "norm_label": "default to sslmode=require, which managed postgres providers expect.",
       "source_file": "src/config/settings.py",
       "source_location": "L126"
-    },
-    {
-      "id": "src_mcp_servers_config_rationale_1",
-      "label": "MCP server registry, split by where the server actually runs. REMOTE servers\u2026",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "settings.py",
-      "file_type": "rationale",
-      "norm_label": "mcp server registry, split by where the server actually runs. remote servers...",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_mcp_servers_config_rationale_31",
-      "label": "Full copy of the current environment plus explicit overrides. stdio servers are\u2026",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "settings.py",
-      "file_type": "rationale",
-      "norm_label": "full copy of the current environment plus explicit overrides. stdio servers are...",
-      "source_file": "src/mcp_servers/config.py",
-      "source_location": "L31"
     },
     {
       "id": "readme",
@@ -4861,6 +4849,17 @@
       "type": "external"
     },
     {
+      "id": "asyncio",
+      "label": "asyncio",
+      "community": 1,
+      "community_name": "critic_agent.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "asyncio",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "functools",
       "label": "functools",
       "community": 1,
@@ -4868,17 +4867,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "functools",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "json",
-      "label": "json",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "json",
       "source_file": "",
       "type": "external"
     },
@@ -4993,13 +4981,24 @@
       "type": "external"
     },
     {
-      "id": "asyncio",
-      "label": "asyncio",
+      "id": "langchain_mcp_adapters_client",
+      "label": "langchain_mcp_adapters_client",
       "community": 3,
       "community_name": "local.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "asyncio",
+      "norm_label": "langchain_mcp_adapters_client",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "sys",
+      "label": "sys",
+      "community": 3,
+      "community_name": "local.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sys",
       "source_file": "",
       "type": "external"
     },
@@ -5011,6 +5010,17 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "hashlib",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "json",
+      "label": "json",
+      "community": 5,
+      "community_name": "cache.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "json",
       "source_file": "",
       "type": "external"
     },
@@ -5044,17 +5054,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "dotenv",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "langchain_mcp_adapters_client",
-      "label": "langchain_mcp_adapters_client",
-      "community": 6,
-      "community_name": "settings.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "langchain_mcp_adapters_client",
       "source_file": "",
       "type": "external"
     },
@@ -5110,17 +5109,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "requests",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sys",
-      "label": "sys",
-      "community": 6,
-      "community_name": "settings.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sys",
       "source_file": "",
       "type": "external"
     }
@@ -6035,7 +6023,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/aviation-3d.js",
-      "source_location": "L871",
+      "source_location": "L560",
       "weight": 1.0
     },
     {
@@ -8860,18 +8848,6 @@
     },
     {
       "source": "frontend_static_js_aviation_3d",
-      "target": "frontend_static_js_aviation_3d_nextshot",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/aviation-3d.js",
-      "source_location": "L696",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_aviation_3d",
       "target": "frontend_static_js_aviation_3d_render",
       "relation": "contains",
       "_origin": "ast",
@@ -8879,7 +8855,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/aviation-3d.js",
-      "source_location": "L788",
+      "source_location": "L498",
       "weight": 1.0
     },
     {
@@ -16694,5 +16670,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f0d5937010e20946e586455dcceedc803c82e85f"
+  "built_at_commit": "5c87a94380a84a9c22f7fd38eefd0c7ab679afd4"
 }

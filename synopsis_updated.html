@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mini Project Synopsis - Group 14 - TravelBrain AI</title>
+<style>
+  @page {
+    size: A4;
+    margin: 10mm 12mm 10mm 12mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #111;
+    line-height: 1.42;
+    font-size: 10.2pt;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .page-box {
+    border: 1.5px solid #222;
+    padding: 16px 18px;
+    min-height: 272mm;
+    position: relative;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-box:last-child {
+    page-break-after: avoid;
+  }
+
+  .title-header {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+  }
+
+  th, td {
+    border: 1px solid #333;
+    padding: 5px 8px;
+    font-size: 9.5pt;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: 700;
+  }
+
+  .section-bar {
+    background: #2a2a2a;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 10.5pt;
+    padding: 5px 8px;
+    margin: 12px 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .section-subhead {
+    font-weight: 700;
+    font-size: 10.2pt;
+    margin: 8px 0 4px 0;
+    color: #111;
+    text-decoration: underline;
+  }
+
+  p {
+    margin: 0 0 8px 0;
+    text-align: justify;
+    line-height: 1.45;
+  }
+
+  ol {
+    margin: 4px 0 8px 18px;
+    padding: 0;
+  }
+
+  ol li {
+    margin-bottom: 6px;
+    text-align: justify;
+    line-height: 1.4;
+  }
+
+  ol li strong {
+    color: #000;
+  }
+
+  ul {
+    margin: 4px 0 8px 18px;
+    padding: 0;
+  }
+
+  ul li {
+    margin-bottom: 5px;
+    text-align: justify;
+    line-height: 1.4;
+  }
+
+  .meta-title {
+    font-weight: 700;
+    background: #f7f7f7;
+    width: 25%;
+  }
+
+  /* Flowchart Container */
+  .flowchart-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    margin: 8px auto;
+    width: 100%;
+    max-width: 620px;
+  }
+
+  .fc-node {
+    border: 1.5px solid #2b4c7e;
+    background: #f4f8fc;
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 8.8pt;
+    font-weight: 600;
+    width: 82%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .fc-node strong {
+    display: block;
+    font-size: 9.3pt;
+    color: #1a365d;
+    margin-bottom: 2px;
+  }
+
+  .fc-node.decision {
+    border: 1.5px solid #b7791f;
+    background: #fffaf0;
+    width: 72%;
+    border-radius: 12px;
+  }
+
+  .fc-node.auth {
+    border-color: #2b6cb0;
+    background: #ebf8ff;
+  }
+
+  .fc-node.agents {
+    border-color: #2c7a7b;
+    background: #e6fffa;
+    width: 98%;
+  }
+
+  .fc-node.synthesis {
+    border-color: #6b46c1;
+    background: #faf5ff;
+    width: 90%;
+  }
+
+  .fc-node.critic {
+    border-color: #c53030;
+    background: #fff5f5;
+    width: 90%;
+  }
+
+  .fc-node.ui {
+    border-color: #3182ce;
+    background: #ebf8ff;
+    width: 98%;
+  }
+
+  .fc-arrow {
+    font-size: 11pt;
+    line-height: 1;
+    color: #4a5568;
+    font-weight: 700;
+  }
+
+  .fc-grid-agents {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+    margin-top: 3px;
+  }
+
+  .fc-subagent {
+    border: 1px solid #4fd1c5;
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 7.8pt;
+    text-align: center;
+  }
+
+  .fc-subagent strong {
+    font-size: 8.2pt;
+    color: #234e52;
+  }
+
+  .sign-row {
+    margin-top: auto;
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .sign-line {
+    border-top: 1px dashed #444;
+    width: 220px;
+    text-align: center;
+    font-size: 9pt;
+    padding-top: 4px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page-box">
+  <div class="title-header">MINI PROJECT SYNOPSIS</div>
+
+  <table>
+    <tr>
+      <td class="meta-title">Name of Project Coordinator</td>
+      <td><strong>Ms Deepa Verma / Mr Neeraj Kumar</strong></td>
+    </tr>
+    <tr>
+      <td class="meta-title">Group Number</td>
+      <td><strong>14</strong></td>
+    </tr>
+  </table>
+
+  <div style="font-weight: 700; font-size: 10pt; margin-bottom: 4px;">MINI PROJECT TITLE</div>
+  <table>
+    <tr>
+      <td style="width: 25%; font-weight: 600;">Tentative</td>
+      <td><strong>AI-Agent Travel Planner</strong></td>
+    </tr>
+    <tr>
+      <td style="width: 25%; font-weight: 600;">Finalized</td>
+      <td><strong>AI-Agent Travel Planner</strong></td>
+    </tr>
+  </table>
+
+  <div style="font-weight: 700; font-size: 10pt; margin: 8px 0 4px 0;">DETAILS OF GROUP MEMBER</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 7%; text-align: center;">Sr.</th>
+        <th style="width: 22%;">Roll No.</th>
+        <th style="width: 25%;">Student Name</th>
+        <th style="width: 18%;">Mobile Number</th>
+        <th style="width: 28%;">Email Id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">1</td>
+        <td>2400520100012</td>
+        <td><strong>Aman Kushwaha</strong></td>
+        <td>9161838512</td>
+        <td>2400520100012@ietlucknow.ac.in</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2</td>
+        <td>2400520100035</td>
+        <td><strong>Dipayan Roy</strong></td>
+        <td>9362717960</td>
+        <td>2400520100035@ietlucknow.ac.in</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">3</td>
+        <td>2400520100024</td>
+        <td><strong>Atul Kumar</strong></td>
+        <td>9695673028</td>
+        <td>2400520100024@ietlucknow.ac.in</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-bar">PROJECT OVERVIEW / BACKGROUND</div>
+
+  <div class="section-subhead">Introduction :-</div>
+  <p>
+    <strong>TravelBrain AI</strong> is an advanced, autonomous multi-agent travel intelligence and itinerary generation system engineered with <strong>LangGraph</strong>, <strong>FastAPI</strong>, and ultra-low-latency <strong>Groq LPUs</strong> hosting Meta’s high-throughput open-weights models (including Llama 3.3 70B Versatile). Instead of forcing travelers to juggle dozens of disjointed browser tabs or rely on generic AI chatbots that hallucinate outdated rates, closed attractions, and unfeasible travel schedules, TravelBrain AI ingests a streamlined natural-language query containing departure origin, destination, and trip duration.
+  </p>
+  <p>
+    Upon query ingestion, a synchronized team of specialized autonomous agents collaborates in real time: the <strong>FlightAgent</strong> queries the AviationStack MCP service for verified IATA airport codes, live airline routes, and airfare guidance in <strong>Indian Rupees (INR ₹)</strong>; the <strong>HotelAgent</strong> leverages the Tavily Search API to curate authentic accommodations, nightly tariffs, and verified destination attractions; the <strong>WeatherAgent</strong> retrieves live climate metrics and 5-day forecasts via a custom OpenWeather FastMCP server; and the <strong>ItineraryAgent</strong> constructs chronological, diurnal morning-to-night activity schedules clustered by geographic proximity.
+  </p>
+  <p>
+    A master <strong>FinalAgent</strong> synthesizes all telemetry into a cohesive master travel dossier, while an autonomous <strong>CriticAgent</strong> conducts an exhaustive 100-point anti-hallucination audit across entity factuality, geographic coherence, and transit feasibility. Backed by resilient PostgreSQL state persistence (psycopg-pool) and session-scoped ephemeral credential isolation (HTTP-only cookies), the verified itinerary is synthesized in under sixty seconds and presented through an ultra-realistic, cinematic <strong>3D Aviation WebGL interface (Three.js + GSAP)</strong> featuring real-time pipeline tracking, one-click clipboard copying, and direct Markdown (.md) export.
+  </p>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page-box">
+  <div class="section-subhead" style="margin-top: 0;">Need of Work / Reason for selection of this project :-</div>
+  <p>
+    Modern travel planning suffers from severe information fragmentation and cognitive overload, forcing users to juggle dozens of websites for airfares, lodging, climate forecasts, and daily budgeting. While generic conversational AI chatbots attempt to assist, they lack live tool grounding and frequently hallucinate fabricated flight routes, obsolete tariffs, and impractical schedules that overlook physical transit times and geography.
+  </p>
+  <p>
+    The primary need for this work is to bridge natural-language conversational travel planning with real-world verifiability and deterministic pricing. We selected this project to move far beyond superficial chatbot wrappers by engineering a production-grade multi-agent system powered by LangGraph state orchestration and Groq LPUs. By orchestrating specialized autonomous agents that query live APIs (AviationStack, Tavily, and OpenWeather), the platform delivers verified flight connections, vetted hotel stays in Indian Rupees (₹), climate-aware schedules, and an independent anti-hallucination Critic audit—demonstrating practical mastery of cutting-edge agentic state orchestration, Model Context Protocol (MCP) tool integration, and photorealistic 3D web engineering.
+  </p>
+
+  <div class="section-subhead">Problem Statement :-</div>
+  <p>
+    Modern travel planning is highly fragmented, chaotic, and time-consuming. Travelers are burdened with cross-referencing isolated platforms for flight schedules, hotel bookings, weather outlooks, and currency conversions. Furthermore, standard Large Language Models operate on static training data and suffer from severe factual hallucination—frequently inventing non-existent museums, suggesting impossible intercity drives, quoting obsolete rates, and generating cluttered schedules with unresolvable logistical conflicts. Without deterministic cross-domain verification, travelers lack a reliable, unified single source of truth for their journey.
+  </p>
+
+  <div class="section-bar">METHODOLOGY</div>
+
+  <div class="section-subhead">Proposed Techniques or Methods :-</div>
+  <ol>
+    <li>
+      <strong>Graph-Based Multi-Agent State Orchestration:</strong><br>
+      The architecture utilizes <strong>LangGraph (StateGraph)</strong> to coordinate specialized, autonomous agent nodes (FlightAgent, HotelAgent, WeatherAgent, ItineraryAgent, FinalAgent, and CriticAgent) that sequentially enrich a shared, strongly-typed <code>TravelState</code> schema without losing conversational state or introducing data collisions.
+    </li>
+    <li>
+      <strong>High-Throughput Low-Latency LLM Inference via Groq LPUs:</strong><br>
+      Groq Language Processing Units (LPUs) hosting open-weights foundation models power the cognitive reasoning layer across all agents, executing multi-step constraint evaluation, geographic clustering, and executive itinerary synthesis in under 60 seconds.
+    </li>
+    <li>
+      <strong>Multi-Source Real-World API Grounding via MCP:</strong><br>
+      The <strong>AviationStack API</strong> resolves authentic IATA codes, flight paths, and airline connections; the <strong>Tavily Search API</strong> curates verified hotel properties, nightly tariffs, and landmark reviews; and the <strong>OpenWeather API</strong> supplies real-time temperatures, humidity, and 5-day forecasts via a modular FastMCP server.
+    </li>
+  </ol>
+</div>
+
+<!-- ==================== PAGE 3 ==================== -->
+<div class="page-box">
+  <ol start="4">
+    <li>
+      <strong>Durable State Checkpointing and Conversation Threading:</strong><br>
+      LangGraph persistence utilizes a production-grade <code>PostgresSaver</code> checkpointer with <code>psycopg_pool.ConnectionPool</code> connection pooling for long-term thread storage, enabling multi-turn conversational follow-up prompts and seamless trip refinement without loss of previous context.
+    </li>
+    <li>
+      <strong>Deterministic Indian Rupee (INR ₹) Financial Modeling:</strong><br>
+      An algorithmic budget engine compiles flight fares, accommodation rates, local transit allowances, and daily meals strictly in Indian Rupees (₹), eliminating opaque foreign currency conversion errors and calculating realistic category splits.
+    </li>
+    <li>
+      <strong>Session-Scoped Ephemeral Credential Security Pipeline:</strong><br>
+      Python ContextVar mechanisms and encrypted HTTP-only session cookies isolate custom user API credentials (Groq API Key, Database URL) strictly in volatile server process memory. Keys are never persisted to disk or database tables and are automatically expunged upon session expiration.
+    </li>
+    <li>
+      <strong>Autonomous Fact-Checking Critic & Anti-Hallucination Audit:</strong><br>
+      A dedicated <strong>CriticAgent</strong> audits the compiled travel dossier against verified geographic databases, issuing an objective <strong>100-point score</strong> evaluated across four core criteria: Entity Factuality (40 pts), Geographic Coherence (30 pts), Transit Realism (20 pts), and Pacing Practicality (10 pts), explicitly flagging any questionable claims.
+    </li>
+    <li>
+      <strong>Asynchronous RESTful Service Architecture:</strong><br>
+      FastAPI and Uvicorn provide non-blocking asynchronous endpoints (<code>/api/travel</code>, <code>/api/evaluate</code>, <code>/api/config</code>) featuring Pydantic request/response validation, CORS governance, and unified error handling.
+    </li>
+    <li>
+      <strong>Contextual Phase-Based Chronological Scheduling:</strong><br>
+      An itinerary structuring engine categorizes daily schedules into distinct diurnal phases (Morning, Afternoon, Evening, Sightseeing, and Transit), tagging activities with geographic proximity clusters to prevent erratic transit times.
+    </li>
+    <li>
+      <strong>Photorealistic 3D Aviation Interface & Offline Dossier Export:</strong><br>
+      A cinematic <strong>Three.js & GSAP WebGL</strong> hero experience renders a commercial airliner with PBR materials, active turbine rotation, atmospheric sunset clouds, and a 4-mode cinematic camera system. The dossier includes client-side Markdown rendering, 1-click clipboard copy, and direct <code>.md</code> file export via HTML5 Blob APIs.
+    </li>
+  </ol>
+</div>
+
+<!-- ==================== PAGE 4 ==================== -->
+<div class="page-box">
+  <div class="section-bar" style="margin-top: 0;">PROJECT FLOWCHART :-</div>
+  <div style="text-align: center; font-weight: 700; font-size: 11pt; margin-bottom: 8px; color: #1a365d;">
+    TravelBrain AI — Multi-Agent Travel Planner Architecture
+  </div>
+
+  <div class="flowchart-wrap">
+    <!-- Start -->
+    <div class="fc-node" style="width: 45%; background: #edf2f7; border-color: #4a5568;">
+      <strong>START</strong>
+      User Visits TravelBrain Web Application
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- Session & Credentials -->
+    <div class="fc-node auth">
+      <strong>Session &amp; Ephemeral Credential Pipeline</strong>
+      HTTP-Only Secure Cookie Generated (secrets.token_urlsafe) &bull; Settings Modal for Groq API &amp; PostgreSQL URL (Held in Volatile Memory Only)
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- User Ingestion -->
+    <div class="fc-node decision">
+      <strong>User Ingests Travel Query</strong>
+      Minimal 3-Field Interface: Departure City (Origin) &bull; Destination &bull; Trip Duration (Days)
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- FastAPI Gateway -->
+    <div class="fc-node" style="border-color: #319795; background: #e6fffa;">
+      <strong>FastAPI Gateway &amp; LangGraph State Initialization</strong>
+      POST /api/travel &bull; Typed TravelState Schema Created &bull; PostgresSaver Thread Tracking
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- Autonomous Multi-Agent Research -->
+    <div class="fc-node agents">
+      <strong>Autonomous Multi-Agent Parallel Research &amp; Tool Grounding</strong>
+      <div class="fc-grid-agents">
+        <div class="fc-subagent">
+          <strong>FlightAgent</strong><br>AviationStack MCP (IATA, Airfares ₹)
+        </div>
+        <div class="fc-subagent">
+          <strong>HotelAgent</strong><br>Tavily Search API (Hotels &amp; Sights)
+        </div>
+        <div class="fc-subagent">
+          <strong>WeatherAgent</strong><br>OpenWeather MCP (5-Day Forecast)
+        </div>
+        <div class="fc-subagent">
+          <strong>ItineraryAgent</strong><br>Diurnal Pacing &amp; Geographic Route
+        </div>
+      </div>
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- Final Synthesis & Critic Audit -->
+    <div class="fc-node synthesis">
+      <strong>FinalAgent: Master Travel Dossier Synthesis</strong>
+      Cross-Domain Conflict Elimination &bull; Budget Engine (INR ₹ Cost Breakdown) &bull; Markdown Compilation
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- Critic Agent -->
+    <div class="fc-node critic">
+      <strong>CriticAgent: Autonomous 100-Point Anti-Hallucination Audit</strong>
+      POST /api/evaluate &bull; Entity Factuality (40) &bull; Geographic Coherence (30) &bull; Transit Realism (20) &bull; Pacing (10)
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- Interactive Dashboard UI -->
+    <div class="fc-node ui">
+      <strong>Cinematic 3D Aviation Interface &amp; Export Flight Deck</strong>
+      Three.js / GSAP WebGL Airliner &bull; Live Pipeline Progress Tracker &bull; Critic Scorecard &bull; Markdown (.md) Export &amp; Copy
+    </div>
+    <div class="fc-arrow">↓</div>
+
+    <!-- End -->
+    <div class="fc-node" style="width: 45%; background: #edf2f7; border-color: #4a5568;">
+      <strong>END</strong>
+      Verified, Hallucination-Free Travel Plan Ready
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 5 ==================== -->
+<div class="page-box">
+  <div class="section-bar" style="margin-top: 0;">PROJECT REQUIREMENTS</div>
+
+  <ul>
+    <li>
+      <strong>Software & Frameworks –</strong> HTML5, CSS3, Vanilla JavaScript (ES6+), Three.js (WebGL 3D Engine), GSAP Animation Library, Python 3.11, FastAPI, Uvicorn (ASGI Production Server), Pydantic, PostgreSQL, psycopg-pool, LangGraph Checkpointers (PostgresSaver), and Markdown.js.
+    </li>
+    <li>
+      <strong>AI and Agentic Orchestration –</strong> LangGraph Multi-Agent Framework (StateGraph), LangChain Core, Model Context Protocol (MCP / FastMCP), and Groq Cloud LPU Inference SDK (Meta Llama 3.3 70B Versatile).
+    </li>
+    <li>
+      <strong>Live Grounding & Search APIs –</strong> AviationStack API (real-time flight paths, IATA airport resolution, airline networks), Tavily Web Search API (verified hotel tariffs in INR, attraction curation), and OpenWeather API (current meteorology and 5-day forecasts).
+    </li>
+    <li>
+      <strong>State Persistence & Security –</strong> PostgreSQL relational database with psycopg-pool connection pooling, HTTP-only session cookie authentication, and ephemeral in-memory credential injection (zero disk persistence).
+    </li>
+    <li>
+      <strong>Version Control & Deployment –</strong> Git, GitHub, Supabase / Render Cloud Hosting, and Uvicorn production ASGI server.
+    </li>
+    <li>
+      <strong>Hardware Specifications –</strong> Multi-core processor (Intel Core i3 / AMD Ryzen 3 or higher), minimum 4 GB RAM (8 GB recommended for concurrent pooling and workers), and 10 GB available SSD storage.
+    </li>
+    <li>
+      <strong>External Cloud Credentials –</strong> Stable high-speed internet connection and active API keys for Groq Cloud, Tavily AI, AviationStack, and OpenWeatherMap.
+    </li>
+  </ul>
+
+  <div class="section-bar">REFERENCES</div>
+
+  <ul>
+    <li>
+      <strong>LangGraph Multi-Agent Architecture –</strong> Official documentation and research publications by LangChain AI on building cyclic, stateful multi-agent workflows and checkpoint persistence (<em>https://langchain-ai.github.io/langgraph/</em>).
+    </li>
+    <li>
+      <strong>Meta LLaMA 3.3 Foundation Model –</strong> Research publication "The Llama 3 Herd of Models" by Meta AI Research, detailing high-speed reasoning, factual synthesis, and instruction-following capabilities (<em>arXiv:2407.21783</em>).
+    </li>
+    <li>
+      <strong>FastAPI Asynchronous Web Framework –</strong> Official documentation by Sebastián Ramírez on high-concurrency asynchronous API routing, Pydantic data schemas, and ASGI server architecture (<em>https://fastapi.tiangolo.com/</em>).
+    </li>
+    <li>
+      <strong>Model Context Protocol (MCP) –</strong> Technical specifications on standardized tool calling and isolated server-client integrations for autonomous AI agents (<em>https://modelcontextprotocol.io/</em>).
+    </li>
+    <li>
+      <strong>Tavily AI Search Engine –</strong> Technical documentation and developer specifications for real-time web intelligence and verified accommodation grounding (<em>https://docs.tavily.com/</em>).
+    </li>
+    <li>
+      <strong>PostgreSQL Database & Connection Pooling –</strong> PostgreSQL Global Development Group documentation on ACID compliance and connection pooling via psycopg-pool (<em>https://www.postgresql.org/docs/</em>).
+    </li>
+  </ul>
+
+  <div class="sign-row">
+    <div>
+      <div class="sign-line">Student Signatures (Group 14)</div>
+    </div>
+    <div>
+      <div class="sign-line">Signature of Mini Project Coordinator<br>(Ms Deepa Verma / Mr Neeraj Kumar)</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
