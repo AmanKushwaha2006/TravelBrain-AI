@@ -6,7 +6,7 @@ from typing import Annotated, TypedDict
 from langchain_core.messages import AnyMessage
 
 
-class TravelState(TypedDict):
+class TravelState(TypedDict, total=False):
     messages: Annotated[list[AnyMessage], operator.add]
     user_query: str
     flight_results: str
@@ -15,6 +15,7 @@ class TravelState(TypedDict):
     itinerary: str
     llm_calls: int
     weather_results: str
+    critic_evaluation: dict | None
 
 
 def initial_state(user_query: str) -> TravelState:
@@ -30,5 +31,6 @@ def initial_state(user_query: str) -> TravelState:
         "attractions_data": "",
         "weather_results": "",
         "itinerary": "",
+        "critic_evaluation": None,
         "llm_calls": 0,
     }

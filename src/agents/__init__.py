@@ -1,4 +1,5 @@
 __all__ = [
+    "critic_agent",
     "extract_destination",
     "final_agent",
     "flight_agent",
@@ -10,6 +11,9 @@ __all__ = [
 
 
 def __getattr__(name: str):
+    if name == "critic_agent":
+        from src.agents.critic_agent import critic_agent
+        return critic_agent
     if name == "extract_destination":
         from src.agents.destination import extract_destination
         return extract_destination

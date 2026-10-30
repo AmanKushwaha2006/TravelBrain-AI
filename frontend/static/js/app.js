@@ -1,65 +1,74 @@
 /* ============================================================
-   TravelBrain AI — frontend
-   Talks to:  POST   /api/travel  { message, thread_id }
-              GET    /api/config          credential status
-              POST   /api/config          set session keys
-              DELETE /api/config          fall back to server .env
-              GET    /health
+   TravelBrain AI — Frontend Application Controller
+   Connects:
+     - 3D Aviation Engine (Three.js + GSAP)
+     - 3-Field Main Travel Search (Source, Destination, Days)
+     - Multi-Agent Orchestration API: POST /api/travel
+     - Critic Fact-Checking Audit:     POST /api/evaluate
+     - Session Credential Store:       GET/POST/DELETE /api/config
    ============================================================ */
+
 (function () {
   "use strict";
 
-  /* ---------------- dom ---------------- */
+  /* ---------------- DOM Elements ---------------- */
 
   var $ = function (id) { return document.getElementById(id); };
 
-  var conversation = $("conversation");
-  var messages     = $("messages");
-  var hero         = $("hero");
-  var input        = $("input");
-  var composer     = $("composer");
-  var sendBtn      = $("sendBtn");
-  var builder      = $("builder");
-  var toastEl      = $("toast");
+  var hero              = $("hero");
+  var planningSection   = $("planningSection");
+  var messages          = $("messages");
+  var input             = $("input");
+  var composer          = $("composer");
+  var sendBtn           = $("sendBtn");
+  var toastEl           = $("toast");
 
-  var composerWrap = document.querySelector(".composer-wrap");
+  var fFrom             = $("fFrom");
+  var fTo               = $("fTo");
+  var fDays             = $("fDays");
+  var btnPlanJourney    = $("btnPlanJourney");
+  var collapsePlanBtn   = $("collapsePlanBtn");
 
-  var statusBtn    = $("apiStatus");
-  var statusText   = statusBtn.querySelector(".status-text");
+  var statusBtn         = $("apiStatus");
+  var statusText        = statusBtn ? statusBtn.querySelector(".status-text") : null;
 
-  var setupGate    = $("setupGate");
-  var gateCreds    = $("gateCreds");
-  var gateSub      = $("gateSub");
-  var gateSave     = $("gateSave");
+  var setupGate         = $("setupGate");
+  var gateCreds         = $("gateCreds");
+  var gateSub           = $("gateSub");
+  var gateSave          = $("gateSave");
 
-  var settingsModal = $("settingsModal");
-  var settingsScrim = $("settingsScrim");
-  var credList      = $("credList");
-  var settingsSave  = $("settingsSave");
+  var settingsModal     = $("settingsModal");
+  var settingsScrim     = $("settingsScrim");
+  var credList          = $("credList");
+  var settingsSave      = $("settingsSave");
+  var settingsReset     = $("settingsReset");
+  var settingsClose     = $("settingsClose");
+  var settingsBtn       = $("settingsBtn");
 
-  /* ---------------- state ---------------- */
+  var themeToggle       = $("themeToggle");
+  var newTripBtn        = $("newTripBtn");
+  var mobileToggle      = $("mobileToggle");
+  var mobileDrawer      = $("mobileDrawer");
+
+  /* ---------------- State ---------------- */
 
   var THEME_KEY = "travelbrain.theme";
-
-  var threadId = null;   // LangGraph conversation thread for the current trip
+  var threadId = null;   // Active LangGraph session thread
   var busy = false;
-  var config = null;     // last /api/config payload
+  var config = null;     // Last /api/config payload
   var savingConfig = false;
 
-  /* One bar, not five rows. The backend answers once at the end, so these
-     weights are an estimate of how long each stage takes - the label is
-     indicative, not a live event feed. */
   var PHASES = [
-    { label: "Fetching flights data",    weight: 0.22 },
-    { label: "Searching hotels",         weight: 0.18 },
-    { label: "Checking the weather",     weight: 0.14 },
-    { label: "Building your itinerary",  weight: 0.23 },
-    { label: "Writing your final plan",  weight: 0.23 }
+    { label: "Flight Intelligence Agent · Analyzing routes & airfares in INR", weight: 0.22 },
+    { label: "Hotel & Stays Agent · Scouting accommodations & tariffs",        weight: 0.20 },
+    { label: "Weather Analyst Agent · Forecasting climate & packing advice",    weight: 0.16 },
+    { label: "Itinerary Architect Agent · Structuring day-by-day pacing",       weight: 0.22 },
+    { label: "Final Synthesis Agent · Compiling verified master dossier",       weight: 0.20 }
   ];
 
   var ESTIMATED_MS = 55000;
 
-  /* ---------------- utils ---------------- */
+  /* ---------------- Utilities ---------------- */
 
   function el(tag, cls, text) {
     var node = document.createElement(tag);
@@ -85,6 +94,7 @@
 
   var toastTimer;
   function toast(msg) {
+    if (!toastEl) return;
     toastEl.textContent = msg;
     toastEl.hidden = false;
     requestAnimationFrame(function () { toastEl.classList.add("show"); });
@@ -92,295 +102,9 @@
     toastTimer = setTimeout(function () {
       toastEl.classList.remove("show");
       setTimeout(function () { toastEl.hidden = true; }, 250);
-    }, 2800);
+    }, 3000);
   }
 
-  function scrollToEnd(smooth) {
-    requestAnimationFrame(function () {
-      conversation.scrollTo({ top: conversation.scrollHeight, behavior: smooth ? "smooth" : "auto" });
-    });
-  }
-
-  /* ---------------- theme ---------------- */
-
-  function initTheme() {
-    var stored = null;
-    try { stored = localStorage.getItem(THEME_KEY); } catch (e) {}
-    var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-    document.documentElement.setAttribute("data-theme", stored || (prefersLight ? "light" : "dark"));
-  }
-
-  $("themeToggle").addEventListener("click", function () {
-    var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
-  });
-
-  /* ============================================================
-     credentials / settings
-     ============================================================ */
-
-  function isReady() {
-    return !!(config && config.ready);
-  }
-
-  /* The hero, the setup gate and the composer lock are all driven by one
-     question: does the server have live credentials yet? */
-  function updateEmptyState() {
-    var hasMessages = messages.children.length > 0;
-    var ready = isReady();
-
-    setupGate.hidden = ready || hasMessages;
-    hero.classList.toggle("is-hidden", !ready || hasMessages);
-
-    composerWrap.classList.toggle("is-locked", !ready);
-    input.disabled = !ready || busy;
-    sendBtn.disabled = !ready || busy;
-  }
-
-  function applyConfig(data) {
-    config = data;
-
-    var missing = (data && data.missing) || [];
-
-    if (data && data.ready) {
-      statusBtn.setAttribute("data-state", "ok");
-      statusText.textContent = "API connected";
-      statusBtn.title = "All keys configured — open settings";
-    } else {
-      statusBtn.setAttribute("data-state", "setup");
-      statusText.textContent = "No Live API";
-      statusBtn.title = "No API keys configured — open settings";
-
-      var labels = missing.map(function (name) {
-        return (data.credentials[name] && data.credentials[name].label) || name;
-      });
-
-      gateSub.textContent = labels.length
-        ? "The server has no " + joinAnd(labels) + " configured, so the agents cannot run. Add " +
-          (labels.length === 1 ? "it" : "them") + " below to start planning."
-        : "The server has no API keys configured, so the agents cannot run.";
-
-      renderCreds(gateCreds);
-    }
-
-    if (!settingsModal.hidden) renderCreds(credList);
-
-    updateEmptyState();
-  }
-
-  function joinAnd(list) {
-    if (list.length <= 1) return list[0] || "";
-    return list.slice(0, -1).join(", ") + " and " + list[list.length - 1];
-  }
-
-  function markUnreachable() {
-    config = null;
-    statusBtn.setAttribute("data-state", "down");
-    statusText.textContent = "API unreachable";
-    statusBtn.title = "Could not reach the server";
-    updateEmptyState();
-  }
-
-  function refreshConfig() {
-    return fetch("/api/config", { cache: "no-store" })
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
-      .then(applyConfig)
-      .catch(markUnreachable);
-  }
-
-  /* Renders one row per credential into the given container, showing where
-     the value comes from and letting the user override it for this session.
-     Used by both the centred gate and the settings modal, so lookups are
-     scoped to the container rather than done by global id. */
-  function renderCreds(container) {
-    container.innerHTML = "";
-
-    if (!config || !config.credentials) {
-      container.appendChild(el("p", "cred-loading", "Loading…"));
-      return;
-    }
-
-    Object.keys(config.credentials).forEach(function (name) {
-      var info = config.credentials[name];
-
-      var row = el("div", "cred");
-
-      var head = el("div", "cred-head");
-      head.appendChild(el("label", "cred-label", info.label));
-
-      var badgeText = info.source === "env" ? "From server .env"
-                    : info.source === "session" ? "Set for this session"
-                    : "Not configured";
-
-      head.appendChild(el("span", "badge badge-" + (info.source || "missing"), badgeText));
-      row.appendChild(head);
-
-      row.appendChild(el("p", "cred-hint", info.hint));
-
-      var field = el("div", "cred-field");
-      var box = el("input", "cred-input");
-      box.type = "password";
-      box.placeholder = info.configured ? "•••••••• (leave blank to keep)" : info.placeholder;
-      box.autocomplete = "off";
-      box.spellcheck = false;
-      box.setAttribute("data-cred", name);
-      field.appendChild(box);
-
-      var reveal = el("button", "icon-btn sm");
-      reveal.type = "button";
-      reveal.title = "Show / hide";
-      reveal.setAttribute("aria-label", "Show or hide value");
-      reveal.appendChild(icon("M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"));
-      reveal.addEventListener("click", function () {
-        box.type = box.type === "password" ? "text" : "password";
-      });
-      field.appendChild(reveal);
-
-      row.appendChild(field);
-
-      var err = el("p", "cred-error");
-      err.setAttribute("data-error-for", name);
-      err.hidden = true;
-      row.appendChild(err);
-
-      container.appendChild(row);
-    });
-  }
-
-  var FIELD_BY_NAME = {
-    GROQ_API_KEY: "groq_api_key",
-    DATABASE_URL: "database_url"
-  };
-
-  var NAME_BY_FIELD = {
-    groq_api_key: "GROQ_API_KEY",
-    database_url: "DATABASE_URL"
-  };
-
-  function openSettings() {
-    settingsModal.hidden = false;
-    settingsScrim.hidden = false;
-    renderCreds(credList);
-    refreshConfig();
-
-    var first = credList.querySelector(".cred-input");
-    if (first) first.focus();
-  }
-
-  function closeSettings() {
-    settingsModal.hidden = true;
-    settingsScrim.hidden = true;
-  }
-
-  function setSavingConfig(state, button) {
-    savingConfig = state;
-    [settingsSave, gateSave].forEach(function (b) { b.disabled = state; });
-    if (button) button.classList.toggle("is-busy", state);
-  }
-
-  function saveCredentials(container, button) {
-    if (savingConfig) return;
-
-    var payload = {};
-    var anything = false;
-
-    container.querySelectorAll(".cred-input").forEach(function (box) {
-      var value = box.value.trim();
-      if (!value) return;
-      anything = true;
-      payload[FIELD_BY_NAME[box.getAttribute("data-cred")]] = value;
-    });
-
-    container.querySelectorAll(".cred-error").forEach(function (n) { n.hidden = true; });
-
-    if (!anything) {
-      toast("Enter a key first.");
-      var empty = container.querySelector(".cred-input");
-      if (empty) empty.focus();
-      return;
-    }
-
-    setSavingConfig(true, button);
-
-    fetch("/api/config", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    })
-      .then(function (response) {
-        return response.json().then(function (data) { return { ok: response.ok, data: data }; });
-      })
-      .then(function (out) {
-        if (!out.ok || out.data.success === false) {
-          var errors = out.data.errors || {};
-          var shown = 0;
-
-          Object.keys(errors).forEach(function (field) {
-            var node = container.querySelector('[data-error-for="' + NAME_BY_FIELD[field] + '"]');
-            if (node) {
-              node.textContent = errors[field];
-              node.hidden = false;
-              shown++;
-            }
-          });
-
-          toast(shown ? "Check the highlighted field." : (out.data.error || "Could not save."));
-          return;
-        }
-
-        applyConfig(out.data);
-        toast(out.data.ready ? "Connected." : "Saved — one key still missing.");
-      })
-      .catch(function () {
-        toast("Could not reach the server.");
-      })
-      .then(function () {
-        setSavingConfig(false, button);
-      });
-  }
-
-  function resetSettings() {
-    if (savingConfig) return;
-    setSavingConfig(true, settingsSave);
-
-    fetch("/api/config", { method: "DELETE" })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        applyConfig(data);
-        renderCreds(credList);
-        toast("Session keys cleared.");
-      })
-      .catch(function () { toast("Could not reach the server."); })
-      .then(function () { setSavingConfig(false, settingsSave); });
-  }
-
-  $("settingsBtn").addEventListener("click", openSettings);
-  statusBtn.addEventListener("click", openSettings);
-  $("settingsClose").addEventListener("click", closeSettings);
-  settingsScrim.addEventListener("click", closeSettings);
-  settingsSave.addEventListener("click", function () { saveCredentials(credList, settingsSave); });
-  gateSave.addEventListener("click", function () { saveCredentials(gateCreds, gateSave); });
-  $("settingsReset").addEventListener("click", resetSettings);
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !settingsModal.hidden) closeSettings();
-  });
-
-  /* ============================================================
-     message rendering
-     ============================================================ */
-
-  function renderUser(text) {
-    var wrap = el("div", "msg msg-user");
-    wrap.appendChild(el("div", "bubble-user", text));
-    messages.appendChild(wrap);
-    return wrap;
-  }
-
-  /* Agent fields are not always strings: MCP tools return content blocks
-     (arrays of {type,text}) and raw tool payloads (objects). Coerce anything
-     into renderable text rather than assuming .trim() exists. */
   function toText(value) {
     if (value === null || value === undefined) return "";
     if (typeof value === "string") return value;
@@ -391,7 +115,6 @@
     }
 
     if (typeof value === "object") {
-      // LangChain / MCP content block shapes
       if (typeof value.text === "string") return value.text;
       if (typeof value.content === "string") return value.content;
       if (Array.isArray(value.content)) return toText(value.content);
@@ -406,87 +129,403 @@
     return String(value);
   }
 
+  /* ---------------- Theme Management ---------------- */
+
+  function initTheme() {
+    var stored = null;
+    try { stored = localStorage.getItem(THEME_KEY); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var activeTheme = stored || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", activeTheme);
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+    });
+  }
+
+  /* ---------------- API Credentials & Config ---------------- */
+
+  function isReady() {
+    return !!(config && config.ready);
+  }
+
+  function updateEmptyState() {
+    var hasMessages = messages && messages.children.length > 0;
+    var ready = isReady();
+
+    if (setupGate) setupGate.hidden = ready || hasMessages;
+    if (planningSection) planningSection.hidden = !hasMessages;
+
+    if (input) input.disabled = !ready || busy;
+    if (sendBtn) sendBtn.disabled = !ready || busy;
+  }
+
+  function applyConfig(data) {
+    config = data;
+    var missing = (data && data.missing) || [];
+
+    if (statusBtn && statusText) {
+      if (data && data.ready) {
+        statusBtn.setAttribute("data-state", "ok");
+        statusText.textContent = "API connected";
+        statusBtn.title = "All credentials verified — click to edit";
+      } else {
+        statusBtn.setAttribute("data-state", "setup");
+        statusText.textContent = "No Live API";
+        statusBtn.title = "API keys needed — click to configure";
+
+        if (gateSub && data.credentials) {
+          var labels = missing.map(function (name) {
+            return (data.credentials[name] && data.credentials[name].label) || name;
+          });
+          gateSub.textContent = labels.length
+            ? "The server has no " + labels.join(" and ") + " configured. Add below to begin planning."
+            : "The server has no API keys configured. Connect your credentials to start planning.";
+        }
+        if (gateCreds) renderCreds(gateCreds);
+      }
+    }
+
+    if (settingsModal && !settingsModal.hidden && credList) {
+      renderCreds(credList);
+    }
+
+    updateEmptyState();
+  }
+
+  function markUnreachable() {
+    config = null;
+    if (statusBtn && statusText) {
+      statusBtn.setAttribute("data-state", "down");
+      statusText.textContent = "API unreachable";
+      statusBtn.title = "Could not reach the server";
+    }
+    updateEmptyState();
+  }
+
+  function refreshConfig() {
+    return fetch("/api/config", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
+      .then(applyConfig)
+      .catch(markUnreachable);
+  }
+
+  function renderCreds(container) {
+    container.innerHTML = "";
+
+    if (!config || !config.credentials) {
+      container.appendChild(el("p", "cred-hint", "Loading configuration…"));
+      return;
+    }
+
+    Object.keys(config.credentials).forEach(function (name) {
+      var info = config.credentials[name];
+      var row = el("div", "cred");
+
+      var head = el("div", "cred-head");
+      head.appendChild(el("label", "cred-label", info.label));
+
+      var badgeText = info.source === "env" ? "Server .env"
+                    : info.source === "session" ? "Session Key"
+                    : "Missing";
+      head.appendChild(el("span", "badge badge-" + (info.source || "missing"), badgeText));
+      row.appendChild(head);
+
+      row.appendChild(el("p", "cred-hint", info.hint));
+
+      var field = el("div", "cred-field");
+      var box = el("input", "cred-input");
+      box.type = "password";
+      box.placeholder = info.configured ? "•••••••• (leave blank to keep)" : info.placeholder;
+      box.autocomplete = "off";
+      box.spellcheck = false;
+      box.setAttribute("data-cred", name);
+      field.appendChild(box);
+
+      var reveal = el("button", "icon-btn");
+      reveal.type = "button";
+      reveal.title = "Show / hide password";
+      reveal.appendChild(icon("M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"));
+      reveal.addEventListener("click", function () {
+        box.type = box.type === "password" ? "text" : "password";
+      });
+      field.appendChild(reveal);
+      row.appendChild(field);
+
+      var err = el("p", "cred-error");
+      err.setAttribute("data-error-for", name);
+      err.hidden = true;
+      row.appendChild(err);
+
+      container.appendChild(row);
+    });
+  }
+
+  var FIELD_MAP = {
+    GROQ_API_KEY: "groq_api_key",
+    DATABASE_URL: "database_url"
+  };
+
+  function openSettings() {
+    if (!settingsModal || !settingsScrim) return;
+    settingsModal.hidden = false;
+    settingsScrim.hidden = false;
+    if (credList) renderCreds(credList);
+    refreshConfig();
+    var first = credList ? credList.querySelector(".cred-input") : null;
+    if (first) first.focus();
+  }
+
+  function closeSettings() {
+    if (!settingsModal || !settingsScrim) return;
+    settingsModal.hidden = true;
+    settingsScrim.hidden = true;
+  }
+
+  function setSavingConfig(state, button) {
+    savingConfig = state;
+    if (settingsSave) settingsSave.disabled = state;
+    if (gateSave) gateSave.disabled = state;
+    if (button) button.classList.toggle("is-busy", state);
+  }
+
+  function saveCredentials(container, button) {
+    if (savingConfig) return;
+
+    var payload = {};
+    var hasValues = false;
+
+    container.querySelectorAll(".cred-input").forEach(function (box) {
+      var val = box.value.trim();
+      if (!val) return;
+      hasValues = true;
+      var prop = FIELD_MAP[box.getAttribute("data-cred")];
+      if (prop) payload[prop] = val;
+    });
+
+    container.querySelectorAll(".cred-error").forEach(function (n) { n.hidden = true; });
+
+    if (!hasValues) {
+      toast("Please enter an API key first.");
+      var emptyBox = container.querySelector(".cred-input");
+      if (emptyBox) emptyBox.focus();
+      return;
+    }
+
+    setSavingConfig(true, button);
+
+    fetch("/api/config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) {
+        return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+      })
+      .then(function (res) {
+        if (!res.ok || res.data.success === false) {
+          var errors = res.data.errors || {};
+          Object.keys(errors).forEach(function (f) {
+            var node = container.querySelector('[data-error-for="' + f.toUpperCase() + '"]');
+            if (node) {
+              node.textContent = errors[f];
+              node.hidden = false;
+            }
+          });
+          toast("Check highlighted configuration error.");
+          return;
+        }
+
+        applyConfig(res.data);
+        closeSettings();
+        toast(res.data.ready ? "Credentials connected successfully!" : "Saved — one credential still missing.");
+      })
+      .catch(function () {
+        toast("Could not connect to server.");
+      })
+      .then(function () {
+        setSavingConfig(false, button);
+      });
+  }
+
+  function resetSettings() {
+    if (savingConfig) return;
+    setSavingConfig(true, settingsSave);
+
+    fetch("/api/config", { method: "DELETE" })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        applyConfig(data);
+        if (credList) renderCreds(credList);
+        toast("Session credentials cleared. Reverted to .env.");
+      })
+      .catch(function () { toast("Could not clear credentials."); })
+      .then(function () { setSavingConfig(false, settingsSave); });
+  }
+
+  if (settingsBtn) settingsBtn.addEventListener("click", openSettings);
+  if (statusBtn) statusBtn.addEventListener("click", openSettings);
+  if (settingsClose) settingsClose.addEventListener("click", closeSettings);
+  if (settingsScrim) settingsScrim.addEventListener("click", closeSettings);
+  if (settingsSave) settingsSave.addEventListener("click", function () { saveCredentials(credList, settingsSave); });
+  if (gateSave) gateSave.addEventListener("click", function () { saveCredentials(gateCreds, gateSave); });
+  if (settingsReset) settingsReset.addEventListener("click", resetSettings);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && settingsModal && !settingsModal.hidden) closeSettings();
+  });
+
+  /* ---------------- Message & Plan Rendering ---------------- */
+
+  function renderUser(text) {
+    var wrap = el("div", "msg msg-user");
+    wrap.appendChild(el("div", "bubble-user", text));
+    messages.appendChild(wrap);
+    return wrap;
+  }
+
   function mdBlock(source, emptyText) {
     var box = el("div", "md");
     var text = toText(source).trim();
 
     if (!text) {
-      var empty = el("div", "md-empty");
-      empty.appendChild(icon("M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"));
-      empty.appendChild(el("span", null, emptyText || "No data returned for this section."));
-      box.appendChild(empty);
+      box.appendChild(el("p", null, emptyText || "No data returned for this section."));
       return box;
     }
 
-    box.innerHTML = window.MD.render(text);
+    if (window.MD && typeof window.MD.render === "function") {
+      box.innerHTML = window.MD.render(text);
+    } else {
+      box.textContent = text;
+    }
     return box;
   }
 
-  function toolButton(label, pathD, handler) {
-    var b = el("button", "icon-btn sm");
-    b.type = "button";
-    b.title = label;
-    b.setAttribute("aria-label", label);
-    b.appendChild(icon(pathD));
-    b.addEventListener("click", handler);
-    return b;
-  }
+  function renderPipeline() {
+    var wrap = el("div", "pipeline-card");
 
-  function plainTextOf(result) {
-    return ["# " + (result.__query || "Trip plan"), "", toText(result.answer)].join("\n");
+    var head = el("div", "pipeline-header");
+    var agentName = el("div", "pipeline-agent-name");
+    agentName.appendChild(icon("M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a.8.8 0 0 0-.8 1.3L8 11l-2 2-2.2-.5a.6.6 0 0 0-.6 1L5 16l2.5 1.8a.6.6 0 0 0 1-.6L8 15l2-2 3.5 4a.8.8 0 0 0 1.3-.8Z"));
+    agentName.appendChild(el("span", null, "Multi-Agent Coordination in Progress…"));
+    head.appendChild(agentName);
+
+    var timer = el("span", "pipeline-timer", "0s");
+    head.appendChild(timer);
+    wrap.appendChild(head);
+
+    var track = el("div", "pipeline-track");
+    var fill = el("div", "pipeline-fill");
+    track.appendChild(fill);
+    wrap.appendChild(track);
+
+    var stageLabel = el("div", "pipeline-stage-label");
+    var spinner = el("span", "spinner", "");
+    spinner.style.display = "inline-block";
+    stageLabel.appendChild(spinner);
+    var labelText = el("span", null, PHASES[0].label);
+    stageLabel.appendChild(labelText);
+    wrap.appendChild(stageLabel);
+
+    messages.appendChild(wrap);
+
+    var started = Date.now();
+    var currentPhase = 0;
+
+    var interval = setInterval(function () {
+      var elapsed = Date.now() - started;
+      var ratio = Math.min(elapsed / ESTIMATED_MS, 0.96);
+
+      fill.style.width = (ratio * 100).toFixed(1) + "%";
+      timer.textContent = Math.floor(elapsed / 1000) + "s";
+
+      var acc = 0;
+      var idx = PHASES.length - 1;
+      for (var i = 0; i < PHASES.length; i++) {
+        acc += PHASES[i].weight;
+        if (ratio < acc) { idx = i; break; }
+      }
+
+      if (idx !== currentPhase) {
+        currentPhase = idx;
+        labelText.textContent = PHASES[idx].label;
+      }
+    }, 250);
+
+    return {
+      node: wrap,
+      finish: function () {
+        clearInterval(interval);
+        fill.style.width = "100%";
+      }
+    };
   }
 
   function renderResult(result) {
     var card = el("article", "card");
 
-    /* head */
+    // Head
     var head = el("div", "card-head");
     var avatar = el("div", "card-avatar");
     avatar.appendChild(icon("M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a.8.8 0 0 0-.8 1.3L8 11l-2 2-2.2-.5a.6.6 0 0 0-.6 1L5 16l2.5 1.8a.6.6 0 0 0 1-.6L8 15l2-2 3.5 4a.8.8 0 0 0 1.3-.8Z"));
     head.appendChild(avatar);
 
     var titleBox = el("div", "card-title");
-    titleBox.appendChild(el("strong", null, "TravelBrain AI"));
-    titleBox.appendChild(el("small", null, "Plan ready"));
+    titleBox.appendChild(el("strong", null, "TravelBrain AI Itinerary"));
+    titleBox.appendChild(el("small", null, "✓ Verified in Indian Rupees (₹)"));
     head.appendChild(titleBox);
 
     var tools = el("div", "card-tools");
 
-    tools.appendChild(toolButton("Copy plan", "M8 4h10a2 2 0 0 1 2 2v10M16 8H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Z", function () {
-      var text = plainTextOf(result);
+    // Copy Button
+    var copyBtn = el("button", "icon-btn");
+    copyBtn.title = "Copy Itinerary to Clipboard";
+    copyBtn.appendChild(icon("M8 4h10a2 2 0 0 1 2 2v10M16 8H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Z"));
+    copyBtn.addEventListener("click", function () {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(
-          function () { toast("Plan copied to clipboard"); },
-          function () { toast("Could not copy"); }
+        navigator.clipboard.writeText(toText(result.answer)).then(
+          function () { toast("Itinerary copied to clipboard!"); },
+          function () { toast("Could not copy."); }
         );
-      } else {
-        toast("Clipboard not available");
       }
-    }));
+    });
+    tools.appendChild(copyBtn);
 
-    tools.appendChild(toolButton("Download as Markdown", "M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2", function () {
-      var blob = new Blob([plainTextOf(result)], { type: "text/markdown;charset=utf-8" });
+    // Download Markdown Button
+    var dlBtn = el("button", "icon-btn");
+    dlBtn.title = "Download as Markdown (.md)";
+    dlBtn.appendChild(icon("M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"));
+    dlBtn.addEventListener("click", function () {
+      var blob = new Blob([toText(result.answer)], { type: "text/markdown;charset=utf-8" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
       a.href = url;
-      a.download = "travelbrain-plan.md";
+      a.download = "TravelBrain-Itinerary.md";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    }));
+    });
+    tools.appendChild(dlBtn);
 
-    tools.appendChild(toolButton("Print", "M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z", function () {
-      window.print();
-    }));
+    // Print Button
+    var printBtn = el("button", "icon-btn");
+    printBtn.title = "Print Plan";
+    printBtn.appendChild(icon("M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"));
+    printBtn.addEventListener("click", function () { window.print(); });
+    tools.appendChild(printBtn);
 
-    /* Critic Agent Audit Button (runs on demand only) */
+    // Critic Agent Audit CTA
     var auditHolder = el("div", "critic-audit-wrap");
     auditHolder.hidden = true;
 
-    var auditBtn = el("button", "btn btn-soft btn-sm audit-btn");
-    auditBtn.type = "button";
-    auditBtn.title = "Evaluate plan quality and check for hallucinations";
+    var auditBtn = el("button", "btn btn-soft btn-sm");
+    auditBtn.title = "Audit this plan for hallucinations & geographic factuality";
     auditBtn.appendChild(icon("M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"));
     var auditLabel = el("span", "btn-label", "Audit with Critic");
     auditBtn.appendChild(auditLabel);
@@ -494,9 +533,10 @@
     auditBtn.addEventListener("click", function () {
       if (auditBtn.disabled) return;
       auditBtn.disabled = true;
-      auditLabel.textContent = "Auditing places...";
-      var auditSpinner = el("span", "spinner", "");
-      auditBtn.appendChild(auditSpinner);
+      auditLabel.textContent = "Auditing landmarks…";
+      var spin = el("span", "spinner", "");
+      spin.style.display = "inline-block";
+      auditBtn.appendChild(spin);
 
       fetch("/api/evaluate", {
         method: "POST",
@@ -504,7 +544,12 @@
         body: JSON.stringify({
           query: result.__query || "",
           plan_text: result.answer || "",
-          destination: ""
+          destination: "",
+          flight_results: result.flight_results || "",
+          hotel_results: result.hotel_results || "",
+          weather_results: result.weather_results || "",
+          itinerary: result.itinerary || "",
+          attractions_data: result.attractions_data || ""
         })
       })
       .then(function (r) {
@@ -518,28 +563,27 @@
           auditBtn.remove();
           auditHolder.scrollIntoView({ behavior: "smooth", block: "nearest" });
         } else {
-          toast(data.error || "Critic evaluation failed.");
+          toast(data.error || "Critic audit failed.");
           auditBtn.disabled = false;
           auditLabel.textContent = "Audit with Critic";
-          if (auditSpinner.parentNode) auditSpinner.remove();
+          if (spin.parentNode) spin.remove();
         }
       })
       .catch(function (err) {
-        toast("Critic audit failed: " + err.message);
+        toast("Critic audit error: " + err.message);
         auditBtn.disabled = false;
         auditLabel.textContent = "Audit with Critic";
-        if (auditSpinner.parentNode) auditSpinner.remove();
+        if (spin.parentNode) spin.remove();
       });
     });
 
     tools.appendChild(auditBtn);
-
     head.appendChild(tools);
     card.appendChild(head);
 
-    /* one message: the final assembled plan */
+    // Body
     var body = el("div", "card-body");
-    body.appendChild(mdBlock(result.answer, "The agent returned an empty response."));
+    body.appendChild(mdBlock(result.answer, "The agent returned an empty itinerary."));
     card.appendChild(body);
     card.appendChild(auditHolder);
 
@@ -553,7 +597,6 @@
     container.innerHTML = "";
     var auditCard = el("div", "critic-card");
 
-    // Head
     var head = el("div", "critic-head");
     var titleBox = el("div", "critic-title-box");
     var shieldIco = el("span", "critic-shield-ico");
@@ -561,23 +604,20 @@
     titleBox.appendChild(shieldIco);
 
     var textWrap = el("div");
-    textWrap.appendChild(el("strong", "critic-title", "Critic Agent Quality & Hallucination Audit"));
-    textWrap.appendChild(el("p", "critic-subtitle", "Rigorous fact-checking of proper nouns, landmarks & travel logistics"));
+    textWrap.appendChild(el("strong", "critic-title", "Critic Agent Hallucination & Quality Audit"));
+    textWrap.appendChild(el("p", "critic-subtitle", "Rigorous fact-checking of landmarks, physical locations & transit realism"));
     titleBox.appendChild(textWrap);
     head.appendChild(titleBox);
 
-    // Score Badge
     var score = Number(data.overall_score) || 0;
     var scoreClass = score >= 85 ? "score-high" : score >= 70 ? "score-med" : "score-low";
     var badgeBox = el("div", "critic-score-box " + scoreClass);
-    var scoreNum = el("span", "critic-score-num", score + "/100");
-    var scoreVerdict = el("span", "critic-score-verdict", data.verdict || (score >= 85 ? "High Faithfulness" : "Hallucination Risk"));
-    badgeBox.appendChild(scoreNum);
-    badgeBox.appendChild(scoreVerdict);
+    badgeBox.appendChild(el("span", "critic-score-num", score + "/100"));
+    badgeBox.appendChild(el("span", "critic-score-verdict", data.verdict || (score >= 85 ? "High Faithfulness" : "Hallucination Risk")));
     head.appendChild(badgeBox);
     auditCard.appendChild(head);
 
-    // Breakdown Bars
+    // Metrics Breakdown
     var breakdown = data.breakdown || {};
     var metricsGrid = el("div", "critic-metrics-grid");
 
@@ -592,384 +632,273 @@
       var item = el("div", "critic-metric-item");
       var topRow = el("div", "metric-top");
       topRow.appendChild(el("span", "metric-label", m.label));
-      topRow.appendChild(el("span", "metric-val", m.val + " / " + m.max + " pts"));
+      topRow.appendChild(el("span", "metric-val", m.val + " / " + m.max));
       item.appendChild(topRow);
 
-      var bar = el("div", "metric-bar");
-      var fill = el("div", "metric-fill " + scoreClass);
-      var pct = Math.min(Math.max((m.val / m.max) * 100, 0), 100);
+      var track = el("div", "metric-bar-track");
+      var fill = el("div", "metric-bar-fill");
+      var pct = Math.min(100, Math.max(0, (m.val / m.max) * 100));
       fill.style.width = pct + "%";
-      bar.appendChild(fill);
-      item.appendChild(bar);
+      track.appendChild(fill);
+      item.appendChild(track);
+
       metricsGrid.appendChild(item);
     });
     auditCard.appendChild(metricsGrid);
 
-    // Flagged Issues (if any)
-    var flagged = data.flagged_issues || [];
-    if (flagged.length > 0) {
-      var flaggedSection = el("div", "critic-section flagged-section");
-      flaggedSection.appendChild(el("h4", "critic-section-title flagged-title", "⚠️ Flagged Hallucinations & Inaccuracies (" + flagged.length + ")"));
-      var flaggedList = el("div", "flagged-list");
-      flagged.forEach(function (issue) {
-        var fi = el("div", "flagged-item " + (issue.severity === "critical" ? "flag-crit" : "flag-warn"));
-        var headRow = el("div", "flag-head");
-        headRow.appendChild(el("strong", "flag-entity", issue.entity || "Unverified Element"));
-        headRow.appendChild(el("span", "flag-badge", (issue.severity || "warning").toUpperCase()));
-        fi.appendChild(headRow);
-        fi.appendChild(el("p", "flag-desc", issue.issue || issue.reason || ""));
-        flaggedList.appendChild(fi);
-      });
-      flaggedSection.appendChild(flaggedList);
-      auditCard.appendChild(flaggedSection);
-    }
-
-    // Verified Entities
-    var verified = data.verified_entities || [];
-    if (verified.length > 0) {
-      var verSection = el("div", "critic-section verified-section");
-      verSection.appendChild(el("h4", "critic-section-title verified-title", "✓ Verified Real-World Places & Landmarks (" + verified.length + ")"));
-      var verGrid = el("div", "verified-grid");
-      verified.forEach(function (v) {
-        var vi = el("div", "verified-chip");
-        vi.appendChild(el("span", "ver-check", "✓"));
-        var viText = el("div");
-        viText.appendChild(el("strong", "ver-name", v.name || ""));
-        if (v.note || v.type) {
-          viText.appendChild(el("small", "ver-type", (v.type ? v.type + " · " : "") + (v.note || "")));
-        }
-        vi.appendChild(viText);
-        verGrid.appendChild(vi);
-      });
-      verSection.appendChild(verGrid);
-      auditCard.appendChild(verSection);
-    }
-
-    // Critic Summary
-    if (data.critic_summary) {
-      var sumSection = el("div", "critic-section summary-section");
-      sumSection.appendChild(el("h4", "critic-section-title", "Critic Audit Analysis"));
-      sumSection.appendChild(el("p", "critic-summary-p", data.critic_summary));
-      auditCard.appendChild(sumSection);
-    }
-
-    // Recommendations
-    var recs = data.recommendations || [];
-    if (recs.length > 0) {
-      var recSection = el("div", "critic-section rec-section");
-      recSection.appendChild(el("h4", "critic-section-title", "Actionable Traveler Guidance"));
-      var ul = el("ul", "rec-list");
-      recs.forEach(function (r) {
-        ul.appendChild(el("li", null, r));
-      });
-      recSection.appendChild(ul);
-      auditCard.appendChild(recSection);
+    // Verified Highlights
+    if (data.verified_entities && data.verified_entities.length) {
+      var verBox = el("div", "audit-detail-box");
+      verBox.appendChild(el("strong", null, "Verified Physical Landmarks:"));
+      var p = el("p", "verified-text", data.verified_entities.join(", "));
+      verBox.appendChild(p);
+      auditCard.appendChild(verBox);
     }
 
     container.appendChild(auditCard);
   }
 
   function renderError(message, kind) {
-    var card = el("article", "card error-card");
-    var body = el("div", "error-body");
-    body.appendChild(icon("M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z", "error-ico"));
+    var card = el("article", "card");
+    var head = el("div", "card-head");
+    var avatar = el("div", "card-avatar");
+    avatar.appendChild(icon("M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"));
+    head.appendChild(avatar);
 
-    var copy = {
-      server: {
-        title: "The planner could not finish",
-        detail: "The request reached the server but the agent run failed. Check the uvicorn console for the full traceback."
-      },
-      network: {
-        title: "Could not reach the server",
-        detail: "The request never completed. Check that the server is still running."
-      },
-      render: {
-        title: "The plan came back, but could not be displayed",
-        detail: "The agents returned data in an unexpected shape. This is a frontend issue, not an agent failure."
-      },
-      setup: {
-        title: "Missing credentials",
-        detail: "Add the required keys in Settings, or set them in the server's .env file."
-      }
-    }[kind || "server"];
+    var titleBox = el("div", "card-title");
+    titleBox.appendChild(el("strong", null, "Agent Planning Stopped"));
+    titleBox.appendChild(el("small", null, kind === "setup" ? "Credentials Required" : "Error"));
+    head.appendChild(titleBox);
+    card.appendChild(head);
 
-    var textBox = el("div");
-    textBox.appendChild(el("strong", null, copy.title));
-    textBox.appendChild(el("p", null, copy.detail));
-    textBox.appendChild(el("code", null, message));
-
-    if (kind === "setup") {
-      var open = el("button", "btn btn-soft btn-sm", "Open settings");
-      open.type = "button";
-      open.addEventListener("click", openSettings);
-      textBox.appendChild(open);
-    }
-
-    body.appendChild(textBox);
+    var body = el("div", "card-body");
+    body.appendChild(el("p", null, message));
     card.appendChild(body);
 
     var wrap = el("div", "msg");
     wrap.appendChild(card);
     messages.appendChild(wrap);
-    return wrap;
   }
 
-  /* ---------------- pipeline (loading state) ---------------- */
-
-  function renderPipeline() {
-    var card = el("article", "card progress-card");
-
-    var head = el("div", "progress-head");
-    var label = el("span", "progress-label", PHASES[0].label);
-    var meta = el("span", "progress-meta");
-    var pct = el("b", null, "0%");
-    meta.appendChild(pct);
-    meta.appendChild(el("span", "progress-sep", "·"));
-    var timer = el("span", null, "0s");
-    meta.appendChild(timer);
-    head.appendChild(label);
-    head.appendChild(meta);
-    card.appendChild(head);
-
-    var track = el("div", "progress-track");
-    var fill = el("div", "progress-fill");
-    track.appendChild(fill);
-    card.appendChild(track);
-
-    var wrap = el("div", "msg");
-    wrap.appendChild(card);
-    messages.appendChild(wrap);
-
-    var started = Date.now();
-    var currentPhase = -1;
-
-    function tick() {
-      var elapsed = Date.now() - started;
-
-      // creep towards 97% so the bar never claims to be finished early
-      var ratio = Math.min(elapsed / ESTIMATED_MS, 0.97);
-
-      fill.style.width = (ratio * 100).toFixed(1) + "%";
-      pct.textContent = Math.round(ratio * 100) + "%";
-      timer.textContent = Math.floor(elapsed / 1000) + "s";
-
-      var acc = 0;
-      var index = PHASES.length - 1;
-      for (var i = 0; i < PHASES.length; i++) {
-        acc += PHASES[i].weight;
-        if (ratio < acc) { index = i; break; }
-      }
-
-      if (index !== currentPhase) {
-        currentPhase = index;
-        label.textContent = PHASES[index].label;
-      }
-    }
-
-    tick();
-    var interval = setInterval(tick, 250);
-
-    return {
-      node: wrap,
-      finish: function () {
-        clearInterval(interval);
-        fill.style.width = "100%";
-        pct.textContent = "100%";
-      }
-    };
-  }
-
-  /* ---------------- sending ---------------- */
+  /* ---------------- Travel Planning Request ---------------- */
 
   function setBusy(state) {
     busy = state;
-    sendBtn.classList.toggle("is-busy", state);
+    if (sendBtn) sendBtn.classList.toggle("is-busy", state);
+    if (btnPlanJourney) btnPlanJourney.classList.toggle("is-busy", state);
     updateEmptyState();
   }
 
   function send(text) {
     if (busy) return;
 
-    var message = String(text == null ? input.value : text).trim();
+    var message = String(text == null ? (input ? input.value : "") : text).trim();
     if (!message) return;
 
     if (!isReady()) {
-      toast("No live API — add your keys first.");
-      updateEmptyState();
+      toast("No live API credentials configured. Add your API keys first.");
+      openSettings();
       return;
     }
 
-    input.value = "";
-    autosize();
+    if (input) {
+      input.value = "";
+      input.style.height = "auto";
+    }
+
     setBusy(true);
 
+    if (planningSection) planningSection.hidden = false;
     renderUser(message);
-    updateEmptyState();
     var pipeline = renderPipeline();
-    scrollToEnd(true);
+
+    // Scroll smoothly to planning deck
+    planningSection.scrollIntoView({ behavior: "smooth", block: "start" });
 
     fetch("/api/travel", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: message, thread_id: threadId })
     })
-      .catch(function (e) {
-        e.__kind = "network";
-        throw e;
-      })
-      .then(function (response) {
-        return response.json()
-          .catch(function () { throw new Error("Server returned a non-JSON response (HTTP " + response.status + ")"); })
-          .then(function (data) {
-            if (!response.ok || data.success === false) {
-              var err = new Error(data.error || ("Request failed with HTTP " + response.status));
-              // 428 Precondition Required = a credential is missing.
-              if (response.status === 428) err.__kind = "setup";
-              throw err;
-            }
-            return data;
-          });
+      .then(function (r) {
+        return r.json().catch(function () {
+          throw new Error("Server returned a non-JSON response (HTTP " + r.status + ")");
+        }).then(function (data) {
+          if (!r.ok || data.success === false) {
+            var err = new Error(data.error || "Request failed with HTTP " + r.status);
+            if (r.status === 428) err.__kind = "setup";
+            throw err;
+          }
+          return data;
+        });
       })
       .then(function (data) {
         pipeline.finish();
-        pipeline.node.remove();
+        if (pipeline.node.parentNode) pipeline.node.remove();
 
         data.__query = message;
         threadId = data.thread_id || threadId;
 
-        // A rendering bug here must not be reported as an agent failure.
         try {
           renderResult(data);
         } catch (e) {
-          console.error("renderResult failed", e, data);
+          console.error("renderResult failed", e);
           renderError(e.message || String(e), "render");
         }
 
-        scrollToEnd(true);
+        planningSection.scrollIntoView({ behavior: "smooth", block: "end" });
       })
       .catch(function (err) {
         pipeline.finish();
         if (pipeline.node.parentNode) pipeline.node.remove();
         renderError(err.message || String(err), err.__kind || "server");
-        scrollToEnd(true);
         refreshConfig();
       })
       .then(function () {
         setBusy(false);
-        input.focus();
+        if (input) input.focus();
       });
   }
 
-  /* ---------------- trips ---------------- */
+  /* ---------------- Main 3-Field Search Execution ---------------- */
 
-  function startNewTrip() {
-    if (busy) { toast("Wait for the current plan to finish."); return; }
-    threadId = null;
-    messages.innerHTML = "";
-    updateEmptyState();
-    if (isReady()) input.focus();
-  }
-
-  $("newTripBtn").addEventListener("click", startNewTrip);
-
-  /* ---------------- composer ---------------- */
-
-  function autosize() {
-    input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 200) + "px";
-  }
-
-  input.addEventListener("input", autosize);
-
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      send();
-    }
-  });
-
-  composer.addEventListener("submit", function (e) {
-    e.preventDefault();
-    send();
-  });
-
-  document.querySelectorAll(".suggestion").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      send(btn.getAttribute("data-prompt"));
-    });
-  });
-
-  /* ---------------- trip builder ---------------- */
-
-  var builderToggle = $("builderToggle");
-
-  builderToggle.addEventListener("click", function () {
-    var show = builder.hidden;
-    builder.hidden = !show;
-    builderToggle.classList.toggle("is-on", show);
-    if (show) $("fFrom").focus();
-  });
-
-  document.querySelectorAll("#interestChips .chip").forEach(function (chip) {
-    chip.addEventListener("click", function () { chip.classList.toggle("on"); });
-  });
-
-  $("builderClear").addEventListener("click", function () {
-    ["fFrom", "fTo", "fDate", "fDays", "fPeople", "fBudget"].forEach(function (id) { $(id).value = ""; });
-    document.querySelectorAll("#interestChips .chip").forEach(function (c) { c.classList.remove("on"); });
-  });
-
-  $("builderApply").addEventListener("click", function () {
-    var from    = $("fFrom").value.trim();
-    var to      = $("fTo").value.trim();
-    var date    = $("fDate").value;
-    var days    = $("fDays").value.trim();
-    var people  = $("fPeople").value.trim();
-    var budget  = $("fBudget").value.trim();
-
-    var interests = [];
-    document.querySelectorAll("#interestChips .chip.on").forEach(function (c) {
-      interests.push(c.getAttribute("data-value"));
-    });
+  function planJourney() {
+    var from = fFrom ? fFrom.value.trim() : "";
+    var to = fTo ? fTo.value.trim() : "";
+    var days = fDays ? fDays.value.trim() : "";
 
     if (!to) {
-      toast("Add a destination first.");
-      $("fTo").focus();
+      toast("Please enter a destination city (e.g. Manali, Goa, Paris).");
+      if (fTo) fTo.focus();
       return;
     }
 
-    var parts = ["Plan a"];
-    if (days) parts.push(days + " day");
-    parts.push("trip to " + to);
-    if (from) parts.push("from " + from);
-
-    if (date) {
-      var d = new Date(date + "T00:00:00");
-      if (!isNaN(d)) {
-        parts.push("departing " + d.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" }));
-      }
+    // Default days if missing
+    var parsedDays = parseInt(days, 10);
+    if (!parsedDays || isNaN(parsedDays)) {
+      parsedDays = 5;
     }
 
-    if (people) parts.push("for " + people + (people === "1" ? " traveller" : " travellers"));
-    if (budget) parts.push("with a budget of " + budget);
-    if (interests.length) parts.push("focused on " + interests.join(", "));
+    var queryParts = ["Plan a " + parsedDays + " day trip to " + to];
+    if (from) {
+      queryParts.push("from " + from);
+    }
+    queryParts.push(". Find verified flights, hotel options with tariffs in Indian Rupees (₹), the weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).");
 
-    var sentence = parts.join(" ") + ". Find flights, hotels, the weather outlook and a day-by-day itinerary.";
+    var finalPrompt = queryParts.join(" ");
+    send(finalPrompt);
+  }
 
-    input.value = sentence;
-    autosize();
-    builder.hidden = true;
-    builderToggle.classList.remove("is-on");
-    input.focus();
+  if (btnPlanJourney) {
+    btnPlanJourney.addEventListener("click", planJourney);
+  }
+
+  // Quick route discovery pills
+  document.querySelectorAll(".quick-pill").forEach(function (pill) {
+    pill.addEventListener("click", function () {
+      var pFrom = pill.getAttribute("data-from") || "Delhi";
+      var pTo   = pill.getAttribute("data-to") || "Goa";
+      var pDays = pill.getAttribute("data-days") || "5";
+
+      if (fFrom) fFrom.value = pFrom;
+      if (fTo) fTo.value = pTo;
+      if (fDays) fDays.value = pDays + " Days";
+
+      planJourney();
+    });
   });
 
-  /* ---------------- boot ---------------- */
+  // Destination cards
+  document.querySelectorAll(".destination-card").forEach(function (card) {
+    card.addEventListener("click", function () {
+      var dFrom = card.getAttribute("data-from") || "Delhi";
+      var dTo   = card.getAttribute("data-to") || "";
+      var dDays = card.getAttribute("data-days") || "5";
+
+      if (fFrom) fFrom.value = dFrom;
+      if (fTo) fTo.value = dTo;
+      if (fDays) fDays.value = dDays + " Days";
+
+      planJourney();
+    });
+  });
+
+  // Reset Trip
+  if (newTripBtn) {
+    newTripBtn.addEventListener("click", function () {
+      if (busy) { toast("Please wait for the active plan to finish."); return; }
+      threadId = null;
+      if (messages) messages.innerHTML = "";
+      if (planningSection) planningSection.hidden = true;
+      if (hero) hero.scrollIntoView({ behavior: "smooth" });
+      if (fTo) fTo.focus();
+    });
+  }
+
+  // Collapse / Back to Search Button
+  if (collapsePlanBtn) {
+    collapsePlanBtn.addEventListener("click", function () {
+      if (hero) hero.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  // Quick refinement chips in planning section
+  document.querySelectorAll(".qr-chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var prompt = chip.getAttribute("data-prompt") || chip.textContent.trim();
+      if (input) {
+        input.value = prompt;
+        input.focus();
+      }
+    });
+  });
+
+  // Composer textarea autosize & submit
+  if (input) {
+    input.addEventListener("input", function () {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 180) + "px";
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        send();
+      }
+    });
+  }
+
+  if (composer) {
+    composer.addEventListener("submit", function (e) {
+      e.preventDefault();
+      send();
+    });
+  }
+
+  // Mobile drawer toggle
+  if (mobileToggle && mobileDrawer) {
+    mobileToggle.addEventListener("click", function () {
+      mobileDrawer.hidden = !mobileDrawer.hidden;
+    });
+
+    document.querySelectorAll(".m-link").forEach(function (link) {
+      link.addEventListener("click", function () {
+        mobileDrawer.hidden = true;
+      });
+    });
+  }
+
+  /* ---------------- Initialization ---------------- */
 
   initTheme();
   updateEmptyState();
-  refreshConfig().then(function () {
-    if (isReady()) input.focus();
-  });
+
+  // Initialize 3D Aviation Engine
+  if (window.Aviation3D) {
+    window.Aviation3D.init("heroCanvasContainer");
+  }
+
+  refreshConfig();
   setInterval(refreshConfig, 60000);
-  autosize();
+
 })();

@@ -79,6 +79,11 @@ class EvaluateRequest(BaseModel):
     query: str
     plan_text: str
     destination: str | None = None
+    flight_results: str | None = ""
+    hotel_results: str | None = ""
+    weather_results: str | None = ""
+    itinerary: str | None = ""
+    attractions_data: str | None = ""
 
 
 class ConfigRequest(BaseModel):
@@ -271,6 +276,11 @@ async def evaluate_plan(request: Request, body: EvaluateRequest):
                 user_query=body.query.strip(),
                 plan_text=plan_content,
                 destination=body.destination,
+                flight_results=body.flight_results or "",
+                hotel_results=body.hotel_results or "",
+                weather_results=body.weather_results or "",
+                itinerary=body.itinerary or "",
+                attractions_data=body.attractions_data or "",
             )
 
         return JSONResponse(
