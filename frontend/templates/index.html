@@ -20,7 +20,6 @@
       <a class="nav-brand" href="#hero" aria-label="TravelBrain Homepage">
         <div class="brand-logo-mark">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-svg">
-            <!-- Sleek supersonic wing & neural node emblem -->
             <path d="M6 24 L20 6 L34 24 L20 18 Z" fill="url(#brandGrad)" />
             <path d="M20 18 L20 34 L15 28 L20 18 Z" fill="#55B8E8" />
             <circle cx="20" cy="18" r="3.2" fill="#FFAD73" />
@@ -42,9 +41,9 @@
       <nav class="nav-links" id="navLinks">
         <a href="#hero" class="nav-link active">Home</a>
         <a href="#how-it-works" class="nav-link">How It Works</a>
-        <a href="#agents" class="nav-link">AI Agents</a>
-        <a href="#destinations" class="nav-link">Destinations</a>
-        <a href="#why-us" class="nav-link">Why TravelBrain</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="javascript:void(0)" class="nav-link" id="navNewTrip">Plan Journey</a>
+        <a href="javascript:void(0)" class="nav-link" id="navSettings">API Config</a>
       </nav>
 
       <!-- Right Action Controls -->
@@ -94,9 +93,9 @@
   <div class="mobile-drawer" id="mobileDrawer" hidden>
     <a href="#hero" class="m-link">Home</a>
     <a href="#how-it-works" class="m-link">How It Works</a>
-    <a href="#agents" class="m-link">AI Agents</a>
-    <a href="#destinations" class="m-link">Destinations</a>
-    <a href="#why-us" class="m-link">Why TravelBrain</a>
+    <a href="#features" class="m-link">Features</a>
+    <a href="javascript:void(0)" class="m-link" id="mNewTrip">Plan Journey</a>
+    <a href="javascript:void(0)" class="m-link" id="mSettings">API Config</a>
   </div>
 
   <!-- ==================== MAIN PAGE CONTENT ==================== -->
@@ -119,7 +118,7 @@
         <!-- Technology Sub-badge -->
         <div class="hero-badge animate-fade-in">
           <span class="pulse-dot"></span>
-          <span>Autonomous Multi-Agent Aviation Experience</span>
+          <span>Autonomous Multi-Agent Travel Planner</span>
           <span class="badge-accent">INR ₹</span>
         </div>
 
@@ -128,7 +127,7 @@
           Your Journey. <span class="gradient-text">Reimagined by AI.</span>
         </h1>
         <p class="hero-subtitle animate-slide-up delay-1">
-          From your first destination idea to a personalized travel itinerary, let intelligent AI agents plan your next adventure.
+          From departure to verified itinerary, let intelligent AI agents plan your next adventure in Indian Rupees (₹).
         </p>
 
         <!-- ==================== 3-FIELD MAIN SEARCH INTERFACE ==================== -->
@@ -139,7 +138,6 @@
             <div class="search-field source-field">
               <div class="field-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="field-svg">
-                  <!-- Departure Airplane Icon -->
                   <path d="M2.5 19h19M4.5 15l15-7.5M14 6l6 1.5-3 5"/>
                 </svg>
               </div>
@@ -163,7 +161,6 @@
             <div class="search-field destination-field">
               <div class="field-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="field-svg">
-                  <!-- Destination Pin Icon -->
                   <path d="M12 21s-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-8 12-8 12z"/>
                   <circle cx="12" cy="9" r="3"/>
                 </svg>
@@ -188,7 +185,6 @@
             <div class="search-field duration-field">
               <div class="field-icon-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="field-svg">
-                  <!-- Calendar / Clock Duration Icon -->
                   <rect x="3" y="4" width="18" height="18" rx="3" ry="3"/>
                   <line x1="16" y1="2" x2="16" y2="6"/>
                   <line x1="8" y1="2" x2="8" y2="6"/>
@@ -219,32 +215,14 @@
             </div>
 
           </form>
-
-          <!-- Quick Discovery Pills -->
-          <div class="quick-pills">
-            <span class="quick-label">Trending Routes:</span>
-            <button type="button" class="quick-pill" data-from="Lucknow" data-to="Manali" data-days="7">🏔️ Lucknow → Manali (7D)</button>
-            <button type="button" class="quick-pill" data-from="Delhi" data-to="Goa" data-days="4">🏖️ Delhi → Goa (4D)</button>
-            <button type="button" class="quick-pill" data-from="Bengaluru" data-to="Kerala" data-days="6">🌴 Bengaluru → Kerala (6D)</button>
-            <button type="button" class="quick-pill" data-from="Mumbai" data-to="Jaipur" data-days="5">🏰 Mumbai → Jaipur (5D)</button>
-            <button type="button" class="quick-pill" data-from="Delhi" data-to="Paris" data-days="5">🗼 Delhi → Paris (5D)</button>
-            <button type="button" class="quick-pill" data-from="Delhi" data-to="Tokyo" data-days="7">🌸 Delhi → Tokyo (7D)</button>
-          </div>
-
-          <!-- Cinematic Camera Perspective Switcher -->
-          <div class="camera-control-bar" id="cameraControls">
-            <span class="cam-label">Cinematic View:</span>
-            <button type="button" class="cam-btn active" data-cam="front">✈️ Front Tracking</button>
-            <button type="button" class="cam-btn" data-cam="side">🌅 Side Profile</button>
-            <button type="button" class="cam-btn" data-cam="wing">🪽 Sunset Chase</button>
-            <button type="button" class="cam-btn" data-cam="director">🎬 Director Loop</button>
-          </div>
         </div>
 
-        <!-- Scroll Down Cue -->
-        <a href="#how-it-works" class="hero-scroll-cue" aria-label="Scroll down to explore how it works">
-          <span class="scroll-mouse"><span class="scroll-wheel"></span></span>
-          <span class="scroll-text">Explore TravelBrain Experience</span>
+        <!-- Scroll cue to Second Page -->
+        <a href="#how-it-works" class="hero-scroll-cue animate-fade-in delay-3" aria-label="Explore How It Works and Features">
+          <span class="cue-text">Explore How It Works &amp; Features</span>
+          <div class="scroll-mouse" aria-hidden="true">
+            <span class="scroll-wheel"></span>
+          </div>
         </a>
 
       </div>
@@ -318,433 +296,157 @@
       </div>
     </div>
 
-    <!-- ==================== SECTION A: HOW TRAVELBRAIN WORKS ==================== -->
-    <section class="section how-it-works-section" id="how-it-works">
-      <div class="section-container">
-        
-        <div class="section-header">
-          <span class="section-tag">Orchestration Architecture</span>
-          <h2 class="section-title">How TravelBrain Works</h2>
-          <p class="section-subtitle">
-            A synchronized multi-agent workflow that transforms high-level travel intent into fact-checked, realistic itineraries.
-          </p>
-        </div>
-
-        <div class="workflow-grid">
+    <!-- ==================== "SECOND PAGE": HOW IT WORKS & FEATURES ==================== -->
+    <div class="second-page-wrap" id="secondPage">
+      
+      <!-- Section 1: How It Works -->
+      <section class="section how-it-works-section" id="how-it-works">
+        <div class="section-container">
           
-          <!-- Stage 1 -->
-          <div class="workflow-card">
-            <div class="card-step-num">01</div>
-            <div class="card-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 class="workflow-title">Understand Your Journey</h3>
-            <p class="workflow-desc">
-              Natural language intent parsing identifies your origin, destination, length of stay, and implicit travel preferences with zero friction.
+          <div class="section-header">
+            <span class="section-tag">Aviation Workflow</span>
+            <h2 class="section-title">How TravelBrain Works</h2>
+            <p class="section-subtitle">
+              Autonomous multi-agent intelligence orchestrates every phase of your journey, from raw idea to verified flight-deck dossier.
             </p>
           </div>
 
-          <!-- Stage 2 -->
-          <div class="workflow-card">
-            <div class="card-step-num">02</div>
-            <div class="card-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-              </svg>
+          <div class="workflow-grid">
+            
+            <!-- Stage 1 -->
+            <div class="workflow-card">
+              <div class="card-step-num">01</div>
+              <div class="card-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2.5 19h19M4.5 15l15-7.5M14 6l6 1.5-3 5"/>
+                </svg>
+              </div>
+              <h3 class="workflow-title">Intelligent Route Input</h3>
+              <p class="workflow-desc">
+                Specify your departure city, destination, and trip duration. Natural language intent parsing automatically detects pace, budget, and travel style.
+              </p>
             </div>
-            <h3 class="workflow-title">AI Destination Research</h3>
-            <p class="workflow-desc">
-              Dedicated destination scouts query verified knowledge bases to identify iconic landmarks, cultural treasures, and seasonal attractions.
-            </p>
-          </div>
 
-          <!-- Stage 3 -->
-          <div class="workflow-card">
-            <div class="card-step-num">03</div>
-            <div class="card-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-              </svg>
+            <!-- Stage 2 -->
+            <div class="workflow-card">
+              <div class="card-step-num">02</div>
+              <div class="card-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+              </div>
+              <h3 class="workflow-title">Parallel Agent Research</h3>
+              <p class="workflow-desc">
+                Specialized AI agents query flight hubs, boutique hotels, seasonal weather, and cultural attractions concurrently across real-time databases.
+              </p>
             </div>
-            <h3 class="workflow-title">Personalized Itinerary Generation</h3>
-            <p class="workflow-desc">
-              Our Itinerary Architect clusters geographically adjacent attractions to build realistic, day-by-day schedules with optimal transit pacing.
-            </p>
-          </div>
 
-          <!-- Stage 4 -->
-          <div class="workflow-card">
-            <div class="card-step-num">04</div>
-            <div class="card-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
-              </svg>
+            <!-- Stage 3 -->
+            <div class="workflow-card">
+              <div class="card-step-num">03</div>
+              <div class="card-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                  <line x1="8" y1="2" x2="8" y2="18"/>
+                  <line x1="16" y1="6" x2="16" y2="22"/>
+                </svg>
+              </div>
+              <h3 class="workflow-title">Personalized Itinerary Pacing</h3>
+              <p class="workflow-desc">
+                Our Itinerary Architect clusters geographically adjacent attractions to build realistic, day-by-day schedules with optimal transit pacing.
+              </p>
             </div>
-            <h3 class="workflow-title">Budget &amp; Travel Tariffs</h3>
-            <p class="workflow-desc">
-              Flight and Hotel agents calculate transparent price estimates in Indian Rupees (₹), accounting for seasonal peaks and realistic daily spends.
-            </p>
-          </div>
 
-          <!-- Stage 5 -->
-          <div class="workflow-card highlight-card">
-            <div class="card-step-num">05</div>
-            <div class="card-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
+            <!-- Stage 4 -->
+            <div class="workflow-card">
+              <div class="card-step-num">04</div>
+              <div class="card-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"/>
+                </svg>
+              </div>
+              <h3 class="workflow-title">Direct INR (₹) Tariffs</h3>
+              <p class="workflow-desc">
+                Flight and hotel agents calculate transparent pricing in Indian Rupees (₹), accounting for seasonal peaks, cab fares, and realistic daily spends.
+              </p>
             </div>
-            <h3 class="workflow-title">Final Plan &amp; Critic Audit</h3>
-            <p class="workflow-desc">
-              The Final Synthesizer compiles your executive dossier, while our Critic Agent performs rigorous fact-checking to ensure zero hallucinations.
-            </p>
+
+            <!-- Stage 5 -->
+            <div class="workflow-card highlight-card">
+              <div class="card-step-num">05</div>
+              <div class="card-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </div>
+              <h3 class="workflow-title">Anti-Hallucination Critic Audit</h3>
+              <p class="workflow-desc">
+                Our proprietary Critic Agent performs rigorous fact-checking on every landmark, route, and schedule to eliminate AI hallucinations.
+              </p>
+            </div>
+
           </div>
 
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ==================== SECTION B: MEET YOUR AI TRAVEL AGENTS ==================== -->
-    <section class="section agents-section" id="agents">
-      <div class="section-container">
-        
-        <div class="section-header">
-          <span class="section-tag">Stateful Multi-Agent Team</span>
-          <h2 class="section-title">Meet Your AI Travel Agents</h2>
-          <p class="section-subtitle">
-            Powered by LangGraph, each agent is an expert in its dedicated domain, communicating seamlessly to build your perfect trip.
-          </p>
-        </div>
-
-        <div class="agents-grid">
+      <!-- Section 2: Platform Features -->
+      <section class="section features-section" id="features">
+        <div class="section-container">
           
-          <!-- Agent 1: Flight Agent -->
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar flight-avatar">✈️</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Flight Search Agent</h4>
-                <span class="agent-role">Aviation Logistics &amp; Airfares</span>
-              </div>
-            </div>
-            <p class="agent-desc">
-              Analyzes departure airports, non-stop vs connecting routes, airline schedules, and realistic fare ranges in Indian Rupees (₹).
+          <div class="section-header">
+            <span class="section-tag">Platform Features</span>
+            <h2 class="section-title">Engineered for Modern Travel</h2>
+            <p class="section-subtitle">
+              State-of-the-art multi-agent AI architecture delivering publication-grade itineraries with complete transparency.
             </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">Direct Hubs</span>
-              <span class="cap-tag">Tariffs in INR ₹</span>
-              <span class="cap-tag">Baggage Guidance</span>
-            </div>
           </div>
 
-          <!-- Agent 2: Hotel Agent -->
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar hotel-avatar">🏨</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Hotel &amp; Stays Agent</h4>
-                <span class="agent-role">Accommodations &amp; Neighborhoods</span>
-              </div>
+          <div class="features-grid">
+            
+            <div class="feature-box">
+              <div class="feature-icon">⚡</div>
+              <h3>Stateful Multi-Agent AI</h3>
+              <p>Unlike single generic LLM prompts, discrete LangGraph agents handle flights, accommodations, meteorology, and route topology independently in real time.</p>
             </div>
-            <p class="agent-desc">
-              Curates verified boutique hotels, luxury resorts, and centrally located stays categorized by nightly tariffs in INR and safety ratings.
-            </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">Neighborhood Safety</span>
-              <span class="cap-tag">Nightly INR ₹ Rates</span>
-              <span class="cap-tag">Verified Stays</span>
-            </div>
-          </div>
 
-          <!-- Agent 3: Weather Agent -->
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar weather-avatar">🌤️</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Weather Analyst Agent</h4>
-                <span class="agent-role">Meteorology &amp; Packing Forecast</span>
-              </div>
+            <div class="feature-box">
+              <div class="feature-icon">🛡️</div>
+              <h3>Anti-Hallucination Critic Audit</h3>
+              <p>Every generated itinerary is audited by a dedicated Critic Agent, validating physical landmark existence, realistic transit durations, and authentic spots.</p>
             </div>
-            <p class="agent-desc">
-              Forecasts seasonal temperatures, precipitation probabilities, and daylight hours, delivering actionable clothing and gear recommendations.
-            </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">Seasonal Trends</span>
-              <span class="cap-tag">Packing Checklists</span>
-              <span class="cap-tag">Monsoon Advisory</span>
-            </div>
-          </div>
 
-          <!-- Agent 4: Itinerary Agent -->
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar itinerary-avatar">🗺️</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Itinerary Architect Agent</h4>
-                <span class="agent-role">Route Pacing &amp; Activities</span>
-              </div>
+            <div class="feature-box">
+              <div class="feature-icon">💰</div>
+              <h3>Direct Indian Rupee (₹) Tariffs</h3>
+              <p>Zero currency conversion headaches. Airfares, boutique stay tariffs, cab rentals, and daily allowances are explicitly calculated in Indian Rupees (₹).</p>
             </div>
-            <p class="agent-desc">
-              Organizes your journey day by day: morning excursions, afternoon cultural landmarks, sunset viewpoints, and authentic dining spots.
-            </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">Geographic Clustering</span>
-              <span class="cap-tag">Realistic Transit</span>
-              <span class="cap-tag">Cultural Highlights</span>
-            </div>
-          </div>
 
-          <!-- Agent 5: Final Synthesis Agent -->
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar synthesis-avatar">📑</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Final Synthesis Agent</h4>
-                <span class="agent-role">Executive Dossier Assembly</span>
-              </div>
+            <div class="feature-box">
+              <div class="feature-icon">🌤️</div>
+              <h3>Meteorology &amp; Smart Packing</h3>
+              <p>Real-time climate analysis provides seasonal temperature trends, precipitation probabilities, and dynamic packing checklists tailored to your destination.</p>
             </div>
-            <p class="agent-desc">
-              Synthesizes all individual agent outputs into a unified master travel plan with clean tables, formatted breakdowns, and cost summaries.
-            </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">Unified Format</span>
-              <span class="cap-tag">Total Budget Summary</span>
-              <span class="cap-tag">Markdown Export</span>
-            </div>
-          </div>
 
-          <!-- Agent 6: Critic Agent -->
-          <div class="agent-card critic-agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar critic-avatar">🛡️</div>
-              <div class="agent-meta">
-                <h4 class="agent-name">Fact-Checking Critic Agent</h4>
-                <span class="agent-role">Anti-Hallucination Gatekeeper</span>
-              </div>
+            <div class="feature-box">
+              <div class="feature-icon">💬</div>
+              <h3>Conversational Refinements</h3>
+              <p>Chat directly with your itinerary: refine budgets, request pure-veg culinary recommendations, switch hotel tiers, or alter daily pacing on the fly.</p>
             </div>
-            <p class="agent-desc">
-              Cross-checks place names, driving distances, and attraction reality. Scores every plan out of 100 on entity factuality and geographic coherence.
-            </p>
-            <div class="agent-capabilities">
-              <span class="cap-tag">100-Point Audit</span>
-              <span class="cap-tag">Entity Verification</span>
-              <span class="cap-tag">Zero Fake Landmarks</span>
+
+            <div class="feature-box">
+              <div class="feature-icon">📋</div>
+              <h3>Flight-Deck Executive Dossier</h3>
+              <p>Receive a publication-grade itinerary in under 60 seconds with structured morning-to-night schedules, transit tips, and one-click copyable summaries.</p>
             </div>
+
           </div>
 
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ==================== SECTION C: DISCOVER YOUR NEXT DESTINATION ==================== -->
-    <section class="section destinations-section" id="destinations">
-      <div class="section-container">
-        
-        <div class="section-header">
-          <span class="section-tag">Inspiration Gallery</span>
-          <h2 class="section-title">Discover Your Next Destination</h2>
-          <p class="section-subtitle">
-            Curated journeys ready to be personalized by TravelBrain AI in 1-click.
-          </p>
-        </div>
-
-        <div class="destinations-grid">
-          
-          <!-- Card 1: Manali -->
-          <div class="destination-card" data-from="Lucknow" data-to="Manali" data-days="7">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80" alt="Manali Snow Mountains" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">HIMALAYAN RETREAT</span>
-              <span class="dest-duration">7 Days / 6 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Manali &amp; Solang Valleys</h3>
-                <span class="dest-flag">🇮🇳</span>
-              </div>
-              <p class="dest-highlights">Rohtang Pass · Solang Adventure · Old Manali Cafes · Hadimba Devi</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹25,000 – ₹35,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Goa -->
-          <div class="destination-card" data-from="Delhi" data-to="Goa" data-days="5">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80" alt="Goa Sunset Beach" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">COASTAL SUNSET</span>
-              <span class="dest-duration">5 Days / 4 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Goa Beaches &amp; Forts</h3>
-                <span class="dest-flag">🇮🇳</span>
-              </div>
-              <p class="dest-highlights">Calangute · Chapora Fort · Anjuna Flea Market · Sunset Cruise</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹30,000 – ₹45,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Kerala -->
-          <div class="destination-card" data-from="Bengaluru" data-to="Kerala" data-days="6">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80" alt="Kerala Backwaters Houseboat" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">TROPICAL SERENITY</span>
-              <span class="dest-duration">6 Days / 5 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Munnar &amp; Alleppey</h3>
-                <span class="dest-flag">🇮🇳</span>
-              </div>
-              <p class="dest-highlights">Munnar Tea Plantations · Alleppey Backwater Houseboat · Spices</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹35,000 – ₹50,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Jaipur -->
-          <div class="destination-card" data-from="Mumbai" data-to="Jaipur" data-days="5">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80" alt="Jaipur Hawa Mahal" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">ROYAL HERITAGE</span>
-              <span class="dest-duration">5 Days / 4 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Jaipur Pink City &amp; Forts</h3>
-                <span class="dest-flag">🇮🇳</span>
-              </div>
-              <p class="dest-highlights">Amber Fort · Hawa Mahal · City Palace · Authentic Rajasthani Thali</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹28,000 – ₹42,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 5: Paris -->
-          <div class="destination-card" data-from="Delhi" data-to="Paris" data-days="5">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80" alt="Paris Eiffel Tower" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">INTERNATIONAL ICON</span>
-              <span class="dest-duration">5 Days / 4 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Paris &amp; Seine River</h3>
-                <span class="dest-flag">🇫🇷</span>
-              </div>
-              <p class="dest-highlights">Eiffel Tower · Louvre Museum · Montmartre · Seine River Cruise</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹1,30,000 – ₹1,60,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 6: Tokyo -->
-          <div class="destination-card" data-from="Delhi" data-to="Tokyo" data-days="7">
-            <div class="dest-image-wrap">
-              <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" alt="Tokyo Shinjuku Skyline" loading="lazy" class="dest-img" />
-              <div class="dest-overlay"></div>
-              <span class="dest-badge">FUTURISTIC &amp; ANCIENT</span>
-              <span class="dest-duration">7 Days / 6 Nights</span>
-            </div>
-            <div class="dest-body">
-              <div class="dest-title-row">
-                <h3 class="dest-name">Tokyo &amp; Mount Fuji</h3>
-                <span class="dest-flag">🇯🇵</span>
-              </div>
-              <p class="dest-highlights">Shibuya Crossing · Senso-ji Temple · Shinjuku Ramen · Mt Fuji Day Excursion</p>
-              <div class="dest-foot">
-                <div class="dest-pricing">
-                  <span class="price-label">Estimated Budget</span>
-                  <span class="price-val">₹1,60,000 – ₹1,95,000</span>
-                </div>
-                <button type="button" class="btn btn-dest-plan">Plan Trip →</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================== SECTION D: WHY TRAVELBRAIN? ==================== -->
-    <section class="section why-us-section" id="why-us">
-      <div class="section-container">
-        
-        <div class="section-header">
-          <span class="section-tag">The TravelBrain Difference</span>
-          <h2 class="section-title">Why TravelBrain?</h2>
-          <p class="section-subtitle">
-            Engineered from first principles to overcome the hallucinations and generic advice of standard AI chatbots.
-          </p>
-        </div>
-
-        <div class="features-grid">
-          
-          <div class="feature-box">
-            <div class="feature-icon">⚡</div>
-            <h3>Multi-Agent AI Planning</h3>
-            <p>Rather than relying on a single generic LLM prompt, discrete agents handle flights, accommodations, meteorology, and route topology independently.</p>
-          </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">🛡️</div>
-            <h3>Anti-Hallucination Critic Audit</h3>
-            <p>Every plan is subjected to our proprietary Critic Agent, validating physical existence, realistic transit durations, and authentic landmark names.</p>
-          </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">💰</div>
-            <h3>Transparent Indian Rupee (₹) Pricing</h3>
-            <p>No obscure currency conversions. Airfares, hotel room tariffs, local cab hires, and meal allowances are explicitly calculated in INR (₹).</p>
-          </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">⏱️</div>
-            <h3>Time-Efficient Travel Planning</h3>
-            <p>Eliminate 15+ browser tabs and dozens of review forums. Receive a publication-grade itinerary in under 60 seconds with 1-click export.</p>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
+    </div>
 
     <!-- ==================== FOOTER ==================== -->
     <footer class="footer">
@@ -757,16 +459,15 @@
             </svg>
           </div>
           <span class="footer-title">Travel<strong>Brain</strong></span>
-          <p class="footer-copy">Autonomous Multi-Agent AI Travel Planning. Crafted with precision for modern globetrotters.</p>
+          <p class="footer-copy">Autonomous Multi-Agent AI Travel Planning. Verified travel itineraries in Indian Rupees (₹).</p>
         </div>
 
         <div class="footer-nav">
           <div class="footer-col">
             <strong>Experience</strong>
-            <a href="#hero">Aviation Hero</a>
+            <a href="#hero">Flight Hero</a>
             <a href="#how-it-works">How It Works</a>
-            <a href="#agents">Multi-Agent Team</a>
-            <a href="#destinations">Curated Routes</a>
+            <a href="#features">Key Features</a>
           </div>
           <div class="footer-col">
             <strong>Technology</strong>
@@ -778,7 +479,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 TravelBrain AI. All travel recommendations generated in Indian Rupees (₹).</p>
+        <p>&copy; 2026 TravelBrain AI. Powered by LangGraph Multi-Agent Engine &amp; Groq LLaMA 3.3.</p>
       </div>
     </footer>
 

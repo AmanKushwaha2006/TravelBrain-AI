@@ -302,7 +302,7 @@
       "file_type": "code",
       "norm_label": "evaluate_plan()",
       "source_file": "app.py",
-      "source_location": "L260"
+      "source_location": "L262"
     },
     {
       "id": "app_favicon",
@@ -314,7 +314,7 @@
       "file_type": "code",
       "norm_label": "favicon()",
       "source_file": "app.py",
-      "source_location": "L340"
+      "source_location": "L342"
     },
     {
       "id": "app_health_check",
@@ -326,7 +326,7 @@
       "file_type": "code",
       "norm_label": "health_check()",
       "source_file": "app.py",
-      "source_location": "L324"
+      "source_location": "L326"
     },
     {
       "id": "app_home",
@@ -338,7 +338,7 @@
       "file_type": "code",
       "norm_label": "home()",
       "source_file": "app.py",
-      "source_location": "L117"
+      "source_location": "L119"
     },
     {
       "id": "app_home_head",
@@ -350,7 +350,7 @@
       "file_type": "code",
       "norm_label": "home_head()",
       "source_file": "app.py",
-      "source_location": "L317"
+      "source_location": "L319"
     },
     {
       "id": "app_read_config",
@@ -362,7 +362,7 @@
       "file_type": "code",
       "norm_label": "read_config()",
       "source_file": "app.py",
-      "source_location": "L130"
+      "source_location": "L132"
     },
     {
       "id": "app_reset_config",
@@ -374,7 +374,7 @@
       "file_type": "code",
       "norm_label": "reset_config()",
       "source_file": "app.py",
-      "source_location": "L186"
+      "source_location": "L188"
     },
     {
       "id": "app_session_id",
@@ -410,7 +410,7 @@
       "file_type": "code",
       "norm_label": "travel_planner()",
       "source_file": "app.py",
-      "source_location": "L200"
+      "source_location": "L202"
     },
     {
       "id": "app_write_config",
@@ -422,7 +422,7 @@
       "file_type": "code",
       "norm_label": "write_config()",
       "source_file": "app.py",
-      "source_location": "L140"
+      "source_location": "L142"
     },
     {
       "id": "src_api_sessions_active_session_count",
@@ -3004,7 +3004,7 @@
       "source_location": "L1"
     },
     {
-      "id": "app_rationale_131",
+      "id": "app_rationale_133",
       "label": "What is configured, and where it came from. Never returns a secret.",
       "_origin": "ast",
       "community": 0,
@@ -3012,10 +3012,10 @@
       "file_type": "rationale",
       "norm_label": "what is configured, and where it came from. never returns a secret.",
       "source_file": "app.py",
-      "source_location": "L131"
+      "source_location": "L133"
     },
     {
-      "id": "app_rationale_141",
+      "id": "app_rationale_143",
       "label": "Store credentials for this browser session. Each supplied value is checked\u2026",
       "_origin": "ast",
       "community": 0,
@@ -3023,10 +3023,10 @@
       "file_type": "rationale",
       "norm_label": "store credentials for this browser session. each supplied value is checked...",
       "source_file": "app.py",
-      "source_location": "L141"
+      "source_location": "L143"
     },
     {
-      "id": "app_rationale_187",
+      "id": "app_rationale_189",
       "label": "Drop session keys and fall back to whatever the server's .env has.",
       "_origin": "ast",
       "community": 0,
@@ -3034,10 +3034,10 @@
       "file_type": "rationale",
       "norm_label": "drop session keys and fall back to whatever the server's .env has.",
       "source_file": "app.py",
-      "source_location": "L187"
+      "source_location": "L189"
     },
     {
-      "id": "app_rationale_318",
+      "id": "app_rationale_320",
       "label": "Hosting platforms probe with HEAD to detect an open port.",
       "_origin": "ast",
       "community": 0,
@@ -3045,7 +3045,7 @@
       "file_type": "rationale",
       "norm_label": "hosting platforms probe with head to detect an open port.",
       "source_file": "app.py",
-      "source_location": "L318"
+      "source_location": "L320"
     },
     {
       "id": "app_rationale_90",
@@ -5123,7 +5123,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L261",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -5135,7 +5135,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L261",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -5147,7 +5147,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L274",
+      "source_location": "L276",
       "weight": 1.0
     },
     {
@@ -5159,7 +5159,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L275",
+      "source_location": "L277",
       "weight": 1.0
     },
     {
@@ -5171,36 +5171,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L304",
+      "source_location": "L306",
       "weight": 1.0
     },
     {
       "source": "app_health_check",
       "target": "app_session_id",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L325",
-      "weight": 1.0
-    },
-    {
-      "source": "app_health_check",
-      "target": "src_api_sessions_get_credentials_for",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L325",
-      "weight": 1.0
-    },
-    {
-      "source": "app_health_check",
-      "target": "src_config_session_use_credentials",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5212,6 +5188,30 @@
     },
     {
       "source": "app_health_check",
+      "target": "src_api_sessions_get_credentials_for",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "app_health_check",
+      "target": "src_config_session_use_credentials",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "app_health_check",
       "target": "src_config_session_credential_status",
       "relation": "calls",
       "_origin": "ast",
@@ -5219,7 +5219,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L328",
+      "source_location": "L330",
       "weight": 1.0
     },
     {
@@ -5231,36 +5231,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L335",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
       "source": "app_read_config",
       "target": "app_session_id",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L133",
-      "weight": 1.0
-    },
-    {
-      "source": "app_read_config",
-      "target": "src_api_sessions_get_credentials_for",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L133",
-      "weight": 1.0
-    },
-    {
-      "source": "app_read_config",
-      "target": "src_config_session_use_credentials",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5272,6 +5248,30 @@
     },
     {
       "source": "app_read_config",
+      "target": "src_api_sessions_get_credentials_for",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "app_read_config",
+      "target": "src_config_session_use_credentials",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "app_read_config",
       "target": "src_config_session_credential_status",
       "relation": "calls",
       "_origin": "ast",
@@ -5279,36 +5279,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L136",
+      "source_location": "L138",
       "weight": 1.0
     },
     {
       "source": "app_reset_config",
       "target": "app_session_id",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L189",
-      "weight": 1.0
-    },
-    {
-      "source": "app_reset_config",
-      "target": "src_api_sessions_clear_credentials",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "app.py",
-      "source_location": "L189",
-      "weight": 1.0
-    },
-    {
-      "source": "app_reset_config",
-      "target": "src_config_session_use_credentials",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5320,6 +5296,30 @@
     },
     {
       "source": "app_reset_config",
+      "target": "src_api_sessions_clear_credentials",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "app_reset_config",
+      "target": "src_config_session_use_credentials",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app.py",
+      "source_location": "L193",
+      "weight": 1.0
+    },
+    {
+      "source": "app_reset_config",
       "target": "src_config_session_credential_status",
       "relation": "calls",
       "_origin": "ast",
@@ -5327,7 +5327,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L192",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -5339,7 +5339,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L201",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -5351,7 +5351,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L201",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -5363,7 +5363,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L215",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -5375,7 +5375,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L216",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -5387,7 +5387,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L248",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -5399,7 +5399,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L146",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -5411,7 +5411,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L146",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -5423,7 +5423,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L152",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -5435,7 +5435,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L158",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -5447,7 +5447,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L167",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -5459,7 +5459,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L170",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -5471,7 +5471,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L176",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -5483,7 +5483,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app.py",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0
     },
     {
@@ -8915,7 +8915,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L259",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -8927,7 +8927,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L339",
+      "source_location": "L341",
       "weight": 1.0
     },
     {
@@ -8939,7 +8939,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L323",
+      "source_location": "L325",
       "weight": 1.0
     },
     {
@@ -8951,7 +8951,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L116",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -8963,7 +8963,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L316",
+      "source_location": "L318",
       "weight": 1.0
     },
     {
@@ -8975,7 +8975,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L129",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -8987,7 +8987,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L185",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -8999,7 +8999,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L199",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -9011,7 +9011,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "app.py",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -12299,7 +12299,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L260",
+      "source_location": "L262",
       "weight": 1.0
     },
     {
@@ -12311,7 +12311,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L260",
+      "source_location": "L262",
       "weight": 1.0
     },
     {
@@ -12323,7 +12323,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L324",
+      "source_location": "L326",
       "weight": 1.0
     },
     {
@@ -12335,7 +12335,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L117",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -12347,7 +12347,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L130",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -12359,7 +12359,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L186",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -12395,7 +12395,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L200",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -12407,7 +12407,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L200",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -12419,7 +12419,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L140",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -12431,7 +12431,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "app.py",
-      "source_location": "L140",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -12656,7 +12656,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L117",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -12667,7 +12667,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L130",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -12678,7 +12678,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L140",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -12689,7 +12689,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L186",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -12700,7 +12700,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L200",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -12711,7 +12711,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L260",
+      "source_location": "L262",
       "weight": 1.0
     },
     {
@@ -12722,7 +12722,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L317",
+      "source_location": "L319",
       "weight": 1.0
     },
     {
@@ -12733,7 +12733,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L324",
+      "source_location": "L326",
       "weight": 1.0
     },
     {
@@ -12744,7 +12744,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L340",
+      "source_location": "L342",
       "weight": 1.0
     },
     {
@@ -15355,47 +15355,47 @@
       "weight": 1.0
     },
     {
-      "source": "app_rationale_131",
+      "source": "app_rationale_133",
       "target": "app_read_config",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L131",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
-      "source": "app_rationale_141",
+      "source": "app_rationale_143",
       "target": "app_write_config",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L141",
+      "source_location": "L143",
       "weight": 1.0
     },
     {
-      "source": "app_rationale_187",
+      "source": "app_rationale_189",
       "target": "app_reset_config",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L187",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
-      "source": "app_rationale_318",
+      "source": "app_rationale_320",
       "target": "app_home_head",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.py",
-      "source_location": "L318",
+      "source_location": "L320",
       "weight": 1.0
     },
     {
@@ -16643,7 +16643,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "app.py",
-      "source_location": "L293",
+      "source_location": "L295",
       "weight": 0.8
     },
     {
@@ -16654,7 +16654,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "app.py",
-      "source_location": "L235",
+      "source_location": "L237",
       "weight": 0.8
     },
     {
@@ -16670,5 +16670,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5c87a94380a84a9c22f7fd38eefd0c7ab679afd4"
+  "built_at_commit": "6cba5b0b5b07645dbda35ca0da8d8c822ff734dc"
 }

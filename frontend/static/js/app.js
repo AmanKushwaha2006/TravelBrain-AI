@@ -888,6 +888,43 @@
     });
   }
 
+  // Navigation Links
+  var navNewTrip = $("navNewTrip");
+  var navSettings = $("navSettings");
+  var mNewTrip = $("mNewTrip");
+  var mSettings = $("mSettings");
+
+  if (navNewTrip) {
+    navNewTrip.addEventListener("click", function () {
+      if (hero) hero.scrollIntoView({ behavior: "smooth" });
+      if (fTo) fTo.focus();
+    });
+  }
+  if (mNewTrip) {
+    mNewTrip.addEventListener("click", function () {
+      if (mobileDrawer) mobileDrawer.hidden = true;
+      if (hero) hero.scrollIntoView({ behavior: "smooth" });
+      if (fTo) fTo.focus();
+    });
+  }
+  if (navSettings) {
+    navSettings.addEventListener("click", openSettings);
+  }
+  if (mSettings) {
+    mSettings.addEventListener("click", function () {
+      if (mobileDrawer) mobileDrawer.hidden = true;
+      openSettings();
+    });
+  }
+
+  // Close mobile drawer on any link click
+  var mLinks = document.querySelectorAll(".mobile-drawer .m-link");
+  mLinks.forEach(function (mlink) {
+    mlink.addEventListener("click", function () {
+      if (mobileDrawer) mobileDrawer.hidden = true;
+    });
+  });
+
   /* ---------------- Initialization ---------------- */
 
   initTheme();
@@ -900,5 +937,19 @@
 
   refreshConfig();
   setInterval(refreshConfig, 60000);
+
+  // Handle direct navigation to /how-it-works or /features
+  var path = window.location.pathname;
+  if (path === "/how-it-works") {
+    setTimeout(function () {
+      var el = $("how-it-works");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 350);
+  } else if (path === "/features") {
+    setTimeout(function () {
+      var el = $("features");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 350);
+  }
 
 })();

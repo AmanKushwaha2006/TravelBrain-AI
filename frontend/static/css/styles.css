@@ -430,10 +430,11 @@ input, textarea {
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   overflow: hidden;
-  padding: 120px 24px 60px;
+  padding: 100px 24px 50px;
   background: radial-gradient(circle at 50% 30%, #0d2847 0%, var(--navy-deep) 75%);
 }
 
@@ -465,6 +466,8 @@ input, textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: auto;
+  margin-bottom: 24px;
 }
 
 .hero-badge {
@@ -757,12 +760,14 @@ input, textarea {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 48px;
+  margin-top: 24px;
   color: var(--text-muted);
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   transition: color 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .hero-scroll-cue:hover {
@@ -1274,6 +1279,28 @@ input, textarea {
 /* ============================================================
    Common Landing Page Sections (A, B, C, D)
    ============================================================ */
+
+/* ============================================================
+   Second Page Sections (How It Works & Platform Features)
+   ============================================================ */
+
+.second-page-wrap {
+  position: relative;
+  width: 100%;
+  background: var(--navy-deep);
+}
+
+.how-it-works-section {
+  position: relative;
+  background: linear-gradient(180deg, #050e1a 0%, #071b33 100%);
+  border-top: 1px solid var(--navy-border);
+}
+
+.features-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, #0d2847 0%, #050e1a 80%);
+  border-top: 1px solid var(--navy-border);
+}
 
 .section {
   padding: 90px 24px;

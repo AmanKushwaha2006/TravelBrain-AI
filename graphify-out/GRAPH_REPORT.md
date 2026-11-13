@@ -1,7 +1,7 @@
-# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-10-31)
+# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-11-13)
 
 ## Corpus Check
-- 41 files · ~62,804 words
+- 41 files · ~56,481 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: (none) 6, .glb 2, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5c87a943`
+- Built from commit: `6cba5b0b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
