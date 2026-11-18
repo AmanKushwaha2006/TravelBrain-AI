@@ -12,6 +12,8 @@ rm -rf "$DIST"
 mkdir -p "$DIST/static"
 
 cp "$ROOT/frontend/templates/index.html" "$DIST/index.html"
+cp "$ROOT/frontend/templates/itinerary.html" "$DIST/itinerary.html"
+cp "$ROOT/frontend/templates/itinerary.html" "$DIST/trip-plan.html"
 cp -r "$ROOT/frontend/static/." "$DIST/static/"
 
 echo "built dist/:"

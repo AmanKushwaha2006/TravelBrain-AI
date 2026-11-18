@@ -318,9 +318,9 @@
     "semantic_hash": ""
   },
   "frontend/static/js/itinerary.js": {
-    "mtime": 1794989132.4686055,
-    "seen": 1794989298.8193147,
-    "ast_hash": "7c021530ba3162a07a9d984861b55d2d",
+    "mtime": 1794989540.5098343,
+    "seen": 1794989608.6145155,
+    "ast_hash": "158c82dfcd69f02c55114e790a5917ae",
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {

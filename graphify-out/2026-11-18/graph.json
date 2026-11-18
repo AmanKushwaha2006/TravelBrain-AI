@@ -2632,7 +2632,7 @@
       "file_type": "code",
       "norm_label": "closesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1030"
+      "source_location": "L1023"
     },
     {
       "id": "frontend_static_js_itinerary_el",
@@ -2656,7 +2656,7 @@
       "file_type": "code",
       "norm_label": "executeplanning()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L783"
+      "source_location": "L776"
     },
     {
       "id": "frontend_static_js_itinerary_handlerefinement",
@@ -2668,7 +2668,7 @@
       "file_type": "code",
       "norm_label": "handlerefinement()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L999"
+      "source_location": "L992"
     },
     {
       "id": "frontend_static_js_itinerary_init",
@@ -2680,7 +2680,7 @@
       "file_type": "code",
       "norm_label": "init()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1067"
+      "source_location": "L1060"
     },
     {
       "id": "frontend_static_js_itinerary_loadtripbyid",
@@ -2692,7 +2692,7 @@
       "file_type": "code",
       "norm_label": "loadtripbyid()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L858"
+      "source_location": "L851"
     },
     {
       "id": "frontend_static_js_itinerary_opensettings",
@@ -2704,7 +2704,7 @@
       "file_type": "code",
       "norm_label": "opensettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1022"
+      "source_location": "L1015"
     },
     {
       "id": "frontend_static_js_itinerary_parseitinerarytext",
@@ -2740,7 +2740,7 @@
       "file_type": "code",
       "norm_label": "rendercriticcard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L967"
+      "source_location": "L960"
     },
     {
       "id": "frontend_static_js_itinerary_renderdashboard",
@@ -2752,7 +2752,7 @@
       "file_type": "code",
       "norm_label": "renderdashboard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L468"
+      "source_location": "L461"
     },
     {
       "id": "frontend_static_js_itinerary_rendermd",
@@ -2776,7 +2776,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1037"
+      "source_location": "L1030"
     },
     {
       "id": "frontend_static_js_itinerary_setactivedaytab",
@@ -2788,7 +2788,7 @@
       "file_type": "code",
       "norm_label": "setactivedaytab()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L766"
+      "source_location": "L759"
     },
     {
       "id": "frontend_static_js_itinerary_showerror",
@@ -2800,7 +2800,7 @@
       "file_type": "code",
       "norm_label": "showerror()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L894"
+      "source_location": "L887"
     },
     {
       "id": "frontend_static_js_itinerary_toast",
@@ -2824,7 +2824,7 @@
       "file_type": "code",
       "norm_label": "triggercriticaudit()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L911"
+      "source_location": "L904"
     },
     {
       "id": "app_home_head",
@@ -9318,7 +9318,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L849",
+      "source_location": "L842",
       "weight": 1.0
     },
     {
@@ -9330,7 +9330,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L850",
+      "source_location": "L843",
       "weight": 1.0
     },
     {
@@ -9342,7 +9342,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L854",
+      "source_location": "L847",
       "weight": 1.0
     },
     {
@@ -9354,7 +9354,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1011",
+      "source_location": "L1004",
       "weight": 1.0
     },
     {
@@ -9366,7 +9366,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1081",
+      "source_location": "L1074",
       "weight": 1.0
     },
     {
@@ -9378,7 +9378,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1168",
+      "source_location": "L1161",
       "weight": 1.0
     },
     {
@@ -9390,7 +9390,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1174",
+      "source_location": "L1167",
       "weight": 1.0
     },
     {
@@ -9402,7 +9402,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1183",
+      "source_location": "L1176",
       "weight": 1.0
     },
     {
@@ -9414,7 +9414,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1184",
+      "source_location": "L1177",
       "weight": 1.0
     },
     {
@@ -9426,7 +9426,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1189",
+      "source_location": "L1182",
       "weight": 1.0
     },
     {
@@ -9438,7 +9438,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L886",
+      "source_location": "L879",
       "weight": 1.0
     },
     {
@@ -9450,7 +9450,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L887",
+      "source_location": "L880",
       "weight": 1.0
     },
     {
@@ -9462,7 +9462,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L890",
+      "source_location": "L883",
       "weight": 1.0
     },
     {
@@ -9498,7 +9498,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L971",
+      "source_location": "L964",
       "weight": 1.0
     },
     {
@@ -9510,7 +9510,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L989",
+      "source_location": "L982",
       "weight": 1.0
     },
     {
@@ -9522,7 +9522,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L474",
+      "source_location": "L467",
       "weight": 1.0
     },
     {
@@ -9534,7 +9534,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L497",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -9546,7 +9546,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L551",
+      "source_location": "L544",
       "weight": 1.0
     },
     {
@@ -9558,7 +9558,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L572",
+      "source_location": "L565",
       "weight": 1.0
     },
     {
@@ -9570,7 +9570,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1040",
+      "source_location": "L1033",
       "weight": 1.0
     },
     {
@@ -9582,7 +9582,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1053",
+      "source_location": "L1046",
       "weight": 1.0
     },
     {
@@ -9594,7 +9594,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L937",
+      "source_location": "L930",
       "weight": 1.0
     },
     {
@@ -9606,7 +9606,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L948",
+      "source_location": "L941",
       "weight": 1.0
     },
     {
@@ -16597,7 +16597,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1022",
+      "source_location": "L1015",
       "weight": 1.0
     },
     {
@@ -16608,7 +16608,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1030",
+      "source_location": "L1023",
       "weight": 1.0
     },
     {
@@ -16619,7 +16619,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1037",
+      "source_location": "L1030",
       "weight": 1.0
     },
     {
@@ -16674,7 +16674,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L468",
+      "source_location": "L461",
       "weight": 1.0
     },
     {
@@ -16685,7 +16685,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L766",
+      "source_location": "L759",
       "weight": 1.0
     },
     {
@@ -16696,7 +16696,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L783",
+      "source_location": "L776",
       "weight": 1.0
     },
     {
@@ -16707,7 +16707,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L858",
+      "source_location": "L851",
       "weight": 1.0
     },
     {
@@ -16718,7 +16718,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L894",
+      "source_location": "L887",
       "weight": 1.0
     },
     {
@@ -16729,7 +16729,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L911",
+      "source_location": "L904",
       "weight": 1.0
     },
     {
@@ -16751,7 +16751,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L967",
+      "source_location": "L960",
       "weight": 1.0
     },
     {
@@ -16773,7 +16773,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L999",
+      "source_location": "L992",
       "weight": 1.0
     },
     {
@@ -20239,7 +20239,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1192",
+      "source_location": "L1185",
       "weight": 1.0
     },
     {
@@ -20251,7 +20251,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1110",
+      "source_location": "L1103",
       "weight": 1.0
     },
     {
@@ -20263,7 +20263,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1113",
+      "source_location": "L1106",
       "weight": 1.0
     },
     {
@@ -20275,7 +20275,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1115",
+      "source_location": "L1108",
       "weight": 1.0
     },
     {
@@ -20287,7 +20287,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1117",
+      "source_location": "L1110",
       "weight": 1.0
     },
     {
@@ -20299,7 +20299,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1136",
+      "source_location": "L1129",
       "weight": 1.0
     },
     {

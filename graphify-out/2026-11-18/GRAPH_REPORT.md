@@ -1,7 +1,7 @@
 # Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-11-18)
 
 ## Corpus Check
-- 48 files · ~66,336 words
+- 48 files · ~66,294 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 219 file(s) not represented in the graph (top: (none) 183, .old 18, .db 3)
 

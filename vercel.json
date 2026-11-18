@@ -5,6 +5,18 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/trip-plan/:path*",
+      "destination": "/itinerary.html"
+    },
+    {
+      "source": "/trip-plan",
+      "destination": "/itinerary.html"
+    },
+    {
+      "source": "/itinerary",
+      "destination": "/itinerary.html"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://travelbrain-api.onrender.com/api/:path*"
     },

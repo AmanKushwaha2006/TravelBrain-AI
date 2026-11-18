@@ -207,18 +207,62 @@
     if (sendBtn) sendBtn.disabled = !ready || busy;
   }
 
+  var settingsBaseUrl       = $("settingsBaseUrl");
+  var settingsUrlBadge      = $("settingsUrlBadge");
+  var btnTestApiConn        = $("btnTestApiConn");
+  var settingsConnIndicator = $("settingsConnIndicator");
+  var settingsConnState     = $("settingsConnState");
+  var settingsConnDetail    = $("settingsConnDetail");
+  var authNoticeBanner      = $("authNoticeBanner");
+  var pendingPlan           = null;
+
+  function updateConnectionUI(stateKind, detailText) {
+    if (settingsConnIndicator) {
+      if (stateKind === "connected") {
+        settingsConnIndicator.style.background = "#22c55e";
+        settingsConnIndicator.style.boxShadow = "0 0 10px rgba(34,197,94,0.5)";
+      } else if (stateKind === "connecting") {
+        settingsConnIndicator.style.background = "#eab308";
+        settingsConnIndicator.style.boxShadow = "none";
+      } else if (stateKind === "failed") {
+        settingsConnIndicator.style.background = "#ef4444";
+        settingsConnIndicator.style.boxShadow = "0 0 10px rgba(239,68,68,0.5)";
+      } else {
+        settingsConnIndicator.style.background = "#94a3b8";
+        settingsConnIndicator.style.boxShadow = "none";
+      }
+    }
+    if (settingsConnState) {
+      settingsConnState.textContent = stateKind === "connected" ? "Connected"
+                                   : stateKind === "connecting" ? "Connecting…"
+                                   : stateKind === "failed" ? "Connection Failed"
+                                   : "Disconnected";
+    }
+    if (settingsConnDetail && detailText) {
+      settingsConnDetail.textContent = detailText;
+    }
+    if (settingsUrlBadge) {
+      var currentBase = window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() : "";
+      settingsUrlBadge.textContent = currentBase ? "Custom Endpoint" : "Auto (Same Origin)";
+      settingsUrlBadge.className = "badge " + (currentBase ? "badge-session" : "badge-env");
+    }
+  }
+
   function applyConfig(data) {
     config = data;
     var missing = (data && data.missing) || [];
 
-    if (statusBtn && statusText) {
+    if (statusBtn) {
       if (data && data.ready) {
         statusBtn.setAttribute("data-state", "ok");
-        statusText.textContent = "API connected";
-        statusBtn.title = "All credentials verified — click to edit";
+        statusBtn.innerHTML = '<span class="status-indicator" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.6);"></span>' +
+                              '<span class="status-text">API Connected</span>';
+        statusBtn.title = "Connected to backend API · Ready to plan";
       } else {
         statusBtn.setAttribute("data-state", "setup");
-        statusText.textContent = "No Live API";
+        statusBtn.innerHTML = '<span class="status-indicator" style="background:#eab308;"></span>' +
+                              '<span class="status-text">Setup Keys</span>' +
+                              '<span class="status-action" style="color:#55B8E8;margin-left:4px;">· Configure</span>';
         statusBtn.title = "API keys needed — click to configure";
 
         if (gateSub && data.credentials) {
@@ -233,6 +277,9 @@
       }
     }
 
+    var baseEndpoint = window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() : "";
+    updateConnectionUI("connected", "Backend reachable at " + (baseEndpoint || window.location.origin));
+
     if (settingsModal && !settingsModal.hidden && credList) {
       renderCreds(credList);
     }
@@ -240,18 +287,22 @@
     updateEmptyState();
   }
 
-  function markUnreachable() {
+  function markUnreachable(err) {
     config = null;
-    if (statusBtn && statusText) {
+    if (statusBtn) {
       statusBtn.setAttribute("data-state", "down");
-      statusText.textContent = "API unreachable";
-      statusBtn.title = "Could not reach the server";
+      statusBtn.innerHTML = '<span class="status-indicator" style="background:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.6);"></span>' +
+                            '<span class="status-text">API Unreachable</span>' +
+                            '<span class="status-action" style="color:#55B8E8;margin-left:4px;font-weight:600;">· Connect to API</span>';
+      statusBtn.title = "Could not reach the server — click to connect";
     }
+    updateConnectionUI("failed", err && err.message ? err.message : "Could not reach server. Verify backend is running.");
     updateEmptyState();
   }
 
   function refreshConfig() {
-    return fetch("/api/config", { cache: "no-store" })
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    return apiClient.fetch("/api/config", { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
       .then(applyConfig)
       .catch(markUnreachable);
@@ -317,6 +368,12 @@
     if (!settingsModal || !settingsScrim) return;
     settingsModal.hidden = false;
     settingsScrim.hidden = false;
+
+    if (settingsBaseUrl && window.TravelBrainAPI) {
+      settingsBaseUrl.value = window.TravelBrainAPI.getBaseUrl();
+    }
+    updateConnectionUI("connecting", "Checking backend connectivity…");
+
     if (credList) renderCreds(credList);
     refreshConfig();
     var first = credList ? credList.querySelector(".cred-input") : null;
@@ -339,6 +396,10 @@
   function saveCredentials(container, button) {
     if (savingConfig) return;
 
+    if (settingsBaseUrl && window.TravelBrainAPI) {
+      window.TravelBrainAPI.setBaseUrl(settingsBaseUrl.value);
+    }
+
     var payload = {};
     var hasValues = false;
 
@@ -352,20 +413,18 @@
 
     container.querySelectorAll(".cred-error").forEach(function (n) { n.hidden = true; });
 
-    if (!hasValues) {
-      toast("Please enter an API key first.");
-      var emptyBox = container.querySelector(".cred-input");
-      if (emptyBox) emptyBox.focus();
-      return;
-    }
-
     setSavingConfig(true, button);
 
-    fetch("/api/config", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    })
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    var savePromise = Object.keys(payload).length > 0
+      ? apiClient.fetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        })
+      : apiClient.fetch("/api/config");
+
+    savePromise
       .then(function (r) {
         return r.json().then(function (data) { return { ok: r.ok, data: data }; });
       })
@@ -385,10 +444,11 @@
 
         applyConfig(res.data);
         closeSettings();
-        toast(res.data.ready ? "Credentials connected successfully!" : "Saved — one credential still missing.");
+        toast(res.data.ready ? "Credentials connected successfully!" : "Configuration saved.");
       })
-      .catch(function () {
-        toast("Could not connect to server.");
+      .catch(function (err) {
+        markUnreachable(err);
+        toast("Could not connect to server at " + (window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() || window.location.origin : "server"));
       })
       .then(function () {
         setSavingConfig(false, button);
@@ -399,7 +459,8 @@
     if (savingConfig) return;
     setSavingConfig(true, settingsSave);
 
-    fetch("/api/config", { method: "DELETE" })
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/config", { method: "DELETE" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         applyConfig(data);
@@ -408,6 +469,24 @@
       })
       .catch(function () { toast("Could not clear credentials."); })
       .then(function () { setSavingConfig(false, settingsSave); });
+  }
+
+  if (btnTestApiConn) {
+    btnTestApiConn.addEventListener("click", function () {
+      var testUrl = settingsBaseUrl ? settingsBaseUrl.value.trim() : "";
+      updateConnectionUI("connecting", "Pinging: " + (testUrl || window.location.origin) + "…");
+      if (window.TravelBrainAPI) {
+        window.TravelBrainAPI.testConnection(testUrl).then(function (res) {
+          if (res.ok) {
+            updateConnectionUI("connected", "Reachable! Latency: " + res.latency + "ms");
+            toast("Connection test successful (" + res.latency + "ms)");
+          } else {
+            updateConnectionUI("failed", res.error || "Connection test failed");
+            toast("Connection failed: " + (res.error || "Cannot reach server"));
+          }
+        });
+      }
+    });
   }
 
   if (settingsBtn) settingsBtn.addEventListener("click", openSettings);
@@ -460,6 +539,34 @@
     authModal.hidden = true;
     authScrim.hidden = true;
     clearAuthError();
+    if (authNoticeBanner) {
+      authNoticeBanner.innerHTML = "";
+      authNoticeBanner.hidden = true;
+    }
+  }
+
+  function resumePendingPlanIfAny() {
+    var pending = pendingPlan;
+    if (!pending) {
+      try {
+        var saved = sessionStorage.getItem("tb_pending_plan");
+        if (saved) pending = JSON.parse(saved);
+      } catch (e) {}
+    }
+
+    if (pending && pending.to) {
+      sessionStorage.removeItem("tb_pending_plan");
+      pendingPlan = null;
+      toast("Welcome, " + (currentUser.name || "Traveler") + "! Starting your journey plan…");
+      setTimeout(function () {
+        var targetUrl = "/trip-plan?to=" + encodeURIComponent(pending.to) +
+          (pending.from ? "&from=" + encodeURIComponent(pending.from) : "") +
+          "&days=" + encodeURIComponent(pending.days || 5);
+        window.location.href = targetUrl;
+      }, 500);
+      return true;
+    }
+    return false;
   }
 
   function switchAuthTab(tab) {
@@ -555,23 +662,27 @@
   }
 
   function checkAuth() {
-    return fetch("/api/auth/me")
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    return apiClient.fetch("/api/auth/me")
       .then(function (r) {
         return r.ok ? r.json() : { authenticated: false };
       })
       .then(function (data) {
         if (data.authenticated && data.user) {
           currentUser = data.user;
+          if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(currentUser);
           updateAuthUI();
           loadHistory();
         } else {
           currentUser = null;
+          if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(null);
           updateAuthUI();
           renderHistory();
         }
       })
       .catch(function () {
         currentUser = null;
+        if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(null);
         updateAuthUI();
         renderHistory();
       });
@@ -594,7 +705,8 @@
       loginSubmitBtn.classList.add("is-busy");
     }
 
-    fetch("/api/auth/login", {
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: password })
@@ -609,11 +721,20 @@
         }
 
         currentUser = res.data.user;
+        if (res.data.token && window.TravelBrainAPI) {
+          window.TravelBrainAPI.setAuthToken(res.data.token);
+        }
+        if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(currentUser);
+
         updateAuthUI();
         closeAuthModal();
         if (loginForm) loginForm.reset();
-        toast("Welcome back, " + (currentUser.name || "traveler") + "!");
-        loadHistory();
+
+        var resumed = resumePendingPlanIfAny();
+        if (!resumed) {
+          toast("Welcome back, " + (currentUser.name || "traveler") + "!");
+          loadHistory();
+        }
       })
       .catch(function (err) {
         showAuthError("Connection error: " + err.message);
@@ -655,7 +776,8 @@
       signupSubmitBtn.classList.add("is-busy");
     }
 
-    fetch("/api/auth/signup", {
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -680,11 +802,20 @@
         }
 
         currentUser = res.data.user;
+        if (res.data.token && window.TravelBrainAPI) {
+          window.TravelBrainAPI.setAuthToken(res.data.token);
+        }
+        if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(currentUser);
+
         updateAuthUI();
         closeAuthModal();
         if (signupForm) signupForm.reset();
-        toast("Account created! Welcome, " + (currentUser.name || "") + "!");
-        loadHistory();
+
+        var resumed = resumePendingPlanIfAny();
+        if (!resumed) {
+          toast("Account created! Welcome, " + (currentUser.name || "") + "!");
+          loadHistory();
+        }
       })
       .catch(function (err) {
         showAuthError("Connection error: " + err.message);
@@ -698,9 +829,11 @@
   }
 
   function handleLogout() {
-    fetch("/api/auth/logout", { method: "POST" })
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/auth/logout", { method: "POST" })
       .then(function () {
         currentUser = null;
+        if (window.TravelBrainAPI) window.TravelBrainAPI.clearAuth();
         activeTripId = null;
         historyItems = [];
         updateAuthUI();
@@ -709,6 +842,7 @@
       })
       .catch(function () {
         currentUser = null;
+        if (window.TravelBrainAPI) window.TravelBrainAPI.clearAuth();
         updateAuthUI();
         renderHistory();
       });
@@ -723,7 +857,8 @@
       return;
     }
 
-    fetch("/api/history")
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/history")
       .then(function (r) {
         return r.ok ? r.json() : { success: false, trips: [] };
       })
@@ -820,7 +955,8 @@
   function deleteTrip(tripId) {
     if (!tripId) return;
 
-    fetch("/api/history/" + tripId, { method: "DELETE" })
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/history/" + tripId, { method: "DELETE" })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (data.success) {
@@ -1231,6 +1367,16 @@
       });
   }
 
+  function escapeHtml(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   /* ---------------- Main 3-Field Search Execution ---------------- */
 
   function planJourney() {
@@ -1250,7 +1396,28 @@
       parsedDays = 5;
     }
 
-    // Navigate cleanly to the dedicated itinerary route
+    // MANDATORY AUTHENTICATION CHECK
+    if (!currentUser) {
+      pendingPlan = { from: from, to: to, days: parsedDays };
+      try {
+        sessionStorage.setItem("tb_pending_plan", JSON.stringify(pendingPlan));
+      } catch (e) {}
+
+      var notice = $("authNoticeBanner");
+      if (notice) {
+        notice.innerHTML = '<div style="padding:10px 14px;background:rgba(85,184,232,0.12);border:1px solid rgba(85,184,232,0.3);border-radius:8px;margin-bottom:14px;font-size:0.85rem;color:#E0F2FE;">' +
+                           '🔒 <strong>Sign In Required</strong><br>' +
+                           'Please sign in or create an account to plan, verify, and save your travel itinerary for <strong>' + escapeHtml(to) + '</strong>.' +
+                           '</div>';
+        notice.hidden = false;
+      }
+
+      openAuthModal("login");
+      toast("Please sign in or create an account to plan your journey.");
+      return;
+    }
+
+    // Authenticated -> Navigate cleanly to dedicated itinerary route
     var targetUrl = "/trip-plan?to=" + encodeURIComponent(to) +
                     (from ? "&from=" + encodeURIComponent(from) : "") +
                     "&days=" + encodeURIComponent(parsedDays);

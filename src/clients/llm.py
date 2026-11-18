@@ -8,6 +8,37 @@ from src.config.session import require, resolve_groq_api_key
 from src.config.settings import GROQ_MODEL
 
 
+def extract_message_content(message) -> str:
+    """Extract clean string content from an AIMessage, supporting reasoning models and content blocks."""
+    if message is None:
+        return ""
+
+    content = getattr(message, "content", "")
+    if isinstance(content, str) and content.strip():
+        return content.strip()
+
+    if isinstance(content, list):
+        parts = []
+        for block in content:
+            if isinstance(block, dict):
+                if block.get("type") == "text":
+                    parts.append(block.get("text", ""))
+                elif "text" in block:
+                    parts.append(str(block["text"]))
+            elif isinstance(block, str):
+                parts.append(block)
+        joined = "\n".join(parts).strip()
+        if joined:
+            return joined
+
+    # Check additional_kwargs for reasoning or alternative model outputs
+    add_kwargs = getattr(message, "additional_kwargs", {}) or {}
+    if add_kwargs.get("reasoning_content"):
+        return str(add_kwargs["reasoning_content"]).strip()
+
+    return str(content).strip() if content else ""
+
+
 @lru_cache(maxsize=8)
 def _build_llm(model: str, api_key: str) -> ChatGroq:
     return ChatGroq(model=model, api_key=api_key, temperature=0.1)

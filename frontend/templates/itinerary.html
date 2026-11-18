@@ -159,9 +159,59 @@
         <p id="errorMessage">We encountered an issue communicating with the multi-agent AI server.</p>
         <div class="error-actions">
           <button type="button" class="btn-retry" id="btnRetry">Try Again</button>
-          <button type="button" class="btn-retry" id="btnErrorSettings" style="background:#55B8E8;color:#050B14;" hidden>Configure API Key</button>
+          <button type="button" class="btn-retry" id="btnErrorSettings" style="background:#55B8E8;color:#050B14;" hidden>Connect to API</button>
           <a href="/" class="btn-back-home">Return to Home</a>
         </div>
+      </div>
+    </section>
+
+    <!-- 2B. AUTHENTICATION REQUIRED SCREEN -->
+    <section class="error-screen" id="authGateScreen" hidden>
+      <div class="error-card" style="max-width:440px;">
+        <div class="error-icon" style="background:rgba(85,184,232,0.1);color:#55B8E8;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h2>Sign In Required</h2>
+        <p id="authGateMsg">Please sign in or create an account to plan, view, and save your travel itinerary.</p>
+        
+        <div style="display:flex;gap:10px;margin-bottom:15px;width:100%;">
+          <button type="button" class="view-toggle-btn active" id="authGateTabLogin" style="flex:1;padding:8px 0;font-size:0.85rem;">Sign In</button>
+          <button type="button" class="view-toggle-btn" id="authGateTabSignup" style="flex:1;padding:8px 0;font-size:0.85rem;">Create Account</button>
+        </div>
+
+        <form id="authGateLoginForm" style="width:100%;text-align:left;">
+          <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Email Address</label>
+            <input type="email" id="authGateEmail" class="settings-input" placeholder="name@example.com" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Password</label>
+            <input type="password" id="authGatePassword" class="settings-input" placeholder="Enter password" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <button type="submit" class="btn-retry" id="authGateLoginBtn" style="width:100%;background:#55B8E8;color:#050B14;font-weight:700;">Sign In &amp; Continue Plan →</button>
+        </form>
+
+        <form id="authGateSignupForm" style="width:100%;text-align:left;" hidden>
+          <div style="margin-bottom:10px;">
+            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Full Name</label>
+            <input type="text" id="authGateName" class="settings-input" placeholder="Your Name" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <div style="margin-bottom:10px;">
+            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Email Address</label>
+            <input type="email" id="authGateSignupEmail" class="settings-input" placeholder="name@example.com" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Password (min 6 characters)</label>
+            <input type="password" id="authGateSignupPassword" class="settings-input" placeholder="Create password" minlength="6" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <button type="submit" class="btn-retry" id="authGateSignupBtn" style="width:100%;background:#55B8E8;color:#050B14;font-weight:700;">Create Account &amp; Continue →</button>
+        </form>
+
+        <div id="authGateError" style="color:#ff6b6b;font-size:0.8rem;margin-top:10px;" hidden></div>
+        <div style="margin-top:14px;"><a href="/" class="btn-back-home" style="justify-content:center;">← Return to Home</a></div>
       </div>
     </section>
 
@@ -337,18 +387,33 @@
   <div class="modal-scrim" id="settingsScrim" hidden></div>
   <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true">
     <div class="settings-head">
-      <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;">API Credentials Configuration</h3>
+      <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;">API &amp; Agent Configuration</h3>
       <button type="button" class="icon-btn-close" id="settingsClose">✕</button>
     </div>
     <div class="settings-body">
-      <p class="settings-sub">Enter your Groq API Key to power the multi-agent AI travel planner:</p>
+      <!-- Live Status Banner -->
+      <div id="itinSettingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="status-indicator" id="itinConnIndicator" style="width:10px;height:10px;border-radius:50%;background:#888;"></span>
+          <span id="itinConnText" style="font-size:0.8rem;color:#FFF;">Checking Status…</span>
+        </div>
+        <button type="button" class="btn-retry" id="itinBtnPing" style="padding:4px 10px;font-size:0.75rem;">Test Ping</button>
+      </div>
+
+      <!-- API Base URL Field -->
+      <div class="settings-field" style="margin-bottom:14px;">
+        <label for="settingsBaseUrl">API Base URL (Leave empty for same host)</label>
+        <input type="url" id="settingsBaseUrl" placeholder="https://travelbrain-api.onrender.com" class="settings-input" />
+      </div>
+
+      <!-- Groq API Key -->
       <div class="settings-field">
-        <label for="settingsGroqKey">Groq API Key</label>
+        <label for="settingsGroqKey">Groq API Key (Stored in Session Memory)</label>
         <input type="password" id="settingsGroqKey" placeholder="gsk_..." class="settings-input" />
       </div>
     </div>
     <div class="settings-foot">
-      <button type="button" class="btn-save-key" id="settingsSave">Save Credentials</button>
+      <button type="button" class="btn-save-key" id="settingsSave">Connect &amp; Save</button>
     </div>
   </div>
 
@@ -357,6 +422,7 @@
 
   <!-- Scripts -->
   <script src="/static/js/markdown.js"></script>
+  <script src="/static/js/api-client.js?v=1.0.0"></script>
   <script src="/static/js/itinerary.js?v=2.0.0"></script>
 
 </body>

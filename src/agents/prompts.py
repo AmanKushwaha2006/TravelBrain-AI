@@ -65,14 +65,15 @@ Weather Context:
 {weather_results}
 
 STRICT GUARDRAILS & ANTI-HALLUCINATION RULES:
-1. STRICT FACTUAL GROUNDING: Recommend ONLY sights, landmarks, viewpoints, trails, and cultural experiences that are either confirmed in the verified research data above or universally verifiable real places. DO NOT invent fictitious attractions, fake museums, or non-existent temples.
-2. REALISTIC TRAVEL PACING:
+1. STRICT FACTUAL GROUNDING: Recommend ONLY real, verified sights, landmarks, viewpoints, trails, and cultural experiences in the destination. DO NOT invent fictitious attractions, fake museums, or non-existent temples. If live web research data is unavailable or unconfigured, use your verified world knowledge of real landmarks in the destination.
+2. MANDATORY COMPLETE ITINERARY: You MUST generate a complete day-by-day plan for the entire duration requested in the query (default 3 to 5 days). Never skip days, and under NO circumstances output 'Itinerary Not Produced' or abort.
+3. REALISTIC TRAVEL PACING:
    - Cap each day at 2 to 3 key activities to allow realistic travel, dining, and rest.
    - In mountainous, rural, or remote areas, account for winding road transit speeds (e.g. 25-35 km/h) rather than straight-line highway speeds.
-3. DAY-BY-DAY FLOW: Group activities by geographical proximity so travelers do not waste hours crisscrossing back and forth.
-4. UNCERTAINTY HANDLING: If information about a remote attraction or seasonality is limited, explicitly note: "(Verify opening hours / weather accessibility locally)".
-5. PRACTICAL LOGISTICS: Mention local transport modes (auto-rickshaw, shared taxi, local bus, walking, rental bike) suitable for the destination.
-6. CURRENCY IN INDIAN RUPEES (INR): Whenever specifying entry fees, ticket costs, local taxi/auto fares, food/dining estimates, or daily budgets, state all amounts strictly in Indian Rupees (INR, ₹). Convert any local or foreign currency prices to INR.
+4. DAY-BY-DAY FLOW: Group activities by geographical proximity so travelers do not waste hours crisscrossing back and forth.
+5. UNCERTAINTY HANDLING: If information about a remote attraction or seasonality is limited, explicitly note: "(Verify opening hours / weather accessibility locally)".
+6. PRACTICAL LOGISTICS: Mention local transport modes (auto-rickshaw, shared taxi, local bus, walking, rental bike) suitable for the destination.
+7. CURRENCY IN INDIAN RUPEES (INR): Whenever specifying entry fees, ticket costs, local taxi/auto fares, food/dining estimates, or daily budgets, state all amounts strictly in Indian Rupees (INR, ₹). Convert any local or foreign currency prices to INR.
 
 Make the itinerary practical, budget-aware (with all costs in Indian Rupees INR, ₹), and easy to follow.
 """
@@ -101,7 +102,7 @@ Weather:
 Itinerary:
 {itinerary}
 
-Format the final answer beautifully using these sections:
+Format the final answer beautifully using these exact sections:
 
 1. Trip Summary
 2. Flight & Transit Information
@@ -112,6 +113,7 @@ Format the final answer beautifully using these sections:
 7. Final Recommendations & Local Tips
 
 Important:
+- MANDATORY COMPLETE CONTENT: You MUST compile and output detailed content for ALL 7 sections above. Under NO circumstances output 'Itinerary Not Produced' or leave Section 5 blank. If the itinerary input is brief, flesh it out into a detailed, practical day-by-day itinerary using real places.
 - Be clear and practical.
 - Never present fictitious places as real.
 - Mention that live flight API may not provide ticket prices if pricing is unavailable.

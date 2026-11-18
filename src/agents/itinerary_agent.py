@@ -8,22 +8,33 @@ from src.agents.prompts import (
     ITINERARY_AGENT_PROMPT,
     ITINERARY_SYSTEM_PROMPT,
 )
-from src.clients.llm import get_llm
+from src.clients.llm import extract_message_content, get_llm
 from src.graph.state import TravelState
 from src.mcp_servers.remote import tavily_mcp_search
 from src.utils.async_utils import bump_llm_calls, run_async
 
 
 def itinerary_agent(state: TravelState):
+    destination = extract_destination(state.get("user_query", ""))
     attractions_data = state.get("attractions_data", "")
-    if not attractions_data or not str(attractions_data).strip():
-        # Integrate Tavily search for attractions if not already in state
+
+    if not attractions_data or "unavailable" in str(attractions_data).lower() or not str(attractions_data).strip():
         try:
-            destination = extract_destination(state["user_query"])
             attractions_query = ATTRACTIONS_SEARCH_QUERY.format(destination=destination)
-            attractions_data = run_async(tavily_mcp_search(attractions_query))
-        except Exception as e:
-            attractions_data = f"Attractions research unavailable: {str(e)}"
+            search_res = run_async(tavily_mcp_search(attractions_query))
+            res_str = str(search_res)
+            if "API key not set" in res_str or "error" in res_str.lower() or "unavailable" in res_str.lower():
+                attractions_data = (
+                    f"Live search unconfigured. Ground the itinerary in genuine, universally verified "
+                    f"landmarks, historical heritage monuments, scenic viewpoints, and cultural experiences in {destination}."
+                )
+            else:
+                attractions_data = res_str
+        except Exception:
+            attractions_data = (
+                f"Live search unavailable. Recommend verified, genuine landmarks and sights in {destination} "
+                f"with realistic transit pacing and entry fees in Indian Rupees (₹)."
+            )
 
     prompt = ITINERARY_AGENT_PROMPT.format(
         user_query=state.get("user_query", ""),
@@ -38,8 +49,10 @@ def itinerary_agent(state: TravelState):
         HumanMessage(content=prompt),
     ])
 
+    itinerary_text = extract_message_content(response)
+
     return {
-        "itinerary": response.content,
+        "itinerary": itinerary_text,
         "attractions_data": str(attractions_data),
         "messages": [response],
         "llm_calls": bump_llm_calls(state),

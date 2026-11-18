@@ -78,8 +78,12 @@ def _get_auth_pool():
 
 
 def _get_current_user(request: Request) -> dict | None:
-    """Read travelbrain_auth cookie -> resolve user or None."""
+    """Read travelbrain_auth cookie or Authorization Bearer header -> resolve user or None."""
     token = request.cookies.get(AUTH_COOKIE)
+    if not token:
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:].strip()
     if not token:
         return None
     pool = _get_auth_pool()
@@ -110,16 +114,18 @@ app = FastAPI(
 )
 
 
-# Only needed when the browser talks to this API on a different origin. With
-# the Vercel rewrite the frontend is same-origin, so this stays inactive.
+# Enable CORS for deployed environments, preview builds, and local development.
+cors_kwargs = {
+    "allow_credentials": True,
+    "allow_methods": ["*"],
+    "allow_headers": ["*"],
+}
 if CORS_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=CORS_ORIGINS,
-        allow_credentials=True,
-        allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
-        allow_headers=["Content-Type"],
-    )
+    cors_kwargs["allow_origins"] = CORS_ORIGINS
+else:
+    cors_kwargs["allow_origin_regex"] = r".*"
+
+app.add_middleware(CORSMiddleware, **cors_kwargs)
 
 
 @app.middleware("http")
@@ -305,6 +311,18 @@ async def reset_config(request: Request):
 
 @app.post("/api/travel")
 async def travel_planner(request: Request, request_data: TravelRequest):
+    # Mandatory authentication check before initiating journey planning
+    user = _get_current_user(request)
+    if not user:
+        return JSONResponse(
+            status_code=401,
+            content={
+                "success": False,
+                "error": "Authentication required. Please sign in to plan and save your journey.",
+                "auth_required": True,
+            }
+        )
+
     credentials = get_credentials_for(_session_id(request))
 
     try:
@@ -524,7 +542,7 @@ async def signup(request: Request, body: SignupRequest):
         return JSONResponse(status_code=409, content={"success": False, "errors": {"email": str(e)}})
 
     token = create_session(pool, user["id"])
-    response = JSONResponse(content={"success": True, "user": user})
+    response = JSONResponse(content={"success": True, "user": user, "token": token})
     _set_auth_cookie(response, token)
     return response
 
@@ -546,7 +564,7 @@ async def login(request: Request, body: LoginRequest):
         return JSONResponse(status_code=401, content={"success": False, "error": "Invalid email or password."})
 
     token = create_session(pool, user["id"])
-    response = JSONResponse(content={"success": True, "user": user})
+    response = JSONResponse(content={"success": True, "user": user, "token": token})
     _set_auth_cookie(response, token)
     return response
 
@@ -658,6 +676,7 @@ async def home_head():
 
 
 @app.api_route("/health", methods=["GET", "HEAD"])
+@app.api_route("/api/health", methods=["GET", "HEAD"])
 async def health_check(request: Request):
     credentials = get_credentials_for(_session_id(request))
 

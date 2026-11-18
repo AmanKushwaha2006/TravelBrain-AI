@@ -71,6 +71,24 @@
   var settingsClose       = $("settingsClose");
   var settingsSave        = $("settingsSave");
   var settingsGroqKey     = $("settingsGroqKey");
+  var settingsBaseUrl     = $("settingsBaseUrl");
+  var itinConnIndicator   = $("itinConnIndicator");
+  var itinConnText        = $("itinConnText");
+  var itinBtnPing         = $("itinBtnPing");
+
+  // Auth Gate Elements
+  var authGateScreen      = $("authGateScreen");
+  var authGateTabLogin    = $("authGateTabLogin");
+  var authGateTabSignup   = $("authGateTabSignup");
+  var authGateLoginForm   = $("authGateLoginForm");
+  var authGateSignupForm  = $("authGateSignupForm");
+  var authGateEmail       = $("authGateEmail");
+  var authGatePassword    = $("authGatePassword");
+  var authGateName        = $("authGateName");
+  var authGateSignupEmail = $("authGateSignupEmail");
+  var authGateSignupPassword = $("authGateSignupPassword");
+  var authGateError       = $("authGateError");
+  var authGateMsg         = $("authGateMsg");
 
   /* ---------------- State ---------------- */
   var currentPlanData     = null;
@@ -810,12 +828,18 @@
       }
     }, 250);
 
-    fetch("/api/travel", {
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/travel", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: query, thread_id: activeThreadId })
     })
       .then(function (r) {
+        if (r.status === 401) {
+          clearInterval(timer);
+          showAuthGate("Please sign in or create an account to plan and save your journey to " + dest + ".");
+          throw new Error("Authentication required");
+        }
         return r.json().catch(function () {
           throw new Error("Invalid response from server (HTTP " + r.status + ")");
         }).then(function (data) {
@@ -848,14 +872,29 @@
       });
   }
 
+  function showAuthGate(msg) {
+    if (loadingScreen) loadingScreen.hidden = true;
+    if (errorScreen) errorScreen.hidden = true;
+    if (dashboardContent) dashboardContent.hidden = true;
+    if (authGateScreen) {
+      authGateScreen.hidden = false;
+      if (msg && authGateMsg) authGateMsg.textContent = msg;
+    }
+  }
+
+  function hideAuthGate() {
+    if (authGateScreen) authGateScreen.hidden = true;
+  }
+
   function loadTripById(tripId) {
     if (loadingScreen) loadingScreen.hidden = false;
     if (errorScreen) errorScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = true;
 
-    fetch("/api/trip/" + tripId)
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/trip/" + tripId)
       .then(function (r) {
-        if (!r.ok) return fetch("/api/history/" + tripId);
+        if (!r.ok) return apiClient.fetch("/api/history/" + tripId);
         return r;
       })
       .then(function (r) { return r.json(); })
@@ -910,7 +949,8 @@
       btnAudit.innerHTML = '<span class="spinner" style="display:inline-block;width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:radarSpin 0.8s linear infinite;"></span> Auditing Factuality…';
     }
 
-    fetch("/api/evaluate", {
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/evaluate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -1012,10 +1052,28 @@
 
   /* ---------------- Settings Modal Handlers ---------------- */
 
+  function updateItinConnUI(stateKind, text) {
+    if (itinConnIndicator) {
+      itinConnIndicator.style.background = stateKind === "connected" ? "#22c55e" : stateKind === "connecting" ? "#eab308" : stateKind === "failed" ? "#ef4444" : "#94a3b8";
+    }
+    if (itinConnText) {
+      itinConnText.textContent = text || (stateKind === "connected" ? "API Reachable" : stateKind === "failed" ? "API Unreachable" : "Checking…");
+    }
+  }
+
   function openSettings() {
     if (settingsModal && settingsScrim) {
       settingsModal.hidden = false;
       settingsScrim.hidden = false;
+      if (settingsBaseUrl && window.TravelBrainAPI) {
+        settingsBaseUrl.value = window.TravelBrainAPI.getBaseUrl();
+      }
+      updateItinConnUI("connecting", "Testing connection…");
+      if (window.TravelBrainAPI) {
+        window.TravelBrainAPI.testConnection().then(function (res) {
+          updateItinConnUI(res.ok ? "connected" : "failed", res.ok ? "Connected (" + res.latency + "ms)" : (res.error || "Unreachable"));
+        });
+      }
       if (settingsGroqKey) settingsGroqKey.focus();
     }
   }
@@ -1028,30 +1086,36 @@
   }
 
   function saveSettings() {
-    var key = settingsGroqKey ? settingsGroqKey.value.trim() : "";
-    if (!key) {
-      toast("Please enter your Groq API key.");
-      return;
+    if (settingsBaseUrl && window.TravelBrainAPI) {
+      window.TravelBrainAPI.setBaseUrl(settingsBaseUrl.value);
     }
 
-    fetch("/api/config", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ groq_api_key: key })
-    })
+    var key = settingsGroqKey ? settingsGroqKey.value.trim() : "";
+    var payload = {};
+    if (key) payload.groq_api_key = key;
+
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    var saveReq = Object.keys(payload).length > 0
+      ? apiClient.fetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        })
+      : apiClient.fetch("/api/config");
+
+    saveReq
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (data.success) {
-          toast("Groq API key saved successfully!");
+        if (data.success !== false) {
+          toast("Settings & API connection saved successfully!");
           closeSettings();
-          // Reload planning
           window.location.reload();
         } else {
-          toast(data.error || "Failed to save key.");
+          toast(data.error || "Failed to save settings.");
         }
       })
-      .catch(function () {
-        toast("Error saving credentials.");
+      .catch(function (err) {
+        toast("Error saving credentials: " + err.message);
       });
   }
 
@@ -1109,6 +1173,112 @@
     if (settingsScrim) settingsScrim.addEventListener("click", closeSettings);
     if (settingsSave) settingsSave.addEventListener("click", saveSettings);
 
+    if (itinBtnPing) {
+      itinBtnPing.addEventListener("click", function () {
+        var pingUrl = settingsBaseUrl ? settingsBaseUrl.value.trim() : "";
+        updateItinConnUI("connecting", "Testing ping…");
+        if (window.TravelBrainAPI) {
+          window.TravelBrainAPI.testConnection(pingUrl).then(function (res) {
+            updateItinConnUI(res.ok ? "connected" : "failed", res.ok ? "Reachable (" + res.latency + "ms)" : (res.error || "Cannot reach server"));
+            toast(res.ok ? "Ping successful (" + res.latency + "ms)" : "Ping failed: " + (res.error || "Unreachable"));
+          });
+        }
+      });
+    }
+
+    // Auth Gate Tabs & Forms
+    if (authGateTabLogin && authGateTabSignup) {
+      authGateTabLogin.addEventListener("click", function () {
+        authGateTabLogin.classList.add("active");
+        authGateTabSignup.classList.remove("active");
+        if (authGateLoginForm) authGateLoginForm.hidden = false;
+        if (authGateSignupForm) authGateSignupForm.hidden = true;
+        if (authGateError) authGateError.hidden = true;
+      });
+      authGateTabSignup.addEventListener("click", function () {
+        authGateTabSignup.classList.add("active");
+        authGateTabLogin.classList.remove("active");
+        if (authGateSignupForm) authGateSignupForm.hidden = false;
+        if (authGateLoginForm) authGateLoginForm.hidden = true;
+        if (authGateError) authGateError.hidden = true;
+      });
+    }
+
+    if (authGateLoginForm) {
+      authGateLoginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = authGateEmail ? authGateEmail.value.trim() : "";
+        var password = authGatePassword ? authGatePassword.value : "";
+        if (!email || !password) return;
+
+        var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+        apiClient.fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: password })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.success && data.user) {
+              if (data.token && window.TravelBrainAPI) window.TravelBrainAPI.setAuthToken(data.token);
+              if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(data.user);
+              hideAuthGate();
+              toast("Signed in as " + data.user.name + "! Resuming travel plan…");
+              init(); // Resume planning
+            } else {
+              if (authGateError) {
+                authGateError.textContent = data.error || "Invalid email or password.";
+                authGateError.hidden = false;
+              }
+            }
+          })
+          .catch(function (err) {
+            if (authGateError) {
+              authGateError.textContent = "Connection error: " + err.message;
+              authGateError.hidden = false;
+            }
+          });
+      });
+    }
+
+    if (authGateSignupForm) {
+      authGateSignupForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var name = authGateName ? authGateName.value.trim() : "";
+        var email = authGateSignupEmail ? authGateSignupEmail.value.trim() : "";
+        var password = authGateSignupPassword ? authGateSignupPassword.value : "";
+        if (!name || !email || !password) return;
+
+        var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+        apiClient.fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: name, email: email, password: password, confirm_password: password })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data.success && data.user) {
+              if (data.token && window.TravelBrainAPI) window.TravelBrainAPI.setAuthToken(data.token);
+              if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(data.user);
+              hideAuthGate();
+              toast("Account created! Generating your travel plan…");
+              init(); // Resume planning
+            } else {
+              if (authGateError) {
+                authGateError.textContent = data.error || (data.errors ? Object.values(data.errors)[0] : "Signup failed.");
+                authGateError.hidden = false;
+              }
+            }
+          })
+          .catch(function (err) {
+            if (authGateError) {
+              authGateError.textContent = "Connection error: " + err.message;
+              authGateError.hidden = false;
+            }
+          });
+      });
+    }
+
     if (viewDashboardBtn && viewDossierBtn) {
       viewDashboardBtn.addEventListener("click", function () {
         viewDashboardBtn.classList.add("active");
@@ -1164,7 +1334,23 @@
 
     if (urlTo) {
       var query = "Plan a " + urlDays + " day trip to " + urlTo + (urlFrom ? " from " + urlFrom : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
-      executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
+
+      // Mandatory Auth Check before initiating AI planning
+      var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+      apiClient.fetch("/api/auth/me")
+        .then(function (r) { return r.ok ? r.json() : { authenticated: false }; })
+        .then(function (auth) {
+          if (auth.authenticated && auth.user) {
+            if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(auth.user);
+            executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
+          } else {
+            showAuthGate("Please sign in or create an account to plan and save your journey to " + urlTo + ".");
+          }
+        })
+        .catch(function () {
+          // If network error, attempt planning which will prompt auth if backend requires it
+          executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
+        });
       return;
     }
 

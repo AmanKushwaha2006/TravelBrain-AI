@@ -3,18 +3,22 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agents.prompts import FINAL_AGENT_PROMPT, FINAL_SYSTEM_PROMPT
-from src.clients.llm import get_llm
+from src.clients.llm import extract_message_content, get_llm
 from src.graph.state import TravelState
 from src.utils.async_utils import bump_llm_calls
 
 
 def final_agent(state: TravelState):
+    itinerary_text = state.get("itinerary", "")
+    if not itinerary_text or not itinerary_text.strip():
+        itinerary_text = "Detailed day-by-day itinerary structured chronologically across the destination's top sights."
+
     prompt = FINAL_AGENT_PROMPT.format(
-        user_query=state["user_query"],
-        flight_results=state["flight_results"],
-        hotel_results=state["hotel_results"],
-        weather_results=state["weather_results"],
-        itinerary=state["itinerary"],
+        user_query=state.get("user_query", ""),
+        flight_results=state.get("flight_results", ""),
+        hotel_results=state.get("hotel_results", ""),
+        weather_results=state.get("weather_results", ""),
+        itinerary=itinerary_text,
     )
 
     response = get_llm().invoke([

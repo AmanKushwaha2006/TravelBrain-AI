@@ -14,21 +14,33 @@ from src.utils.async_utils import bump_llm_calls, run_async, truncate
 
 
 def flight_agent(state: TravelState):
-    print("\nINSIDE FLIGHT AGENT\n")
-
     query = state["user_query"]
 
     try:
         airports = run_async(aviation_mcp_call("list_airports"))
         airlines = run_async(aviation_mcp_call("list_airlines"))
 
-        print("\nAIRPORTS:", airports)
-        print("\nAIRLINES:", airlines)
+        airports_str = str(airports)
+        airlines_str = str(airlines)
+
+        if "API key not set" in airports_str or "error" in airports_str.lower():
+            airport_data = (
+                "Live AviationStack data not connected. Suggest standard commercial routes, "
+                "origin/destination airport codes (e.g. DEL, BOM, BLR, GOI), flight durations, "
+                "and realistic round-trip airfares in Indian Rupees (₹)."
+            )
+        else:
+            airport_data = truncate(airports, AIRPORT_DATA_CHAR_LIMIT)
+
+        if "API key not set" in airlines_str or "error" in airlines_str.lower():
+            airline_data = "Major domestic and international carriers (e.g. IndiGo, Air India, Vistara, Akasa Air)."
+        else:
+            airline_data = truncate(airlines, AIRLINE_DATA_CHAR_LIMIT)
 
         prompt = FLIGHT_AGENT_PROMPT.format(
             query=query,
-            airport_data=truncate(airports, AIRPORT_DATA_CHAR_LIMIT),
-            airline_data=truncate(airlines, AIRLINE_DATA_CHAR_LIMIT),
+            airport_data=airport_data,
+            airline_data=airline_data,
         )
 
         response = get_llm().invoke([
