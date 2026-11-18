@@ -41,11 +41,19 @@ def get_connection(database_url: str) -> psycopg.Connection:
 
 
 @lru_cache(maxsize=4)
-def get_checkpointer(database_url: str) -> PostgresSaver:
-    pool = get_pool(database_url)
-    checkpointer = PostgresSaver(pool)
-    checkpointer.setup()
-    return checkpointer
+def get_checkpointer(database_url: str):
+    if not database_url or not str(database_url).strip():
+        from langgraph.checkpoint.memory import MemorySaver
+        return MemorySaver()
+    try:
+        pool = get_pool(database_url)
+        checkpointer = PostgresSaver(pool)
+        checkpointer.setup()
+        return checkpointer
+    except Exception as e:
+        print(f"[checkpointer] Postgres checkpointer setup warning: {e}. Falling back to MemorySaver.")
+        from langgraph.checkpoint.memory import MemorySaver
+        return MemorySaver()
 
 
 def get_session_checkpointer() -> PostgresSaver:

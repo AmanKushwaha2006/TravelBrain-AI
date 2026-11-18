@@ -8,9 +8,7 @@ from src.graph.state import initial_state
 
 
 def run_travel_agent(user_input: str, thread_id: str | None = None) -> dict:
-    # Check everything up front so the caller learns about every missing key
-    # at once, rather than one per failed attempt.
-    require("GROQ_API_KEY", "DATABASE_URL")
+    require("GROQ_API_KEY")
 
     if not thread_id:
         thread_id = f"user_{uuid.uuid4().hex}"

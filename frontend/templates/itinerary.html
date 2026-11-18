@@ -86,6 +86,15 @@
           <span>🛡️ Audit Factuality</span>
         </button>
 
+        <!-- API Settings -->
+        <button type="button" class="action-btn" id="settingsBtn" title="API Credentials & Configuration">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span class="action-text">API Config</span>
+        </button>
+
       </div>
 
     </div>
@@ -150,6 +159,7 @@
         <p id="errorMessage">We encountered an issue communicating with the multi-agent AI server.</p>
         <div class="error-actions">
           <button type="button" class="btn-retry" id="btnRetry">Try Again</button>
+          <button type="button" class="btn-retry" id="btnErrorSettings" style="background:#55B8E8;color:#050B14;" hidden>Configure API Key</button>
           <a href="/" class="btn-back-home">Return to Home</a>
         </div>
       </div>
@@ -323,12 +333,31 @@
 
   </main>
 
+  <!-- API Settings Modal -->
+  <div class="modal-scrim" id="settingsScrim" hidden></div>
+  <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true">
+    <div class="settings-head">
+      <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;">API Credentials Configuration</h3>
+      <button type="button" class="icon-btn-close" id="settingsClose">✕</button>
+    </div>
+    <div class="settings-body">
+      <p class="settings-sub">Enter your Groq API Key to power the multi-agent AI travel planner:</p>
+      <div class="settings-field">
+        <label for="settingsGroqKey">Groq API Key</label>
+        <input type="password" id="settingsGroqKey" placeholder="gsk_..." class="settings-input" />
+      </div>
+    </div>
+    <div class="settings-foot">
+      <button type="button" class="btn-save-key" id="settingsSave">Save Credentials</button>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="toast-box" id="toast"></div>
 
   <!-- Scripts -->
   <script src="/static/js/markdown.js"></script>
-  <script src="/static/js/itinerary.js?v=1.0.0"></script>
+  <script src="/static/js/itinerary.js?v=2.0.0"></script>
 
 </body>
 </html>

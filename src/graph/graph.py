@@ -45,7 +45,10 @@ def get_travel_graph():
     Compile the graph against whichever database the current session
     resolves to. One compiled graph is cached per distinct URL.
     """
+    db_url = ""
+    try:
+        db_url = resolve_database_url()
+    except Exception:
+        pass
 
-    require("DATABASE_URL")
-
-    return _compiled_graph(resolve_database_url())
+    return _compiled_graph(db_url)

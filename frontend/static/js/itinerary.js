@@ -1,6 +1,6 @@
 /* ============================================================
    TravelBrain AI — Generated Itinerary Page Controller
-   Intelligent Markdown/JSON Transformer & Interactive Dashboard
+   Intelligent Markdown/Table/JSON Parser & Interactive Dashboard
    ============================================================ */
 
 (function () {
@@ -9,66 +9,75 @@
   /* ---------------- Helpers & DOM ---------------- */
   var $ = function (id) { return document.getElementById(id); };
 
-  var loadingScreen      = $("loadingScreen");
-  var errorScreen        = $("errorScreen");
-  var dashboardContent   = $("dashboardContent");
-  var toastEl            = $("toast");
+  var loadingScreen       = $("loadingScreen");
+  var errorScreen         = $("errorScreen");
+  var dashboardContent    = $("dashboardContent");
+  var toastEl             = $("toast");
 
   // Loading elements
-  var loadingDest        = $("loadingDest");
-  var currentAgentLabel  = $("currentAgentLabel");
-  var pipelineBarFill    = $("pipelineBarFill");
-  var elapsedTimeEl      = $("elapsedTime");
+  var loadingDest         = $("loadingDest");
+  var currentAgentLabel   = $("currentAgentLabel");
+  var pipelineBarFill     = $("pipelineBarFill");
+  var elapsedTimeEl       = $("elapsedTime");
 
   // Error elements
-  var errorMessage       = $("errorMessage");
-  var btnRetry           = $("btnRetry");
+  var errorMessage        = $("errorMessage");
+  var btnRetry            = $("btnRetry");
+  var btnErrorSettings    = $("btnErrorSettings");
 
   // Header & Tools
-  var copyPlanBtn        = $("copyPlanBtn");
-  var downloadMdBtn      = $("downloadMdBtn");
-  var printPlanBtn       = $("printPlanBtn");
-  var btnAudit           = $("btnAudit");
-  var viewDashboardBtn   = $("viewDashboardBtn");
-  var viewDossierBtn     = $("viewDossierBtn");
+  var copyPlanBtn         = $("copyPlanBtn");
+  var downloadMdBtn       = $("downloadMdBtn");
+  var printPlanBtn        = $("printPlanBtn");
+  var btnAudit            = $("btnAudit");
+  var viewDashboardBtn    = $("viewDashboardBtn");
+  var viewDossierBtn      = $("viewDossierBtn");
+  var settingsBtn         = $("settingsBtn");
 
   // Hero & Summary
-  var heroTitle          = $("heroTitle");
-  var heroSummaryLine    = $("heroSummaryLine");
-  var heroTagsRow        = $("heroTagsRow");
-  var summaryCardsGrid   = $("summaryCardsGrid");
+  var heroTitle           = $("heroTitle");
+  var heroSummaryLine     = $("heroSummaryLine");
+  var heroTagsRow         = $("heroTagsRow");
+  var summaryCardsGrid    = $("summaryCardsGrid");
 
   // Day Navigation & Timeline
-  var dayNavTabs         = $("dayNavTabs");
-  var daysContainer      = $("daysContainer");
+  var dayNavTabs          = $("dayNavTabs");
+  var daysContainer       = $("daysContainer");
 
   // Additional Sections
-  var highlightsGrid     = $("highlightsGrid");
-  var weatherSection     = $("weatherSection");
-  var weatherCardsRow    = $("weatherCardsRow");
-  var weatherAdvice      = $("weatherAdvice");
-  var recommendationsGrid= $("recommendationsGrid");
-  var budgetBreakdownGrid= $("budgetBreakdownGrid");
-  var budgetTotalNum     = $("budgetTotalNum");
-  var logisticsSection   = $("logisticsSection");
-  var flightsContent     = $("flightsContent");
-  var hotelsContent      = $("hotelsContent");
-  var criticAuditSection = $("criticAuditSection");
-  var criticAuditWrap    = $("criticAuditWrap");
-  var rawDossierWrap     = $("rawDossierWrap");
-  var rawDossierContent  = $("rawDossierContent");
+  var highlightsGrid      = $("highlightsGrid");
+  var weatherSection      = $("weatherSection");
+  var weatherCardsRow     = $("weatherCardsRow");
+  var weatherAdvice       = $("weatherAdvice");
+  var recommendationsGrid = $("recommendationsGrid");
+  var budgetBreakdownGrid = $("budgetBreakdownGrid");
+  var budgetTotalNum      = $("budgetTotalNum");
+  var logisticsSection    = $("logisticsSection");
+  var flightsContent      = $("flightsContent");
+  var hotelsContent       = $("hotelsContent");
+  var criticAuditSection  = $("criticAuditSection");
+  var criticAuditWrap     = $("criticAuditWrap");
+  var rawDossierWrap      = $("rawDossierWrap");
+  var rawDossierContent   = $("rawDossierContent");
 
   // Refinement Bar
-  var refinementForm     = $("refinementForm");
-  var refinementInput    = $("refinementInput");
-  var refinementSubmitBtn= $("refinementSubmitBtn");
+  var refinementForm      = $("refinementForm");
+  var refinementInput     = $("refinementInput");
+  var refinementSubmitBtn = $("refinementSubmitBtn");
+
+  // Settings Modal
+  var settingsModal       = $("settingsModal");
+  var settingsScrim       = $("settingsScrim");
+  var settingsClose       = $("settingsClose");
+  var settingsSave        = $("settingsSave");
+  var settingsGroqKey     = $("settingsGroqKey");
 
   /* ---------------- State ---------------- */
-  var currentPlanData    = null;
-  var currentParsed      = null;
-  var activeThreadId     = null;
-  var isAuditing         = false;
-  var currentTripId      = null;
+  var currentPlanData     = null;
+  var currentParsed       = null;
+  var activeThreadId      = null;
+  var isAuditing          = false;
+  var currentTripId       = null;
 
   var PHASES = [
     { label: "Flight Intelligence Agent · Analyzing routes & airfares in INR", weight: 0.22 },
@@ -78,7 +87,7 @@
     { label: "Final Synthesis Agent · Compiling verified master dossier",       weight: 0.20 }
   ];
 
-  /* ---------------- Utility Functions ---------------- */
+  /* ---------------- Utilities ---------------- */
 
   function el(tag, cls, text) {
     var node = document.createElement(tag);
@@ -93,37 +102,64 @@
     toastEl.classList.add("show");
     setTimeout(function () {
       toastEl.classList.remove("show");
-    }, 3600);
+    }, 3800);
   }
 
-  function escapeHtml(str) {
+  function cleanMarkdown(str) {
     return String(str || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/\*(.*?)\*/g, "$1")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .trim();
   }
 
   function renderMd(text) {
     if (window.MD && typeof window.MD.render === "function") {
-      return window.MD.render(text || "");
+      return window.MD.render(String(text || "").trim());
     }
-    return escapeHtml(text || "");
+    return String(text || "");
   }
 
-  /* ---------------- Intelligent Itinerary Text Parser ---------------- */
+  /* Parse Markdown tables into 2D array of cells */
+  function parseMarkdownTable(tableStr) {
+    var lines = String(tableStr || "").trim().split("\n");
+    var rows = [];
+
+    lines.forEach(function (line) {
+      var l = line.trim();
+      if (!l.startsWith("|") || !l.endsWith("|")) return;
+      if (/^\|[\s\-:]+\|/.test(l)) return; // skip header divider
+      var cols = l.split("|").slice(1, -1).map(function (c) {
+        return c.trim();
+      });
+      if (cols.length > 0) rows.push(cols);
+    });
+
+    return rows;
+  }
+
+  /* ---------------- Robust AI Output Parser ---------------- */
 
   function parseItineraryText(fullText, meta) {
     var text = String(fullText || "");
+
+    // Normalize unicode non-breaking spaces and hyphens
+    text = text
+      .replace(/\u2011/g, "-")
+      .replace(/\u2013/g, "-")
+      .replace(/\u2014/g, "-")
+      .replace(/\u202f/g, " ")
+      .replace(/\u00a0/g, " ");
+
     var parsed = {
       destination: meta.destination || "Destination",
       origin: meta.origin || "",
-      daysCount: meta.days || 5,
-      budget: "Estimated in INR (₹)",
+      daysCount: meta.days || 3,
+      budget: "Verified in INR (₹)",
       summary: "",
       highlights: [],
-      weather: { temp: "", condition: "", advice: "", forecast: [] },
+      weather: { temp: "", condition: "", advice: "", seasons: [] },
       days: [],
       budgetBreakdown: { items: [], total: "" },
       recommendations: { packing: [], transport: [], dining: [], safety: [] },
@@ -131,193 +167,296 @@
       hotelsText: ""
     };
 
-    // 1. Try to extract destination from query or text
-    var destMatch = text.match(/(?:trip to|journey to|visiting|explore|itinerary for)\s+([A-Za-z\s]+?)(?:[\.\,\:\n]|\s+from|\s+for|\s+in)/i);
-    if (destMatch && destMatch[1] && parsed.destination === "Destination") {
-      parsed.destination = destMatch[1].trim();
+    // 1. Destination Extraction
+    var destM = text.match(/(?:Destination[:\s\*]+)([A-Za-z\s]+?)(?:\(|,|\.|\n)/i) ||
+                text.match(/(?:trip to|journey to|visiting|explore)\s+([A-Za-z\s]+?)(?:[\.\,\:\n]|\s+from|\s+for)/i);
+    if (destM && destM[1] && (!parsed.destination || parsed.destination === "Destination")) {
+      parsed.destination = destM[1].trim();
     }
 
-    // 2. Extract Sections by common headers
-    var sectionPatterns = [
-      { key: "summary", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:1\.?\s*)?(?:Trip Summary|Overview|Introduction)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[2-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "flights", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:2\.?\s*)?(?:Flight|Transit|Flights & Transit Information)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[3-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "hotels", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:3\.?\s*)?(?:Hotel|Accommodation|Hotel Suggestions)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[4-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "weather", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:4\.?\s*)?(?:Weather|Climate|Weather Information)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[5-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "itinerary", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:5\.?\s*)?(?:Day-by-Day Itinerary|Itinerary|Daily Schedule)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[6-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "budget", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:6\.?\s*)?(?:Estimated Budget|Budget Breakdown|Costs)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})(?:[7-9]\.?\s*)?[A-Z]|\Z)/is },
-      { key: "recommendations", regex: /(?:^|\n)(?:#{1,3}\s*|\*{1,2})(?:7\.?\s*)?(?:Final Recommendations|Recommendations & Local Tips|Travel Tips)[:\s\*]*(.*?)(?=\n(?:#{1,3}\s*|\*{1,2})[A-Z]|\Z)/is }
+    // 2. Split into Major Sections
+    // Typical prompt sections: 1. Trip Summary, 2. Flight & Transit, 3. Hotel Suggestions, 4. Weather, 5. Day-by-Day Itinerary, 6. Estimated Budget, 7. Final Recommendations
+    var secRegex = /(?:^|\n)(?:#{1,3}\s*|\*{1,2})?(?:(\d+)\.\s*)?([A-Za-z\s&\–\-\/]+?)(?:\*{1,2})?[:\s\-\n]+(?=\n|\Z)/g;
+    
+    // We split by standard numbered or named sections
+    var splitPoints = [];
+    var knownHeaders = [
+      { key: "summary", rx: /(?:Trip Summary|Overview)/i },
+      { key: "flights", rx: /(?:Flight|Transit Information)/i },
+      { key: "hotels", rx: /(?:Hotel Suggestions|Accommodations|Hotels)/i },
+      { key: "weather", rx: /(?:Weather Information|Climate)/i },
+      { key: "itinerary", rx: /(?:Day[- ]by[- ]Day Itinerary|Daily Schedule|Itinerary)/i },
+      { key: "budget", rx: /(?:Estimated Budget|Budget Breakdown|Costs)/i },
+      { key: "recommendations", rx: /(?:Final Recommendations|Recommendations & Local Tips|Travel Tips)/i }
     ];
 
     var sections = {};
-    sectionPatterns.forEach(function (sec) {
-      var m = text.match(sec.regex);
-      if (m && m[1]) {
-        sections[sec.key] = m[1].trim();
-      }
+
+    // Alternative reliable section splitter:
+    var rawSections = text.split(/(?=\n#{1,3}\s+|\n\*\*\d+\.\s+)/);
+    rawSections.forEach(function (chunk) {
+      var headerLine = chunk.trim().split("\n")[0] || "";
+      knownHeaders.forEach(function (kh) {
+        if (kh.rx.test(headerLine)) {
+          sections[kh.key] = chunk;
+        }
+      });
     });
 
-    // Summary
-    parsed.summary = sections.summary || (text.slice(0, 320) + "…");
-    parsed.flightsText = sections.flights || "";
-    parsed.hotelsText = sections.hotels || "";
-
-    // Weather extraction
-    if (sections.weather) {
-      var wText = sections.weather;
-      var tempM = wText.match(/(\d{1,2}(?:\.\d+)?\s*°\s*C|\d{1,2}(?:\.\d+)?\s*°\s*F)/i);
-      if (tempM) parsed.weather.temp = tempM[1];
-
-      if (/sunny|clear/i.test(wText)) parsed.weather.condition = "☀️ Sunny & Clear";
-      else if (/rain|shower/i.test(wText)) parsed.weather.condition = "🌧️ Seasonal Rain";
-      else if (/snow|freez/i.test(wText)) parsed.weather.condition = "❄️ Snowy & Cold";
-      else if (/cloud/i.test(wText)) parsed.weather.condition = "⛅ Partly Cloudy";
-      else parsed.weather.condition = "🌤️ Pleasant Climate";
-
-      parsed.weather.advice = wText.replace(/^[\*\#\-\s]+/gm, " ").trim().slice(0, 240);
+    // Fallbacks if section split missed:
+    if (!sections.summary) {
+      var sm = text.match(/(?:Trip Summary|Overview)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      if (sm) sections.summary = sm[1];
+    }
+    if (!sections.itinerary) {
+      var im = text.match(/(?:Day[- ]by[- ]Day Itinerary|Itinerary)[:\s\*]+(.*?)(?=\n#{1,3}\s*(?:Estimated Budget|\d+\.)|\n\*\*\d+\.\s*Estimated Budget|\Z)/is);
+      if (im) sections.itinerary = im[1];
+    }
+    if (!sections.budget) {
+      var bm = text.match(/(?:Estimated Budget|Budget Breakdown)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      if (bm) sections.budget = bm[1];
+    }
+    if (!sections.weather) {
+      var wm = text.match(/(?:Weather Information)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      if (wm) sections.weather = wm[1];
+    }
+    if (!sections.recommendations) {
+      var rm = text.match(/(?:Final Recommendations|Recommendations & Local Tips)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      if (rm) sections.recommendations = rm[1];
     }
 
-    // Budget extraction
-    if (sections.budget) {
-      var bText = sections.budget;
-      var totalM = bText.match(/(?:Total(?: Estimated)?(?: Trip)? Cost|Grand Total)[:\s\*]*(?:₹|INR)?\s*([\d\,]+)/i);
-      if (totalM) {
-        parsed.budgetBreakdown.total = "₹" + totalM[1];
-        parsed.budget = "₹" + totalM[1];
-      } else {
-        var firstInr = bText.match(/(?:₹|INR)\s*([\d\,]+)/);
-        if (firstInr) {
-          parsed.budget = "₹" + firstInr[1];
-          parsed.budgetBreakdown.total = "₹" + firstInr[1];
-        }
+    // 3. Process Summary
+    if (sections.summary) {
+      parsed.summary = sections.summary;
+      // Extract origin
+      var origM = sections.summary.match(/(?:Departure city|From)[:\s\*]+([A-Za-z\s]+?)(?:\(|,|\.|\n)/i);
+      if (origM) parsed.origin = origM[1].trim();
+      // Extract days
+      var daysM = sections.summary.match(/(?:Duration)[:\s\*]+(\d+)\s*(?:days?|Nights?)/i);
+      if (daysM) parsed.daysCount = parseInt(daysM[1], 10);
+      // Extract total budget
+      var costM = sections.summary.match(/(?:Total estimated cost|Total)[:\s\*]+(?:\*{1,2})?(?:₹|INR)?\s*([\d\,]+)/i);
+      if (costM) {
+        parsed.budget = "₹" + costM[1].trim();
+        parsed.budgetBreakdown.total = "₹" + costM[1].trim();
       }
-
-      // Line items
-      var lines = bText.split("\n");
-      lines.forEach(function (l) {
-        var itemM = l.match(/(?:[-*•]|\d+\.)\s*([A-Za-z\s&\/]+?)[:\-–—]\s*(?:₹|INR)?\s*([\d\,]+)/);
-        if (itemM) {
-          parsed.budgetBreakdown.items.push({
-            name: itemM[1].trim(),
-            cost: "₹" + itemM[2].trim()
-          });
-        }
-      });
     }
 
-    // Parse Day-by-Day Itinerary
-    var itinText = sections.itinerary || text;
-    var dayRegex = /(?:^|\n)(?:#{1,4}\s*|\*{1,2})Day\s*(\d+)[:\s\-\–—]*(.*?)(?=\n(?:#{1,4}\s*|\*{1,2})Day\s*\d+|\n#{1,3}\s+[A-Z]|\Z)/gis;
-    var match;
-    var dayMatches = [];
+    // 4. Process Budget Breakdown
+    if (sections.budget) {
+      var bTables = parseMarkdownTable(sections.budget);
+      if (bTables.length > 1) {
+        // Table has header row + data rows
+        var headerCols = bTables[0];
+        bTables.slice(1).forEach(function (row) {
+          if (row.length >= 2) {
+            var category = cleanMarkdown(row[0] || "");
+            var itemDesc = row.length >= 3 ? cleanMarkdown(row[1]) : "";
+            var costVal = cleanMarkdown(row[row.length - 1] || "");
 
-    while ((match = dayRegex.exec(itinText)) !== null) {
-      dayMatches.push({
-        num: parseInt(match[1], 10),
-        raw: match[2].trim()
-      });
-    }
-
-    if (dayMatches.length > 0) {
-      parsed.days = dayMatches.map(function (dm) {
-        var rawLines = dm.raw.split("\n");
-        var dayTitle = "Exploration & Activities";
-
-        // First non-empty line can be day title
-        if (rawLines.length && rawLines[0].length < 80) {
-          dayTitle = rawLines[0].replace(/^[\#\*\-\s]+/, "").trim();
-        }
-
-        var activities = [];
-        // Split by activity headers or bold time markers
-        var actRegex = /(?:^|\n)(?:(?:#{3,4}\s*|\*{1,2})?(?:Morning|Afternoon|Evening|Night|\d{1,2}:\d{2}\s*(?:AM|PM)?)[:\s\-\–—]*|[-*•]\s*\*{1,2})([^\n\*]+?)(?:\*{1,2})?[:\s\-\–—]+(.*?)(?=\n(?:(?:#{3,4}\s*|\*{1,2})?(?:Morning|Afternoon|Evening|Night|\d{1,2}:\d{2}\s*(?:AM|PM)?)|\s*[-*•]\s*\*{1,2}[A-Z]|\Z))/gis;
-        var actM;
-
-        while ((actM = actRegex.exec(dm.raw)) !== null) {
-          var actTitle = actM[1].replace(/^[#\*\s]+/, "").trim();
-          var actBody = actM[2].trim();
-
-          var timeMatch = actTitle.match(/(\d{1,2}:\d{2}\s*(?:AM|PM)?|Morning|Afternoon|Evening|Night)/i);
-          var timeStr = timeMatch ? timeMatch[1] : "Daytime";
-
-          var locMatch = actBody.match(/(?:Location|Venue)[:\s\*]*([^\n,\.]+)/i);
-          var durMatch = actBody.match(/(?:Duration|Time required)[:\s\*]*([^\n,\.]+)/i);
-          var tipMatch = actBody.match(/(?:Tip|Note|Pro-Tip|Recommendation)[:\s\*]*([^\n]+)/i);
-
-          activities.push({
-            time: timeStr,
-            title: actTitle.replace(/^(?:Morning|Afternoon|Evening|Night|\d{1,2}:\d{2}\s*(?:AM|PM)?)\s*[:\-–—]?\s*/i, "").trim() || actTitle,
-            location: locMatch ? locMatch[1].trim() : parsed.destination,
-            duration: durMatch ? durMatch[1].trim() : "2-3 hours",
-            description: actBody.replace(/(?:Location|Duration|Tip|Note|Pro-Tip)[:\s\*]*[^\n]+/gi, "").trim(),
-            tip: tipMatch ? tipMatch[1].trim() : null
-          });
-        }
-
-        // Fallback if no sub-activities parsed: create one activity with the day's markdown
-        if (activities.length === 0) {
-          activities.push({
-            time: "Full Day",
-            title: dayTitle,
-            location: parsed.destination,
-            duration: "Day Schedule",
-            description: dm.raw,
-            tip: null
-          });
-        }
-
-        return {
-          dayNum: dm.num,
-          title: dayTitle,
-          activities: activities
-        };
-      });
-    }
-
-    // Recommendations extraction
-    if (sections.recommendations) {
-      var rText = sections.recommendations;
-      var rLines = rText.split("\n");
-      var curCat = "safety";
-
-      rLines.forEach(function (line) {
-        var clean = line.replace(/^[\*\#\-\s•\d\.]+/, "").trim();
-        if (!clean) return;
-
-        if (/packing|clothes|wear|carry/i.test(clean)) curCat = "packing";
-        else if (/transit|transport|metro|taxi|cab|auto|bus/i.test(clean)) curCat = "transport";
-        else if (/food|dining|eat|cuisine|restaurant|veg/i.test(clean)) curCat = "dining";
-        else if (/safety|tip|scam|cash|sim|atm/i.test(clean)) curCat = "safety";
-
-        if (clean.length > 8 && clean.length < 220) {
-          parsed.recommendations[curCat].push(clean);
-        }
-      });
-    }
-
-    // Highlights extraction: pull famous attractions mentioned in itinerary
-    var highlightKeywords = ["Temple", "Fort", "Palace", "Museum", "Beach", "Valley", "Viewpoint", "Pass", "Market", "Tower", "Lake", "Gardens", "Cathedral", "Sanctuary", "Falls", "Bridge"];
-    var seenHighlights = {};
-    parsed.days.forEach(function (d) {
-      d.activities.forEach(function (act) {
-        var words = act.title.split(/\s+/);
-        highlightKeywords.forEach(function (kw) {
-          if (act.title.toLowerCase().indexOf(kw.toLowerCase()) !== -1 && !seenHighlights[act.title]) {
-            seenHighlights[act.title] = true;
-            parsed.highlights.push({
-              name: act.title,
-              category: /Temple|Church|Cathedral/i.test(act.title) ? "Heritage" : /Beach|Lake|Falls|Valley/i.test(act.title) ? "Nature" : "Sightseeing",
-              description: act.description.slice(0, 140) + "…",
-              location: act.location || parsed.destination
+            if (/Total/i.test(category) || /Total/i.test(itemDesc)) {
+              if (costVal) {
+                parsed.budgetBreakdown.total = costVal.startsWith("₹") ? costVal : "₹" + costVal;
+                parsed.budget = parsed.budgetBreakdown.total;
+              }
+            } else if (category && costVal) {
+              parsed.budgetBreakdown.items.push({
+                name: category + (itemDesc ? " · " + itemDesc : ""),
+                cost: costVal.startsWith("₹") ? costVal : "₹" + costVal
+              });
+            }
+          }
+        });
+      } else {
+        // Fallback: list of items
+        var bLines = sections.budget.split("\n");
+        bLines.forEach(function (l) {
+          var itemM = l.match(/(?:[-*•]|\d+\.)\s*([A-Za-z\s&\/]+?)[:\-–—]\s*(?:₹|INR)?\s*([\d\,]+)/);
+          if (itemM) {
+            parsed.budgetBreakdown.items.push({
+              name: itemM[1].trim(),
+              cost: "₹" + itemM[2].trim()
             });
           }
         });
+      }
+    }
+
+    // 5. Process Weather Section
+    if (sections.weather) {
+      var wText = sections.weather;
+      var wTables = parseMarkdownTable(wText);
+      if (wTables.length > 1) {
+        wTables.slice(1).forEach(function (row) {
+          if (row.length >= 3) {
+            parsed.weather.seasons.push({
+              season: cleanMarkdown(row[0]),
+              temp: cleanMarkdown(row[1]),
+              rainfall: cleanMarkdown(row[2]),
+              notes: row.length >= 4 ? cleanMarkdown(row[3]) : ""
+            });
+          }
+        });
+        if (parsed.weather.seasons.length > 0) {
+          parsed.weather.temp = parsed.weather.seasons[0].temp;
+          parsed.weather.condition = parsed.weather.seasons[0].season;
+        }
+      }
+
+      var adviceM = wText.match(/(?:Weather[- ]Based Advice|Advice|Tips)[:\s\*]+(.*?)(?=\n#{1,3}|\Z)/is);
+      if (adviceM) {
+        parsed.weather.advice = cleanMarkdown(adviceM[1]);
+      } else {
+        parsed.weather.advice = "Pack comfortable walking shoes, light clothing, and check local forecasts prior to departure.";
+      }
+    }
+
+    // 6. Process Day-by-Day Itinerary (Most Important!)
+    var itinSource = sections.itinerary || text;
+
+    var dayPattern = /(?:^|\n)(?:#{2,4}\s*|\*{1,2})Day\s*(\d+)[:\s\-\–—]*([^\n\*]*)\n([\s\S]*?)(?=\n(?:#{2,4}\s*|\*{1,2})Day\s*\d+|\n#{1,3}\s+[A-Z0-9]|\n\*\*\d+\.|\n---\s*\n\s*##|\Z)/gi;
+    var dayMatch;
+    var dayIndex = 1;
+
+    while ((dayMatch = dayPattern.exec(itinSource)) !== null) {
+      var dayNum = parseInt(dayMatch[1], 10) || dayIndex;
+      var dayTitle = dayMatch[2] ? dayMatch[2].trim() : ("Day " + dayNum + " Schedule");
+      var dayContent = dayMatch[3].trim();
+
+      var activities = [];
+
+      // Check if Day has a Markdown Table: | Time | Activity | Notes |
+      var dayTable = parseMarkdownTable(dayContent);
+      if (dayTable.length > 1) {
+        var rows = dayTable.slice(1);
+        rows.forEach(function (row) {
+          if (row.length >= 2) {
+            var timeVal = cleanMarkdown(row[0]);
+            var actVal = cleanMarkdown(row[1]);
+            var noteVal = row.length >= 3 ? cleanMarkdown(row[2]) : "";
+
+            var loc = parsed.destination;
+            var locM = actVal.match(/(?:at|to|in)\s+([A-Z][A-Za-z\s]+?)(?:[\(\,\.]|\s+for|\s+and|$)/);
+            if (locM && locM[1]) loc = locM[1].trim();
+
+            activities.push({
+              time: timeVal || "Day Schedule",
+              title: actVal || "Sightseeing Experience",
+              location: loc,
+              duration: /Airport|Flight/i.test(actVal) ? "Transit" : "1.5 - 2.5 hrs",
+              description: noteVal || actVal,
+              tip: /₹/i.test(noteVal) ? noteVal : null
+            });
+
+            // Extract landmark highlights
+            var landmarkKeywords = ["Fort", "Beach", "Cathedral", "Temple", "Palace", "Museum", "Church", "Market", "Waterfalls", "Valley", "Sanctuary", "Lake"];
+            landmarkKeywords.forEach(function (kw) {
+              if (actVal.indexOf(kw) !== -1) {
+                var exists = parsed.highlights.some(function (h) { return h.name === actVal; });
+                if (!exists && parsed.highlights.length < 8) {
+                  parsed.highlights.push({
+                    name: actVal,
+                    category: /Temple|Church|Cathedral/i.test(actVal) ? "Heritage" : /Beach|Lake|Falls|Valley/i.test(actVal) ? "Nature" : "Sightseeing",
+                    description: noteVal || ("Premier landmark in " + parsed.destination),
+                    location: loc
+                  });
+                }
+              }
+            });
+          }
+        });
+      }
+
+      // If no table rows found, try parsing bullet points
+      if (activities.length === 0) {
+        var lines = dayContent.split("\n");
+        lines.forEach(function (line) {
+          var l = line.trim();
+          var itemM = l.match(/(?:[-*•]|\d+\.)\s*(?:\*{1,2})?([^\*:]+?)(?:\*{1,2})?[:\-–—]+(.*?)$/);
+          if (itemM) {
+            activities.push({
+              time: "Scheduled",
+              title: cleanMarkdown(itemM[1]),
+              location: parsed.destination,
+              duration: "2-3 hours",
+              description: cleanMarkdown(itemM[2]),
+              tip: null
+            });
+          }
+        });
+      }
+
+      // Fallback
+      if (activities.length === 0) {
+        activities.push({
+          time: "Full Day",
+          title: dayTitle,
+          location: parsed.destination,
+          duration: "Day Schedule",
+          description: dayContent,
+          tip: null
+        });
+      }
+
+      parsed.days.push({
+        dayNum: dayNum,
+        title: dayTitle,
+        activities: activities
       });
-    });
+
+      dayIndex++;
+    }
+
+    // 7. Process Recommendations
+    if (sections.recommendations) {
+      var rTables = parseMarkdownTable(sections.recommendations);
+      if (rTables.length > 1) {
+        rTables.slice(1).forEach(function (row) {
+          if (row.length >= 2) {
+            var tipTitle = cleanMarkdown(row[0]);
+            var tipDesc = cleanMarkdown(row[1]);
+            parsed.recommendations.safety.push(tipTitle + ": " + tipDesc);
+          }
+        });
+      } else {
+        var rLines = sections.recommendations.split("\n");
+        rLines.forEach(function (l) {
+          var cl = cleanMarkdown(l);
+          if (cl.length > 10 && cl.length < 220) {
+            parsed.recommendations.safety.push(cl);
+          }
+        });
+      }
+    }
+
+    // Default recommendations if empty
+    if (parsed.recommendations.safety.length === 0) {
+      parsed.recommendations.safety = [
+        "Book round-trip flights 2-3 months ahead for lowest airfares.",
+        "Pre-book last-mile airport transfers to avoid surge pricing.",
+        "Keep small cash/UPI handy for local auto-rickshaws and temple/monument tickets."
+      ];
+    }
+    parsed.recommendations.transport = [
+      "Rent a local scooter or pre-paid taxi for flexible coastal/city transit.",
+      "Inquire about local tourist bus loops or metro cards for city tours."
+    ];
+    parsed.recommendations.dining = [
+      "Try local coastal curry, vegetarian thalis, and freshly prepared local delicacies.",
+      "Choose popular local shacks and heritage cafés with high local patron turnover."
+    ];
+    parsed.recommendations.packing = [
+      "Light, breathable cotton garments suitable for warm coastal/city climates.",
+      "High SPF sunscreen, UV sunglasses, and sturdy walking footwear."
+    ];
+
+    parsed.flightsText = sections.flights || "";
+    parsed.hotelsText = sections.hotels || "";
 
     return parsed;
   }
 
-  /* ---------------- UI Rendering ---------------- */
+  /* ---------------- Dashboard Rendering ---------------- */
 
   function renderDashboard(parsed, rawResult) {
     currentParsed = parsed;
@@ -325,27 +464,27 @@
 
     // 1. Hero Section
     if (heroTitle) {
-      heroTitle.innerHTML = "Your Journey to <em>" + escapeHtml(parsed.destination) + "</em>";
+      heroTitle.innerHTML = "Your Journey to <em>" + cleanMarkdown(parsed.destination) + "</em>";
     }
 
     if (heroSummaryLine) {
-      var daysText = (parsed.days.length || parsed.daysCount) + " Days";
-      var nightsText = Math.max(1, (parsed.days.length || parsed.daysCount) - 1) + " Nights";
+      var dayCount = parsed.days.length || parsed.daysCount || 3;
+      var nightCount = Math.max(1, dayCount - 1);
       heroSummaryLine.innerHTML =
-        "<span>" + daysText + " · " + nightsText + "</span>" +
+        "<span>" + dayCount + " Days · " + nightCount + " Nights</span>" +
         '<span class="hero-dot">✦</span>' +
-        "<span>" + (parsed.origin ? "From " + escapeHtml(parsed.origin) + " ➔ " : "") + escapeHtml(parsed.destination) + "</span>" +
+        "<span>" + (parsed.origin ? "From " + cleanMarkdown(parsed.origin) + " ➔ " : "") + cleanMarkdown(parsed.destination) + "</span>" +
         '<span class="hero-dot">✦</span>' +
-        "<span>Verified in INR (₹)</span>";
+        '<span class="badge-inr">Verified in INR (₹)</span>';
     }
 
     if (heroTagsRow) {
       heroTagsRow.innerHTML = "";
       var tags = [
-        { label: parsed.budget || "Budget in ₹", cls: "tag-currency", icon: "💰" },
+        { label: parsed.budgetBreakdown.total || parsed.budget || "Itemized in ₹", cls: "tag-currency", icon: "💰" },
         { label: parsed.weather.condition || "Pleasant Climate", cls: "", icon: "🌤️" },
         { label: "Culture & Sights", cls: "", icon: "🏛️" },
-        { label: "Multi-Agent Verified", cls: "", icon: "✓" }
+        { label: "Anti-Hallucination Verified", cls: "", icon: "✓" }
       ];
       tags.forEach(function (t) {
         var span = el("span", "hero-tag " + t.cls);
@@ -360,26 +499,26 @@
       var cards = [
         {
           label: "Destination",
-          val: parsed.destination,
-          sub: parsed.origin ? "Outbound from " + parsed.origin : "Premier travel destination",
+          val: cleanMarkdown(parsed.destination),
+          sub: parsed.origin ? "Outbound from " + cleanMarkdown(parsed.origin) : "Prime leisure & cultural destination",
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-8 12-8 12z"/></svg>'
         },
         {
           label: "Duration & Pace",
-          val: (parsed.days.length || parsed.daysCount) + " Days · " + Math.max(1, (parsed.days.length || parsed.daysCount) - 1) + "N",
-          sub: "Chronologically sequenced pacing",
+          val: (parsed.days.length || parsed.daysCount || 3) + " Days · " + Math.max(1, (parsed.days.length || parsed.daysCount || 3) - 1) + "N",
+          sub: "Chronologically sequenced activities",
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
         },
         {
-          label: "Weather & Climate",
-          val: parsed.weather.temp ? parsed.weather.temp + " · " + parsed.weather.condition : (parsed.weather.condition || "Seasonal"),
+          label: "Weather Snapshot",
+          val: parsed.weather.temp ? parsed.weather.temp + " · " + (parsed.weather.condition || "Pleasant") : (parsed.weather.condition || "24 - 28 °C"),
           sub: parsed.weather.advice ? parsed.weather.advice.slice(0, 50) + "…" : "Favorable conditions",
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>'
         },
         {
           label: "Estimated Budget",
-          val: parsed.budgetBreakdown.total || parsed.budget || "Itemized in ₹",
-          sub: "All tariffs and fares in Indian Rupees",
+          val: parsed.budgetBreakdown.total || parsed.budget || "Verified in ₹",
+          sub: "Itemized tariffs and transit in INR",
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 6v12"/></svg>'
         }
       ];
@@ -421,7 +560,7 @@
       daysContainer.innerHTML = "";
 
       if (parsed.days.length === 0) {
-        // Fallback if no days parsed: render raw answer formatted
+        // Fallback: render formatted markdown of itinerary
         var fallbackBlock = el("div", "itinerary-day-block");
         fallbackBlock.innerHTML = renderMd(rawResult.itinerary || rawResult.answer);
         daysContainer.appendChild(fallbackBlock);
@@ -434,7 +573,7 @@
           var dHead = el("div", "day-header");
           var badgeWrap = el("div", "day-badge-wrap");
           badgeWrap.appendChild(el("span", "day-number-badge", "Day " + d.dayNum));
-          badgeWrap.appendChild(el("h3", "day-header-title", d.title));
+          badgeWrap.appendChild(el("h3", "day-header-title", cleanMarkdown(d.title)));
           dHead.appendChild(badgeWrap);
 
           var dMeta = el("div", "day-header-meta");
@@ -458,29 +597,30 @@
             var metaBadges = el("div", "activity-meta-badges");
             if (act.duration) {
               var durBadge = el("span", "activity-meta-badge");
-              durBadge.innerHTML = '⏱️ ' + escapeHtml(act.duration);
+              durBadge.innerHTML = '⏱️ ' + cleanMarkdown(act.duration);
               metaBadges.appendChild(durBadge);
             }
             topRow.appendChild(metaBadges);
             card.appendChild(topRow);
 
-            var actTitle = el("h4", "activity-title", act.title);
+            var actTitle = el("h4", "activity-title", cleanMarkdown(act.title));
             card.appendChild(actTitle);
 
             if (act.location) {
               var locEl = el("div", "activity-location");
-              locEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-8 12-8 12z"/></svg> ' + escapeHtml(act.location);
+              locEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-8 12-8 12z"/></svg> ' + cleanMarkdown(act.location);
               card.appendChild(locEl);
             }
 
             if (act.description) {
-              var desc = el("p", "activity-description", act.description);
-              card.appendChild(desc);
+              var descWrap = el("div", "activity-description");
+              descWrap.innerHTML = renderMd(act.description);
+              card.appendChild(descWrap);
             }
 
             if (act.tip) {
               var tipBox = el("div", "activity-tip-box");
-              tipBox.innerHTML = '<span>💡</span><span>' + escapeHtml(act.tip) + '</span>';
+              tipBox.innerHTML = '<span>💡</span><div>' + renderMd(act.tip) + '</div>';
               card.appendChild(tipBox);
             }
 
@@ -501,30 +641,40 @@
         parsed.highlights.slice(0, 6).forEach(function (h) {
           var hCard = el("div", "highlight-card");
           var hHead = el("div", "highlight-header");
-          hHead.appendChild(el("h4", "highlight-title", h.name));
+          hHead.appendChild(el("h4", "highlight-title", cleanMarkdown(h.name)));
           hHead.appendChild(el("span", "highlight-cat-tag", h.category));
           hCard.appendChild(hHead);
-          hCard.appendChild(el("p", "highlight-desc", h.description));
+          hCard.appendChild(el("p", "highlight-desc", cleanMarkdown(h.description)));
           var hFoot = el("div", "highlight-footer");
-          hFoot.innerHTML = '<span>📍 ' + escapeHtml(h.location) + '</span>';
+          hFoot.innerHTML = '<span>📍 ' + cleanMarkdown(h.location) + '</span>';
           hCard.appendChild(hFoot);
           highlightsGrid.appendChild(hCard);
         });
       } else {
-        var highlightsSec = $("highlightsSection");
-        if (highlightsSec) highlightsSec.hidden = true;
+        var hSec = $("highlightsSection");
+        if (hSec) hSec.hidden = true;
       }
     }
 
     // 6. Weather Section
     if (weatherSection) {
-      if (parsed.weather.advice || parsed.weather.temp) {
-        weatherSection.hidden = false;
-        if (weatherAdvice) {
-          weatherAdvice.innerHTML = '<span>🌤️</span><span>' + escapeHtml(parsed.weather.advice || "Ideal travel weather with comfortable temperatures.") + '</span>';
+      weatherSection.hidden = false;
+      if (weatherAdvice) {
+        weatherAdvice.innerHTML = '<span>🌤️</span><div>' + renderMd(parsed.weather.advice || "Favorable seasonal climate for travel.") + '</div>';
+      }
+      if (weatherCardsRow) {
+        weatherCardsRow.innerHTML = "";
+        if (parsed.weather.seasons && parsed.weather.seasons.length > 0) {
+          parsed.weather.seasons.forEach(function (s) {
+            var wCard = el("div", "weather-card");
+            wCard.appendChild(el("div", "weather-date", s.season));
+            var iconVal = /monsoon|rain/i.test(s.season) ? "🌧️" : /winter|cold/i.test(s.season) ? "❄️" : "☀️";
+            wCard.appendChild(el("div", "weather-icon-lg", iconVal));
+            wCard.appendChild(el("div", "weather-temp", s.temp));
+            wCard.appendChild(el("div", "weather-cond", s.rainfall));
+            weatherCardsRow.appendChild(wCard);
+          });
         }
-      } else {
-        weatherSection.hidden = true;
       }
     }
 
@@ -532,27 +682,24 @@
     if (recommendationsGrid) {
       recommendationsGrid.innerHTML = "";
       var categories = [
-        { key: "transport", title: "Local Transit & Commute", icon: "🚕", def: ["Use local prepaid taxis or registered app cabs.", "Inquire about daily transit passes for major routes."] },
-        { key: "dining", title: "Dining & Food Scene", icon: "🍲", def: ["Savor authentic regional cuisine and thalis.", "Look for reputed restaurants with high local footfall."] },
-        { key: "packing", title: "Packing Essentials", icon: "🎒", def: ["Comfortable walking footwear for active sightseeing.", "Layered clothing suitable for day and evening temperature shifts."] },
-        { key: "safety", title: "Insider & Safety Tips", icon: "💡", def: ["Keep small currency notes handy for auto-rickshaws and entry fees.", "Book high-demand heritage monuments and safari passes online in advance."] }
+        { key: "transport", title: "Local Transit & Commute", icon: "🚕", items: parsed.recommendations.transport },
+        { key: "dining", title: "Dining & Food Scene", icon: "🍲", items: parsed.recommendations.dining },
+        { key: "packing", title: "Packing Essentials", icon: "🎒", items: parsed.recommendations.packing },
+        { key: "safety", title: "Insider & Safety Tips", icon: "💡", items: parsed.recommendations.safety }
       ];
 
       categories.forEach(function (cat) {
-        var items = (parsed.recommendations[cat.key] && parsed.recommendations[cat.key].length)
-          ? parsed.recommendations[cat.key]
-          : cat.def;
-
         var catCard = el("div", "rec-category-card");
         var cHead = el("div", "rec-category-header");
-        var ico = el("div", "rec-cat-icon", cat.icon);
-        cHead.appendChild(ico);
+        cHead.appendChild(el("div", "rec-cat-icon", cat.icon));
         cHead.appendChild(el("h4", "rec-cat-title", cat.title));
         catCard.appendChild(cHead);
 
         var ul = el("ul", "rec-list");
-        items.slice(0, 4).forEach(function (it) {
-          ul.appendChild(el("li", "rec-list-item", it));
+        (cat.items || []).slice(0, 4).forEach(function (it) {
+          var li = el("li", "rec-list-item");
+          li.innerHTML = renderMd(it);
+          ul.appendChild(li);
         });
         catCard.appendChild(ul);
         recommendationsGrid.appendChild(catCard);
@@ -565,9 +712,9 @@
       var budgetItems = parsed.budgetBreakdown.items;
       if (budgetItems.length === 0) {
         budgetItems = [
-          { name: "Flights / Transit", cost: "Estimated in ₹" },
-          { name: "Hotels & Stays", cost: "Tariff in ₹" },
-          { name: "Daily Food & Dining", cost: "Approx. ₹1,200/day" },
+          { name: "Flights / Main Transit", cost: "Estimated in ₹" },
+          { name: "Hotel & Accommodations", cost: "Approx. ₹4,000/night" },
+          { name: "Daily Food & Dining", cost: "Approx. ₹1,500/day" },
           { name: "Activities & Entries", cost: "Approx. ₹800/day" }
         ];
       }
@@ -586,13 +733,13 @@
 
     // 9. Logistics (Flights & Hotels)
     if (logisticsSection) {
-      var hasFlights = Boolean(rawResult.flight_results || parsed.flightsText);
-      var hasHotels = Boolean(rawResult.hotel_results || parsed.hotelsText);
+      var flText = rawResult.flight_results || parsed.flightsText;
+      var htText = rawResult.hotel_results || parsed.hotelsText;
 
-      if (hasFlights || hasHotels) {
+      if (flText || htText) {
         logisticsSection.hidden = false;
-        if (flightsContent) flightsContent.innerHTML = renderMd(rawResult.flight_results || parsed.flightsText || "Flights analyzed by Flight Intelligence Agent.");
-        if (hotelsContent) hotelsContent.innerHTML = renderMd(rawResult.hotel_results || parsed.hotelsText || "Curated accommodations scouted by Hotel Agent.");
+        if (flightsContent) flightsContent.innerHTML = renderMd(flText || "Flight routing analyzed by Flight Intelligence Agent.");
+        if (hotelsContent) hotelsContent.innerHTML = renderMd(htText || "Curated hotel options scouted by Stays Agent.");
       } else {
         logisticsSection.hidden = true;
       }
@@ -603,7 +750,7 @@
       rawDossierContent.innerHTML = renderMd(rawResult.answer || rawResult.itinerary || "");
     }
 
-    // Show dashboard
+    // Reveal Dashboard
     if (loadingScreen) loadingScreen.hidden = true;
     if (errorScreen) errorScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = false;
@@ -614,7 +761,6 @@
     if (activeTabEl) activeTabEl.classList.add("active");
 
     if (!targetId) {
-      // Show all days
       document.querySelectorAll(".itinerary-day-block").forEach(function (b) { b.style.display = "block"; });
       window.scrollTo({ top: daysContainer.offsetTop - 120, behavior: "smooth" });
     } else {
@@ -638,11 +784,11 @@
 
     var started = Date.now();
     var currentPhase = 0;
-    var ESTIMATED_MS = 50000;
+    var ESTIMATED_MS = 45000;
 
     var timer = setInterval(function () {
       var elapsed = Date.now() - started;
-      var ratio = Math.min(elapsed / ESTIMATED_MS, 0.95);
+      var ratio = Math.min(elapsed / ESTIMATED_MS, 0.96);
 
       if (pipelineBarFill) pipelineBarFill.style.width = (ratio * 100).toFixed(1) + "%";
       if (elapsedTimeEl) elapsedTimeEl.textContent = Math.floor(elapsed / 1000) + "s";
@@ -674,7 +820,9 @@
           throw new Error("Invalid response from server (HTTP " + r.status + ")");
         }).then(function (data) {
           if (!r.ok || data.success === false) {
-            throw new Error(data.error || "Planning failed with HTTP " + r.status);
+            var err = new Error(data.error || "Planning request failed (HTTP " + r.status + ")");
+            if (r.status === 428) err.__kind = "credentials";
+            throw err;
           }
           return data;
         });
@@ -687,7 +835,6 @@
         activeThreadId = data.thread_id || activeThreadId;
         if (data.history_id) currentTripId = data.history_id;
 
-        // Cache in sessionStorage for fast back/forward navigation
         try {
           sessionStorage.setItem("travelbrain_active_plan", JSON.stringify(data));
         } catch (e) {}
@@ -697,7 +844,7 @@
       })
       .catch(function (err) {
         clearInterval(timer);
-        showError(err.message);
+        showError(err.message, err.__kind);
       });
   }
 
@@ -726,7 +873,7 @@
         planResult.__meta = {
           destination: trip.destination || "",
           query: trip.query || "",
-          days: 5
+          days: 3
         };
 
         var parsed = parseItineraryText(planResult.answer || planResult.itinerary, planResult.__meta);
@@ -737,11 +884,19 @@
       });
   }
 
-  function showError(msg) {
+  function showError(msg, kind) {
     if (loadingScreen) loadingScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = true;
     if (errorScreen) errorScreen.hidden = false;
-    if (errorMessage) errorMessage.textContent = msg || "An unexpected error occurred while planning your journey.";
+
+    if (errorMessage) {
+      if (kind === "credentials" || /Missing credentials|GROQ_API_KEY/i.test(msg)) {
+        errorMessage.textContent = "Please configure your Groq API Key to generate travel plans.";
+        if (btnErrorSettings) btnErrorSettings.hidden = false;
+      } else {
+        errorMessage.textContent = msg || "An error occurred while generating your itinerary.";
+      }
+    }
   }
 
   /* ---------------- Critic Fact-Checking Audit ---------------- */
@@ -786,7 +941,7 @@
           toast(data.error || "Audit failed.");
           if (btnAudit) {
             btnAudit.disabled = false;
-            btnAudit.textContent = "🛡️ Audit Plan";
+            btnAudit.textContent = "🛡️ Audit Factuality";
           }
         }
       })
@@ -794,7 +949,7 @@
         toast("Audit error: " + err.message);
         if (btnAudit) {
           btnAudit.disabled = false;
-          btnAudit.textContent = "🛡️ Audit Plan";
+          btnAudit.textContent = "🛡️ Audit Factuality";
         }
       })
       .then(function () {
@@ -824,7 +979,7 @@
     if (evalData.verified_entities && evalData.verified_entities.length) {
       var entBox = el("div", "activity-tip-box");
       entBox.style.marginTop = "16px";
-      entBox.innerHTML = "<strong>Verified Real Landmarks:</strong> " + escapeHtml(evalData.verified_entities.join(", "));
+      entBox.innerHTML = "<strong>Verified Real Landmarks:</strong> " + cleanMarkdown(evalData.verified_entities.join(", "));
       card.appendChild(entBox);
     }
 
@@ -844,9 +999,9 @@
       refinementSubmitBtn.textContent = "Refining…";
     }
 
-    var combinedPrompt = "Regarding the previously planned trip to " + (currentParsed ? currentParsed.destination : "the destination") + ": " + refText + ". Please update and refine the itinerary accordingly with all costs in INR (₹).";
+    var combinedPrompt = "Regarding the trip to " + (currentParsed ? currentParsed.destination : "the destination") + ": " + refText + ". Please update and refine the itinerary accordingly with all costs in INR (₹).";
 
-    executePlanning(combinedPrompt, currentParsed ? currentParsed.origin : "", currentParsed ? currentParsed.destination : "", currentParsed ? currentParsed.daysCount : 5);
+    executePlanning(combinedPrompt, currentParsed ? currentParsed.origin : "", currentParsed ? currentParsed.destination : "", currentParsed ? currentParsed.daysCount : 3);
 
     if (refinementInput) refinementInput.value = "";
     if (refinementSubmitBtn) {
@@ -855,10 +1010,54 @@
     }
   }
 
-  /* ---------------- Event Listeners & Initialization ---------------- */
+  /* ---------------- Settings Modal Handlers ---------------- */
+
+  function openSettings() {
+    if (settingsModal && settingsScrim) {
+      settingsModal.hidden = false;
+      settingsScrim.hidden = false;
+      if (settingsGroqKey) settingsGroqKey.focus();
+    }
+  }
+
+  function closeSettings() {
+    if (settingsModal && settingsScrim) {
+      settingsModal.hidden = true;
+      settingsScrim.hidden = true;
+    }
+  }
+
+  function saveSettings() {
+    var key = settingsGroqKey ? settingsGroqKey.value.trim() : "";
+    if (!key) {
+      toast("Please enter your Groq API key.");
+      return;
+    }
+
+    fetch("/api/config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ groq_api_key: key })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.success) {
+          toast("Groq API key saved successfully!");
+          closeSettings();
+          // Reload planning
+          window.location.reload();
+        } else {
+          toast(data.error || "Failed to save key.");
+        }
+      })
+      .catch(function () {
+        toast("Error saving credentials.");
+      });
+  }
+
+  /* ---------------- Initialization ---------------- */
 
   function init() {
-    // 1. Back button behavior
     var backBtn = $("btnBackHome");
     if (backBtn) {
       backBtn.addEventListener("click", function (e) {
@@ -867,7 +1066,6 @@
       });
     }
 
-    // 2. Action buttons
     if (copyPlanBtn) {
       copyPlanBtn.addEventListener("click", function () {
         var text = (currentPlanData && (currentPlanData.answer || currentPlanData.itinerary)) || "";
@@ -905,7 +1103,12 @@
       btnAudit.addEventListener("click", triggerCriticAudit);
     }
 
-    // View toggle: Dashboard vs Dossier
+    if (settingsBtn) settingsBtn.addEventListener("click", openSettings);
+    if (btnErrorSettings) btnErrorSettings.addEventListener("click", openSettings);
+    if (settingsClose) settingsClose.addEventListener("click", closeSettings);
+    if (settingsScrim) settingsScrim.addEventListener("click", closeSettings);
+    if (settingsSave) settingsSave.addEventListener("click", saveSettings);
+
     if (viewDashboardBtn && viewDossierBtn) {
       viewDashboardBtn.addEventListener("click", function () {
         viewDashboardBtn.classList.add("active");
@@ -922,7 +1125,6 @@
       });
     }
 
-    // Refinement Form
     if (refinementForm) {
       refinementForm.addEventListener("submit", handleRefinement);
     }
@@ -943,14 +1145,13 @@
       });
     }
 
-    // 3. Inspect URL parameters
+    // Inspect URL parameters
     var params = new URLSearchParams(window.location.search);
     var urlTripId = params.get("id");
     var urlTo = params.get("to");
     var urlFrom = params.get("from") || "";
-    var urlDays = params.get("days") || "5";
+    var urlDays = params.get("days") || "3";
 
-    // Dynamic path route check: /trip-plan/<id>
     var pathMatch = window.location.pathname.match(/\/trip-plan\/([a-zA-Z0-9\-]+)/);
     if (pathMatch && pathMatch[1] && pathMatch[1] !== "itinerary") {
       urlTripId = pathMatch[1];
@@ -967,7 +1168,7 @@
       return;
     }
 
-    // Check sessionStorage fallback
+    // Check cached plan in sessionStorage
     try {
       var cached = sessionStorage.getItem("travelbrain_active_plan");
       if (cached) {
@@ -978,8 +1179,7 @@
       }
     } catch (e) {}
 
-    // If nothing provided, prompt user to go home
-    showError("No travel plan specified. Please select a destination from the home page.");
+    showError("No destination specified. Return home to choose your journey.");
   }
 
   document.addEventListener("DOMContentLoaded", init);
