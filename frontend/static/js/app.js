@@ -814,57 +814,7 @@
   function openTrip(tripId) {
     if (!tripId) return;
     activeTripId = tripId;
-
-    // Highlight in sidebar
-    document.querySelectorAll(".history-item").forEach(function (node) {
-      node.classList.toggle("active", node.getAttribute("data-trip-id") === tripId);
-    });
-
-    fetch("/api/history/" + tripId)
-      .then(function (r) {
-        return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status));
-      })
-      .then(function (data) {
-        if (!data.success || !data.trip) {
-          toast("Could not load trip record.");
-          return;
-        }
-
-        var trip = data.trip;
-        if (messages) messages.innerHTML = "";
-
-        if (trip.query) {
-          renderUser(trip.query);
-        }
-
-        var planResult = trip.result || {};
-        if (typeof planResult === "string") {
-          try {
-            planResult = JSON.parse(planResult);
-          } catch (e) {
-            planResult = { answer: planResult };
-          }
-        }
-        planResult.__query = trip.query || "";
-
-        try {
-          renderResult(planResult);
-        } catch (e) {
-          console.error("renderResult error:", e);
-          renderError("Failed to display saved itinerary: " + e.message, "render");
-        }
-
-        if (planningSection) planningSection.hidden = false;
-        planningSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
-        // On mobile, close sidebar after selecting
-        if (window.innerWidth < 992) {
-          toggleSidebar(false);
-        }
-      })
-      .catch(function (err) {
-        toast("Failed to load trip: " + err.message);
-      });
+    window.location.href = "/trip-plan?id=" + encodeURIComponent(tripId);
   }
 
   function deleteTrip(tripId) {
@@ -1300,19 +1250,28 @@
       parsedDays = 5;
     }
 
-    var queryParts = ["Plan a " + parsedDays + " day trip to " + to];
-    if (from) {
-      queryParts.push("from " + from);
-    }
-    queryParts.push(". Find verified flights, hotel options with tariffs in Indian Rupees (₹), the weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).");
-
-    var finalPrompt = queryParts.join(" ");
-    send(finalPrompt);
+    // Navigate cleanly to the dedicated itinerary route
+    var targetUrl = "/trip-plan?to=" + encodeURIComponent(to) +
+                    (from ? "&from=" + encodeURIComponent(from) : "") +
+                    "&days=" + encodeURIComponent(parsedDays);
+    window.location.href = targetUrl;
   }
 
   if (btnPlanJourney) {
     btnPlanJourney.addEventListener("click", planJourney);
   }
+
+  // Allow pressing Enter in search inputs
+  [fFrom, fTo, fDays].forEach(function (inp) {
+    if (inp) {
+      inp.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          planJourney();
+        }
+      });
+    }
+  });
 
   // Quick route discovery pills
   document.querySelectorAll(".quick-pill").forEach(function (pill) {
@@ -1530,132 +1489,9 @@
   });
 
   
-  /* ============================================================
-     Aether Luxury Scroll & Telemetry Engine
-     ============================================================ */
-  function initAetherScrollEngine() {
-    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var clamp = function (v, a, b) { return Math.min(b !== undefined ? b : 1, Math.max(a !== undefined ? a : 0, v)); };
-    var lerp = function (a, b, t) { return a + (b - a) * t; };
-    var ease = function (t) { return t * t * (3 - 2 * t); };
-    var hex = function (h) {
-      return [1, 3, 5].map(function (i) { return parseInt(h.slice(i, i + 2), 16); });
-    };
-
-    // Sky shifts from dawn to midday to golden hour to dusk to night as you scroll
-    var SKY = [
-      [0, '#0a2a42', '#6f9fb8'],
-      [0.28, '#1d5b86', '#a9d0e3'],
-      [0.58, '#0f3a5c', '#e7c999'],
-      [0.82, '#1a1a3a', '#c9806a'],
-      [1.0, '#071c2b', '#3b4f6b']
-    ].map(function (k) { return [k[0], hex(k[1]), hex(k[2])]; });
-
-    function seg(arr, p) {
-      var i = 0;
-      while (i < arr.length - 2 && p > arr[i + 1][0]) i++;
-      var a = arr[i], b = arr[i + 1];
-      return [a, b, ease(clamp((p - a[0]) / (b[0] - a[0])))];
-    }
-
-    // Procedural atmospheric clouds
-    var cl = document.getElementById('clouds');
-    var C = [];
-    if (cl && cl.children.length === 0) {
-      var seed = 7;
-      var rnd = function () {
-        seed = (seed * 16807) % 2147483647;
-        return seed / 2147483647;
-      };
-      for (var ci = 0; ci < 16; ci++) {
-        var w = 180 + rnd() * 360;
-        var d = 0.25 + rnd() * 1.5;
-        var e = document.createElement('i');
-        e.style.cssText = 'width:' + w + 'px;height:' + (w * 0.32) + 'px;top:' + (8 + rnd() * 84) + '%;opacity:' + (0.12 + rnd() * 0.28 * d / 1.5) + ';';
-        cl.appendChild(e);
-        C.push({ e: e, w: w, d: d, x: rnd() * 1800 });
-      }
-    }
-
-    var sun = document.getElementById('sun');
-    var root = document.documentElement;
-    var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene .box'));
-    var secs = Array.prototype.slice.call(document.querySelectorAll('main [id]'));
-    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
-
-    var alt = function (p) {
-      return 35000 * (p < 0.14 ? ease(p / 0.14) : p < 0.78 ? 1 : 1 - ease((p - 0.78) / 0.22));
-    };
-    var status = function (p) {
-      return p < 0.03 ? 'Boarding' : p < 0.14 ? 'Climbing' : p < 0.78 ? 'Cruising' : p < 0.97 ? 'Descending' : 'Landed';
-    };
-
-    var sp = 0, W = window.innerWidth, H = window.innerHeight;
-    var size = function () {
-      W = window.innerWidth;
-      H = window.innerHeight;
-    };
-    window.addEventListener('resize', size);
-
-    var altEl = document.getElementById('alt');
-    var spdEl = document.getElementById('spd');
-    var stEl = document.getElementById('st');
-    var barEl = document.getElementById('bar');
-    var pctEl = document.getElementById('pct');
-
-    function frame(t) {
-      var max = root.scrollHeight - H;
-      var p = max > 0 ? clamp(window.scrollY / max) : 0;
-      sp = rm ? p : sp + (p - sp) * 0.075;
-
-      // Update Sky colors
-      var s = seg(SKY, sp);
-      var a = s[0], b = s[1], k = s[2];
-      var mix = function (idx) {
-        return a[idx].map(function (v, j) {
-          return Math.round(lerp(v, b[idx][j], k));
-        }).join(',');
-      };
-      root.style.setProperty('--sky-top', 'rgb(' + mix(1) + ')');
-      root.style.setProperty('--sky-bot', 'rgb(' + mix(2) + ')');
-
-      // Update Sun position
-      if (sun) {
-        sun.style.transform = 'translate3d(' + (lerp(0.72, 0.3, sp) * W) + 'px,' + (lerp(0.22, 0.72, sp) * H) + 'px,0)';
-      }
-
-      // Parallax drifting clouds
-      var tt = rm ? 0 : t * 0.01;
-      for (var i = 0; i < C.length; i++) {
-        var c = C[i];
-        var span = W + c.w * 2;
-        var x = (((c.x - (sp * 1400 + tt) * c.d) % span + span) % span) - c.w;
-        c.e.style.transform = 'translate3d(' + x + 'px,0,0)';
-      }
-
-      // Active nav link highlight
-      var cur = secs[0];
-      for (var sidx = 0; sidx < secs.length; sidx++) {
-        if (secs[sidx].getBoundingClientRect().top <= H * 0.5) {
-          cur = secs[sidx];
-        }
-      }
-      if (cur) {
-        links.forEach(function (l) {
-          l.classList.toggle('on', l.getAttribute('href') === '#' + cur.id);
-        });
-      }
-
-      requestAnimationFrame(frame);
-    }
-
-    requestAnimationFrame(frame);
-  }
-
   /* ---------------- Initialization ---------------- */
 
-  initAetherScrollEngine();
-
+  
   initTheme();
   updateEmptyState();
   checkAuth();

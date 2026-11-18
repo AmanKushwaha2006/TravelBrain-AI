@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelBrain AI — Generated Travel Itinerary</title>
+  <meta name="description" content="AI-generated luxury travel itinerary powered by multi-agent coordination with verified costs in Indian Rupees (₹)." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Itinerary Dashboard Stylesheet -->
+  <link rel="stylesheet" href="/static/css/itinerary.css?v=1.0.0" />
+</head>
+<body>
+
+  <!-- ==================== HEADER & NAVIGATION ==================== -->
+  <header class="itinerary-header">
+    <div class="header-inner">
+      
+      <!-- Left: Back to Home Button -->
+      <div class="header-left">
+        <a href="/" class="btn-back-home" id="btnBackHome" title="Return to TravelBrain Home Page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>← Back to Home</span>
+        </a>
+
+        <!-- Brand Mark -->
+        <div class="header-brand">
+          <div class="brand-symbol">
+            <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+              <path d="M6 24 L20 6 L34 24 L20 18 Z" fill="#55B8E8"/>
+              <circle cx="20" cy="18" r="3.2" fill="#D4AF37" />
+            </svg>
+          </div>
+          <span class="brand-text">TravelBrain <span>Itinerary</span></span>
+        </div>
+      </div>
+
+      <!-- Right: Action Buttons & View Mode Toggle -->
+      <div class="header-right">
+        
+        <!-- View Toggle -->
+        <div class="view-toggle-wrap">
+          <button type="button" class="view-toggle-btn active" id="viewDashboardBtn" title="Switch to structured dashboard view">✦ Dashboard</button>
+          <button type="button" class="view-toggle-btn" id="viewDossierBtn" title="View complete markdown agent dossier">📄 Full Dossier</button>
+        </div>
+
+        <!-- Copy Plan -->
+        <button type="button" class="action-btn" id="copyPlanBtn" title="Copy text to clipboard">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+          </svg>
+          <span class="action-text">Copy</span>
+        </button>
+
+        <!-- Download .md -->
+        <button type="button" class="action-btn" id="downloadMdBtn" title="Export as Markdown file">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          <span class="action-text">Export</span>
+        </button>
+
+        <!-- Print -->
+        <button type="button" class="action-btn" id="printPlanBtn" title="Print travel dossier">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect width="12" height="8" x="6" y="14"/>
+          </svg>
+          <span class="action-text">Print</span>
+        </button>
+
+        <!-- Critic Audit -->
+        <button type="button" class="action-btn btn-audit" id="btnAudit" title="Audit this plan for hallucinations & geographic factuality">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>🛡️ Audit Factuality</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="itinerary-container">
+
+    <!-- 1. LOADING SCREEN -->
+    <section class="loading-screen" id="loadingScreen">
+      
+      <div class="radar-wrapper">
+        <div class="radar-circle c1"></div>
+        <div class="radar-circle c2"></div>
+        <div class="radar-circle c3"></div>
+        <div class="radar-sweep"></div>
+        <div class="radar-plane">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="loading-title">Planning Your Journey to <span class="loading-dest" id="loadingDest">Destination</span>…</h1>
+      <p class="loading-subtitle">Our specialized AI agents are scouring verified routes, flight schedules, hotel tariffs, and local attractions.</p>
+
+      <div class="pipeline-progress-box">
+        <div class="pipeline-phase-text">
+          <span class="current-agent-tag">
+            <span class="pulse-dot"></span>
+            <span id="currentAgentLabel">Flight Intelligence Agent · Analyzing routes in INR</span>
+          </span>
+          <span class="elapsed-time" id="elapsedTime">0s</span>
+        </div>
+
+        <div class="pipeline-bar-track">
+          <div class="pipeline-bar-fill" id="pipelineBarFill"></div>
+        </div>
+
+        <div class="pipeline-agent-chips">
+          <span class="agent-chip active">01 Flights</span>
+          <span class="agent-chip">02 Stays</span>
+          <span class="agent-chip">03 Weather</span>
+          <span class="agent-chip">04 Itinerary</span>
+          <span class="agent-chip">05 Synthesis</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. ERROR SCREEN -->
+    <section class="error-screen" id="errorScreen" hidden>
+      <div class="error-card">
+        <div class="error-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h2>Could Not Generate Itinerary</h2>
+        <p id="errorMessage">We encountered an issue communicating with the multi-agent AI server.</p>
+        <div class="error-actions">
+          <button type="button" class="btn-retry" id="btnRetry">Try Again</button>
+          <a href="/" class="btn-back-home">Return to Home</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DASHBOARD CONTENT -->
+    <div id="dashboardContent" hidden>
+
+      <!-- SECTION 4: TRIP OVERVIEW HERO -->
+      <section class="trip-hero">
+        <div class="hero-meta-kicker">✦ Verified Travel Dossier · Indian Rupees (₹)</div>
+        <h1 class="hero-title" id="heroTitle">Your Journey to <em>Destination</em></h1>
+        <div class="hero-summary-line" id="heroSummaryLine">
+          <!-- Injected dynamically -->
+        </div>
+        <div class="hero-tags-row" id="heroTagsRow">
+          <!-- Injected dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION 5: QUICK TRAVEL SUMMARY CARDS -->
+      <section class="summary-cards-grid" id="summaryCardsGrid">
+        <!-- Injected dynamically by itinerary.js -->
+      </section>
+
+      <!-- SECTION 8: STICKY DAY NAVIGATION TABS -->
+      <nav class="day-nav-wrapper">
+        <div class="day-nav-inner">
+          <div class="day-nav-tabs" id="dayNavTabs">
+            <!-- Tabs injected dynamically -->
+          </div>
+        </div>
+      </nav>
+
+      <!-- SECTION 6 & 7: DAY-BY-DAY ITINERARY TIMELINE -->
+      <section class="itinerary-section">
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Chronological Timeline</div>
+            <h2 class="section-title">Day-by-Day Itinerary</h2>
+          </div>
+        </div>
+
+        <div id="daysContainer">
+          <!-- Day blocks and activity timeline injected dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION 9: DESTINATION HIGHLIGHTS -->
+      <section class="highlights-section" id="highlightsSection">
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Curated Landmarks</div>
+            <h2 class="section-title">Destination Highlights</h2>
+          </div>
+        </div>
+        <div class="highlights-grid" id="highlightsGrid">
+          <!-- Highlight cards injected dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION 10: WEATHER & SEASONAL ADVISORY -->
+      <section class="weather-container" id="weatherSection" hidden>
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Meteorology & Climate</div>
+            <h2 class="section-title">Weather Advisory</h2>
+          </div>
+        </div>
+        <div class="weather-advice-banner" id="weatherAdvice">
+          <!-- Weather advice text -->
+        </div>
+      </section>
+
+      <!-- SECTION 11: TRAVEL RECOMMENDATIONS -->
+      <section class="recommendations-section">
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Actionable Advice</div>
+            <h2 class="section-title">Travel & Local Insights</h2>
+          </div>
+        </div>
+        <div class="recommendations-grid" id="recommendationsGrid">
+          <!-- Categorized tip cards injected dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION 12: ESTIMATED BUDGET BREAKDOWN -->
+      <section class="budget-container" id="budgetSection">
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Financial Estimates</div>
+            <h2 class="section-title">Estimated Budget (in ₹ INR)</h2>
+          </div>
+        </div>
+        <div class="budget-breakdown-grid" id="budgetBreakdownGrid">
+          <!-- Line items -->
+        </div>
+        <div class="budget-total-box">
+          <div class="budget-total-label">Estimated Total Trip Outlay</div>
+          <div class="budget-total-number" id="budgetTotalNum">₹0</div>
+        </div>
+      </section>
+
+      <!-- SECTION 13: FLIGHTS & HOTELS LOGISTICS -->
+      <section class="logistics-section" id="logisticsSection" hidden>
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Transit & Lodging</div>
+            <h2 class="section-title">Flights & Accommodations</h2>
+          </div>
+        </div>
+        <div class="logistics-grid">
+          <div class="logistics-card">
+            <div class="logistics-card-head">
+              <div class="logistics-icon">✈️</div>
+              <h3 class="day-header-title">Flight Options</h3>
+            </div>
+            <div class="md" id="flightsContent"></div>
+          </div>
+          <div class="logistics-card">
+            <div class="logistics-card-head">
+              <div class="logistics-icon">🏨</div>
+              <h3 class="day-header-title">Hotel Stays</h3>
+            </div>
+            <div class="md" id="hotelsContent"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 14: CRITIC AGENT AUDIT SECTION -->
+      <section class="critic-audit-section" id="criticAuditSection" hidden>
+        <div id="criticAuditWrap">
+          <!-- Critic audit card injected dynamically -->
+        </div>
+      </section>
+
+      <!-- SECTION 16: FULL RAW DOSSIER VIEW (TOGGLED VIA HEADER) -->
+      <section class="raw-dossier-wrap" id="rawDossierWrap" hidden>
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Direct Agent Output</div>
+            <h2 class="section-title">Master Travel Dossier</h2>
+          </div>
+        </div>
+        <div class="md" id="rawDossierContent">
+          <!-- Full markdown content -->
+        </div>
+      </section>
+
+      <!-- SECTION 15: CONVERSATIONAL REFINEMENT DOCK -->
+      <div class="refinement-dock">
+        <form class="refinement-form" id="refinementForm" autocomplete="off">
+          <input type="text" class="refinement-input" id="refinementInput" placeholder="Refine your plan (e.g., 'Add pure veg dining options' or 'Make day 2 more relaxed')…" aria-label="Refine trip plan" />
+          <button type="submit" class="refinement-submit-btn" id="refinementSubmitBtn">
+            <span>Refine Plan</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m22 2-7 20-4-9-9-4 20-7Z"/>
+            </svg>
+          </button>
+        </form>
+        <div class="refinement-chips">
+          <button type="button" class="refine-chip" data-prompt="Add authentic pure vegetarian dining recommendations.">🥗 Pure Veg Dining</button>
+          <button type="button" class="refine-chip" data-prompt="Find boutique stays under ₹6,000 per night.">🏨 Boutique Stays</button>
+          <button type="button" class="refine-chip" data-prompt="Adjust budget to stay under ₹40,000 total.">💰 Budget &lt; ₹40K</button>
+          <button type="button" class="refine-chip" data-prompt="Focus more on photography and scenic viewpoints.">📸 Scenic Spots</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast-box" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/markdown.js"></script>
+  <script src="/static/js/itinerary.js?v=1.0.0"></script>
+
+</body>
+</html>

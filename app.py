@@ -126,7 +126,11 @@ if CORS_ORIGINS:
 async def add_no_cache_for_dev(request: Request, call_next):
     """Prevent aggressive browser caching for static files and templates."""
     response = await call_next(request)
-    if request.url.path.startswith("/static/") or request.url.path == "/" or request.url.path == "/index.html":
+    if (
+        request.url.path.startswith("/static/")
+        or request.url.path in ("/", "/index.html", "/trip-plan", "/itinerary")
+        or request.url.path.startswith("/trip-plan/")
+    ):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
@@ -211,6 +215,17 @@ async def home(request: Request):
         request=request,
         name="index.html",
         context={}
+    )
+
+
+@app.get("/trip-plan", response_class=HTMLResponse)
+@app.get("/trip-plan/{trip_id}", response_class=HTMLResponse)
+@app.get("/itinerary", response_class=HTMLResponse)
+async def itinerary_view(request: Request, trip_id: str | None = None):
+    return templates.TemplateResponse(
+        request=request,
+        name="itinerary.html",
+        context={"trip_id": trip_id or ""}
     )
 
 
@@ -586,6 +601,39 @@ async def read_history(request: Request, trip_id: str):
         return JSONResponse(status_code=404, content={"success": False, "error": "Trip not found."})
 
     return JSONResponse(content={"success": True, "trip": trip})
+
+
+@app.get("/api/trip/{trip_id}")
+async def read_public_trip(trip_id: str):
+    """Retrieve trip by ID for sharing or direct page navigation."""
+    pool = _get_auth_pool()
+    if not pool:
+        return JSONResponse(status_code=503, content={"success": False, "error": "Database not configured."})
+    try:
+        with pool.connection() as conn:
+            row = conn.execute(
+                """
+                SELECT id, title, destination, query, result, created_at
+                FROM travel_history
+                WHERE id = %s::uuid
+                """,
+                (trip_id,),
+            ).fetchone()
+        if not row:
+            return JSONResponse(status_code=404, content={"success": False, "error": "Trip not found."})
+        return JSONResponse(content={
+            "success": True,
+            "trip": {
+                "id": str(row["id"]),
+                "title": row["title"],
+                "destination": row["destination"],
+                "query": row["query"],
+                "result": row["result"],
+                "created_at": row["created_at"].isoformat() if row["created_at"] else None,
+            }
+        })
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"success": False, "error": str(e)})
 
 
 @app.delete("/api/history/{trip_id}")
