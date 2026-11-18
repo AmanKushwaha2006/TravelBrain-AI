@@ -167,63 +167,12 @@
     },
 
     buildAtmosphereAndSky: function () {
-      var self = this;
-      var textureLoader = new THREE.TextureLoader();
-
-      textureLoader.load(
-        "/static/img/sky-sunset-bg.jpg",
-        function (texture) {
-          texture.encoding = THREE.sRGBEncoding;
-          var bgGeo = new THREE.PlaneGeometry(125, 70);
-          var bgMat = new THREE.MeshBasicMaterial({
-            map: texture,
-            depthWrite: false
-          });
-          var bgMesh = new THREE.Mesh(bgGeo, bgMat);
-          bgMesh.position.set(0, 2, -45);
-          self.scene.add(bgMesh);
-          self.skyBackdrop = bgMesh;
-        },
-        undefined,
-        function () {
-          // Dynamic shader sky gradient fallback
-          var bgGeo = new THREE.PlaneGeometry(125, 70);
-          var bgMat = new THREE.ShaderMaterial({
-            uniforms: {
-              colorTop: { value: new THREE.Color(0x0c2038) },
-              colorMid: { value: new THREE.Color(0x274e78) },
-              colorSunset: { value: new THREE.Color(0xffaf66) },
-              colorSunGlow: { value: new THREE.Color(0xffe4b5) }
-            },
-            vertexShader: [
-              "varying vec2 vUv;",
-              "void main() {",
-              "  vUv = uv;",
-              "  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);",
-              "}"
-            ].join("\n"),
-            fragmentShader: [
-              "uniform vec3 colorTop;",
-              "uniform vec3 colorMid;",
-              "uniform vec3 colorSunset;",
-              "uniform vec3 colorSunGlow;",
-              "varying vec2 vUv;",
-              "void main() {",
-              "  vec3 c = mix(colorMid, colorTop, smoothstep(0.4, 1.0, vUv.y));",
-              "  float sun = exp(-length(vUv - vec2(0.22, 0.76)) * 4.2);",
-              "  c = mix(c, colorSunset, smoothstep(0.08, 0.45, vUv.y) * (1.0 - smoothstep(0.45, 0.85, vUv.y)));",
-              "  c += colorSunGlow * sun * 1.6;",
-              "  gl_FragColor = vec4(c, 1.0);",
-              "}"
-            ].join("\n"),
-            depthWrite: false
-          });
-          var bgMesh = new THREE.Mesh(bgGeo, bgMat);
-          bgMesh.position.set(0, 2, -45);
-          self.scene.add(bgMesh);
-          self.skyBackdrop = bgMesh;
-        }
-      );
+      // The sky backdrop is now managed globally and seamlessly by CSS (.global-sky-background)
+      // so all 3 pages (Hero, How It Works, Features) share the exact same photographic cloudscape.
+      // Three.js WebGL canvas runs transparently (alpha: true) so the 3D aircraft flies directly
+      // in the global sky without any seam, crop difference, or color shifts.
+      this.skyBackdrop = null;
+      this._globalSkyBg = document.querySelector(".global-sky-background");
     },
 
     loadAircraftModel: function () {
@@ -231,8 +180,9 @@
       var loader = new THREE.GLTFLoader();
 
       // Load ultra-detailed Airbus A350 commercial airliner
+      var modelUrl = window.location.protocol === "file:" ? "./static/models/A350.glb" : "/static/models/A350.glb";
       loader.load(
-        "/static/models/A350.glb",
+        modelUrl,
         function (gltf) {
           var root = gltf.scene;
 
@@ -257,11 +207,12 @@
           box.getCenter(center);
           root.position.sub(center);
 
-          // Scale model so wingspan fits screen width gracefully (~15.2 units)
+          // Scale model so wingspan fits screen width gracefully (~11.8 units, ~46% of viewport)
           var size = new THREE.Vector3();
           box.getSize(size);
           var maxDim = Math.max(size.x, size.y, size.z);
-          var scaleFactor = 15.2 / maxDim;
+          var scaleFactor = 11.8 / maxDim;
+          self.baseScale = scaleFactor;
           wrapper.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
           // Attach Aviation Navigation Strobes & Beacons
@@ -289,8 +240,9 @@
       var self = this;
       var loader = new THREE.GLTFLoader();
 
+      var fallbackUrl = window.location.protocol === "file:" ? "./static/models/A320.glb" : "/static/models/A320.glb";
       loader.load(
-        "/static/models/A320.glb",
+        fallbackUrl,
         function (gltf) {
           var root = gltf.scene;
           root.traverse(function (child) {
@@ -310,7 +262,8 @@
           var size = new THREE.Vector3();
           box.getSize(size);
           var maxDim = Math.max(size.x, size.y, size.z);
-          var s = 15.2 / maxDim;
+          var s = 11.8 / maxDim;
+          self.baseScale = s;
           wrapper.scale.set(s, s, s);
 
           wrapper.rotation.set(-Math.PI / 2 + 0.08, 0, 0.06);
@@ -386,9 +339,13 @@
       // Scroll Depth Parallax
       window.addEventListener("scroll", function () {
         var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        var heroHeight = self.container ? self.container.clientHeight : window.innerHeight;
-        self.scrollProgress = Math.min(Math.max(scrollY / heroHeight, 0), 1.5);
+        var maxScroll = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+        self.scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1.0);
       }, { passive: true });
+    },
+
+    setScrollProgress: function (p) {
+      this.scrollProgress = Math.min(Math.max(p, 0), 1.0);
     },
 
     onResize: function () {
@@ -513,20 +470,67 @@
             self.introTimer += delta;
             var t = Math.min(self.introTimer / self.introDuration, 1.0);
             var ease = 1 - Math.pow(1 - t, 3); // Smooth cubic ease-out
-            self.airplane.position.x = -22 + (activeConfig.planePos.x - (-22)) * ease;
-            self.airplane.position.y = activeConfig.planePos.y;
+            self.airplane.position.x = -22 + (1.2 - (-22)) * ease;
+            self.airplane.position.y = 5.8;
+            var initScale = (self.baseScale || 0.175);
+            self.airplane.scale.set(initScale, initScale, initScale);
           } else {
             // Turbulence and physical flight banking
             var turbulencePitch = Math.sin(elapsedTime * 1.4) * 0.016 + Math.cos(elapsedTime * 0.7) * 0.008;
             var turbulenceRoll = Math.cos(elapsedTime * 1.1) * 0.024;
             var turbulenceY = Math.sin(elapsedTime * 1.6) * 0.12;
 
-            self.airplane.position.y = activeConfig.planePos.y + turbulenceY + self.mouse.y * 0.7 + self.scrollProgress * 2.8;
-            self.airplane.position.x = activeConfig.planePos.x + self.mouse.x * 1.4 - self.scrollProgress * 1.8;
+            // Full-page flight spline based on scrollProgress
+            var p = self.scrollProgress;
+            var waypoints = [
+              { p: 0.00, pos: [1.2, 5.8, 0.0], rot: [0.03, -0.52, 0.07], scale: 1.0 },
+              { p: 0.20, pos: [2.6, 6.2, -1.2], rot: [0.08, -0.65, 0.16], scale: 0.92 },
+              { p: 0.50, pos: [2.2, 5.9, -0.8], rot: [0.02, -0.44, -0.04], scale: 0.96 },
+              { p: 0.75, pos: [3.0, 5.4, -1.8], rot: [-0.04, -0.58, -0.12], scale: 0.88 },
+              { p: 1.00, pos: [1.8, 4.8, -1.0], rot: [0.02, -0.50, 0.04], scale: 0.82 }
+            ];
 
-            self.airplane.rotation.z = activeConfig.planeRot.z - self.mouse.x * 0.14 + turbulenceRoll;
-            self.airplane.rotation.x = activeConfig.planeRot.x - self.mouse.y * 0.08 + turbulencePitch;
-            self.airplane.rotation.y = activeConfig.planeRot.y + self.mouse.x * 0.07;
+            var idx = 0;
+            while (idx < waypoints.length - 2 && p > waypoints[idx + 1].p) idx++;
+            var wa = waypoints[idx], wb = waypoints[idx + 1];
+            var wt = (p - wa.p) / (wb.p - wa.p);
+            wt = wt * wt * (3 - 2 * wt);
+
+            var targetX = wa.pos[0] + (wb.pos[0] - wa.pos[0]) * wt;
+            var targetY = wa.pos[1] + (wb.pos[1] - wa.pos[1]) * wt;
+            var targetZ = wa.pos[2] + (wb.pos[2] - wa.pos[2]) * wt;
+            var targetRotX = wa.rot[0] + (wb.rot[0] - wa.rot[0]) * wt;
+            var targetRotY = wa.rot[1] + (wb.rot[1] - wa.rot[1]) * wt;
+            var targetRotZ = wa.rot[2] + (wb.rot[2] - wa.rot[2]) * wt;
+            var targetScale = wa.scale + (wb.scale - wa.scale) * wt;
+
+            // Holding pattern override when in live multi-agent planning mode
+            if (document.body.classList.contains("planning-active")) {
+              targetX = 4.8;
+              targetY = 7.0;
+              targetZ = -3.5;
+              targetRotX = 0.02;
+              targetRotY = -0.42;
+              targetRotZ = 0.04;
+              targetScale = 0.78;
+            }
+
+            // Mobile viewport adaptation
+            if (window.innerWidth < 768) {
+              targetX = (targetX - 1.2) * 0.3;
+              targetY = targetY * 0.85 + 0.6;
+              targetScale = targetScale * 0.75;
+            }
+
+            self.airplane.position.x = targetX + self.mouse.x * 1.2;
+            self.airplane.position.y = targetY + turbulenceY + self.mouse.y * 0.6;
+            self.airplane.position.z = targetZ;
+
+            self.airplane.rotation.x = targetRotX - self.mouse.y * 0.08 + turbulencePitch;
+            self.airplane.rotation.y = targetRotY + self.mouse.x * 0.08;
+            self.airplane.rotation.z = targetRotZ - self.mouse.x * 0.14 + turbulenceRoll;
+            var currentScale = (self.baseScale || 0.175) * targetScale;
+            self.airplane.scale.set(currentScale, currentScale, currentScale);
           }
         }
 
@@ -547,6 +551,8 @@
         if (self.skyBackdrop) {
           self.skyBackdrop.position.x = -self.mouse.x * 1.1;
           self.skyBackdrop.position.y = 2.0 - self.mouse.y * 0.6;
+        } else if (self._globalSkyBg) {
+          self._globalSkyBg.style.transform = "translate3d(" + (-self.mouse.x * 12) + "px, " + (-self.mouse.y * 8) + "px, 0) scale(1.04)";
         }
 
         // 5. Camera LookAt

@@ -1,11 +1,11 @@
 {
   "0": "app.py",
   "1": "critic_agent.py",
-  "2": "checkpointer.py",
+  "2": "session.py",
   "3": "local.py",
   "4": "app.js",
   "5": "cache.py",
-  "6": "settings.py",
+  "6": "auth.py",
   "7": "README.md",
   "8": "render",
   "9": "vercel.json",
@@ -20,5 +20,12 @@
   "18": ".assignTexture",
   "19": ".getDependency",
   "20": "GLTFMaterialsPbrSpecularGlossinessExtension",
-  "21": ".parse"
+  "21": ".parse",
+  "22": "Request",
+  "23": "evaluate_plan",
+  "24": "animated-content.js",
+  "25": "settings.py",
+  "26": "history.py",
+  "27": "sessions.py",
+  "30": "db/__init__.py"
 }

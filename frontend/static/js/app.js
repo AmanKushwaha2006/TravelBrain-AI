@@ -50,6 +50,42 @@
   var mobileToggle      = $("mobileToggle");
   var mobileDrawer      = $("mobileDrawer");
 
+  /* --- Auth & Sidebar Elements --- */
+  var sidebarToggle     = $("sidebarToggle");
+  var chatSidebar       = $("chatSidebar");
+  var sidebarCloseBtn   = $("sidebarCloseBtn");
+  var sidebarBackdrop   = $("sidebarBackdrop");
+  var sidebarNewTripBtn = $("sidebarNewTripBtn");
+  var historyList       = $("historyList");
+  var historyCount      = $("historyCount");
+  var historyEmpty      = $("historyEmpty");
+  var sidebarUserAvatar = $("sidebarUserAvatar");
+  var sidebarUserName   = $("sidebarUserName");
+  var sidebarUserEmail  = $("sidebarUserEmail");
+  var sidebarAuthActionBtn = $("sidebarAuthActionBtn");
+  var navAuthBtn        = $("navAuthBtn");
+  var navAuthText       = $("navAuthText");
+  var mAuth             = $("mAuth");
+
+  var authModal         = $("authModal");
+  var authScrim         = $("authScrim");
+  var authClose         = $("authClose");
+  var tabLogin          = $("tabLogin");
+  var tabSignup         = $("tabSignup");
+  var authErrorBanner   = $("authErrorBanner");
+  var loginForm         = $("loginForm");
+  var loginEmail        = $("loginEmail");
+  var loginPassword     = $("loginPassword");
+  var loginSubmitBtn    = $("loginSubmitBtn");
+  var signupForm        = $("signupForm");
+  var signupName        = $("signupName");
+  var signupEmail       = $("signupEmail");
+  var signupPassword    = $("signupPassword");
+  var signupConfirm     = $("signupConfirm");
+  var signupSubmitBtn   = $("signupSubmitBtn");
+  var switchToSignup    = $("switchToSignup");
+  var switchToLogin     = $("switchToLogin");
+
   /* ---------------- State ---------------- */
 
   var THEME_KEY = "travelbrain.theme";
@@ -57,6 +93,10 @@
   var busy = false;
   var config = null;     // Last /api/config payload
   var savingConfig = false;
+
+  var currentUser = null; // { id, name, email }
+  var historyItems = [];  // Array of latest 10 trips
+  var activeTripId = null;
 
   var PHASES = [
     { label: "Flight Intelligence Agent · Analyzing routes & airfares in INR", weight: 0.22 },
@@ -80,6 +120,8 @@
   function icon(paths, cls) {
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "18");
+    svg.setAttribute("height", "18");
     svg.setAttribute("fill", "none");
     svg.setAttribute("stroke", "currentColor");
     svg.setAttribute("stroke-width", "2");
@@ -380,12 +422,480 @@
     if (e.key === "Escape" && settingsModal && !settingsModal.hidden) closeSettings();
   });
 
+  /* ---------------- Auth & Sidebar Controllers ---------------- */
+
+  function toggleSidebar(state) {
+    var isOpen = typeof state === "boolean" ? state : !document.body.classList.contains("sidebar-open");
+    document.body.classList.toggle("sidebar-open", isOpen);
+    if (chatSidebar) {
+      if (isOpen) {
+        chatSidebar.style.visibility = "visible";
+        chatSidebar.style.pointerEvents = "auto";
+        chatSidebar.style.transform = "translateX(0)";
+      } else {
+        chatSidebar.style.pointerEvents = "none";
+        chatSidebar.style.transform = "translateX(-100%)";
+        setTimeout(function () {
+          if (!document.body.classList.contains("sidebar-open")) {
+            chatSidebar.style.visibility = "hidden";
+          }
+        }, 300);
+      }
+    }
+    if (sidebarBackdrop) sidebarBackdrop.hidden = !isOpen;
+  }
+
+  function openAuthModal(tab) {
+    if (!authModal || !authScrim) return;
+    authModal.hidden = false;
+    authScrim.hidden = false;
+    clearAuthError();
+    switchAuthTab(tab || "login");
+    var firstInput = (tab === "signup" ? signupName : loginEmail);
+    if (firstInput) setTimeout(function () { firstInput.focus(); }, 100);
+  }
+
+  function closeAuthModal() {
+    if (!authModal || !authScrim) return;
+    authModal.hidden = true;
+    authScrim.hidden = true;
+    clearAuthError();
+  }
+
+  function switchAuthTab(tab) {
+    clearAuthError();
+    if (tab === "signup") {
+      if (tabLogin) tabLogin.classList.remove("active");
+      if (tabSignup) tabSignup.classList.add("active");
+      if (loginForm) loginForm.hidden = true;
+      if (signupForm) signupForm.hidden = false;
+    } else {
+      if (tabSignup) tabSignup.classList.remove("active");
+      if (tabLogin) tabLogin.classList.add("active");
+      if (signupForm) signupForm.hidden = true;
+      if (loginForm) loginForm.hidden = false;
+    }
+  }
+
+  function showAuthError(msg) {
+    if (!authErrorBanner) return;
+    authErrorBanner.textContent = msg;
+    authErrorBanner.hidden = false;
+  }
+
+  function clearAuthError() {
+    if (!authErrorBanner) return;
+    authErrorBanner.textContent = "";
+    authErrorBanner.hidden = true;
+  }
+
+  function formatRelativeTime(dateStr) {
+    if (!dateStr) return "";
+    var date = new Date(dateStr);
+    var now = new Date();
+    var diffMs = now - date;
+    var diffSec = Math.floor(diffMs / 1000);
+    var diffMin = Math.floor(diffSec / 60);
+    var diffHrs = Math.floor(diffMin / 60);
+    var diffDays = Math.floor(diffHrs / 24);
+
+    if (diffSec < 60) return "Just now";
+    if (diffMin < 60) return diffMin + "m ago";
+    if (diffHrs < 24) return diffHrs + "h ago";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return diffDays + "d ago";
+
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  }
+
+  function updateAuthUI() {
+    if (currentUser) {
+      var initial = (currentUser.name || "U").trim().charAt(0).toUpperCase();
+      if (sidebarUserAvatar) sidebarUserAvatar.textContent = initial;
+      if (sidebarUserName) sidebarUserName.textContent = currentUser.name;
+      if (sidebarUserEmail) sidebarUserEmail.textContent = currentUser.email;
+
+      if (sidebarAuthActionBtn) {
+        sidebarAuthActionBtn.title = "Log Out (" + currentUser.name + ")";
+        sidebarAuthActionBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+      }
+
+      if (navAuthBtn) {
+        navAuthBtn.classList.add("is-logged-in");
+        navAuthBtn.title = "Logged in as " + currentUser.name + " — click to log out";
+      }
+      if (navAuthText) {
+        var firstName = currentUser.name.split(" ")[0];
+        navAuthText.textContent = firstName;
+      }
+      if (mAuth) {
+        mAuth.textContent = "Log Out (" + currentUser.name.split(" ")[0] + ")";
+      }
+    } else {
+      if (sidebarUserAvatar) sidebarUserAvatar.textContent = "G";
+      if (sidebarUserName) sidebarUserName.textContent = "Guest Traveler";
+      if (sidebarUserEmail) sidebarUserEmail.textContent = "Sign in to sync history";
+
+      if (sidebarAuthActionBtn) {
+        sidebarAuthActionBtn.title = "Sign In";
+        sidebarAuthActionBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
+      }
+
+      if (navAuthBtn) {
+        navAuthBtn.classList.remove("is-logged-in");
+        navAuthBtn.title = "Sign In or Register";
+      }
+      if (navAuthText) {
+        navAuthText.textContent = "Sign In";
+      }
+      if (mAuth) {
+        mAuth.textContent = "Sign In / Register";
+      }
+    }
+  }
+
+  function checkAuth() {
+    return fetch("/api/auth/me")
+      .then(function (r) {
+        return r.ok ? r.json() : { authenticated: false };
+      })
+      .then(function (data) {
+        if (data.authenticated && data.user) {
+          currentUser = data.user;
+          updateAuthUI();
+          loadHistory();
+        } else {
+          currentUser = null;
+          updateAuthUI();
+          renderHistory();
+        }
+      })
+      .catch(function () {
+        currentUser = null;
+        updateAuthUI();
+        renderHistory();
+      });
+  }
+
+  function handleLogin(e) {
+    if (e) e.preventDefault();
+    clearAuthError();
+
+    var email = (loginEmail ? loginEmail.value : "").trim();
+    var password = (loginPassword ? loginPassword.value : "");
+
+    if (!email || !password) {
+      showAuthError("Please fill in both email and password.");
+      return;
+    }
+
+    if (loginSubmitBtn) {
+      loginSubmitBtn.disabled = true;
+      loginSubmitBtn.classList.add("is-busy");
+    }
+
+    fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    })
+      .then(function (r) {
+        return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+      })
+      .then(function (res) {
+        if (!res.ok || res.data.success === false) {
+          showAuthError(res.data.error || "Invalid email or password.");
+          return;
+        }
+
+        currentUser = res.data.user;
+        updateAuthUI();
+        closeAuthModal();
+        if (loginForm) loginForm.reset();
+        toast("Welcome back, " + (currentUser.name || "traveler") + "!");
+        loadHistory();
+      })
+      .catch(function (err) {
+        showAuthError("Connection error: " + err.message);
+      })
+      .then(function () {
+        if (loginSubmitBtn) {
+          loginSubmitBtn.disabled = false;
+          loginSubmitBtn.classList.remove("is-busy");
+        }
+      });
+  }
+
+  function handleSignup(e) {
+    if (e) e.preventDefault();
+    clearAuthError();
+
+    var name = (signupName ? signupName.value : "").trim();
+    var email = (signupEmail ? signupEmail.value : "").trim();
+    var password = (signupPassword ? signupPassword.value : "");
+    var confirm = (signupConfirm ? signupConfirm.value : "");
+
+    if (!name || !email || !password || !confirm) {
+      showAuthError("Please complete all fields.");
+      return;
+    }
+
+    if (password.length < 6) {
+      showAuthError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (password !== confirm) {
+      showAuthError("Passwords do not match.");
+      return;
+    }
+
+    if (signupSubmitBtn) {
+      signupSubmitBtn.disabled = true;
+      signupSubmitBtn.classList.add("is-busy");
+    }
+
+    fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        confirm_password: confirm
+      })
+    })
+      .then(function (r) {
+        return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+      })
+      .then(function (res) {
+        if (!res.ok || res.data.success === false) {
+          if (res.data.errors) {
+            var firstKey = Object.keys(res.data.errors)[0];
+            showAuthError(res.data.errors[firstKey]);
+          } else {
+            showAuthError(res.data.error || "Registration failed.");
+          }
+          return;
+        }
+
+        currentUser = res.data.user;
+        updateAuthUI();
+        closeAuthModal();
+        if (signupForm) signupForm.reset();
+        toast("Account created! Welcome, " + (currentUser.name || "") + "!");
+        loadHistory();
+      })
+      .catch(function (err) {
+        showAuthError("Connection error: " + err.message);
+      })
+      .then(function () {
+        if (signupSubmitBtn) {
+          signupSubmitBtn.disabled = false;
+          signupSubmitBtn.classList.remove("is-busy");
+        }
+      });
+  }
+
+  function handleLogout() {
+    fetch("/api/auth/logout", { method: "POST" })
+      .then(function () {
+        currentUser = null;
+        activeTripId = null;
+        historyItems = [];
+        updateAuthUI();
+        renderHistory();
+        toast("Logged out successfully.");
+      })
+      .catch(function () {
+        currentUser = null;
+        updateAuthUI();
+        renderHistory();
+      });
+  }
+
+  /* ---------------- Travel History Controllers ---------------- */
+
+  function loadHistory() {
+    if (!currentUser) {
+      historyItems = [];
+      renderHistory();
+      return;
+    }
+
+    fetch("/api/history")
+      .then(function (r) {
+        return r.ok ? r.json() : { success: false, trips: [] };
+      })
+      .then(function (data) {
+        if (data.success && Array.isArray(data.trips)) {
+          historyItems = data.trips;
+        } else {
+          historyItems = [];
+        }
+        renderHistory();
+      })
+      .catch(function () {
+        historyItems = [];
+        renderHistory();
+      });
+  }
+
+  function renderHistory() {
+    if (!historyList) return;
+    historyList.innerHTML = "";
+
+    if (historyCount) {
+      historyCount.textContent = historyItems.length + " / 10";
+    }
+
+    // Guest state
+    if (!currentUser) {
+      var guestBox = el("div", "history-empty");
+      guestBox.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>Sign in to save trips</p><small>Your generated itineraries will be saved automatically.</small>';
+      var signBtn = el("button", "btn btn-soft btn-sm", "Sign In / Register");
+      signBtn.style.marginTop = "14px";
+      signBtn.addEventListener("click", function () { openAuthModal("login"); });
+      guestBox.appendChild(signBtn);
+      historyList.appendChild(guestBox);
+      return;
+    }
+
+    // Authenticated but empty history
+    if (historyItems.length === 0) {
+      var emptyBox = el("div", "history-empty");
+      emptyBox.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>No recent trips yet</p><small>Search a route above to generate and save your plan!</small>';
+      historyList.appendChild(emptyBox);
+      return;
+    }
+
+    // Render list
+    historyItems.forEach(function (trip) {
+      var item = el("div", "history-item" + (trip.id === activeTripId ? " active" : ""));
+      item.setAttribute("data-trip-id", trip.id);
+
+      var tripIcon = el("span", "history-item-icon");
+      tripIcon.appendChild(icon("M12 21s-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-8 12-8 12z"));
+      item.appendChild(tripIcon);
+
+      var info = el("div", "history-item-info");
+      var title = el("div", "history-item-title", trip.title || "Travel Plan");
+      info.appendChild(title);
+
+      var meta = el("div", "history-item-meta");
+      if (trip.destination) {
+        meta.appendChild(el("span", "history-dest-pill", trip.destination));
+        meta.appendChild(el("span", null, "·"));
+      }
+      meta.appendChild(el("span", null, formatRelativeTime(trip.created_at)));
+      info.appendChild(meta);
+      item.appendChild(info);
+
+      // Delete Button
+      var delBtn = el("button", "history-item-del");
+      delBtn.type = "button";
+      delBtn.title = "Delete this trip";
+      delBtn.appendChild(icon("M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"));
+      delBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        deleteTrip(trip.id);
+      });
+      item.appendChild(delBtn);
+
+      // Click to open saved trip
+      item.addEventListener("click", function () {
+        openTrip(trip.id);
+      });
+
+      historyList.appendChild(item);
+    });
+  }
+
+  function openTrip(tripId) {
+    if (!tripId) return;
+    activeTripId = tripId;
+
+    // Highlight in sidebar
+    document.querySelectorAll(".history-item").forEach(function (node) {
+      node.classList.toggle("active", node.getAttribute("data-trip-id") === tripId);
+    });
+
+    fetch("/api/history/" + tripId)
+      .then(function (r) {
+        return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status));
+      })
+      .then(function (data) {
+        if (!data.success || !data.trip) {
+          toast("Could not load trip record.");
+          return;
+        }
+
+        var trip = data.trip;
+        if (messages) messages.innerHTML = "";
+
+        if (trip.query) {
+          renderUser(trip.query);
+        }
+
+        var planResult = trip.result || {};
+        if (typeof planResult === "string") {
+          try {
+            planResult = JSON.parse(planResult);
+          } catch (e) {
+            planResult = { answer: planResult };
+          }
+        }
+        planResult.__query = trip.query || "";
+
+        try {
+          renderResult(planResult);
+        } catch (e) {
+          console.error("renderResult error:", e);
+          renderError("Failed to display saved itinerary: " + e.message, "render");
+        }
+
+        if (planningSection) planningSection.hidden = false;
+        planningSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // On mobile, close sidebar after selecting
+        if (window.innerWidth < 992) {
+          toggleSidebar(false);
+        }
+      })
+      .catch(function (err) {
+        toast("Failed to load trip: " + err.message);
+      });
+  }
+
+  function deleteTrip(tripId) {
+    if (!tripId) return;
+
+    fetch("/api/history/" + tripId, { method: "DELETE" })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.success) {
+          historyItems = historyItems.filter(function (t) { return t.id !== tripId; });
+          if (activeTripId === tripId) {
+            activeTripId = null;
+          }
+          renderHistory();
+          toast("Trip removed from history.");
+        } else {
+          toast(data.error || "Failed to delete trip.");
+        }
+      })
+      .catch(function () {
+        toast("Error deleting trip.");
+      });
+  }
+
   /* ---------------- Message & Plan Rendering ---------------- */
 
   function renderUser(text) {
     var wrap = el("div", "msg msg-user");
     wrap.appendChild(el("div", "bubble-user", text));
     messages.appendChild(wrap);
+    if (window.AnimatedContent) window.AnimatedContent(wrap, { distance: 20, duration: 0.45, ease: "power3.out", trigger: "mount" });
     return wrap;
   }
 
@@ -433,6 +943,7 @@
     wrap.appendChild(stageLabel);
 
     messages.appendChild(wrap);
+    if (window.AnimatedContent) window.AnimatedContent(wrap, { distance: 25, duration: 0.5, ease: "power3.out", trigger: "mount" });
 
     var started = Date.now();
     var currentPhase = 0;
@@ -590,6 +1101,7 @@
     var wrap = el("div", "msg");
     wrap.appendChild(card);
     messages.appendChild(wrap);
+    if (window.AnimatedContent) window.AnimatedContent(wrap, { distance: 35, duration: 0.65, ease: "power3.out", trigger: "mount" });
     return wrap;
   }
 
@@ -709,6 +1221,7 @@
     setBusy(true);
 
     if (planningSection) planningSection.hidden = false;
+    document.body.classList.add("planning-active");
     renderUser(message);
     var pipeline = renderPipeline();
 
@@ -738,12 +1251,20 @@
 
         data.__query = message;
         threadId = data.thread_id || threadId;
+        if (data.history_id) {
+          activeTripId = data.history_id;
+        }
 
         try {
           renderResult(data);
         } catch (e) {
           console.error("renderResult failed", e);
           renderError(e.message || String(e), "render");
+        }
+
+        // Refresh recent travel history in sidebar
+        if (currentUser) {
+          loadHistory();
         }
 
         planningSection.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -823,21 +1344,104 @@
     });
   });
 
-  // Reset Trip
+  // Reset / New Trip function
+  function startNewTrip() {
+    if (busy) { toast("Please wait for the active plan to finish."); return; }
+    threadId = null;
+    activeTripId = null;
+    document.querySelectorAll(".history-item").forEach(function (n) { n.classList.remove("active"); });
+    if (messages) messages.innerHTML = "";
+    if (planningSection) planningSection.hidden = true;
+    document.body.classList.remove("planning-active");
+    if (hero) hero.scrollIntoView({ behavior: "smooth" });
+    if (fTo) fTo.focus();
+    if (window.innerWidth < 992) toggleSidebar(false);
+  }
+
   if (newTripBtn) {
-    newTripBtn.addEventListener("click", function () {
-      if (busy) { toast("Please wait for the active plan to finish."); return; }
-      threadId = null;
-      if (messages) messages.innerHTML = "";
-      if (planningSection) planningSection.hidden = true;
-      if (hero) hero.scrollIntoView({ behavior: "smooth" });
-      if (fTo) fTo.focus();
+    newTripBtn.addEventListener("click", startNewTrip);
+  }
+  if (sidebarNewTripBtn) {
+    sidebarNewTripBtn.addEventListener("click", startNewTrip);
+  }
+
+  // Sidebar Toggle Listeners
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener("click", function () { toggleSidebar(); });
+  }
+  if (sidebarCloseBtn) {
+    sidebarCloseBtn.addEventListener("click", function () { toggleSidebar(false); });
+  }
+  if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener("click", function () { toggleSidebar(false); });
+  }
+
+  // Auth Button Listeners
+  if (navAuthBtn) {
+    navAuthBtn.addEventListener("click", function () {
+      if (currentUser) {
+        // Toggle sidebar or prompt logout
+        toggleSidebar(true);
+      } else {
+        openAuthModal("login");
+      }
     });
   }
+  if (mAuth) {
+    mAuth.addEventListener("click", function () {
+      if (mobileDrawer) mobileDrawer.hidden = true;
+      if (currentUser) {
+        handleLogout();
+      } else {
+        openAuthModal("login");
+      }
+    });
+  }
+  if (sidebarAuthActionBtn) {
+    sidebarAuthActionBtn.addEventListener("click", function () {
+      if (currentUser) {
+        handleLogout();
+      } else {
+        openAuthModal("login");
+      }
+    });
+  }
+
+  // Auth Modal Controls
+  if (authClose) authClose.addEventListener("click", closeAuthModal);
+  if (authScrim) authScrim.addEventListener("click", closeAuthModal);
+  if (tabLogin) tabLogin.addEventListener("click", function () { switchAuthTab("login"); });
+  if (tabSignup) tabSignup.addEventListener("click", function () { switchAuthTab("signup"); });
+  if (switchToSignup) switchToSignup.addEventListener("click", function () { switchAuthTab("signup"); });
+  if (switchToLogin) switchToLogin.addEventListener("click", function () { switchAuthTab("login"); });
+
+  if (loginForm) loginForm.addEventListener("submit", handleLogin);
+  if (signupForm) signupForm.addEventListener("submit", handleSignup);
+
+  // Password Visibility Toggle Buttons
+  document.querySelectorAll(".pw-toggle-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var wrap = btn.closest(".password-input-wrap");
+      if (!wrap) return;
+      var pwInput = wrap.querySelector("input");
+      if (pwInput) {
+        pwInput.type = pwInput.type === "password" ? "text" : "password";
+      }
+    });
+  });
+
+  // Global ESC key listener for modals
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      if (authModal && !authModal.hidden) closeAuthModal();
+      if (document.body.classList.contains("sidebar-open")) toggleSidebar(false);
+    }
+  });
 
   // Collapse / Back to Search Button
   if (collapsePlanBtn) {
     collapsePlanBtn.addEventListener("click", function () {
+      document.body.classList.remove("planning-active");
       if (hero) hero.scrollIntoView({ behavior: "smooth" });
     });
   }
@@ -925,10 +1529,162 @@
     });
   });
 
+  
+  /* ============================================================
+     Aether Luxury Scroll & Telemetry Engine
+     ============================================================ */
+  function initAetherScrollEngine() {
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var clamp = function (v, a, b) { return Math.min(b !== undefined ? b : 1, Math.max(a !== undefined ? a : 0, v)); };
+    var lerp = function (a, b, t) { return a + (b - a) * t; };
+    var ease = function (t) { return t * t * (3 - 2 * t); };
+    var hex = function (h) {
+      return [1, 3, 5].map(function (i) { return parseInt(h.slice(i, i + 2), 16); });
+    };
+
+    // Sky shifts from dawn to midday to golden hour to dusk to night as you scroll
+    var SKY = [
+      [0, '#0a2a42', '#6f9fb8'],
+      [0.28, '#1d5b86', '#a9d0e3'],
+      [0.58, '#0f3a5c', '#e7c999'],
+      [0.82, '#1a1a3a', '#c9806a'],
+      [1.0, '#071c2b', '#3b4f6b']
+    ].map(function (k) { return [k[0], hex(k[1]), hex(k[2])]; });
+
+    function seg(arr, p) {
+      var i = 0;
+      while (i < arr.length - 2 && p > arr[i + 1][0]) i++;
+      var a = arr[i], b = arr[i + 1];
+      return [a, b, ease(clamp((p - a[0]) / (b[0] - a[0])))];
+    }
+
+    // Procedural atmospheric clouds
+    var cl = document.getElementById('clouds');
+    var C = [];
+    if (cl && cl.children.length === 0) {
+      var seed = 7;
+      var rnd = function () {
+        seed = (seed * 16807) % 2147483647;
+        return seed / 2147483647;
+      };
+      for (var ci = 0; ci < 16; ci++) {
+        var w = 180 + rnd() * 360;
+        var d = 0.25 + rnd() * 1.5;
+        var e = document.createElement('i');
+        e.style.cssText = 'width:' + w + 'px;height:' + (w * 0.32) + 'px;top:' + (8 + rnd() * 84) + '%;opacity:' + (0.12 + rnd() * 0.28 * d / 1.5) + ';';
+        cl.appendChild(e);
+        C.push({ e: e, w: w, d: d, x: rnd() * 1800 });
+      }
+    }
+
+    var sun = document.getElementById('sun');
+    var root = document.documentElement;
+    var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene .box'));
+    var secs = Array.prototype.slice.call(document.querySelectorAll('main [id]'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+
+    var alt = function (p) {
+      return 35000 * (p < 0.14 ? ease(p / 0.14) : p < 0.78 ? 1 : 1 - ease((p - 0.78) / 0.22));
+    };
+    var status = function (p) {
+      return p < 0.03 ? 'Boarding' : p < 0.14 ? 'Climbing' : p < 0.78 ? 'Cruising' : p < 0.97 ? 'Descending' : 'Landed';
+    };
+
+    var sp = 0, W = window.innerWidth, H = window.innerHeight;
+    var size = function () {
+      W = window.innerWidth;
+      H = window.innerHeight;
+    };
+    window.addEventListener('resize', size);
+
+    var altEl = document.getElementById('alt');
+    var spdEl = document.getElementById('spd');
+    var stEl = document.getElementById('st');
+    var barEl = document.getElementById('bar');
+    var pctEl = document.getElementById('pct');
+
+    function frame(t) {
+      var max = root.scrollHeight - H;
+      var p = max > 0 ? clamp(window.scrollY / max) : 0;
+      sp = rm ? p : sp + (p - sp) * 0.075;
+
+      // Update Sky colors
+      var s = seg(SKY, sp);
+      var a = s[0], b = s[1], k = s[2];
+      var mix = function (idx) {
+        return a[idx].map(function (v, j) {
+          return Math.round(lerp(v, b[idx][j], k));
+        }).join(',');
+      };
+      root.style.setProperty('--sky-top', 'rgb(' + mix(1) + ')');
+      root.style.setProperty('--sky-bot', 'rgb(' + mix(2) + ')');
+
+      // Update Sun position
+      if (sun) {
+        sun.style.transform = 'translate3d(' + (lerp(0.72, 0.3, sp) * W) + 'px,' + (lerp(0.22, 0.72, sp) * H) + 'px,0)';
+      }
+
+      // Parallax drifting clouds
+      var tt = rm ? 0 : t * 0.01;
+      for (var i = 0; i < C.length; i++) {
+        var c = C[i];
+        var span = W + c.w * 2;
+        var x = (((c.x - (sp * 1400 + tt) * c.d) % span + span) % span) - c.w;
+        c.e.style.transform = 'translate3d(' + x + 'px,0,0)';
+      }
+
+      // Choreograph 3D Flight Waypoint Spline
+      if (window.Aviation3D && typeof window.Aviation3D.setScrollProgress === 'function') {
+        window.Aviation3D.setScrollProgress(sp);
+      }
+
+      // Scene boxes opacity & distance-from-center parallax
+      for (var si = 0; si < scenes.length; si++) {
+        var el = scenes[si];
+        var parent = el.parentElement;
+        if (!parent) continue;
+        var r = parent.getBoundingClientRect();
+        var d = (r.top + r.height / 2 - H / 2) / H;
+        var o = rm ? 1 : clamp(1 - (Math.abs(d) - 0.25) / 0.65, 0.2, 1);
+        el.style.opacity = o;
+        el.style.transform = 'translate3d(0,' + (d * 44) + 'px,0)';
+        el.style.pointerEvents = o > 0.25 ? 'auto' : 'none';
+      }
+
+      // Real-Time HUD Telemetry
+      var al = Math.round(alt(p) / 100) * 100;
+      if (altEl) altEl.textContent = al.toLocaleString('en-US') + ' ft';
+      if (spdEl) spdEl.textContent = 'M ' + (al ? (0.4 + 0.45 * al / 35000).toFixed(2) : '0.00');
+      if (stEl) stEl.textContent = status(p);
+      if (barEl) barEl.style.width = (p * 100) + '%';
+      if (pctEl) pctEl.textContent = String(Math.round(p * 100)).padStart(2, '0') + '%';
+
+      // Active nav link highlight
+      var cur = secs[0];
+      for (var sidx = 0; sidx < secs.length; sidx++) {
+        if (secs[sidx].getBoundingClientRect().top <= H * 0.5) {
+          cur = secs[sidx];
+        }
+      }
+      if (cur) {
+        links.forEach(function (l) {
+          l.classList.toggle('on', l.getAttribute('href') === '#' + cur.id);
+        });
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
   /* ---------------- Initialization ---------------- */
+
+  initAetherScrollEngine();
 
   initTheme();
   updateEmptyState();
+  checkAuth();
 
   // Initialize 3D Aviation Engine
   if (window.Aviation3D) {

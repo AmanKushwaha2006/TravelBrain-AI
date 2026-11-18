@@ -122,6 +122,17 @@ if CORS_ORIGINS:
     )
 
 
+@app.middleware("http")
+async def add_no_cache_for_dev(request: Request, call_next):
+    """Prevent aggressive browser caching for static files and templates."""
+    response = await call_next(request)
+    if request.url.path.startswith("/static/") or request.url.path == "/" or request.url.path == "/index.html":
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
+
 app.mount(
     "/static",
     StaticFiles(directory=str(FRONTEND_DIR / "static")),
