@@ -1323,7 +1323,7 @@
 
       if (fFrom) fFrom.value = pFrom;
       if (fTo) fTo.value = pTo;
-      if (fDays) fDays.value = pDays + " Days";
+      if (fDays) fDays.value = pDays;
 
       planJourney();
     });
@@ -1338,7 +1338,7 @@
 
       if (fFrom) fFrom.value = dFrom;
       if (fTo) fTo.value = dTo;
-      if (fDays) fDays.value = dDays + " Days";
+      if (fDays) fDays.value = dDays;
 
       planJourney();
     });
@@ -1632,32 +1632,6 @@
         var x = (((c.x - (sp * 1400 + tt) * c.d) % span + span) % span) - c.w;
         c.e.style.transform = 'translate3d(' + x + 'px,0,0)';
       }
-
-      // Choreograph 3D Flight Waypoint Spline
-      if (window.Aviation3D && typeof window.Aviation3D.setScrollProgress === 'function') {
-        window.Aviation3D.setScrollProgress(sp);
-      }
-
-      // Scene boxes opacity & distance-from-center parallax
-      for (var si = 0; si < scenes.length; si++) {
-        var el = scenes[si];
-        var parent = el.parentElement;
-        if (!parent) continue;
-        var r = parent.getBoundingClientRect();
-        var d = (r.top + r.height / 2 - H / 2) / H;
-        var o = rm ? 1 : clamp(1 - (Math.abs(d) - 0.25) / 0.65, 0.2, 1);
-        el.style.opacity = o;
-        el.style.transform = 'translate3d(0,' + (d * 44) + 'px,0)';
-        el.style.pointerEvents = o > 0.25 ? 'auto' : 'none';
-      }
-
-      // Real-Time HUD Telemetry
-      var al = Math.round(alt(p) / 100) * 100;
-      if (altEl) altEl.textContent = al.toLocaleString('en-US') + ' ft';
-      if (spdEl) spdEl.textContent = 'M ' + (al ? (0.4 + 0.45 * al / 35000).toFixed(2) : '0.00');
-      if (stEl) stEl.textContent = status(p);
-      if (barEl) barEl.style.width = (p * 100) + '%';
-      if (pctEl) pctEl.textContent = String(Math.round(p * 100)).padStart(2, '0') + '%';
 
       // Active nav link highlight
       var cur = secs[0];

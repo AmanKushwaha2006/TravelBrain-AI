@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TravelBrain — Above the Ordinary | Autonomous Multi-Agent AI Travel Planner</title>
+  <title>TravelBrain — Your next journey, intelligently planned</title>
   <meta name="description" content="TravelBrain AI: Luxury editorial aviation travel planning powered by LangGraph multi-agent AI swarms. Flight, stays, meteorology and verified itineraries in Indian Rupees (₹)." />
-  <link rel="stylesheet" href="/static/css/styles.css?v=3.6.0" />
+  <link rel="stylesheet" href="/static/css/styles.css?v=4.0.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -102,39 +102,26 @@
           </div>
           <div class="brand-name-wrap">
             <span class="brand-title">Travel<strong>Brain</strong></span>
-            <span class="brand-badge">AI 2.0</span>
           </div>
         </a>
       </div>
 
       <!-- Desktop Nav Links -->
       <nav class="nav-links" id="navLinks">
-        <a href="#hero" class="nav-link active">Home</a>
         <a href="#how-it-works" class="nav-link">How It Works</a>
         <a href="#features" class="nav-link">Features</a>
-        <a href="javascript:void(0)" class="nav-link" id="navNewTrip">Plan Journey</a>
-        <a href="javascript:void(0)" class="nav-link" id="navSettings">API Config</a>
+        <a href="#technology" class="nav-link">AI Technology</a>
       </nav>
 
       <!-- Right Action Controls -->
       <div class="nav-actions">
-        <!-- Currency Pill -->
-        <div class="currency-pill" title="All travel tariffs generated in Indian Rupees">
-          <span class="currency-flag">🇮🇳</span>
-          <span class="currency-text">INR (₹)</span>
-        </div>
-
         <!-- API Connection Status -->
         <button class="status-chip" id="apiStatus" data-state="checking" type="button" title="API status — click to configure">
           <span class="status-indicator"></span>
           <span class="status-text">Checking…</span>
         </button>
 
-        <!-- New Trip / Reset Button -->
-        <button class="btn btn-nav-cta" id="newTripBtn" type="button" title="Start a fresh trip search">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-          <span>New Trip</span>
-        </button>
+        <a class="btn btn-nav-cta" id="navNewTrip" href="#hero">Plan a Journey</a>
 
         <!-- Settings Button -->
         <button class="icon-btn-nav" id="settingsBtn" type="button" aria-label="API Settings" title="API Settings">
@@ -170,10 +157,10 @@
 
   <!-- Mobile Navigation Drawer -->
   <div class="mobile-drawer" id="mobileDrawer" hidden>
-    <a href="#hero" class="m-link">Home</a>
     <a href="#how-it-works" class="m-link">How It Works</a>
     <a href="#features" class="m-link">Features</a>
-    <a href="javascript:void(0)" class="m-link" id="mNewTrip">Plan Journey</a>
+    <a href="#technology" class="m-link">AI Technology</a>
+    <a href="#hero" class="m-link" id="mNewTrip">Plan a Journey</a>
     <a href="javascript:void(0)" class="m-link" id="mSettings">API Config</a>
     <a href="javascript:void(0)" class="m-link" id="mAuth">Sign In / Register</a>
   </div>
@@ -247,74 +234,42 @@
   <!-- ==================== MAIN PAGE CONTENT ==================== -->
   <main class="page-content" id="conversation">
 
-    <!-- SCENE 1: HERO & FLIGHT DISPATCH -->
-    <section class="scene hero" id="hero">
-      <div class="box">
-        <div class="eyebrow">TravelBrain Journal · 01</div>
-        <h1>Above the <em>ordinary.</em></h1>
-        <p>A quieter kind of escape. Autonomous multi-agent AI orchestrates your flights, boutique stays, meteorology, and verified itinerary in Indian Rupees (₹).</p>
-        
-        <!-- Luxury Glass Cockpit Search Console -->
-        <div class="search-panel-wrapper">
-          <form class="aviation-search-panel" id="mainSearchForm" autocomplete="off">
-            
-            <div class="asp-field">
-              <label for="fFrom" class="asp-label">Origin</label>
-              <div class="asp-input-wrap">
-                <svg class="asp-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
-                </svg>
-                <input type="text" id="fFrom" placeholder="New Delhi (DEL)" value="New Delhi" aria-label="Departure City" />
-              </div>
+    <!-- 1 · HERO -->
+    <section class="sec hero" id="hero">
+      <div class="wrap"><div class="hero-copy">
+        <div class="kicker rv">AI travel companion</div>
+        <h1 class="rv">Your next journey, <em>intelligently planned.</em></h1>
+        <p class="lead rv">Tell us where you are going. Specialised AI agents research flights, stays and weather, then deliver a verified day-by-day itinerary in Indian Rupees (₹).</p>
+
+        <form class="aviation-search-panel rv" id="mainSearchForm" autocomplete="off" onsubmit="event.preventDefault();document.getElementById('btnPlanJourney').click();">
+          <div class="asp-field">
+            <label for="fFrom" class="asp-label">From</label>
+            <div class="asp-input-wrap">
+              <svg class="asp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+              <input type="text" id="fFrom" placeholder="New Delhi" value="New Delhi" aria-label="Departure city" />
             </div>
-
-            <div class="asp-divider" aria-hidden="true"></div>
-
-            <div class="asp-field">
-              <label for="fTo" class="asp-label">Destination</label>
-              <div class="asp-input-wrap">
-                <svg class="asp-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
-                </svg>
-                <input type="text" id="fTo" placeholder="Manali, Himachal" value="Manali" aria-label="Destination City" />
-              </div>
-            </div>
-
-            <div class="asp-divider" aria-hidden="true"></div>
-
-            <div class="asp-field asp-field-days">
-              <label for="fDays" class="asp-label">Duration</label>
-              <div class="asp-input-wrap">
-                <svg class="asp-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-                <input type="number" id="fDays" min="1" max="30" value="5" aria-label="Trip Duration in Days" />
-                <span class="asp-unit">Days</span>
-              </div>
-            </div>
-
-            <button type="button" class="btn btn-primary btn-plan-journey" id="btnPlanJourney">
-              <span>Plan Journey</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-
-          </form>
-
-          <div class="quick-prompts-bar">
-            <span class="qp-label">Popular Expeditions:</span>
-            <button type="button" class="qp-chip destination-card" data-from="New Delhi" data-to="Manali" data-days="5">🏔️ Manali 5D</button>
-            <button type="button" class="qp-chip destination-card" data-from="Mumbai" data-to="Goa" data-days="4">🏖️ Goa 4D</button>
-            <button type="button" class="qp-chip destination-card" data-from="Delhi" data-to="Ladakh" data-days="6">🏍️ Ladakh 6D</button>
-            <button type="button" class="qp-chip destination-card" data-from="Bengaluru" data-to="Kerala" data-days="5">🌴 Kerala 5D</button>
-            <button type="button" class="qp-chip destination-card" data-from="Mumbai" data-to="Tokyo" data-days="7">🗼 Tokyo 7D</button>
           </div>
-        </div>
+          <div class="asp-divider" aria-hidden="true"></div>
+          <div class="asp-field">
+            <label for="fTo" class="asp-label">To</label>
+            <div class="asp-input-wrap">
+              <svg class="asp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input type="text" id="fTo" placeholder="Manali" value="Manali" aria-label="Destination city" />
+            </div>
+          </div>
+          <div class="asp-divider" aria-hidden="true"></div>
+          <div class="asp-field asp-field-days">
+            <label for="fDays" class="asp-label">Days</label>
+            <div class="asp-input-wrap"><input type="number" id="fDays" min="1" max="30" value="5" aria-label="Trip duration in days" /></div>
+          </div>
+          <button type="button" class="btn btn-primary btn-plan-journey" id="btnPlanJourney"><span class="btn-label">Plan My Journey →</span><span class="spinner" aria-hidden="true"></span></button>
+        </form>
 
-        <div class="cue">Scroll to open</div>
-      </div>
+        <a class="ghost-link rv" href="#how-it-works">Explore how it works ↓</a>
+      </div></div>
     </section>
+
+    
 
     <!-- ==================== SETUP GATE (SHOWN IF NO API KEYS) ==================== -->
     <section class="gate" id="setupGate" hidden>
@@ -388,138 +343,76 @@
 
     
 
-    <!-- ==================== "SECOND PAGE": EDITORIAL STORY SCENES ==================== -->
-    <div class="second-page-wrap" id="secondPage">
-      
-      <!-- SCENE 2: EDITORIAL JOURNEYS -->
-      <section id="journeys">
-        <div class="scene">
-          <div class="box card-destination destination-card" data-from="New Delhi" data-to="Manali" data-days="5">
-            <span class="place">Alpine escape</span>
-            <h2>Chase the <em>first light.</em></h2>
-            <p>Depart at dawn and land beside glacier-fed valleys and pine forests before the world wakes.</p>
-            <span class="btn-vignette">Fly this route →</span>
-          </div>
-        </div>
-
-        <div class="scene">
-          <div class="box card-destination destination-card" data-from="Mumbai" data-to="Goa" data-days="4">
-            <span class="place">Coastal retreat</span>
-            <h2>Salt air, <em>quiet runways.</em></h2>
-            <p>Skip the terminal rush. Step off the aircraft and straight into Arabian Sea breezes and coastal villas.</p>
-            <span class="btn-vignette">Fly this route →</span>
-          </div>
-        </div>
-
-        <div class="scene">
-          <div class="box card-destination destination-card" data-from="Delhi" data-to="Jaisalmer" data-days="4">
-            <span class="place">Desert light</span>
-            <h2>Golden hour, <em>all day.</em></h2>
-            <p>Cross open desert horizons while sandstone forts and golden dunes turn amber beneath the wing.</p>
-            <span class="btn-vignette">Fly this route →</span>
-          </div>
-        </div>
-
-        <div class="scene">
-          <div class="box card-destination destination-card" data-from="Mumbai" data-to="Tokyo" data-days="7">
-            <span class="place">Far horizons</span>
-            <h2>Arrive in the <em>middle of it all.</em></h2>
-            <p>Neon boulevards, Michelin dining, and bullet-train pacing choreographed with precision.</p>
-            <span class="btn-vignette">Fly this route →</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCENE 3: WORKFLOW -->
-      <section class="scene" id="how-it-works">
-        <div class="box wide">
-          <div class="eyebrow">Aviation Workflow · 02</div>
-          <h2>No queues. <em>No noise.</em></h2>
-          <p>Tell us where. Specialized LangGraph AI agents research flights, verify accommodations, forecast meteorology, and audit routes before you reach the gate.</p>
-          <div class="cards">
-            <div class="card">
-              <div class="card-step-num">01 / ROUTE & INTENT</div>
-              <b>Intelligent Route Input</b>
-              <span>Specify your departure city, destination, and trip duration. Natural language intent parsing automatically detects pace, budget, and travel style.</span>
-            </div>
-            <div class="card">
-              <div class="card-step-num">02 / PARALLEL AI</div>
-              <b>Parallel Swarm Research</b>
-              <span>Specialized AI agents query flight hubs, boutique hotels, seasonal weather, and cultural attractions concurrently across real-time databases.</span>
-            </div>
-            <div class="card">
-              <div class="card-step-num">03 / CRITIC AUDIT</div>
-              <b>Anti-Hallucination Critic Audit</b>
-              <span>Our proprietary Critic Agent performs rigorous fact-checking on every landmark, route, and schedule to eliminate AI hallucinations.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCENE 4: CABINS & CAPABILITIES -->
-      <section class="scene" id="features">
-        <div class="box wide">
-          <div class="eyebrow">Platform Capabilities · 03</div>
-          <h2>Three cabins. <em>One calm.</em></h2>
-          <p>Pick the intelligence tier you want to cross the sky with.</p>
-          <div class="cards">
-            <div class="card">
-              <div class="card-step-num">CABIN A</div>
-              <b>Lounge — Leisure Dossier</b>
-              <span>Curated leisure escapes, scenic transfers, boutique hideaways, and verified culinary recommendations in direct Indian Rupees (₹).</span>
-            </div>
-            <div class="card">
-              <div class="card-step-num">CABIN B</div>
-              <b>Studio — High-Velocity Executive</b>
-              <span>Tight, minute-by-minute business agendas, airport lounges, fast transit, and high-productivity stays with zero latency.</span>
-            </div>
-            <div class="card">
-              <div class="card-step-num">CABIN C</div>
-              <b>Retreat — Deep Slow Travel</b>
-              <span>Multi-day slow travel, mountain wellness, cultural expeditions, and scenic off-grid tranquility with adaptive pacing.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCENE 5: CONTACT & DISPATCH -->
-      <section class="scene end" id="contact">
-        <div class="box">
-          <div class="eyebrow">Ready to Fly · 04</div>
-          <h2>Ready to <em>fly again.</em></h2>
-          <p>Share your dates and destination. Our multi-agent AI swarm will craft the verified flight-deck dossier in under 60 seconds.</p>
-          <a class="btn-gold" href="#hero">Plan a Journey ↑</a>
-          <div class="foot-nav">
-            <a href="#journeys">Journeys</a>
-            <a href="#how-it-works">Workflow</a>
-            <a href="#features">Cabins</a>
-            <a href="#hero">Back to top</a>
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- Legacy Footer for SEO & Links -->
-    <footer class="footer" style="position:relative; z-index:10; background:rgba(3,16,28,0.9);">
-      <div class="footer-container">
-        <div class="footer-brand">
-          <span class="footer-title">Travel<strong>Brain</strong></span>
-          <p class="footer-copy">Autonomous Multi-Agent AI Travel Planning. Verified travel itineraries in Indian Rupees (₹).</p>
-        </div>
-        <div class="footer-nav">
-          <div class="footer-col">
-            <h4>Platform</h4>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#features">Key Features</a>
-            <a href="#hero">Plan Journey</a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 TravelBrain AI. Luxury Editorial Aviation Edition.</p>
+    <!-- 2 · HOW IT WORKS -->
+    <section class="sec" id="how-it-works">
+      <div class="wrap">
+        <div class="head rv"><div class="kicker">How it works</div><h2>Three steps. <em>No noise.</em></h2></div>
+        <div class="grid g3">
+          <div class="glass rv"><div class="no">01</div><h3>Tell us where</h3><p>An origin, a destination and the number of days. That is all it takes.</p>
+            <div class="mini"><b>From</b>New Delhi</div><div class="mini"><b>To</b>Manali</div><div class="mini"><b>Days</b>5</div></div>
+          <div class="glass rv"><div class="no">02</div><h3>Agents do the research</h3><p>Specialised agents work through your request one after another.</p>
+            <span class="chip">Flights</span><span class="chip">Stays</span><span class="chip">Weather</span><span class="chip">Itinerary</span></div>
+          <div class="glass rv"><div class="no">03</div><h3>Get a verified plan</h3><p>A day-by-day itinerary priced in ₹, ready to refine in plain English.</p>
+            <div class="mini"><b>Day 1</b>Arrive &amp; settle in</div><div class="mini"><b>Day 2</b>Valleys &amp; viewpoints</div><div class="mini"><b>Day 3</b>Local culture</div></div>
         </div>
       </div>
-    </footer>
+    </section>
+
+    <!-- 3 · AI TECHNOLOGY -->
+    <section class="sec" id="technology">
+      <div class="wrap">
+        <div class="head rv"><div class="kicker">AI technology</div><h2>Not one prompt. <em>A team of agents.</em></h2>
+          <p class="lead">Built on LangGraph: each agent owns one part of the trip and hands its findings to the next.</p></div>
+        <div class="flow">
+          <div class="node rv" style="--i:0"><small>00</small><b>Your request</b><span>Origin, destination, days</span></div>
+          <div class="node rv" style="--i:1"><small>01</small><b>Flight Intelligence</b><span>Routes and airfares in ₹</span></div>
+          <div class="node rv" style="--i:2"><small>02</small><b>Hotel &amp; Stays</b><span>Accommodation and tariffs</span></div>
+          <div class="node rv" style="--i:3"><small>03</small><b>Weather Analyst</b><span>Climate and packing advice</span></div>
+          <div class="node rv" style="--i:4"><small>04</small><b>Itinerary Architect</b><span>Day-by-day pacing</span></div>
+          <div class="node rv" style="--i:5"><small>05</small><b>Final Synthesis</b><span>Compiles the master plan</span></div>
+        </div>
+        <p class="note rv">Afterwards, the Critic Agent can audit the plan for entity factuality, geographic coherence, transit realism and pacing, and score it out of 100.</p>
+      </div>
+    </section>
+
+    <!-- 4 · FEATURES -->
+    <section class="sec" id="features">
+      <div class="wrap">
+        <div class="head rv"><div class="kicker">Features</div><h2>Only what <em>matters.</em></h2></div>
+        <div class="grid g4">
+          <div class="glass rv"><div class="no">01</div><h3>Itineraries in ₹</h3><p>Day-by-day plans with flights, stays and costs in Indian Rupees.</p></div>
+          <div class="glass rv"><div class="no">02</div><h3>Weather-aware</h3><p>Forecasts shape the plan and the packing advice.</p></div>
+          <div class="glass rv"><div class="no">03</div><h3>Critic audit</h3><p>One click fact-checks landmarks, routes and pacing.</p></div>
+          <div class="glass rv"><div class="no">04</div><h3>Refine anytime</h3><p>Change budget, hotels or pace in plain English. Signed-in trips are saved.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · PREVIEW -->
+    <section class="sec" id="preview">
+      <div class="wrap">
+        <div class="head rv"><div class="kicker">What you receive</div><h2>Your trip, <em>laid out.</em></h2></div>
+        <div class="itin-card rv">
+          <div class="itin-top"><strong>Manali · 3 days</strong><span class="chip">☀ 8–17°C · Clear</span><span class="tag">Sample preview</span></div>
+          <div class="grid g3">
+            <div class="itin-day"><h4>Day 1</h4><ul><li>Old Manali walk</li><li>Hadimba Temple</li><li>Mall Road evening</li></ul></div>
+            <div class="itin-day"><h4>Day 2</h4><ul><li>Solang Valley</li><li>Atal Tunnel drive</li><li>Café dinner</li></ul></div>
+            <div class="itin-day"><h4>Day 3</h4><ul><li>Naggar Castle</li><li>Jogini Falls</li><li>Departure</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · FINAL CTA -->
+    <section class="sec" id="contact">
+      <div class="wrap center">
+        <h2 class="rv">Ready to explore <em>somewhere new?</em></h2>
+        <p class="lead rv">Let AI turn your travel ideas into your next unforgettable journey.</p>
+        <a class="btn-gold rv" id="finalCta" href="#hero">Plan Your Journey →</a>
+      </div>
+    </section>
+
+    <footer class="foot">© 2026 TravelBrain AI · Verified itineraries in Indian Rupees (₹)</footer>
 
   </main>
 
@@ -637,46 +530,31 @@
 
   
 
-  <!-- ==================== REAL-TIME AVIATION TELEMETRY HUD ==================== -->
-  <footer class="hud" id="aviationHud">
-    <div class="meta">
-      <div class="mi">
-        <span class="ml">Flight no.</span>
-        <span class="mv">TB—001 / 26</span>
-      </div>
-      <div class="mi">
-        <span class="ml">Status</span>
-        <span class="mv"><i class="live"></i><span id="st">Boarding</span></span>
-      </div>
-      <div class="mi">
-        <span class="ml">Altitude</span>
-        <span class="mv" id="alt">0 ft</span>
-      </div>
-      <div class="mi">
-        <span class="ml">Speed</span>
-        <span class="mv" id="spd">M 0.00</span>
-      </div>
-    </div>
-    <div class="ctrl">
-      <span>Flight film</span>
-      <span class="bar"><i id="bar"></i></span>
-      <span id="pct">00%</span>
-      <a class="up" href="#hero" aria-label="Replay from the start">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 19V5m-6 6 6-6 6 6"/>
-        </svg>
-      </a>
-    </div>
-  </footer>
+  
 
   <!-- Scripts: Three.js, GLTFLoader, GSAP, ScrollTrigger, AnimatedContent, 3D Aviation, Markdown, App -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="/static/js/GLTFLoader.js"></script>
-  <script src="/static/js/aviation-3d.js?v=3.6.0"></script>
+  <script src="/static/js/aviation-3d.js?v=4.0.0"></script>
   <script src="/static/js/markdown.js"></script>
   <script src="/static/js/animated-content.js?v=1.0.0"></script>
-  <script src="/static/js/app.js?v=3.6.0"></script>
+  <script src="/static/js/app.js?v=4.0.0"></script>
+<script>
+    // Scroll-triggered reveals (GSAP ScrollTrigger) + final CTA focus
+    window.addEventListener("load", function () {
+      var cta = document.getElementById("finalCta");
+      if (cta) cta.addEventListener("click", function () {
+        setTimeout(function () { var t = document.getElementById("fTo"); if (t) t.focus(); }, 700);
+      });
+      if (!window.gsap || !window.ScrollTrigger || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray(".rv").forEach(function (el, i) {
+        gsap.from(el, { y: 36, opacity: 0, duration: 0.9, delay: (i % 4) * 0.08, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+      });
+    });
+  </script>
 </body>
 </html>

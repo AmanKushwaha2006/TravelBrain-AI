@@ -6,9 +6,9 @@
     "semantic_hash": ""
   },
   "frontend/static/js/app.js": {
-    "mtime": 1794949111.0605757,
-    "seen": 1794949541.1123736,
-    "ast_hash": "5fd6c1661afd92ddbd8d926237ba9901",
+    "mtime": 1794982806.7935228,
+    "seen": 1794982870.4013178,
+    "ast_hash": "608a2a791eb35924c85df866868c0d4b",
     "semantic_hash": ""
   },
   "frontend/static/js/markdown.js": {
@@ -240,15 +240,15 @@
     "semantic_hash": ""
   },
   "frontend/templates/index.html": {
-    "mtime": 1794948581.568528,
-    "seen": 1794948765.6960466,
-    "ast_hash": "376d877c3f666950704c83f70f71e18f",
+    "mtime": 1794982806.787954,
+    "seen": 1794982870.4015265,
+    "ast_hash": "a9d2d7c8a14cb1e92fd13cb292f45617",
     "semantic_hash": ""
   },
   "frontend/static/js/aviation-3d.js": {
-    "mtime": 1794980608.8372319,
-    "seen": 1794981432.511659,
-    "ast_hash": "2b9c58e938c3ac2e1e171f7ab0fb6c4a",
+    "mtime": 1794982806.798452,
+    "seen": 1794982870.4013207,
+    "ast_hash": "9e2c1d317246bbd42980a07593a75f6c",
     "semantic_hash": ""
   },
   "frontend/static/js/GLTFLoader.js": {

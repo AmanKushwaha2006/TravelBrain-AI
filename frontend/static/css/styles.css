@@ -563,11 +563,11 @@ input, textarea {
 }
 
 .aviation-canvas-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   z-index: 1;
   pointer-events: none;
 }
@@ -3488,3 +3488,92 @@ body.sidebar-open .sidebar-backdrop {
     width: 90vw;
   }
 }
+
+
+/* ===== Landing redesign (v4) ===== */
+/* TravelBrain landing redesign — load AFTER styles.css
+   ROOT-CAUSE FIX: styles.css redeclares .aviation-canvas-container as
+   position:absolute (old hero block), so the plane scrolled away with the page. */
+.aviation-canvas-container{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:1;pointer-events:none}
+.planning-section,.gate{position:relative;z-index:10}
+.planning-section{background:rgba(5,14,26,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav-link.on{color:#fff}.nav-link.on::after{transform:scaleX(1)}
+
+/* Layout */
+.sec{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;padding:110px 7vw;box-sizing:border-box}
+.sec .wrap{width:100%;max-width:1120px;margin:0 auto}
+.sec.hero{padding-top:120px}
+.hero-copy{max-width:620px}
+.kicker{margin-bottom:18px;font:11px var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.sec h1,.sec h2{margin:0 0 20px;font-weight:300;letter-spacing:-.045em;line-height:1.06;color:#f6f8f6;text-shadow:0 2px 30px rgba(2,10,18,.7)}
+.sec h1{font-size:clamp(40px,6vw,82px)}
+.sec h2{font-size:clamp(30px,4vw,54px)}
+.sec h1 em,.sec h2 em{font-style:normal;font-weight:600;color:var(--gold)}
+.lead{max-width:520px;margin:0 0 30px;color:rgba(246,248,246,.78);font-size:16px;line-height:1.75;font-weight:300;text-shadow:0 2px 20px rgba(2,10,18,.8)}
+.head{max-width:620px;margin-bottom:38px}
+.head .lead{margin:0}
+.center{text-align:center}.center .lead{margin:0 auto 28px}
+
+/* Hero search console */
+.aviation-search-panel{display:flex;align-items:center;gap:4px;max-width:640px;padding:8px;background:rgba(7,28,43,.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(231,201,153,.28);border-radius:22px;box-shadow:0 20px 50px rgba(3,14,25,.55)}
+.aviation-search-panel:focus-within{border-color:var(--gold)}
+.asp-field{flex:1;min-width:0;padding:8px 14px}
+.asp-field-days{flex:0 0 100px}
+.asp-label{display:block;margin-bottom:4px;font:9px var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.asp-input-wrap{display:flex;align-items:center;gap:8px}
+.asp-icon{width:15px;height:15px;color:rgba(255,255,255,.5)}
+.asp-input-wrap input{width:100%;min-width:0;background:transparent;color:#fff;font-size:15px;font-weight:500}
+.asp-input-wrap input::placeholder{color:rgba(255,255,255,.4)}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.asp-unit{font-size:12px;color:rgba(255,255,255,.5)}
+.asp-divider{width:1px;height:34px;background:rgba(255,255,255,.15)}
+.btn-plan-journey{padding:16px 24px;border-radius:16px;background:var(--gold);color:#071c2b;font-size:14px;font-weight:700;white-space:nowrap;box-shadow:0 6px 20px rgba(231,201,153,.3)}
+.btn-plan-journey:hover{background:#f3dab0;transform:translateY(-2px)}
+.ghost-link{display:inline-block;margin-top:22px;color:rgba(255,255,255,.75);font-size:14px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px;transition:color .2s}
+.ghost-link:hover{color:var(--gold);border-color:var(--gold)}
+
+/* Cards & grids */
+.grid{display:grid;gap:18px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.glass{padding:26px;color:#eaf2f8;background:rgba(7,28,43,.5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);border-radius:18px;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s,box-shadow .35s}
+.glass:hover{transform:translateY(-4px);border-color:rgba(231,201,153,.55);box-shadow:0 20px 44px rgba(3,14,24,.45)}
+.glass .no{font:11px var(--font-mono);letter-spacing:.18em;color:var(--gold)}
+.glass h3{margin:12px 0 8px;font-size:19px;font-weight:600;color:#fff}
+.glass p{margin:0 0 16px;font-size:14px;line-height:1.7;font-weight:300;color:rgba(246,248,246,.72)}
+.chip{display:inline-block;margin:0 6px 6px 0;padding:5px 11px;border:1px solid rgba(255,255,255,.18);border-radius:99px;font-size:12px;color:#eaf2f8}
+.mini{margin-bottom:6px;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.07);font-size:12px;color:rgba(255,255,255,.8)}
+.mini b{color:var(--gold);font-weight:500;margin-right:8px}
+
+/* Agent flow — nodes light up in sequence to show hand-offs */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.node{position:relative;padding:18px 14px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(7,28,43,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:lit 7s infinite;animation-delay:calc(var(--i) * 1s)}
+.node:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:12px}
+.node small{display:block;font:9px var(--font-mono);letter-spacing:.15em;color:var(--gold)}
+.node b{display:block;margin:8px 0 4px;font-size:14px;color:#fff}
+.node span{font-size:12px;line-height:1.5;color:rgba(246,248,246,.65)}
+@keyframes lit{0%,14%{border-color:var(--gold);box-shadow:0 0 28px var(--gold-glow)}22%,100%{border-color:rgba(255,255,255,.14);box-shadow:none}}
+.note{margin-top:22px;max-width:640px;font-size:14px;line-height:1.7;color:rgba(246,248,246,.72)}
+
+/* Itinerary preview */
+.itin-card{padding:28px;border:1px solid rgba(255,255,255,.16);border-radius:22px;background:rgba(5,18,30,.58);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(2,10,18,.5)}
+.itin-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:20px;color:#fff}
+.itin-top strong{font-size:22px;font-weight:600}
+.itin-day{padding:18px;border-radius:14px;background:rgba(255,255,255,.06)}
+.itin-day h4{margin:0 0 10px;font:11px var(--font-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.itin-day ul{margin:0;padding:0;list-style:none}
+.itin-day li{padding:7px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14px;color:#eaf2f8}
+.itin-day li:first-child{border-top:0}
+.tag{font:10px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+.foot{position:relative;z-index:10;padding:26px;text-align:center;font-size:12px;color:rgba(255,255,255,.5);background:rgba(3,10,19,.85)}
+
+@media (max-width:1100px){.flow{grid-template-columns:repeat(3,1fr)}.node:nth-child(3)::after{display:none}.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .g3{grid-template-columns:1fr}
+  .sec{min-height:auto;padding:100px 6vw 70px}
+  .sec.hero{min-height:100svh;align-items:flex-end;padding-bottom:60px}
+  .aviation-search-panel{flex-direction:column;align-items:stretch}
+  .asp-divider{width:100%;height:1px}.asp-field-days{flex:1}
+}
+@media (max-width:560px){.g4,.flow{grid-template-columns:1fr}.node::after{display:none}}
+@media (prefers-reduced-motion:reduce){.node{animation:none}}
