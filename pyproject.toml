@@ -8,7 +8,6 @@ authors = [
     { name = "Aman Kushwaha", email = "mouryaaman156@gmail.com" }
 ]
 dependencies = [
-    "airportsdata>=20260803",
     "fastapi>=0.141.1",
     "jinja2>=3.1.6",
     "langchain>=1.3.17",
@@ -20,7 +19,6 @@ dependencies = [
     "nest-asyncio>=1.6.0",
     "psycopg-pool>=3.3.1",
     "psycopg[binary]>=3.3.4",
-    "pycountry>=26.2.16",
     "python-dotenv>=1.2.3",
     "redis>=5.2.1",
     "requests>=2.34.2",

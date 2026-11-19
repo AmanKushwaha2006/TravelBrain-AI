@@ -10,7 +10,7 @@ from src.agents.hotel_agent import hotel_agent
 from src.agents.itinerary_agent import itinerary_agent
 from src.agents.weather_agent import weather_agent
 from src.clients.checkpointer import get_checkpointer
-from src.config.session import require, resolve_database_url
+from src.config.session import resolve_database_url
 from src.graph.state import TravelState
 
 

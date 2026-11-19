@@ -56,6 +56,7 @@ from src.db.history import (
     get_trip,
     delete_trip,
 )
+from src.agents.critic_agent import run_critic_evaluation
 from src.graph.runner import run_travel_agent
 
 # This is to allow nested event loops for async calls in FastAPI
@@ -161,8 +162,6 @@ templates = Jinja2Templates(
 )
 
 
-
-from src.agents.critic_agent import run_critic_evaluation
 
 class TravelRequest(BaseModel):
     message: str

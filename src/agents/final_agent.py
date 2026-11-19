@@ -3,7 +3,7 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agents.prompts import FINAL_AGENT_PROMPT, FINAL_SYSTEM_PROMPT
-from src.clients.llm import extract_message_content, get_llm
+from src.clients.llm import get_llm
 from src.graph.state import TravelState
 from src.utils.async_utils import bump_llm_calls
 

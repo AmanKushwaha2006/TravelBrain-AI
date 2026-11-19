@@ -2154,30 +2154,6 @@
       });
     }
 
-    function resumePlanning() {
-      var params = new URLSearchParams(window.location.search);
-      var urlTo = params.get("to");
-      var urlFrom = params.get("from") || "";
-      var urlDays = params.get("days") || "5";
-
-      if (urlTo) {
-        var query = "Plan a " + urlDays + " day trip to " + urlTo + (urlFrom ? " from " + urlFrom : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
-        executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
-        return;
-      }
-
-      if (pTo && pTo.value.trim()) {
-        var to = pTo.value.trim();
-        var from = pFrom ? pFrom.value.trim() : "";
-        var days = pDays ? parseInt(pDays.value, 10) : 5;
-        var q = "Plan a " + days + " day trip to " + to + (from ? " from " + from : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
-        executePlanning(q, from, to, days);
-        return;
-      }
-
-      showPlannerScreen();
-    }
-
     // Inspect URL parameters
     var params = new URLSearchParams(window.location.search);
     var urlTripId = params.get("id");
