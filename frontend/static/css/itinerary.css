@@ -2360,10 +2360,10 @@ button {
   z-index: 10;
   background: linear-gradient(180deg, rgba(3, 10, 19, 0.9) 0%, #030810 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 64px 6vw 32px;
+  padding: 50px 6vw 24px;
   color: rgba(255, 255, 255, 0.7);
   font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
-  margin-top: 60px;
+  margin-top: 48px;
 }
 
 .footer-wrap {
@@ -2374,8 +2374,8 @@ button {
 .footer-top {
   display: grid;
   grid-template-columns: 2fr 1.2fr 1.8fr;
-  gap: 48px;
-  padding-bottom: 48px;
+  gap: 40px;
+  padding-bottom: 36px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -2569,7 +2569,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 26px;
+  padding-top: 20px;
   font-size: 0.82rem;
   color: rgba(255, 255, 255, 0.45);
   flex-wrap: wrap;
@@ -2579,10 +2579,10 @@ button {
 @media (max-width: 900px) {
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 30px;
   }
   .site-footer {
-    padding: 48px 5vw 24px;
+    padding: 38px 5vw 20px;
   }
   .footer-bottom {
     flex-direction: column;
