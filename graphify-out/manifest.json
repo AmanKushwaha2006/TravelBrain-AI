@@ -6,8 +6,8 @@
     "semantic_hash": ""
   },
   "frontend/static/js/app.js": {
-    "mtime": 1795104326.7633376,
-    "seen": 1795104450.5877361,
+    "mtime": 1795105482.6408045,
+    "seen": 1795113079.0672762,
     "ast_hash": "8c44f7d78fe56848873e6202c6ee8a94",
     "semantic_hash": ""
   },
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "frontend/templates/index.html": {
-    "mtime": 1795090019.2340436,
-    "seen": 1795091334.010985,
-    "ast_hash": "33b7a773f87e02f8a6dcd8bf9f0f667c",
+    "mtime": 1795112915.593459,
+    "seen": 1795113079.0673444,
+    "ast_hash": "1fed819fb52d256737903aa04a9dbd38",
     "semantic_hash": ""
   },
   "frontend/static/js/aviation-3d.js": {
@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {
-    "mtime": 1795099044.736568,
-    "seen": 1795099473.0241961,
-    "ast_hash": "2c3f8c7cc19370a1f74dba9d007b186a",
+    "mtime": 1795112989.585308,
+    "seen": 1795113079.0673459,
+    "ast_hash": "16a879e2cdd5fed8038555fac1adca19",
     "semantic_hash": ""
   },
   "frontend/static/js/api-client.js": {
