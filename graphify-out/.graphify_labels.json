@@ -2,7 +2,7 @@
   "0": "session.py",
   "1": "critic_agent.py",
   "2": "verify_single_key",
-  "3": "settings.py",
+  "3": "local.py",
   "4": "app.js",
   "5": "cache.py",
   "6": "auth.py",
@@ -28,8 +28,6 @@
   "26": "history.py",
   "27": "api-client.js",
   "28": "Request",
-  "29": "add_no_cache_for_dev",
   "30": "db/__init__.py",
-  "31": "itinerary.js",
-  "32": "home_head"
+  "31": "itinerary.js"
 }

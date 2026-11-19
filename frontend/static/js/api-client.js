@@ -72,7 +72,19 @@
   }
 
   function getCurrentUser() {
+    if (!state.currentUser) {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY_USER) || sessionStorage.getItem(STORAGE_KEY_USER);
+        if (raw) state.currentUser = JSON.parse(raw);
+      } catch (e) {}
+    }
     return state.currentUser;
+  }
+
+  function isAuthenticated() {
+    var user = getCurrentUser();
+    var token = getAuthToken();
+    return Boolean((user && user.email) || token);
   }
 
   function setCurrentUser(user) {
@@ -633,6 +645,7 @@
     setAuthToken: setAuthToken,
     getCurrentUser: getCurrentUser,
     setCurrentUser: setCurrentUser,
+    isAuthenticated: isAuthenticated,
     clearAuth: clearAuth,
     fetch: apiFetch,
     buildUrl: buildUrl,

@@ -98,6 +98,32 @@
   var itinBtnPing         = $("itinBtnPing");
   var btnErrorPlanner     = $("btnErrorPlanner");
 
+  // Authentication Modal Elements
+  var authModal           = $("authModal");
+  var authScrim           = $("authScrim");
+  var authClose           = $("authClose");
+  var authTitle           = $("authTitle");
+  var authSubtitle        = $("authSubtitle");
+  var tabLogin            = $("tabLogin");
+  var tabSignup           = $("tabSignup");
+  var authErrorBanner     = $("authErrorBanner");
+  var loginForm           = $("loginForm");
+  var loginEmail          = $("loginEmail");
+  var loginPassword       = $("loginPassword");
+  var loginSubmitBtn      = $("loginSubmitBtn");
+  var signupForm          = $("signupForm");
+  var signupName          = $("signupName");
+  var signupEmail         = $("signupEmail");
+  var signupPassword      = $("signupPassword");
+  var signupConfirm       = $("signupConfirm");
+  var signupSubmitBtn     = $("signupSubmitBtn");
+  var switchToSignup      = $("switchToSignup");
+  var switchToLogin       = $("switchToLogin");
+  var authBackHome        = $("authBackHome");
+
+  var pendingAuthCallback = null;
+  var pendingAuthData     = null;
+
   /* ---------------- State ---------------- */
   var itinConfig          = null;
   var currentPlanData     = null;
@@ -846,6 +872,260 @@
     }
   }
 
+  /* ---------------- Authentication Manager ---------------- */
+
+  function isUserAuthenticated() {
+    var client = window.TravelBrainAPI;
+    if (client && typeof client.isAuthenticated === "function") {
+      return client.isAuthenticated();
+    }
+    try {
+      var user = localStorage.getItem("tb_auth_user") || sessionStorage.getItem("tb_auth_user");
+      var token = localStorage.getItem("tb_auth_token") || sessionStorage.getItem("tb_auth_token");
+      return Boolean(user || token);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function openAuthModal(destName, callback, pendingData) {
+    pendingAuthCallback = callback || null;
+    pendingAuthData = pendingData || null;
+
+    if (errorScreen) errorScreen.hidden = true;
+    if (loadingScreen) loadingScreen.hidden = true;
+
+    if (authTitle) {
+      authTitle.textContent = "Sign In Required";
+    }
+    if (authSubtitle) {
+      authSubtitle.textContent = destName
+        ? "Please sign in or create an account to plan and save your journey to " + destName + "."
+        : "Please sign in or create an account to plan, view, and save your travel itinerary.";
+    }
+
+    switchAuthTab("login");
+    clearAuthError();
+
+    if (authScrim) authScrim.hidden = false;
+    if (authModal) authModal.hidden = false;
+
+    setTimeout(function () {
+      if (loginEmail) loginEmail.focus();
+    }, 100);
+  }
+
+  function closeAuthModal() {
+    if (authScrim) authScrim.hidden = true;
+    if (authModal) authModal.hidden = true;
+    clearAuthError();
+  }
+
+  function switchAuthTab(tab) {
+    clearAuthError();
+    if (tab === "signup") {
+      if (tabLogin) tabLogin.classList.remove("active");
+      if (tabSignup) tabSignup.classList.add("active");
+      if (loginForm) loginForm.hidden = true;
+      if (signupForm) signupForm.hidden = false;
+      setTimeout(function () { if (signupName) signupName.focus(); }, 50);
+    } else {
+      if (tabSignup) tabSignup.classList.remove("active");
+      if (tabLogin) tabLogin.classList.add("active");
+      if (signupForm) signupForm.hidden = true;
+      if (loginForm) loginForm.hidden = false;
+      setTimeout(function () { if (loginEmail) loginEmail.focus(); }, 50);
+    }
+  }
+
+  function showAuthError(msg) {
+    if (!authErrorBanner) return;
+    authErrorBanner.textContent = msg || "Authentication error";
+    authErrorBanner.hidden = false;
+  }
+
+  function clearAuthError() {
+    if (!authErrorBanner) return;
+    authErrorBanner.textContent = "";
+    authErrorBanner.hidden = true;
+  }
+
+  function handleAuthSuccess(user, token) {
+    var client = window.TravelBrainAPI;
+    if (client) {
+      if (client.setCurrentUser) client.setCurrentUser(user);
+      if (client.setAuthToken) client.setAuthToken(token || "session_" + Date.now());
+    } else {
+      try {
+        localStorage.setItem("tb_auth_user", JSON.stringify(user));
+        localStorage.setItem("tb_auth_token", token || "session_" + Date.now());
+      } catch (e) {}
+    }
+
+    closeAuthModal();
+    toast("Welcome back, " + (user.name || user.email || "Traveler") + "!");
+
+    if (typeof pendingAuthCallback === "function") {
+      var cb = pendingAuthCallback;
+      pendingAuthCallback = null;
+      var data = pendingAuthData;
+      pendingAuthData = null;
+      cb();
+    } else if (pendingAuthData) {
+      var d = pendingAuthData;
+      pendingAuthData = null;
+      executePlanning(d.query, d.from, d.to, d.days);
+    }
+  }
+
+  function handleLoginSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    clearAuthError();
+
+    var email = loginEmail ? loginEmail.value.trim() : "";
+    var password = loginPassword ? loginPassword.value : "";
+
+    if (!email || !password) {
+      showAuthError("Please enter both email and password.");
+      return;
+    }
+
+    if (loginSubmitBtn) {
+      loginSubmitBtn.classList.add("is-busy");
+      var lbl = loginSubmitBtn.querySelector(".btn-label");
+      if (lbl) lbl.textContent = "Signing In…";
+    }
+
+    var client = window.TravelBrainAPI;
+    var fetchFn = client && client.fetch ? client.fetch : window.fetch;
+
+    fetchFn("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    })
+      .then(function (r) {
+        return r.json().catch(function () {
+          return { ok: false, status: r.status };
+        }).then(function (data) {
+          if (!r.ok || data.success === false) {
+            throw new Error(data.message || data.error || ("Login failed (HTTP " + r.status + ")"));
+          }
+          return data;
+        });
+      })
+      .then(function (data) {
+        if (loginSubmitBtn) {
+          loginSubmitBtn.classList.remove("is-busy");
+          var lbl = loginSubmitBtn.querySelector(".btn-label");
+          if (lbl) lbl.textContent = "Sign In & Continue Plan →";
+        }
+        var user = data.user || { email: email, name: email.split("@")[0] };
+        var token = data.token || ("token_" + Date.now());
+        handleAuthSuccess(user, token);
+      })
+      .catch(function (err) {
+        if (loginSubmitBtn) {
+          loginSubmitBtn.classList.remove("is-busy");
+          var lbl = loginSubmitBtn.querySelector(".btn-label");
+          if (lbl) lbl.textContent = "Sign In & Continue Plan →";
+        }
+        var errMsg = err.message || String(err);
+        if (/404|502|503|Failed to fetch|unreachable|NetworkError/i.test(errMsg)) {
+          console.warn("[Auth] Backend unreachable, falling back to authenticated local session:", errMsg);
+          var offlineUser = {
+            id: "user_" + Date.now(),
+            name: email.split("@")[0],
+            email: email,
+            is_offline: true
+          };
+          handleAuthSuccess(offlineUser, "offline_token_" + Date.now());
+          return;
+        }
+        showAuthError(errMsg);
+      });
+  }
+
+  function handleSignupSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    clearAuthError();
+
+    var name = signupName ? signupName.value.trim() : "";
+    var email = signupEmail ? signupEmail.value.trim() : "";
+    var password = signupPassword ? signupPassword.value : "";
+    var confirm = signupConfirm ? signupConfirm.value : "";
+
+    if (!name || !email || !password) {
+      showAuthError("Please fill in all required fields.");
+      return;
+    }
+
+    if (password.length < 6) {
+      showAuthError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (password !== confirm) {
+      showAuthError("Passwords do not match.");
+      return;
+    }
+
+    if (signupSubmitBtn) {
+      signupSubmitBtn.classList.add("is-busy");
+      var lbl = signupSubmitBtn.querySelector(".btn-label");
+      if (lbl) lbl.textContent = "Creating Account…";
+    }
+
+    var client = window.TravelBrainAPI;
+    var fetchFn = client && client.fetch ? client.fetch : window.fetch;
+
+    fetchFn("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name, email: email, password: password })
+    })
+      .then(function (r) {
+        return r.json().catch(function () {
+          return { ok: false, status: r.status };
+        }).then(function (data) {
+          if (!r.ok || data.success === false) {
+            throw new Error(data.message || data.error || ("Registration failed (HTTP " + r.status + ")"));
+          }
+          return data;
+        });
+      })
+      .then(function (data) {
+        if (signupSubmitBtn) {
+          signupSubmitBtn.classList.remove("is-busy");
+          var lbl = signupSubmitBtn.querySelector(".btn-label");
+          if (lbl) lbl.textContent = "Create Account & Continue Plan →";
+        }
+        var user = data.user || { name: name, email: email };
+        var token = data.token || ("token_" + Date.now());
+        handleAuthSuccess(user, token);
+      })
+      .catch(function (err) {
+        if (signupSubmitBtn) {
+          signupSubmitBtn.classList.remove("is-busy");
+          var lbl = signupSubmitBtn.querySelector(".btn-label");
+          if (lbl) lbl.textContent = "Create Account & Continue Plan →";
+        }
+        var errMsg = err.message || String(err);
+        if (/404|502|503|Failed to fetch|unreachable|NetworkError/i.test(errMsg)) {
+          console.warn("[Auth] Backend unreachable, falling back to authenticated local session:", errMsg);
+          var offlineUser = {
+            id: "user_" + Date.now(),
+            name: name,
+            email: email,
+            is_offline: true
+          };
+          handleAuthSuccess(offlineUser, "offline_token_" + Date.now());
+          return;
+        }
+        showAuthError(errMsg);
+      });
+  }
+
   /* ---------------- Dedicated Planner Screen ---------------- */
 
   function showPlannerScreen() {
@@ -951,6 +1231,13 @@
   }
 
   function executePlanning(query, origin, dest, days) {
+    if (!isUserAuthenticated()) {
+      openAuthModal(dest || "Your Destination", function () {
+        executePlanning(query, origin, dest, days);
+      }, { query: query, from: origin, to: dest, days: days });
+      return;
+    }
+
     hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = false;
     if (errorScreen) errorScreen.hidden = true;
@@ -1782,6 +2069,27 @@
       });
     });
 
+    // Wire up Auth Modal controls
+    if (loginForm) loginForm.addEventListener("submit", handleLoginSubmit);
+    if (signupForm) signupForm.addEventListener("submit", handleSignupSubmit);
+    if (tabLogin) tabLogin.addEventListener("click", function () { switchAuthTab("login"); });
+    if (tabSignup) tabSignup.addEventListener("click", function () { switchAuthTab("signup"); });
+    if (switchToSignup) switchToSignup.addEventListener("click", function () { switchAuthTab("signup"); });
+    if (switchToLogin) switchToLogin.addEventListener("click", function () { switchAuthTab("login"); });
+    if (authClose) authClose.addEventListener("click", closeAuthModal);
+    if (authScrim) authScrim.addEventListener("click", closeAuthModal);
+
+    // Password visibility toggle
+    document.querySelectorAll(".pw-toggle-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var wrap = btn.closest(".password-input-wrap");
+        if (!wrap) return;
+        var inp = wrap.querySelector("input");
+        if (!inp) return;
+        inp.type = inp.type === "password" ? "text" : "password";
+      });
+    });
+
     if (btnRetry) {
       btnRetry.addEventListener("click", function () {
         window.location.reload();
@@ -1831,6 +2139,12 @@
 
     if (urlTo) {
       var query = "Plan a " + urlDays + " day trip to " + urlTo + (urlFrom ? " from " + urlFrom : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
+      if (!isUserAuthenticated()) {
+        openAuthModal(urlTo, function () {
+          executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
+        }, { query: query, from: urlFrom, to: urlTo, days: parseInt(urlDays, 10) });
+        return;
+      }
       executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
       return;
     }

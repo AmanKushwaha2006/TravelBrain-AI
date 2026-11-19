@@ -465,6 +465,99 @@
     </div>
   </div>
 
+  <!-- ==================== AUTHENTICATION MODAL ==================== -->
+  <div class="modal-scrim" id="authScrim" hidden></div>
+  <div class="modal auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+    <div class="modal-head" style="flex-direction:column;align-items:center;text-align:center;position:relative;padding-top:24px;">
+      <button class="icon-btn" id="authClose" type="button" aria-label="Close modal" style="position:absolute;top:16px;right:16px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="auth-icon-badge" style="width:48px;height:48px;border-radius:50%;background:rgba(85,184,232,0.12);border:1px solid rgba(85,184,232,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:#55B8E8;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="modal-heading">
+        <h2 id="authTitle" style="font-size:1.35rem;font-weight:700;margin-bottom:6px;">Sign In Required</h2>
+        <p id="authSubtitle" style="font-size:0.84rem;color:var(--text-muted);max-width:320px;line-height:1.45;">Please sign in or create an account to plan, view, and save your travel itinerary.</p>
+      </div>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" type="button">Sign In</button>
+      <button class="auth-tab" id="tabSignup" type="button">Create Account</button>
+    </div>
+
+    <!-- Error Banner -->
+    <div class="auth-error-banner" id="authErrorBanner" hidden></div>
+
+    <!-- Login Form -->
+    <form class="auth-form" id="loginForm" autocomplete="on">
+      <div class="auth-field">
+        <label for="loginEmail" class="auth-label">Email Address</label>
+        <input type="email" id="loginEmail" class="auth-input" placeholder="name@example.com" required autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="loginPassword" class="auth-label">Password</label>
+        <div class="password-input-wrap">
+          <input type="password" id="loginPassword" class="auth-input" placeholder="Enter your password" required autocomplete="current-password" />
+          <button type="button" class="icon-btn pw-toggle-btn" tabindex="-1" title="Toggle visibility">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="auth-actions">
+        <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">
+          <span class="btn-label">Sign In &amp; Continue Plan →</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="auth-switch-text">
+        Don't have an account? <a href="javascript:void(0)" id="switchToSignup">Sign up here</a>
+      </p>
+    </form>
+
+    <!-- Signup Form -->
+    <form class="auth-form" id="signupForm" autocomplete="on" hidden>
+      <div class="auth-field">
+        <label for="signupName" class="auth-label">Full Name</label>
+        <input type="text" id="signupName" class="auth-input" placeholder="e.g. Rahul Sharma" required autocomplete="name" />
+      </div>
+      <div class="auth-field">
+        <label for="signupEmail" class="auth-label">Email Address</label>
+        <input type="email" id="signupEmail" class="auth-input" placeholder="name@example.com" required autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="signupPassword" class="auth-label">Password (min. 6 characters)</label>
+        <div class="password-input-wrap">
+          <input type="password" id="signupPassword" class="auth-input" placeholder="Create a secure password" minlength="6" required autocomplete="new-password" />
+          <button type="button" class="icon-btn pw-toggle-btn" tabindex="-1" title="Toggle visibility">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="auth-field">
+        <label for="signupConfirm" class="auth-label">Confirm Password</label>
+        <input type="password" id="signupConfirm" class="auth-input" placeholder="Repeat your password" minlength="6" required autocomplete="new-password" />
+      </div>
+      <div class="auth-actions">
+        <button type="submit" class="btn btn-primary btn-block" id="signupSubmitBtn">
+          <span class="btn-label">Create Account &amp; Continue Plan →</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="auth-switch-text">
+        Already have an account? <a href="javascript:void(0)" id="switchToLogin">Sign in here</a>
+      </p>
+    </form>
+
+    <div class="auth-modal-foot">
+      <a href="/" id="authBackHome">← Return to Home</a>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="toast-box" id="toast"></div>
 
