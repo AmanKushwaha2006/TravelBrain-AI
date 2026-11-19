@@ -51,6 +51,15 @@
           <button type="button" class="view-toggle-btn" id="viewDossierBtn" title="View complete markdown agent dossier">📄 Full Dossier</button>
         </div>
 
+        <!-- Plan New Journey Button -->
+        <button type="button" class="action-btn btn-new-plan" id="btnNewTripModal" title="Plan a new journey or change destination">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span class="action-text">Plan New Journey</span>
+        </button>
+
         <!-- Copy Plan -->
         <button type="button" class="action-btn" id="copyPlanBtn" title="Copy text to clipboard">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -86,13 +95,11 @@
           <span>🛡️ Audit Factuality</span>
         </button>
 
-        <!-- API Settings -->
-        <button type="button" class="action-btn" id="settingsBtn" title="API Credentials & Configuration">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-          </svg>
-          <span class="action-text">API Config</span>
+        <!-- API Connection Status -->
+        <button class="status-chip" id="apiStatus" data-state="checking" type="button" title="API status — click to configure">
+          <span class="status-indicator"></span>
+          <span class="status-text">Checking…</span>
+          <span class="status-action"></span>
         </button>
 
       </div>
@@ -102,6 +109,98 @@
 
   <!-- ==================== MAIN CONTENT ==================== -->
   <main class="itinerary-container">
+
+    <!-- 0. DEDICATED PLAN A JOURNEY SECTION -->
+    <section class="plan-journey-screen" id="planJourneySection" hidden>
+      <div class="planner-card">
+        <div class="planner-head">
+          <div class="planner-badge">✦ Multi-Agent AI Travel Architect</div>
+          <h1 class="planner-title">Plan Your Next Journey</h1>
+          <p class="planner-subtitle">Where would you like to travel? Our specialized AI agent swarms will search verified routes, airfares in INR (₹), hand-curated stays, and meteorology to construct your custom day-by-day itinerary.</p>
+        </div>
+
+        <form id="itinPlannerForm" class="planner-form" autocomplete="off">
+          <div class="planner-grid">
+            <div class="planner-field">
+              <label for="pFrom" class="planner-label">Origin / Departure City</label>
+              <div class="planner-input-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                </svg>
+                <input type="text" id="pFrom" class="planner-input" placeholder="e.g. New Delhi, Mumbai, Bengaluru" value="New Delhi" />
+              </div>
+            </div>
+
+            <div class="planner-field">
+              <label for="pTo" class="planner-label">Destination City <span style="color:var(--gold-primary);">*</span></label>
+              <div class="planner-input-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <input type="text" id="pTo" class="planner-input" placeholder="e.g. Manali, Goa, Paris, Srinagar, Kyoto" required />
+              </div>
+            </div>
+
+            <div class="planner-field planner-field-days">
+              <label for="pDays" class="planner-label">Duration (Days)</label>
+              <div class="planner-input-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <input type="number" id="pDays" class="planner-input" min="1" max="30" value="5" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Discovery Pills -->
+          <div class="planner-quick-row">
+            <span class="planner-quick-label">Trending Destinations:</span>
+            <button type="button" class="itin-quick-pill" data-to="Manali" data-from="New Delhi" data-days="5">🏔️ Manali</button>
+            <button type="button" class="itin-quick-pill" data-to="Goa" data-from="Mumbai" data-days="4">🏖️ Goa</button>
+            <button type="button" class="itin-quick-pill" data-to="Srinagar" data-from="New Delhi" data-days="5">🛶 Kashmir</button>
+            <button type="button" class="itin-quick-pill" data-to="Kerala" data-from="Bengaluru" data-days="6">🌴 Kerala</button>
+            <button type="button" class="itin-quick-pill" data-to="Jaipur" data-from="New Delhi" data-days="3">🏰 Jaipur</button>
+            <button type="button" class="itin-quick-pill" data-to="Paris" data-from="New Delhi" data-days="6">🗼 Paris</button>
+          </div>
+
+          <!-- Travel Style / Pace Selection -->
+          <div class="planner-style-row">
+            <span class="planner-quick-label">Travel Style:</span>
+            <label class="style-radio-label">
+              <input type="radio" name="travelStyle" value="Balanced & Scenic" checked />
+              <span>Balanced</span>
+            </label>
+            <label class="style-radio-label">
+              <input type="radio" name="travelStyle" value="Relaxed & Leisure" />
+              <span>Relaxed</span>
+            </label>
+            <label class="style-radio-label">
+              <input type="radio" name="travelStyle" value="Adventure & Active" />
+              <span>Adventure</span>
+            </label>
+            <label class="style-radio-label">
+              <input type="radio" name="travelStyle" value="Heritage & Culture" />
+              <span>Heritage</span>
+            </label>
+            <label class="style-radio-label">
+              <input type="radio" name="travelStyle" value="Luxury & Fine Dining" />
+              <span>Luxury</span>
+            </label>
+          </div>
+
+          <div class="planner-actions">
+            <button type="submit" class="btn-planner-submit" id="btnPlannerSubmit">
+              <span class="btn-planner-icon">✦</span>
+              <span>Generate Verified Itinerary (₹) →</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
     <!-- 1. LOADING SCREEN -->
     <section class="loading-screen" id="loadingScreen">
@@ -159,59 +258,10 @@
         <p id="errorMessage">We encountered an issue communicating with the multi-agent AI server.</p>
         <div class="error-actions">
           <button type="button" class="btn-retry" id="btnRetry">Try Again</button>
+          <button type="button" class="btn-retry" id="btnErrorPlanner" style="background:linear-gradient(135deg, #D4AF37, #AA8416);color:#050B14;font-weight:700;">Plan New Journey</button>
           <button type="button" class="btn-retry" id="btnErrorSettings" style="background:#55B8E8;color:#050B14;" hidden>Connect to API</button>
           <a href="/" class="btn-back-home">Return to Home</a>
         </div>
-      </div>
-    </section>
-
-    <!-- 2B. AUTHENTICATION REQUIRED SCREEN -->
-    <section class="error-screen" id="authGateScreen" hidden>
-      <div class="error-card" style="max-width:440px;">
-        <div class="error-icon" style="background:rgba(85,184,232,0.1);color:#55B8E8;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-        </div>
-        <h2>Sign In Required</h2>
-        <p id="authGateMsg">Please sign in or create an account to plan, view, and save your travel itinerary.</p>
-        
-        <div style="display:flex;gap:10px;margin-bottom:15px;width:100%;">
-          <button type="button" class="view-toggle-btn active" id="authGateTabLogin" style="flex:1;padding:8px 0;font-size:0.85rem;">Sign In</button>
-          <button type="button" class="view-toggle-btn" id="authGateTabSignup" style="flex:1;padding:8px 0;font-size:0.85rem;">Create Account</button>
-        </div>
-
-        <form id="authGateLoginForm" style="width:100%;text-align:left;">
-          <div style="margin-bottom:12px;">
-            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Email Address</label>
-            <input type="email" id="authGateEmail" class="settings-input" placeholder="name@example.com" required style="width:100%;box-sizing:border-box;" />
-          </div>
-          <div style="margin-bottom:16px;">
-            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Password</label>
-            <input type="password" id="authGatePassword" class="settings-input" placeholder="Enter password" required style="width:100%;box-sizing:border-box;" />
-          </div>
-          <button type="submit" class="btn-retry" id="authGateLoginBtn" style="width:100%;background:#55B8E8;color:#050B14;font-weight:700;">Sign In &amp; Continue Plan →</button>
-        </form>
-
-        <form id="authGateSignupForm" style="width:100%;text-align:left;" hidden>
-          <div style="margin-bottom:10px;">
-            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Full Name</label>
-            <input type="text" id="authGateName" class="settings-input" placeholder="Your Name" required style="width:100%;box-sizing:border-box;" />
-          </div>
-          <div style="margin-bottom:10px;">
-            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Email Address</label>
-            <input type="email" id="authGateSignupEmail" class="settings-input" placeholder="name@example.com" required style="width:100%;box-sizing:border-box;" />
-          </div>
-          <div style="margin-bottom:14px;">
-            <label style="display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:4px;">Password (min 6 characters)</label>
-            <input type="password" id="authGateSignupPassword" class="settings-input" placeholder="Create password" minlength="6" required style="width:100%;box-sizing:border-box;" />
-          </div>
-          <button type="submit" class="btn-retry" id="authGateSignupBtn" style="width:100%;background:#55B8E8;color:#050B14;font-weight:700;">Create Account &amp; Continue →</button>
-        </form>
-
-        <div id="authGateError" style="color:#ff6b6b;font-size:0.8rem;margin-top:10px;" hidden></div>
-        <div style="margin-top:14px;"><a href="/" class="btn-back-home" style="justify-content:center;">← Return to Home</a></div>
       </div>
     </section>
 
@@ -281,6 +331,9 @@
         </div>
         <div class="weather-advice-banner" id="weatherAdvice">
           <!-- Weather advice text -->
+        </div>
+        <div class="weather-cards-row" id="weatherCardsRow">
+          <!-- Weather forecast cards injected dynamically -->
         </div>
       </section>
 
@@ -385,35 +438,30 @@
 
   <!-- API Settings Modal -->
   <div class="modal-scrim" id="settingsScrim" hidden></div>
-  <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true">
+  <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true" style="max-width:580px;">
     <div class="settings-head">
-      <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;">API &amp; Agent Configuration</h3>
+      <div>
+        <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;margin:0;">AI Agent &amp; API Configuration</h3>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin:4px 0 0 0;">Connect and verify credentials for each specialized AI agent and external travel service.</p>
+      </div>
       <button type="button" class="icon-btn-close" id="settingsClose">✕</button>
     </div>
-    <div class="settings-body">
+    <div class="settings-body" style="max-height:65vh;overflow-y:auto;">
       <!-- Live Status Banner -->
       <div id="itinSettingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin-bottom:14px;">
         <div style="display:flex;align-items:center;gap:8px;">
           <span class="status-indicator" id="itinConnIndicator" style="width:10px;height:10px;border-radius:50%;background:#888;"></span>
-          <span id="itinConnText" style="font-size:0.8rem;color:#FFF;">Checking Status…</span>
+          <span id="itinConnText" style="font-size:0.8rem;color:#FFF;">Checking Providers…</span>
         </div>
-        <button type="button" class="btn-retry" id="itinBtnPing" style="padding:4px 10px;font-size:0.75rem;">Test Ping</button>
+        <button type="button" class="btn-retry" id="itinBtnPing" style="padding:4px 10px;font-size:0.75rem;">Ping Backend</button>
       </div>
 
-      <!-- API Base URL Field -->
-      <div class="settings-field" style="margin-bottom:14px;">
-        <label for="settingsBaseUrl">API Base URL (Leave empty for same host)</label>
-        <input type="url" id="settingsBaseUrl" placeholder="https://travelbrain-api.onrender.com" class="settings-input" />
-      </div>
-
-      <!-- Groq API Key -->
-      <div class="settings-field">
-        <label for="settingsGroqKey">Groq API Key (Stored in Session Memory)</label>
-        <input type="password" id="settingsGroqKey" placeholder="gsk_..." class="settings-input" />
-      </div>
+      <!-- Providers List (Groq, Tavily, AviationStack, OpenWeather, PostgreSQL) -->
+      <div id="credList" style="display:flex;flex-direction:column;gap:12px;"></div>
     </div>
-    <div class="settings-foot">
-      <button type="button" class="btn-save-key" id="settingsSave">Connect &amp; Save</button>
+    <div class="settings-foot" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid rgba(255,255,255,0.08);">
+      <button type="button" class="btn-retry" id="settingsReset" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text-muted);padding:8px 14px;font-size:0.8rem;">Use server .env</button>
+      <button type="button" class="btn-save-key" id="settingsSave" style="padding:8px 18px;font-size:0.85rem;">Save &amp; Connect All</button>
     </div>
   </div>
 

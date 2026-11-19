@@ -20,7 +20,13 @@ from src.api.sessions import (
     new_session_id,
     store_credentials,
 )
-from src.api.validation import check_database_url, check_groq_api_key
+from src.api.validation import (
+    check_aviationstack_api_key,
+    check_database_url,
+    check_groq_api_key,
+    check_openweather_api_key,
+    check_tavily_api_key,
+)
 from src.clients import cache
 from src.clients.checkpointer import get_pool
 from src.config.session import (
@@ -182,6 +188,14 @@ class ConfigRequest(BaseModel):
 
     groq_api_key: str | None = None
     database_url: str | None = None
+    tavily_api_key: str | None = None
+    aviationstack_api_key: str | None = None
+    openweather_api_key: str | None = None
+
+
+class VerifyKeyRequest(BaseModel):
+    provider: str
+    key: str
 
 
 class SignupRequest(BaseModel):
@@ -266,6 +280,24 @@ async def write_config(request: Request, body: ConfigRequest):
         if not ok:
             errors["groq_api_key"] = detail
 
+    tavily_key = (body.tavily_api_key or "").strip()
+    if tavily_key:
+        ok, detail = check_tavily_api_key(tavily_key)
+        if not ok:
+            errors["tavily_api_key"] = detail
+
+    aviation_key = (body.aviationstack_api_key or "").strip()
+    if aviation_key:
+        ok, detail = check_aviationstack_api_key(aviation_key)
+        if not ok:
+            errors["aviationstack_api_key"] = detail
+
+    weather_key = (body.openweather_api_key or "").strip()
+    if weather_key:
+        ok, detail = check_openweather_api_key(weather_key)
+        if not ok:
+            errors["openweather_api_key"] = detail
+
     database_url = (body.database_url or "").strip()
     if database_url:
         ok, detail = check_database_url(database_url)
@@ -284,6 +316,9 @@ async def write_config(request: Request, body: ConfigRequest):
         session_id,
         groq_api_key=body.groq_api_key,
         database_url=body.database_url,
+        tavily_api_key=body.tavily_api_key,
+        aviationstack_api_key=body.aviationstack_api_key,
+        openweather_api_key=body.openweather_api_key,
     )
 
     with use_credentials(credentials):
@@ -292,6 +327,68 @@ async def write_config(request: Request, body: ConfigRequest):
     response = JSONResponse(content=payload)
     _set_session_cookie(response, session_id)
 
+    return response
+
+
+@app.post("/api/config/verify-key")
+async def verify_single_key(request: Request, body: VerifyKeyRequest):
+    """
+    Test and store an individual provider's API key.
+    Provides immediate feedback for each provider card in the UI.
+    """
+    session_id = _session_id(request) or new_session_id()
+    provider = (body.provider or "").strip().lower()
+    key = (body.key or "").strip()
+
+    if not key:
+        return JSONResponse(
+            status_code=400,
+            content={"ok": False, "message": "API key or connection string cannot be empty."}
+        )
+
+    ok = False
+    message = "Unknown provider"
+
+    if provider in ("groq", "groq_api_key"):
+        ok, message = check_groq_api_key(key)
+        if ok:
+            store_credentials(session_id, groq_api_key=key)
+    elif provider in ("tavily", "tavily_api_key"):
+        ok, message = check_tavily_api_key(key)
+        if ok:
+            store_credentials(session_id, tavily_api_key=key)
+    elif provider in ("aviationstack", "aviationstack_api_key", "aviation"):
+        ok, message = check_aviationstack_api_key(key)
+        if ok:
+            store_credentials(session_id, aviationstack_api_key=key)
+    elif provider in ("openweather", "openweather_api_key", "weather"):
+        ok, message = check_openweather_api_key(key)
+        if ok:
+            store_credentials(session_id, openweather_api_key=key)
+    elif provider in ("database", "database_url", "postgres"):
+        ok, message = check_database_url(key)
+        if ok:
+            store_credentials(session_id, database_url=key)
+    else:
+        return JSONResponse(
+            status_code=400,
+            content={"ok": False, "message": f"Unsupported provider: {provider}"}
+        )
+
+    credentials = get_credentials_for(session_id)
+    with use_credentials(credentials):
+        status_payload = credential_status()
+
+    response = JSONResponse(
+        status_code=200 if ok else 400,
+        content={
+            "ok": ok,
+            "provider": provider,
+            "message": message,
+            **status_payload,
+        }
+    )
+    _set_session_cookie(response, session_id)
     return response
 
 
@@ -311,18 +408,7 @@ async def reset_config(request: Request):
 
 @app.post("/api/travel")
 async def travel_planner(request: Request, request_data: TravelRequest):
-    # Mandatory authentication check before initiating journey planning
     user = _get_current_user(request)
-    if not user:
-        return JSONResponse(
-            status_code=401,
-            content={
-                "success": False,
-                "error": "Authentication required. Please sign in to plan and save your journey.",
-                "auth_required": True,
-            }
-        )
-
     credentials = get_credentials_for(_session_id(request))
 
     try:

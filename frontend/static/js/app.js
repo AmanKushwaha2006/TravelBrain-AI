@@ -207,14 +207,60 @@
     if (sendBtn) sendBtn.disabled = !ready || busy;
   }
 
-  var settingsBaseUrl       = $("settingsBaseUrl");
-  var settingsUrlBadge      = $("settingsUrlBadge");
   var btnTestApiConn        = $("btnTestApiConn");
   var settingsConnIndicator = $("settingsConnIndicator");
   var settingsConnState     = $("settingsConnState");
   var settingsConnDetail    = $("settingsConnDetail");
   var authNoticeBanner      = $("authNoticeBanner");
   var pendingPlan           = null;
+
+  var PROVIDER_LIST = [
+    {
+      id: "groq",
+      name: "Groq API",
+      tag: "Core LLM Engine",
+      envKey: "GROQ_API_KEY",
+      propKey: "groq_api_key",
+      placeholder: "gsk_...",
+      desc: "Powers multi-agent LLM reasoning, itinerary synthesis, budgeting, and agent conversations."
+    },
+    {
+      id: "tavily",
+      name: "Tavily Search API",
+      tag: "Live Web Search",
+      envKey: "TAVILY_API_KEY",
+      propKey: "tavily_api_key",
+      placeholder: "tvly-...",
+      desc: "Empowers Hotel & Itinerary Agents to fetch real-time accommodation prices and live landmark hours."
+    },
+    {
+      id: "aviationstack",
+      name: "AviationStack API",
+      tag: "Flight Intelligence",
+      envKey: "AVIATIONSTACK_API_KEY",
+      propKey: "aviationstack_api_key",
+      placeholder: "Enter AviationStack API key",
+      desc: "Empowers Flight Agent via MCP to query live airline routes, IATA/ICAO airport directories, and flight schedules."
+    },
+    {
+      id: "openweather",
+      name: "OpenWeather API",
+      tag: "Climate & Forecasts",
+      envKey: "OPENWEATHER_API_KEY",
+      propKey: "openweather_api_key",
+      placeholder: "Enter OpenWeather API key",
+      desc: "Empowers Weather Agent via MCP to retrieve live meteorological observations and packing advice."
+    },
+    {
+      id: "database",
+      name: "PostgreSQL Database",
+      tag: "State Checkpoints",
+      envKey: "DATABASE_URL",
+      propKey: "database_url",
+      placeholder: "postgresql://user:password@host:5432/dbname",
+      desc: "Stores conversation checkpoints, journey history, and user authentication accounts (Neon, Supabase, etc.)."
+    }
+  ];
 
   function updateConnectionUI(stateKind, detailText) {
     if (settingsConnIndicator) {
@@ -233,18 +279,19 @@
       }
     }
     if (settingsConnState) {
-      settingsConnState.textContent = stateKind === "connected" ? "Connected"
-                                   : stateKind === "connecting" ? "Connecting…"
-                                   : stateKind === "failed" ? "Connection Failed"
-                                   : "Disconnected";
+      if (config && typeof config.connected_count === "number") {
+        settingsConnState.textContent = config.ready
+          ? "AI Agents Ready · " + config.connected_count + "/" + config.total_count + " Services Connected"
+          : "Configuration Required · " + config.connected_count + "/" + config.total_count + " Services Connected";
+      } else {
+        settingsConnState.textContent = stateKind === "connected" ? "Connected"
+                                     : stateKind === "connecting" ? "Connecting…"
+                                     : stateKind === "failed" ? "API Unreachable"
+                                     : "Disconnected";
+      }
     }
     if (settingsConnDetail && detailText) {
       settingsConnDetail.textContent = detailText;
-    }
-    if (settingsUrlBadge) {
-      var currentBase = window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() : "";
-      settingsUrlBadge.textContent = currentBase ? "Custom Endpoint" : "Auto (Same Origin)";
-      settingsUrlBadge.className = "badge " + (currentBase ? "badge-session" : "badge-env");
     }
   }
 
@@ -261,7 +308,7 @@
       } else {
         statusBtn.setAttribute("data-state", "setup");
         statusBtn.innerHTML = '<span class="status-indicator" style="background:#eab308;"></span>' +
-                              '<span class="status-text">Setup Keys</span>' +
+                              '<span class="status-text">Connect to API</span>' +
                               '<span class="status-action" style="color:#55B8E8;margin-left:4px;">· Configure</span>';
         statusBtn.title = "API keys needed — click to configure";
 
@@ -277,8 +324,9 @@
       }
     }
 
-    var baseEndpoint = window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() : "";
-    updateConnectionUI("connected", "Backend reachable at " + (baseEndpoint || window.location.origin));
+    var connectedCount = (data && data.connected_count) || 0;
+    var totalCount = (data && data.total_count) || 5;
+    updateConnectionUI(data && data.ready ? "connected" : "connecting", connectedCount + " of " + totalCount + " AI services configured.");
 
     if (settingsModal && !settingsModal.hidden && credList) {
       renderCreds(credList);
@@ -309,74 +357,181 @@
   }
 
   function renderCreds(container) {
+    if (!container) return;
     container.innerHTML = "";
 
-    if (!config || !config.credentials) {
-      container.appendChild(el("p", "cred-hint", "Loading configuration…"));
-      return;
-    }
+    var creds = (config && config.credentials) || {};
 
-    Object.keys(config.credentials).forEach(function (name) {
-      var info = config.credentials[name];
-      var row = el("div", "cred");
+    PROVIDER_LIST.forEach(function (p) {
+      var info = creds[p.envKey] || {};
+      var isConfigured = Boolean(info.configured);
+      var source = info.source || "";
 
-      var head = el("div", "cred-head");
-      head.appendChild(el("label", "cred-label", info.label));
+      var card = document.createElement("div");
+      card.className = "provider-card" + (isConfigured ? " is-connected" : "");
+      card.setAttribute("data-provider-card", p.id);
 
-      var badgeText = info.source === "env" ? "Server .env"
-                    : info.source === "session" ? "Session Key"
-                    : "Missing";
-      head.appendChild(el("span", "badge badge-" + (info.source || "missing"), badgeText));
-      row.appendChild(head);
+      // Header
+      var header = document.createElement("div");
+      header.className = "provider-header";
 
-      row.appendChild(el("p", "cred-hint", info.hint));
+      var infoCol = document.createElement("div");
+      infoCol.className = "provider-info";
 
-      var field = el("div", "cred-field");
-      var box = el("input", "cred-input");
-      box.type = "password";
-      box.placeholder = info.configured ? "•••••••• (leave blank to keep)" : info.placeholder;
-      box.autocomplete = "off";
-      box.spellcheck = false;
-      box.setAttribute("data-cred", name);
-      field.appendChild(box);
+      var badgeRow = document.createElement("div");
+      badgeRow.className = "provider-badge-row";
 
-      var reveal = el("button", "icon-btn");
-      reveal.type = "button";
-      reveal.title = "Show / hide password";
-      reveal.appendChild(icon("M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"));
-      reveal.addEventListener("click", function () {
-        box.type = box.type === "password" ? "text" : "password";
+      var nameSpan = document.createElement("span");
+      nameSpan.className = "provider-name";
+      nameSpan.textContent = p.name;
+      badgeRow.appendChild(nameSpan);
+
+      var tagSpan = document.createElement("span");
+      tagSpan.className = "provider-role-tag";
+      tagSpan.textContent = p.tag;
+      badgeRow.appendChild(tagSpan);
+
+      var statusBadge = document.createElement("span");
+      statusBadge.className = "provider-status-badge " + (isConfigured ? "status-connected" : "status-disconnected");
+      statusBadge.id = "badge-" + p.id;
+      statusBadge.innerHTML = isConfigured
+        ? '<span style="font-size:0.75rem;">✓</span> Connected' + (source ? ' (' + source + ')' : '')
+        : '<span style="font-size:0.75rem;">●</span> Disconnected';
+      badgeRow.appendChild(statusBadge);
+
+      infoCol.appendChild(badgeRow);
+
+      var descP = document.createElement("p");
+      descP.className = "provider-desc";
+      descP.textContent = p.desc;
+      infoCol.appendChild(descP);
+
+      header.appendChild(infoCol);
+      card.appendChild(header);
+
+      // Body (Input Group)
+      var bodyDiv = document.createElement("div");
+      bodyDiv.className = "provider-body";
+
+      var inputGroup = document.createElement("div");
+      inputGroup.className = "provider-input-group";
+
+      var keyInput = document.createElement("input");
+      keyInput.type = "password";
+      keyInput.className = "provider-key-input";
+      keyInput.placeholder = isConfigured ? "•••••••••••••••• (Connected · Enter new key to change)" : p.placeholder;
+      keyInput.autocomplete = "off";
+      keyInput.spellcheck = false;
+      keyInput.setAttribute("data-provider", p.id);
+      keyInput.setAttribute("data-prop", p.propKey);
+      inputGroup.appendChild(keyInput);
+
+      // Eye toggle
+      var eyeBtn = document.createElement("button");
+      eyeBtn.type = "button";
+      eyeBtn.className = "btn-toggle-eye";
+      eyeBtn.title = "Show/Hide Key";
+      eyeBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+      eyeBtn.addEventListener("click", function () {
+        keyInput.type = keyInput.type === "password" ? "text" : "password";
       });
-      field.appendChild(reveal);
-      row.appendChild(field);
+      inputGroup.appendChild(eyeBtn);
 
-      var err = el("p", "cred-error");
-      err.setAttribute("data-error-for", name);
-      err.hidden = true;
-      row.appendChild(err);
+      // Connect button
+      var connectBtn = document.createElement("button");
+      connectBtn.type = "button";
+      connectBtn.className = "btn-connect-provider";
+      connectBtn.innerHTML = '<span class="btn-label">Connect</span>';
 
-      container.appendChild(row);
+      var statusMsg = document.createElement("div");
+      statusMsg.className = "provider-status-msg";
+      statusMsg.hidden = true;
+
+      connectBtn.addEventListener("click", function () {
+        var keyVal = keyInput.value.trim();
+        if (!keyVal) {
+          if (isConfigured) {
+            toast(p.name + " is already connected.");
+            return;
+          }
+          keyInput.focus();
+          statusMsg.className = "provider-status-msg msg-error";
+          statusMsg.textContent = "Please enter an API key for " + p.name;
+          statusMsg.hidden = false;
+          return;
+        }
+
+        connectBtn.classList.add("is-busy");
+        connectBtn.querySelector(".btn-label").textContent = "Connecting…";
+        statusBadge.className = "provider-status-badge status-connecting";
+        statusBadge.textContent = "Verifying…";
+        statusMsg.hidden = true;
+
+        var client = window.TravelBrainAPI;
+        var verifyPromise = client && client.verifyProviderKey
+          ? client.verifyProviderKey(p.id, keyVal)
+          : fetch("/api/config/verify-key", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ provider: p.id, key: keyVal })
+            }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok, data: d }; }); });
+
+        verifyPromise
+          .then(function (res) {
+            connectBtn.classList.remove("is-busy");
+            connectBtn.querySelector(".btn-label").textContent = "Connect";
+            var data = res.data || res;
+            if (res.ok || (data && data.ok)) {
+              card.classList.add("is-connected");
+              card.classList.remove("is-failed");
+              statusBadge.className = "provider-status-badge status-connected";
+              statusBadge.innerHTML = '<span style="font-size:0.75rem;">✓</span> Connected';
+              statusMsg.className = "provider-status-msg msg-success";
+              statusMsg.textContent = "✓ " + (data.message || "Connected successfully!");
+              statusMsg.hidden = false;
+              toast("Connected " + p.name + "!");
+              refreshConfig();
+            } else {
+              card.classList.remove("is-connected");
+              card.classList.add("is-failed");
+              statusBadge.className = "provider-status-badge status-failed";
+              statusBadge.innerHTML = '<span style="font-size:0.75rem;">✕</span> Failed';
+              statusMsg.className = "provider-status-msg msg-error";
+              statusMsg.textContent = "✕ " + ((data && data.message) || "Verification failed");
+              statusMsg.hidden = false;
+              toast("Failed to connect " + p.name);
+            }
+          })
+          .catch(function (err) {
+            connectBtn.classList.remove("is-busy");
+            connectBtn.querySelector(".btn-label").textContent = "Connect";
+            card.classList.add("is-failed");
+            statusBadge.className = "provider-status-badge status-failed";
+            statusBadge.innerHTML = '<span style="font-size:0.75rem;">✕</span> Error';
+            statusMsg.className = "provider-status-msg msg-error";
+            statusMsg.textContent = "✕ " + (err.message || "Network error");
+            statusMsg.hidden = false;
+          });
+      });
+
+      inputGroup.appendChild(connectBtn);
+      bodyDiv.appendChild(inputGroup);
+      bodyDiv.appendChild(statusMsg);
+      card.appendChild(bodyDiv);
+
+      container.appendChild(card);
     });
   }
-
-  var FIELD_MAP = {
-    GROQ_API_KEY: "groq_api_key",
-    DATABASE_URL: "database_url"
-  };
 
   function openSettings() {
     if (!settingsModal || !settingsScrim) return;
     settingsModal.hidden = false;
     settingsScrim.hidden = false;
 
-    if (settingsBaseUrl && window.TravelBrainAPI) {
-      settingsBaseUrl.value = window.TravelBrainAPI.getBaseUrl();
-    }
-    updateConnectionUI("connecting", "Checking backend connectivity…");
-
+    updateConnectionUI("connecting", "Verifying AI provider connections…");
     if (credList) renderCreds(credList);
     refreshConfig();
-    var first = credList ? credList.querySelector(".cred-input") : null;
+    var first = credList ? credList.querySelector(".provider-key-input") : null;
     if (first) first.focus();
   }
 
@@ -396,59 +551,69 @@
   function saveCredentials(container, button) {
     if (savingConfig) return;
 
-    if (settingsBaseUrl && window.TravelBrainAPI) {
-      window.TravelBrainAPI.setBaseUrl(settingsBaseUrl.value);
-    }
-
     var payload = {};
     var hasValues = false;
 
-    container.querySelectorAll(".cred-input").forEach(function (box) {
+    container.querySelectorAll(".provider-key-input").forEach(function (box) {
       var val = box.value.trim();
       if (!val) return;
       hasValues = true;
-      var prop = FIELD_MAP[box.getAttribute("data-cred")];
+      var prop = box.getAttribute("data-prop");
       if (prop) payload[prop] = val;
     });
 
-    container.querySelectorAll(".cred-error").forEach(function (n) { n.hidden = true; });
+    if (!hasValues) {
+      toast("No new credentials entered. Existing settings preserved.");
+      closeSettings();
+      return;
+    }
 
     setSavingConfig(true, button);
 
-    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    var savePromise = Object.keys(payload).length > 0
-      ? apiClient.fetch("/api/config", {
+    var apiClient = window.TravelBrainAPI;
+    var saveCall = apiClient && apiClient.saveConfig
+      ? apiClient.saveConfig(payload)
+      : fetch("/api/config", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
-        })
-      : apiClient.fetch("/api/config");
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); });
 
-    savePromise
-      .then(function (r) {
-        return r.json().then(function (data) { return { ok: r.ok, data: data }; });
-      })
+    saveCall
       .then(function (res) {
         if (!res.ok || res.data.success === false) {
           var errors = res.data.errors || {};
-          Object.keys(errors).forEach(function (f) {
-            var node = container.querySelector('[data-error-for="' + f.toUpperCase() + '"]');
-            if (node) {
-              node.textContent = errors[f];
-              node.hidden = false;
-            }
-          });
-          toast("Check highlighted configuration error.");
+          var errKeys = Object.keys(errors);
+          if (errKeys.length > 0) {
+            errKeys.forEach(function (prop) {
+              var input = container.querySelector('[data-prop="' + prop + '"]');
+              if (input) {
+                var card = input.closest(".provider-card");
+                if (card) {
+                  card.classList.add("is-failed");
+                  var msg = card.querySelector(".provider-status-msg");
+                  if (msg) {
+                    msg.className = "provider-status-msg msg-error";
+                    msg.textContent = "✕ " + errors[prop];
+                    msg.hidden = false;
+                  }
+                }
+              }
+            });
+            toast("Connection error: " + errors[errKeys[0]]);
+          } else {
+            toast("Could not verify credentials.");
+          }
           return;
         }
 
         applyConfig(res.data);
-        closeSettings();
-        toast(res.data.ready ? "Credentials connected successfully!" : "Configuration saved.");
+        renderCreds(container);
+        toast("All credentials connected successfully!");
+        setTimeout(closeSettings, 700);
       })
       .catch(function (err) {
-        markUnreachable(err);
-        toast("Could not connect to server at " + (window.TravelBrainAPI ? window.TravelBrainAPI.getBaseUrl() || window.location.origin : "server"));
+        toast("Could not reach server: " + (err.message || String(err)));
       })
       .then(function () {
         setSavingConfig(false, button);
@@ -459,13 +624,16 @@
     if (savingConfig) return;
     setSavingConfig(true, settingsSave);
 
-    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    apiClient.fetch("/api/config", { method: "DELETE" })
-      .then(function (r) { return r.json(); })
+    var apiClient = window.TravelBrainAPI;
+    var resetCall = apiClient && apiClient.resetConfig
+      ? apiClient.resetConfig()
+      : fetch("/api/config", { method: "DELETE" }).then(function (r) { return r.json(); });
+
+    resetCall
       .then(function (data) {
         applyConfig(data);
         if (credList) renderCreds(credList);
-        toast("Session credentials cleared. Reverted to .env.");
+        toast("Session credentials cleared. Reverted to server .env.");
       })
       .catch(function () { toast("Could not clear credentials."); })
       .then(function () { setSavingConfig(false, settingsSave); });
@@ -473,13 +641,13 @@
 
   if (btnTestApiConn) {
     btnTestApiConn.addEventListener("click", function () {
-      var testUrl = settingsBaseUrl ? settingsBaseUrl.value.trim() : "";
-      updateConnectionUI("connecting", "Pinging: " + (testUrl || window.location.origin) + "…");
+      updateConnectionUI("connecting", "Pinging backend server…");
       if (window.TravelBrainAPI) {
-        window.TravelBrainAPI.testConnection(testUrl).then(function (res) {
+        window.TravelBrainAPI.testConnection().then(function (res) {
           if (res.ok) {
             updateConnectionUI("connected", "Reachable! Latency: " + res.latency + "ms");
             toast("Connection test successful (" + res.latency + "ms)");
+            refreshConfig();
           } else {
             updateConnectionUI("failed", res.error || "Connection test failed");
             toast("Connection failed: " + (res.error || "Cannot reach server"));
@@ -489,7 +657,6 @@
     });
   }
 
-  if (settingsBtn) settingsBtn.addEventListener("click", openSettings);
   if (statusBtn) statusBtn.addEventListener("click", openSettings);
   if (settingsClose) settingsClose.addEventListener("click", closeSettings);
   if (settingsScrim) settingsScrim.addEventListener("click", closeSettings);
@@ -1396,28 +1563,7 @@
       parsedDays = 5;
     }
 
-    // MANDATORY AUTHENTICATION CHECK
-    if (!currentUser) {
-      pendingPlan = { from: from, to: to, days: parsedDays };
-      try {
-        sessionStorage.setItem("tb_pending_plan", JSON.stringify(pendingPlan));
-      } catch (e) {}
-
-      var notice = $("authNoticeBanner");
-      if (notice) {
-        notice.innerHTML = '<div style="padding:10px 14px;background:rgba(85,184,232,0.12);border:1px solid rgba(85,184,232,0.3);border-radius:8px;margin-bottom:14px;font-size:0.85rem;color:#E0F2FE;">' +
-                           '🔒 <strong>Sign In Required</strong><br>' +
-                           'Please sign in or create an account to plan, verify, and save your travel itinerary for <strong>' + escapeHtml(to) + '</strong>.' +
-                           '</div>';
-        notice.hidden = false;
-      }
-
-      openAuthModal("login");
-      toast("Please sign in or create an account to plan your journey.");
-      return;
-    }
-
-    // Authenticated -> Navigate cleanly to dedicated itinerary route
+    // Navigate directly to dedicated itinerary route
     var targetUrl = "/trip-plan?to=" + encodeURIComponent(to) +
                     (from ? "&from=" + encodeURIComponent(from) : "") +
                     "&days=" + encodeURIComponent(parsedDays);
@@ -1623,6 +1769,17 @@
   var navSettings = $("navSettings");
   var mNewTrip = $("mNewTrip");
   var mSettings = $("mSettings");
+  var finalCta = $("finalCta");
+
+  if (finalCta) {
+    finalCta.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (hero) hero.scrollIntoView({ behavior: "smooth" });
+      if (fTo) {
+        setTimeout(function () { fTo.focus(); }, 300);
+      }
+    });
+  }
 
   if (navNewTrip) {
     navNewTrip.addEventListener("click", function () {

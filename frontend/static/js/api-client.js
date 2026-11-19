@@ -131,7 +131,7 @@
     var startTime = Date.now();
 
     var controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-    var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 12000) : null;
+    var timeoutId = controller ? setTimeout(function () { controller.abort(); }, 35000) : null;
 
     var fetchOpts = {
       method: "GET",
@@ -158,9 +158,50 @@
       .catch(function (err) {
         if (timeoutId) clearTimeout(timeoutId);
         var isAbort = err.name === "AbortError";
-        var msg = isAbort ? "Connection timed out (12s). Verify server is running." : "Could not reach server: " + (err.message || String(err));
+        var msg = isAbort ? "Connection timed out (35s). Server might be waking up from sleep." : "Could not reach server: " + (err.message || String(err));
         setStatus("failed", msg);
         return { ok: false, error: msg };
+      });
+  }
+
+  /* ---------------- Provider & Config APIs ---------------- */
+
+  function fetchConfig() {
+    return apiFetch("/api/config", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      });
+  }
+
+  function verifyProviderKey(provider, key) {
+    return apiFetch("/api/config/verify-key", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ provider: provider, key: key })
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        return { ok: res.ok && data.ok, data: data };
+      });
+    });
+  }
+
+  function saveConfig(payload) {
+    return apiFetch("/api/config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        return { ok: res.ok, data: data };
+      });
+    });
+  }
+
+  function resetConfig() {
+    return apiFetch("/api/config", { method: "DELETE" })
+      .then(function (res) {
+        return res.json();
       });
   }
 
@@ -213,6 +254,10 @@
     fetch: apiFetch,
     buildUrl: buildUrl,
     testConnection: testConnection,
+    fetchConfig: fetchConfig,
+    verifyProviderKey: verifyProviderKey,
+    saveConfig: saveConfig,
+    resetConfig: resetConfig,
     getState: function () { return Object.assign({}, state); },
     onStateChange: onStateChange,
     renderStatusPill: renderStatusPill

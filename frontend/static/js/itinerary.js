@@ -33,6 +33,15 @@
   var viewDashboardBtn    = $("viewDashboardBtn");
   var viewDossierBtn      = $("viewDossierBtn");
   var settingsBtn         = $("settingsBtn");
+  var btnNewTripModal     = $("btnNewTripModal");
+
+  // Planner Screen
+  var planJourneySection  = $("planJourneySection");
+  var itinPlannerForm     = $("itinPlannerForm");
+  var pFrom               = $("pFrom");
+  var pTo                 = $("pTo");
+  var pDays               = $("pDays");
+  var btnPlannerSubmit    = $("btnPlannerSubmit");
 
   // Hero & Summary
   var heroTitle           = $("heroTitle");
@@ -65,32 +74,21 @@
   var refinementInput     = $("refinementInput");
   var refinementSubmitBtn = $("refinementSubmitBtn");
 
-  // Settings Modal
+  // Settings & Status
+  var apiStatus           = $("apiStatus");
   var settingsModal       = $("settingsModal");
   var settingsScrim       = $("settingsScrim");
   var settingsClose       = $("settingsClose");
   var settingsSave        = $("settingsSave");
-  var settingsGroqKey     = $("settingsGroqKey");
-  var settingsBaseUrl     = $("settingsBaseUrl");
+  var settingsReset       = $("settingsReset");
+  var credList            = $("credList");
   var itinConnIndicator   = $("itinConnIndicator");
   var itinConnText        = $("itinConnText");
   var itinBtnPing         = $("itinBtnPing");
-
-  // Auth Gate Elements
-  var authGateScreen      = $("authGateScreen");
-  var authGateTabLogin    = $("authGateTabLogin");
-  var authGateTabSignup   = $("authGateTabSignup");
-  var authGateLoginForm   = $("authGateLoginForm");
-  var authGateSignupForm  = $("authGateSignupForm");
-  var authGateEmail       = $("authGateEmail");
-  var authGatePassword    = $("authGatePassword");
-  var authGateName        = $("authGateName");
-  var authGateSignupEmail = $("authGateSignupEmail");
-  var authGateSignupPassword = $("authGateSignupPassword");
-  var authGateError       = $("authGateError");
-  var authGateMsg         = $("authGateMsg");
+  var btnErrorPlanner     = $("btnErrorPlanner");
 
   /* ---------------- State ---------------- */
+  var itinConfig          = null;
   var currentPlanData     = null;
   var currentParsed       = null;
   var activeThreadId      = null;
@@ -211,7 +209,7 @@
     var sections = {};
 
     // Alternative reliable section splitter:
-    var rawSections = text.split(/(?=\n#{1,3}\s+|\n\*\*\d+\.\s+)/);
+    var rawSections = text.split(/(?=\n#{1,4}\s+|\n\*{0,2}\d+\.\s+)/);
     rawSections.forEach(function (chunk) {
       var headerLine = chunk.trim().split("\n")[0] || "";
       knownHeaders.forEach(function (kh) {
@@ -223,23 +221,23 @@
 
     // Fallbacks if section split missed:
     if (!sections.summary) {
-      var sm = text.match(/(?:Trip Summary|Overview)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      var sm = text.match(/(?:Trip Summary|Overview)[:\s\*]+(.*?)(?=\n#{1,4}|\n\*{0,2}\d+\.|\Z)/is);
       if (sm) sections.summary = sm[1];
     }
     if (!sections.itinerary) {
-      var im = text.match(/(?:Day[- ]by[- ]Day Itinerary|Itinerary)[:\s\*]+(.*?)(?=\n#{1,3}\s*(?:Estimated Budget|\d+\.)|\n\*\*\d+\.\s*Estimated Budget|\Z)/is);
+      var im = text.match(/(?:Day[- ]by[- ]Day Itinerary|Itinerary)[:\s\*]+(.*?)(?=\n#{1,4}\s*(?:Estimated Budget|\d+\.)|\n\*{0,2}\d+\.\s*Estimated Budget|\Z)/is);
       if (im) sections.itinerary = im[1];
     }
     if (!sections.budget) {
-      var bm = text.match(/(?:Estimated Budget|Budget Breakdown)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      var bm = text.match(/(?:Estimated Budget|Budget Breakdown)[:\s\*]+(.*?)(?=\n#{1,4}|\n\*{0,2}\d+\.|\Z)/is);
       if (bm) sections.budget = bm[1];
     }
     if (!sections.weather) {
-      var wm = text.match(/(?:Weather Information)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      var wm = text.match(/(?:Weather Information)[:\s\*]+(.*?)(?=\n#{1,4}|\n\*{0,2}\d+\.|\Z)/is);
       if (wm) sections.weather = wm[1];
     }
     if (!sections.recommendations) {
-      var rm = text.match(/(?:Final Recommendations|Recommendations & Local Tips)[:\s\*]+(.*?)(?=\n#{1,3}|\n\*\*\d+\.|\Z)/is);
+      var rm = text.match(/(?:Final Recommendations|Recommendations & Local Tips)[:\s\*]+(.*?)(?=\n#{1,4}|\n\*{0,2}\d+\.|\Z)/is);
       if (rm) sections.recommendations = rm[1];
     }
 
@@ -332,7 +330,7 @@
     // 6. Process Day-by-Day Itinerary (Most Important!)
     var itinSource = sections.itinerary || text;
 
-    var dayPattern = /(?:^|\n)(?:#{2,4}\s*|\*{1,2})Day\s*(\d+)[:\s\-\–—]*([^\n\*]*)\n([\s\S]*?)(?=\n(?:#{2,4}\s*|\*{1,2})Day\s*\d+|\n#{1,3}\s+[A-Z0-9]|\n\*\*\d+\.|\n---\s*\n\s*##|\Z)/gi;
+    var dayPattern = /(?:^|\n)(?:#{1,4}\s*|\*{1,2})?Day\s*(\d+)[:\s\-\–—\(\)]*([^\n\*]*)\n([\s\S]*?)(?=\n(?:#{1,4}\s*|\*{1,2})?Day\s*\d+|\n#{1,3}\s+[A-Z0-9]|\n\*{0,2}\d+\.\s+[A-Z]|\n---\s*\n\s*##|\Z)/gi;
     var dayMatch;
     var dayIndex = 1;
 
@@ -357,8 +355,10 @@
             var locM = actVal.match(/(?:at|to|in)\s+([A-Z][A-Za-z\s]+?)(?:[\(\,\.]|\s+for|\s+and|$)/);
             if (locM && locM[1]) loc = locM[1].trim();
 
+            var slotIcon = /morning/i.test(timeVal) ? "🌅 " : /afternoon/i.test(timeVal) ? "☀️ " : /evening/i.test(timeVal) ? "🌆 " : /night/i.test(timeVal) ? "🌙 " : "";
+
             activities.push({
-              time: timeVal || "Day Schedule",
+              time: slotIcon + (timeVal || "Day Schedule"),
               title: actVal || "Sightseeing Experience",
               location: loc,
               duration: /Airport|Flight/i.test(actVal) ? "Transit" : "1.5 - 2.5 hrs",
@@ -385,20 +385,65 @@
         });
       }
 
-      // If no table rows found, try parsing bullet points
+      // If no table rows found, try parsing structured slots or bullet points
       if (activities.length === 0) {
         var lines = dayContent.split("\n");
         lines.forEach(function (line) {
           var l = line.trim();
-          var itemM = l.match(/(?:[-*•]|\d+\.)\s*(?:\*{1,2})?([^\*:]+?)(?:\*{1,2})?[:\-–—]+(.*?)$/);
-          if (itemM) {
+          if (!l) return;
+
+          // Check for time slot format: - **Morning**: ... OR Morning: ... OR **Morning (9 AM - 12 PM)**: ...
+          var slotM = l.match(/^(?:[-*•]|\d+\.)?\s*(?:\*{1,3}|#{2,4}\s*)?(Morning|Afternoon|Evening|Night|Early Morning|Late Afternoon|Sunset|Dinner|Breakfast|Transit)(?:\s*\([^\)]+\))?(?:\*{1,3})?[:\s\-\–—]+(.*)$/i);
+          if (slotM) {
+            var rawSlot = slotM[1].trim();
+            var body = cleanMarkdown(slotM[2].trim());
+            var slotIcon = /morning/i.test(rawSlot) ? "🌅 " : /afternoon/i.test(rawSlot) ? "☀️ " : /evening/i.test(rawSlot) ? "🌆 " : /night/i.test(rawSlot) ? "🌙 " : "⏱️ ";
+
+            // Extract a clean title from the body (first sentence or up to 60 chars)
+            var sentences = body.split(/[.\n]/);
+            var actTitle = sentences[0] ? sentences[0].trim() : body;
+            if (actTitle.length > 70) {
+              actTitle = actTitle.slice(0, 65).replace(/[,;:\s]+$/, "") + "…";
+            }
+
+            var loc = parsed.destination;
+            var locM = body.match(/(?:at|to|in|visit)\s+([A-Z][A-Za-z\s]{3,25}?)(?:[\(\,\.]|\s+for|\s+and|$)/);
+            if (locM && locM[1]) loc = locM[1].trim();
+
+            var rupeeM = body.match(/(?:₹|INR)\s*[\d\,]+(?:\s*(?:per person|\/person|entry|ticket|fare|approx))?/i);
+
             activities.push({
-              time: "Scheduled",
-              title: cleanMarkdown(itemM[1]),
+              time: slotIcon + rawSlot,
+              title: actTitle || (rawSlot + " Excursion"),
+              location: loc,
+              duration: "2 - 3 hrs",
+              description: body,
+              tip: rupeeM ? rupeeM[0] : null
+            });
+            return;
+          }
+
+          // Check standard bullet points: - **Activity Name**: Description
+          var itemM = l.match(/^(?:[-*•]|\d+\.)\s*(?:\*{1,2})?([^\*:]+?)(?:\*{1,2})?[:\-–—]+(.*?)$/);
+          if (itemM) {
+            var bulletKey = cleanMarkdown(itemM[1]);
+            var bulletVal = cleanMarkdown(itemM[2]);
+
+            // If bulletKey is a time range like "10:00 AM - 01:00 PM"
+            var isTime = /\b(?:\d{1,2}:\d{2}|\d{1,2}\s*(?:am|pm))\b/i.test(bulletKey);
+            var aTime = isTime ? bulletKey : ("Experience " + (activities.length + 1));
+            var aTitle = isTime ? (bulletVal.split(".")[0] || bulletVal) : bulletKey;
+            var aDesc = bulletVal;
+
+            var rupeeM2 = aDesc.match(/(?:₹|INR)\s*[\d\,]+(?:\s*(?:per person|\/person|entry|ticket|fare|approx))?/i);
+
+            activities.push({
+              time: aTime,
+              title: aTitle,
               location: parsed.destination,
-              duration: "2-3 hours",
-              description: cleanMarkdown(itemM[2]),
-              tip: null
+              duration: "1.5 - 2.5 hrs",
+              description: aDesc,
+              tip: rupeeM2 ? rupeeM2[0] : null
             });
           }
         });
@@ -407,10 +452,10 @@
       // Fallback
       if (activities.length === 0) {
         activities.push({
-          time: "Full Day",
+          time: "Full Day Experience",
           title: dayTitle,
           location: parsed.destination,
-          duration: "Day Schedule",
+          duration: "Full Day",
           description: dayContent,
           tip: null
         });
@@ -769,6 +814,7 @@
     }
 
     // Reveal Dashboard
+    hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = true;
     if (errorScreen) errorScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = false;
@@ -789,9 +835,29 @@
     }
   }
 
+  /* ---------------- Dedicated Planner Screen ---------------- */
+
+  function showPlannerScreen() {
+    if (loadingScreen) loadingScreen.hidden = true;
+    if (errorScreen) errorScreen.hidden = true;
+    if (dashboardContent) dashboardContent.hidden = true;
+    if (planJourneySection) {
+      planJourneySection.hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (pTo) {
+        setTimeout(function () { pTo.focus(); }, 120);
+      }
+    }
+  }
+
+  function hidePlannerScreen() {
+    if (planJourneySection) planJourneySection.hidden = true;
+  }
+
   /* ---------------- Planning Request & Pipeline ---------------- */
 
   function executePlanning(query, origin, dest, days) {
+    hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = false;
     if (errorScreen) errorScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = true;
@@ -835,11 +901,6 @@
       body: JSON.stringify({ message: query, thread_id: activeThreadId })
     })
       .then(function (r) {
-        if (r.status === 401) {
-          clearInterval(timer);
-          showAuthGate("Please sign in or create an account to plan and save your journey to " + dest + ".");
-          throw new Error("Authentication required");
-        }
         return r.json().catch(function () {
           throw new Error("Invalid response from server (HTTP " + r.status + ")");
         }).then(function (data) {
@@ -872,21 +933,8 @@
       });
   }
 
-  function showAuthGate(msg) {
-    if (loadingScreen) loadingScreen.hidden = true;
-    if (errorScreen) errorScreen.hidden = true;
-    if (dashboardContent) dashboardContent.hidden = true;
-    if (authGateScreen) {
-      authGateScreen.hidden = false;
-      if (msg && authGateMsg) authGateMsg.textContent = msg;
-    }
-  }
-
-  function hideAuthGate() {
-    if (authGateScreen) authGateScreen.hidden = true;
-  }
-
   function loadTripById(tripId) {
+    hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = false;
     if (errorScreen) errorScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = true;
@@ -924,6 +972,7 @@
   }
 
   function showError(msg, kind) {
+    hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = true;
     if (dashboardContent) dashboardContent.hidden = true;
     if (errorScreen) errorScreen.hidden = false;
@@ -1050,31 +1099,286 @@
     }
   }
 
-  /* ---------------- Settings Modal Handlers ---------------- */
+  /* ---------------- Provider & API Settings ---------------- */
+
+  var PROVIDER_LIST = [
+    {
+      id: "groq",
+      name: "Groq API",
+      tag: "Core LLM Engine",
+      envKey: "GROQ_API_KEY",
+      propKey: "groq_api_key",
+      placeholder: "gsk_...",
+      desc: "Powers multi-agent LLM reasoning, itinerary synthesis, budgeting, and agent conversations."
+    },
+    {
+      id: "tavily",
+      name: "Tavily Search API",
+      tag: "Live Web Search",
+      envKey: "TAVILY_API_KEY",
+      propKey: "tavily_api_key",
+      placeholder: "tvly-...",
+      desc: "Empowers Hotel & Itinerary Agents to fetch real-time accommodation prices and live landmark hours."
+    },
+    {
+      id: "aviationstack",
+      name: "AviationStack API",
+      tag: "Flight Intelligence",
+      envKey: "AVIATIONSTACK_API_KEY",
+      propKey: "aviationstack_api_key",
+      placeholder: "Enter AviationStack API key",
+      desc: "Empowers Flight Agent via MCP to query live airline routes, IATA/ICAO airport directories, and flight schedules."
+    },
+    {
+      id: "openweather",
+      name: "OpenWeather API",
+      tag: "Climate & Forecasts",
+      envKey: "OPENWEATHER_API_KEY",
+      propKey: "openweather_api_key",
+      placeholder: "Enter OpenWeather API key",
+      desc: "Empowers Weather Agent via MCP to retrieve live meteorological observations and packing advice."
+    },
+    {
+      id: "database",
+      name: "PostgreSQL Database",
+      tag: "State Checkpoints",
+      envKey: "DATABASE_URL",
+      propKey: "database_url",
+      placeholder: "postgresql://user:password@host:5432/dbname",
+      desc: "Stores conversation checkpoints, journey history, and user authentication accounts (Neon, Supabase, etc.)."
+    }
+  ];
 
   function updateItinConnUI(stateKind, text) {
     if (itinConnIndicator) {
       itinConnIndicator.style.background = stateKind === "connected" ? "#22c55e" : stateKind === "connecting" ? "#eab308" : stateKind === "failed" ? "#ef4444" : "#94a3b8";
     }
     if (itinConnText) {
-      itinConnText.textContent = text || (stateKind === "connected" ? "API Reachable" : stateKind === "failed" ? "API Unreachable" : "Checking…");
+      if (itinConfig && typeof itinConfig.connected_count === "number") {
+        itinConnText.textContent = itinConfig.ready
+          ? "AI Ready · " + itinConfig.connected_count + "/" + itinConfig.total_count + " Services Connected"
+          : "Setup Needed · " + itinConfig.connected_count + "/" + itinConfig.total_count + " Services Connected";
+      } else {
+        itinConnText.textContent = text || (stateKind === "connected" ? "API Connected" : stateKind === "failed" ? "API Unreachable" : "Checking…");
+      }
     }
+  }
+
+  function refreshItinConfig() {
+    var client = window.TravelBrainAPI;
+    var fetchCall = client && client.fetchConfig
+      ? client.fetchConfig()
+      : fetch("/api/config", { cache: "no-store" }).then(function (r) { return r.json(); });
+
+    return fetchCall
+      .then(function (data) {
+        itinConfig = data;
+        if (apiStatus && window.TravelBrainAPI) {
+          if (data && data.ready) {
+            apiStatus.setAttribute("data-state", "ok");
+            apiStatus.innerHTML = '<span class="status-indicator" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.6);"></span>' +
+                                  '<span class="status-text">API Connected</span>';
+            apiStatus.title = "Connected to backend API · Ready to plan";
+          } else {
+            apiStatus.setAttribute("data-state", "setup");
+            apiStatus.innerHTML = '<span class="status-indicator" style="background:#eab308;"></span>' +
+                                  '<span class="status-text">Connect to API</span>' +
+                                  '<span class="status-action" style="color:#55B8E8;margin-left:4px;">· Configure</span>';
+            apiStatus.title = "API credentials needed — click to configure";
+          }
+        }
+        updateItinConnUI(data && data.ready ? "connected" : "connecting");
+        if (settingsModal && !settingsModal.hidden && credList) {
+          renderCreds(credList);
+        }
+        return data;
+      })
+      .catch(function (err) {
+        if (apiStatus) {
+          apiStatus.setAttribute("data-state", "down");
+          apiStatus.innerHTML = '<span class="status-indicator" style="background:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.6);"></span>' +
+                                '<span class="status-text">API Unreachable</span>' +
+                                '<span class="status-action" style="color:#55B8E8;margin-left:4px;font-weight:600;">· Connect to API</span>';
+          apiStatus.title = "Could not reach the server — click to connect";
+        }
+        updateItinConnUI("failed", "Could not reach backend");
+      });
+  }
+
+  function renderCreds(container) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    var creds = (itinConfig && itinConfig.credentials) || {};
+
+    PROVIDER_LIST.forEach(function (p) {
+      var info = creds[p.envKey] || {};
+      var isConfigured = Boolean(info.configured);
+      var source = info.source || "";
+
+      var card = document.createElement("div");
+      card.className = "provider-card" + (isConfigured ? " is-connected" : "");
+      card.setAttribute("data-provider-card", p.id);
+
+      // Header
+      var header = document.createElement("div");
+      header.className = "provider-header";
+
+      var infoCol = document.createElement("div");
+      infoCol.className = "provider-info";
+
+      var badgeRow = document.createElement("div");
+      badgeRow.className = "provider-badge-row";
+
+      var nameSpan = document.createElement("span");
+      nameSpan.className = "provider-name";
+      nameSpan.textContent = p.name;
+      badgeRow.appendChild(nameSpan);
+
+      var tagSpan = document.createElement("span");
+      tagSpan.className = "provider-role-tag";
+      tagSpan.textContent = p.tag;
+      badgeRow.appendChild(tagSpan);
+
+      var statusBadge = document.createElement("span");
+      statusBadge.className = "provider-status-badge " + (isConfigured ? "status-connected" : "status-disconnected");
+      statusBadge.id = "itin-badge-" + p.id;
+      statusBadge.innerHTML = isConfigured
+        ? '<span style="font-size:0.75rem;">✓</span> Connected' + (source ? ' (' + source + ')' : '')
+        : '<span style="font-size:0.75rem;">●</span> Disconnected';
+      badgeRow.appendChild(statusBadge);
+
+      infoCol.appendChild(badgeRow);
+
+      var descP = document.createElement("p");
+      descP.className = "provider-desc";
+      descP.textContent = p.desc;
+      infoCol.appendChild(descP);
+
+      header.appendChild(infoCol);
+      card.appendChild(header);
+
+      // Body (Input Group)
+      var bodyDiv = document.createElement("div");
+      bodyDiv.className = "provider-body";
+
+      var inputGroup = document.createElement("div");
+      inputGroup.className = "provider-input-group";
+
+      var keyInput = document.createElement("input");
+      keyInput.type = "password";
+      keyInput.className = "provider-key-input";
+      keyInput.placeholder = isConfigured ? "•••••••••••••••• (Connected · Enter new key to change)" : p.placeholder;
+      keyInput.autocomplete = "off";
+      keyInput.spellcheck = false;
+      keyInput.setAttribute("data-provider", p.id);
+      keyInput.setAttribute("data-prop", p.propKey);
+      inputGroup.appendChild(keyInput);
+
+      // Eye toggle
+      var eyeBtn = document.createElement("button");
+      eyeBtn.type = "button";
+      eyeBtn.className = "btn-toggle-eye";
+      eyeBtn.title = "Show/Hide Key";
+      eyeBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+      eyeBtn.addEventListener("click", function () {
+        keyInput.type = keyInput.type === "password" ? "text" : "password";
+      });
+      inputGroup.appendChild(eyeBtn);
+
+      // Connect button
+      var connectBtn = document.createElement("button");
+      connectBtn.type = "button";
+      connectBtn.className = "btn-connect-provider";
+      connectBtn.innerHTML = '<span class="btn-label">Connect</span>';
+
+      var statusMsg = document.createElement("div");
+      statusMsg.className = "provider-status-msg";
+      statusMsg.hidden = true;
+
+      connectBtn.addEventListener("click", function () {
+        var keyVal = keyInput.value.trim();
+        if (!keyVal) {
+          if (isConfigured) {
+            toast(p.name + " is already connected.");
+            return;
+          }
+          keyInput.focus();
+          statusMsg.className = "provider-status-msg msg-error";
+          statusMsg.textContent = "Please enter an API key for " + p.name;
+          statusMsg.hidden = false;
+          return;
+        }
+
+        connectBtn.classList.add("is-busy");
+        connectBtn.querySelector(".btn-label").textContent = "Connecting…";
+        statusBadge.className = "provider-status-badge status-connecting";
+        statusBadge.textContent = "Verifying…";
+        statusMsg.hidden = true;
+
+        var client = window.TravelBrainAPI;
+        var verifyPromise = client && client.verifyProviderKey
+          ? client.verifyProviderKey(p.id, keyVal)
+          : fetch("/api/config/verify-key", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ provider: p.id, key: keyVal })
+            }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok, data: d }; }); });
+
+        verifyPromise
+          .then(function (res) {
+            connectBtn.classList.remove("is-busy");
+            connectBtn.querySelector(".btn-label").textContent = "Connect";
+            var data = res.data || res;
+            if (res.ok || (data && data.ok)) {
+              card.classList.add("is-connected");
+              card.classList.remove("is-failed");
+              statusBadge.className = "provider-status-badge status-connected";
+              statusBadge.innerHTML = '<span style="font-size:0.75rem;">✓</span> Connected';
+              statusMsg.className = "provider-status-msg msg-success";
+              statusMsg.textContent = "✓ " + (data.message || "Connected successfully!");
+              statusMsg.hidden = false;
+              toast("Connected " + p.name + "!");
+              refreshItinConfig();
+            } else {
+              card.classList.remove("is-connected");
+              card.classList.add("is-failed");
+              statusBadge.className = "provider-status-badge status-failed";
+              statusBadge.innerHTML = '<span style="font-size:0.75rem;">✕</span> Failed';
+              statusMsg.className = "provider-status-msg msg-error";
+              statusMsg.textContent = "✕ " + ((data && data.message) || "Verification failed");
+              statusMsg.hidden = false;
+              toast("Failed to connect " + p.name);
+            }
+          })
+          .catch(function (err) {
+            connectBtn.classList.remove("is-busy");
+            connectBtn.querySelector(".btn-label").textContent = "Connect";
+            card.classList.add("is-failed");
+            statusBadge.className = "provider-status-badge status-failed";
+            statusBadge.innerHTML = '<span style="font-size:0.75rem;">✕</span> Error';
+            statusMsg.className = "provider-status-msg msg-error";
+            statusMsg.textContent = "✕ " + (err.message || "Network error");
+            statusMsg.hidden = false;
+          });
+      });
+
+      inputGroup.appendChild(connectBtn);
+      bodyDiv.appendChild(inputGroup);
+      bodyDiv.appendChild(statusMsg);
+      card.appendChild(bodyDiv);
+
+      container.appendChild(card);
+    });
   }
 
   function openSettings() {
     if (settingsModal && settingsScrim) {
       settingsModal.hidden = false;
       settingsScrim.hidden = false;
-      if (settingsBaseUrl && window.TravelBrainAPI) {
-        settingsBaseUrl.value = window.TravelBrainAPI.getBaseUrl();
-      }
-      updateItinConnUI("connecting", "Testing connection…");
-      if (window.TravelBrainAPI) {
-        window.TravelBrainAPI.testConnection().then(function (res) {
-          updateItinConnUI(res.ok ? "connected" : "failed", res.ok ? "Connected (" + res.latency + "ms)" : (res.error || "Unreachable"));
-        });
-      }
-      if (settingsGroqKey) settingsGroqKey.focus();
+      updateItinConnUI("connecting", "Verifying AI provider connections…");
+      if (credList) renderCreds(credList);
+      refreshItinConfig();
     }
   }
 
@@ -1086,37 +1390,89 @@
   }
 
   function saveSettings() {
-    if (settingsBaseUrl && window.TravelBrainAPI) {
-      window.TravelBrainAPI.setBaseUrl(settingsBaseUrl.value);
+    var payload = {};
+    var hasValues = false;
+
+    if (credList) {
+      credList.querySelectorAll(".provider-key-input").forEach(function (box) {
+        var val = box.value.trim();
+        if (!val) return;
+        hasValues = true;
+        var prop = box.getAttribute("data-prop");
+        if (prop) payload[prop] = val;
+      });
     }
 
-    var key = settingsGroqKey ? settingsGroqKey.value.trim() : "";
-    var payload = {};
-    if (key) payload.groq_api_key = key;
+    if (!hasValues) {
+      toast("No new credentials entered. Existing settings preserved.");
+      closeSettings();
+      return;
+    }
 
-    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    var saveReq = Object.keys(payload).length > 0
-      ? apiClient.fetch("/api/config", {
+    if (settingsSave) settingsSave.disabled = true;
+
+    var client = window.TravelBrainAPI;
+    var saveCall = client && client.saveConfig
+      ? client.saveConfig(payload)
+      : fetch("/api/config", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
-        })
-      : apiClient.fetch("/api/config");
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); });
 
-    saveReq
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.success !== false) {
-          toast("Settings & API connection saved successfully!");
-          closeSettings();
-          window.location.reload();
-        } else {
-          toast(data.error || "Failed to save settings.");
+    saveCall
+      .then(function (res) {
+        if (settingsSave) settingsSave.disabled = false;
+        if (!res.ok || res.data.success === false) {
+          var errors = res.data.errors || {};
+          var errKeys = Object.keys(errors);
+          if (errKeys.length > 0) {
+            errKeys.forEach(function (prop) {
+              var input = credList.querySelector('[data-prop="' + prop + '"]');
+              if (input) {
+                var card = input.closest(".provider-card");
+                if (card) {
+                  card.classList.add("is-failed");
+                  var msg = card.querySelector(".provider-status-msg");
+                  if (msg) {
+                    msg.className = "provider-status-msg msg-error";
+                    msg.textContent = "✕ " + errors[prop];
+                    msg.hidden = false;
+                  }
+                }
+              }
+            });
+            toast("Connection error: " + errors[errKeys[0]]);
+          } else {
+            toast("Could not verify credentials.");
+          }
+          return;
         }
+
+        itinConfig = res.data;
+        renderCreds(credList);
+        toast("All credentials connected successfully!");
+        setTimeout(closeSettings, 700);
       })
       .catch(function (err) {
-        toast("Error saving credentials: " + err.message);
+        if (settingsSave) settingsSave.disabled = false;
+        toast("Could not reach server: " + (err.message || String(err)));
       });
+  }
+
+  function resetSettings() {
+    var client = window.TravelBrainAPI;
+    var resetCall = client && client.resetConfig
+      ? client.resetConfig()
+      : fetch("/api/config", { method: "DELETE" }).then(function (r) { return r.json(); });
+
+    resetCall
+      .then(function (data) {
+        itinConfig = data;
+        if (credList) renderCreds(credList);
+        toast("Session credentials cleared. Reverted to server .env.");
+      })
+      .catch(function () { toast("Could not clear credentials."); });
   }
 
   /* ---------------- Initialization ---------------- */
@@ -1167,122 +1523,33 @@
       btnAudit.addEventListener("click", triggerCriticAudit);
     }
 
-    if (settingsBtn) settingsBtn.addEventListener("click", openSettings);
+    if (apiStatus) apiStatus.addEventListener("click", openSettings);
     if (btnErrorSettings) btnErrorSettings.addEventListener("click", openSettings);
     if (settingsClose) settingsClose.addEventListener("click", closeSettings);
     if (settingsScrim) settingsScrim.addEventListener("click", closeSettings);
     if (settingsSave) settingsSave.addEventListener("click", saveSettings);
+    if (settingsReset) settingsReset.addEventListener("click", resetSettings);
 
     if (itinBtnPing) {
       itinBtnPing.addEventListener("click", function () {
-        var pingUrl = settingsBaseUrl ? settingsBaseUrl.value.trim() : "";
-        updateItinConnUI("connecting", "Testing ping…");
+        updateItinConnUI("connecting", "Pinging backend server…");
         if (window.TravelBrainAPI) {
-          window.TravelBrainAPI.testConnection(pingUrl).then(function (res) {
+          window.TravelBrainAPI.testConnection().then(function (res) {
             updateItinConnUI(res.ok ? "connected" : "failed", res.ok ? "Reachable (" + res.latency + "ms)" : (res.error || "Cannot reach server"));
             toast(res.ok ? "Ping successful (" + res.latency + "ms)" : "Ping failed: " + (res.error || "Unreachable"));
+            refreshItinConfig();
           });
         }
       });
     }
 
-    // Auth Gate Tabs & Forms
-    if (authGateTabLogin && authGateTabSignup) {
-      authGateTabLogin.addEventListener("click", function () {
-        authGateTabLogin.classList.add("active");
-        authGateTabSignup.classList.remove("active");
-        if (authGateLoginForm) authGateLoginForm.hidden = false;
-        if (authGateSignupForm) authGateSignupForm.hidden = true;
-        if (authGateError) authGateError.hidden = true;
-      });
-      authGateTabSignup.addEventListener("click", function () {
-        authGateTabSignup.classList.add("active");
-        authGateTabLogin.classList.remove("active");
-        if (authGateSignupForm) authGateSignupForm.hidden = false;
-        if (authGateLoginForm) authGateLoginForm.hidden = true;
-        if (authGateError) authGateError.hidden = true;
-      });
-    }
-
-    if (authGateLoginForm) {
-      authGateLoginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = authGateEmail ? authGateEmail.value.trim() : "";
-        var password = authGatePassword ? authGatePassword.value : "";
-        if (!email || !password) return;
-
-        var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-        apiClient.fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: password })
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data.success && data.user) {
-              if (data.token && window.TravelBrainAPI) window.TravelBrainAPI.setAuthToken(data.token);
-              if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(data.user);
-              hideAuthGate();
-              toast("Signed in as " + data.user.name + "! Resuming travel plan…");
-              init(); // Resume planning
-            } else {
-              if (authGateError) {
-                authGateError.textContent = data.error || "Invalid email or password.";
-                authGateError.hidden = false;
-              }
-            }
-          })
-          .catch(function (err) {
-            if (authGateError) {
-              authGateError.textContent = "Connection error: " + err.message;
-              authGateError.hidden = false;
-            }
-          });
-      });
-    }
-
-    if (authGateSignupForm) {
-      authGateSignupForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var name = authGateName ? authGateName.value.trim() : "";
-        var email = authGateSignupEmail ? authGateSignupEmail.value.trim() : "";
-        var password = authGateSignupPassword ? authGateSignupPassword.value : "";
-        if (!name || !email || !password) return;
-
-        var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-        apiClient.fetch("/api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: name, email: email, password: password, confirm_password: password })
-        })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (data.success && data.user) {
-              if (data.token && window.TravelBrainAPI) window.TravelBrainAPI.setAuthToken(data.token);
-              if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(data.user);
-              hideAuthGate();
-              toast("Account created! Generating your travel plan…");
-              init(); // Resume planning
-            } else {
-              if (authGateError) {
-                authGateError.textContent = data.error || (data.errors ? Object.values(data.errors)[0] : "Signup failed.");
-                authGateError.hidden = false;
-              }
-            }
-          })
-          .catch(function (err) {
-            if (authGateError) {
-              authGateError.textContent = "Connection error: " + err.message;
-              authGateError.hidden = false;
-            }
-          });
-      });
-    }
+    refreshItinConfig();
 
     if (viewDashboardBtn && viewDossierBtn) {
       viewDashboardBtn.addEventListener("click", function () {
         viewDashboardBtn.classList.add("active");
         viewDossierBtn.classList.remove("active");
+        hidePlannerScreen();
         if (daysContainer) daysContainer.hidden = false;
         if (rawDossierWrap) rawDossierWrap.hidden = true;
       });
@@ -1290,10 +1557,65 @@
       viewDossierBtn.addEventListener("click", function () {
         viewDossierBtn.classList.add("active");
         viewDashboardBtn.classList.remove("active");
+        hidePlannerScreen();
         if (daysContainer) daysContainer.hidden = true;
         if (rawDossierWrap) rawDossierWrap.hidden = false;
       });
     }
+
+    // Planner Screen Form & Actions
+    if (btnNewTripModal) {
+      btnNewTripModal.addEventListener("click", function () {
+        showPlannerScreen();
+      });
+    }
+
+    if (btnErrorPlanner) {
+      btnErrorPlanner.addEventListener("click", function () {
+        showPlannerScreen();
+      });
+    }
+
+    if (itinPlannerForm) {
+      itinPlannerForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var from = pFrom ? pFrom.value.trim() : "";
+        var to = pTo ? pTo.value.trim() : "";
+        var days = pDays ? parseInt(pDays.value, 10) : 5;
+        if (!to) {
+          toast("Please enter a destination city.");
+          if (pTo) pTo.focus();
+          return;
+        }
+
+        var style = "Balanced & Scenic";
+        var checkedStyle = document.querySelector('input[name="travelStyle"]:checked');
+        if (checkedStyle) style = checkedStyle.value;
+
+        var q = "Plan a " + days + " day trip to " + to + (from ? " from " + from : "") + " focusing on " + style + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
+
+        executePlanning(q, from, to, days);
+      });
+    }
+
+    document.querySelectorAll(".itin-quick-pill").forEach(function (pill) {
+      pill.addEventListener("click", function () {
+        var to = pill.getAttribute("data-to") || "Manali";
+        var from = pill.getAttribute("data-from") || "New Delhi";
+        var days = parseInt(pill.getAttribute("data-days") || "5", 10);
+        if (pTo) pTo.value = to;
+        if (pFrom) pFrom.value = from;
+        if (pDays) pDays.value = days;
+        if (itinPlannerForm) {
+          if (typeof itinPlannerForm.requestSubmit === "function") {
+            itinPlannerForm.requestSubmit();
+          } else {
+            var submitBtn = $("btnPlannerSubmit");
+            if (submitBtn) submitBtn.click();
+          }
+        }
+      });
+    });
 
     if (refinementForm) {
       refinementForm.addEventListener("submit", handleRefinement);
@@ -1315,12 +1637,36 @@
       });
     }
 
+    function resumePlanning() {
+      var params = new URLSearchParams(window.location.search);
+      var urlTo = params.get("to");
+      var urlFrom = params.get("from") || "";
+      var urlDays = params.get("days") || "5";
+
+      if (urlTo) {
+        var query = "Plan a " + urlDays + " day trip to " + urlTo + (urlFrom ? " from " + urlFrom : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
+        executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
+        return;
+      }
+
+      if (pTo && pTo.value.trim()) {
+        var to = pTo.value.trim();
+        var from = pFrom ? pFrom.value.trim() : "";
+        var days = pDays ? parseInt(pDays.value, 10) : 5;
+        var q = "Plan a " + days + " day trip to " + to + (from ? " from " + from : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
+        executePlanning(q, from, to, days);
+        return;
+      }
+
+      showPlannerScreen();
+    }
+
     // Inspect URL parameters
     var params = new URLSearchParams(window.location.search);
     var urlTripId = params.get("id");
     var urlTo = params.get("to");
     var urlFrom = params.get("from") || "";
-    var urlDays = params.get("days") || "3";
+    var urlDays = params.get("days") || "5";
 
     var pathMatch = window.location.pathname.match(/\/trip-plan\/([a-zA-Z0-9\-]+)/);
     if (pathMatch && pathMatch[1] && pathMatch[1] !== "itinerary") {
@@ -1334,23 +1680,7 @@
 
     if (urlTo) {
       var query = "Plan a " + urlDays + " day trip to " + urlTo + (urlFrom ? " from " + urlFrom : "") + ". Find verified flights, hotel options with tariffs in Indian Rupees (₹), weather forecast, and a realistic day-by-day itinerary with all costs in INR (₹).";
-
-      // Mandatory Auth Check before initiating AI planning
-      var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-      apiClient.fetch("/api/auth/me")
-        .then(function (r) { return r.ok ? r.json() : { authenticated: false }; })
-        .then(function (auth) {
-          if (auth.authenticated && auth.user) {
-            if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(auth.user);
-            executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
-          } else {
-            showAuthGate("Please sign in or create an account to plan and save your journey to " + urlTo + ".");
-          }
-        })
-        .catch(function () {
-          // If network error, attempt planning which will prompt auth if backend requires it
-          executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
-        });
+      executePlanning(query, urlFrom, urlTo, parseInt(urlDays, 10));
       return;
     }
 
@@ -1365,7 +1695,8 @@
       }
     } catch (e) {}
 
-    showError("No destination specified. Return home to choose your journey.");
+    // Dedicated UX: Display the Plan a Journey form
+    showPlannerScreen();
   }
 
   document.addEventListener("DOMContentLoaded", init);

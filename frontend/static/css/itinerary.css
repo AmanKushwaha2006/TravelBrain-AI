@@ -218,6 +218,20 @@ button {
   color: #6EE7B7;
 }
 
+.action-btn.btn-new-plan {
+  background: linear-gradient(135deg, rgba(85, 184, 232, 0.15), rgba(212, 175, 55, 0.18));
+  border-color: var(--border-gold);
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.action-btn.btn-new-plan:hover {
+  background: linear-gradient(135deg, rgba(85, 184, 232, 0.25), rgba(212, 175, 55, 0.3));
+  border-color: var(--gold-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
+}
+
 /* ==================== VIEW MODES TOGGLE ==================== */
 
 .view-toggle-wrap {
@@ -250,6 +264,249 @@ button {
   max-width: 1280px;
   margin: 0 auto;
   padding: 32px 24px 80px;
+}
+
+/* ==================== PLAN A JOURNEY INPUT SCREEN ==================== */
+
+.plan-journey-screen {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  animation: fadeIn 0.4s ease;
+}
+
+.planner-card {
+  width: 100%;
+  max-width: 860px;
+  background: rgba(11, 20, 36, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 42px 40px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(212, 175, 55, 0.12);
+}
+
+.planner-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.planner-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-full);
+  color: var(--gold-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.planner-title {
+  font-family: var(--font-serif);
+  font-size: 2.35rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.planner-subtitle {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.planner-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.planner-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 0.8fr;
+  gap: 16px;
+}
+
+.planner-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planner-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.02em;
+}
+
+.planner-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.planner-input-wrap svg {
+  position: absolute;
+  left: 14px;
+  color: var(--gold-primary);
+  pointer-events: none;
+}
+
+.planner-input {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.planner-input:focus {
+  border-color: var(--gold-primary);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
+}
+
+.planner-input::placeholder {
+  color: var(--text-dim);
+}
+
+.planner-quick-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.planner-quick-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+.itin-quick-pill {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.itin-quick-pill:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--border-gold);
+  color: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.planner-style-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.style-radio-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.style-radio-label input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.style-radio-label span {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.style-radio-label input:checked + span {
+  background: rgba(85, 184, 232, 0.15);
+  border-color: var(--blue-sky);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(85, 184, 232, 0.25);
+}
+
+.planner-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.btn-planner-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #D4AF37 0%, #AA8416 100%);
+  color: #050B14;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+}
+
+.btn-planner-submit:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%);
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.5);
+}
+
+.btn-planner-submit:active {
+  transform: translateY(0);
+}
+
+.btn-planner-icon {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .planner-grid {
+    grid-template-columns: 1fr;
+  }
+  .planner-card {
+    padding: 28px 20px;
+  }
+  .planner-title {
+    font-size: 1.8rem;
+  }
 }
 
 /* ==================== LOADING STATE SCREEN ==================== */
@@ -1630,4 +1887,204 @@ button {
 .badge-inr {
   color: var(--gold-primary);
   font-weight: 600;
+}
+
+/* ============================================================
+   Provider Cards & API Agent Configuration Styles
+   ============================================================ */
+.provider-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.provider-card:hover {
+  border-color: rgba(212, 175, 55, 0.25);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.provider-card.is-connected {
+  border-color: rgba(34, 197, 94, 0.25);
+  background: rgba(34, 197, 94, 0.02);
+}
+
+.provider-card.is-failed {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.provider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.provider-info {
+  flex: 1;
+}
+
+.provider-badge-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.provider-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.provider-role-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(212, 175, 55, 0.12);
+  color: #D4AF37;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.provider-status-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.provider-status-badge.status-connected {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.provider-status-badge.status-connecting {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+.provider-status-badge.status-failed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.provider-status-badge.status-disconnected {
+  background: rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.provider-desc {
+  font-size: 0.77rem;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.provider-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.provider-input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(5, 11, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 3px 6px 3px 12px;
+  gap: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.provider-input-group:focus-within {
+  border-color: rgba(85, 184, 232, 0.6);
+  box-shadow: 0 0 0 2px rgba(85, 184, 232, 0.15);
+}
+
+.provider-key-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #FFFFFF;
+  font-size: 0.84rem;
+  font-family: monospace;
+  padding: 6px 0;
+}
+
+.btn-toggle-eye {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.btn-toggle-eye:hover {
+  color: #FFFFFF;
+}
+
+.btn-connect-provider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(85, 184, 232, 0.18), rgba(85, 184, 232, 0.08));
+  border: 1px solid rgba(85, 184, 232, 0.4);
+  color: #55B8E8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-connect-provider:hover {
+  background: #55B8E8;
+  color: #050B14;
+}
+
+.btn-connect-provider.is-busy {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.provider-status-msg {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1.35;
+}
+
+.provider-status-msg.msg-success {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.provider-status-msg.msg-error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
 }
