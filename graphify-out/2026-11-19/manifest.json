@@ -6,9 +6,9 @@
     "semantic_hash": ""
   },
   "frontend/static/js/app.js": {
-    "mtime": 1795093123.8274586,
-    "seen": 1795093516.0016608,
-    "ast_hash": "0aa9b128743914d93c4d1b10269e5260",
+    "mtime": 1795097246.4474137,
+    "seen": 1795099473.024123,
+    "ast_hash": "2727694b068070ddeae8502a7dbeaf63",
     "semantic_hash": ""
   },
   "frontend/static/js/markdown.js": {
@@ -318,21 +318,21 @@
     "semantic_hash": ""
   },
   "frontend/static/js/itinerary.js": {
-    "mtime": 1795093255.1725397,
-    "seen": 1795093516.0016644,
-    "ast_hash": "18a70149a84705d8e28c120c3519e02b",
+    "mtime": 1795099337.4846091,
+    "seen": 1795099473.0241265,
+    "ast_hash": "6bc0192270b603cc19b849c5313ef3c5",
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {
-    "mtime": 1795090019.3944364,
-    "seen": 1795091334.010987,
-    "ast_hash": "7b808c85d7d5a24fab682aa8f311095c",
+    "mtime": 1795099044.736568,
+    "seen": 1795099473.0241961,
+    "ast_hash": "2c3f8c7cc19370a1f74dba9d007b186a",
     "semantic_hash": ""
   },
   "frontend/static/js/api-client.js": {
-    "mtime": 1795092914.7357974,
-    "seen": 1795093516.001658,
-    "ast_hash": "61b5ba68f75e6ea8044f6672309e00be",
+    "mtime": 1795097087.595369,
+    "seen": 1795099473.0241199,
+    "ast_hash": "0b10344a06e95ba45b8558aef57a2dca",
     "semantic_hash": ""
   }
 }

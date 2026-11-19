@@ -693,6 +693,40 @@ async def list_history(request: Request):
     return JSONResponse(content={"success": True, "trips": trips})
 
 
+@app.post("/api/history")
+async def create_history(request: Request):
+    user = _get_current_user(request)
+    if not user:
+        return JSONResponse(status_code=401, content={"success": False, "error": "Not authenticated."})
+
+    try:
+        data = await request.json()
+    except Exception:
+        data = {}
+
+    title = data.get("title") or _extract_title(data.get("query", "Trip"))
+    destination = data.get("destination") or _extract_destination(data.get("query", ""))
+    query = data.get("query", "")
+    result = data.get("result", {})
+
+    pool = _get_auth_pool()
+    if pool:
+        try:
+            trip = save_trip(
+                pool,
+                user_id=user["id"],
+                title=title,
+                query=query,
+                destination=destination,
+                result=result,
+            )
+            return JSONResponse(content={"success": True, "trip": trip})
+        except Exception as ex:
+            return JSONResponse(status_code=500, content={"success": False, "error": str(ex)})
+
+    return JSONResponse(content={"success": True, "trip": {"title": title, "destination": destination, "query": query}})
+
+
 @app.get("/api/history/{trip_id}")
 async def read_history(request: Request, trip_id: str):
     user = _get_current_user(request)

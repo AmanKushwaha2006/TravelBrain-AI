@@ -28,6 +28,11 @@
   "26": "history.py",
   "27": "api-client.js",
   "28": "Request",
+  "29": "settings.py",
   "30": "db/__init__.py",
-  "31": "itinerary.js"
+  "31": "itinerary.js",
+  "32": "_read",
+  "33": "remote.py",
+  "34": "add_no_cache_for_dev",
+  "35": "get_client"
 }

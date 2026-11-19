@@ -1230,6 +1230,48 @@
       });
   }
 
+  function savePlanToHistory(dest, origin, days, query, tripData) {
+    if (!dest) return;
+    try {
+      var raw = localStorage.getItem("tb_recent_trips");
+      var list = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(list)) list = [];
+
+      var tripId = (tripData && (tripData.history_id || tripData.id)) ||
+                   ("trip_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6));
+
+      list = list.filter(function (t) {
+        if (tripId && t.id === tripId) return false;
+        if (t.destination && t.destination.toLowerCase() === dest.toLowerCase()) return false;
+        return true;
+      });
+
+      var tripItem = {
+        id: tripId,
+        title: "Trip to " + dest,
+        destination: dest,
+        origin: origin || "",
+        days: days || 5,
+        query: query || ("Plan a " + (days || 5) + " day trip to " + dest),
+        created_at: new Date().toISOString()
+      };
+
+      list.unshift(tripItem);
+      if (list.length > 15) list = list.slice(0, 15);
+
+      localStorage.setItem("tb_recent_trips", JSON.stringify(list));
+
+      var client = window.TravelBrainAPI;
+      var user = client && client.getCurrentUser ? client.getCurrentUser() : null;
+      if (user && (user.email || user.id)) {
+        var uKey = "tb_trips_" + (user.email || user.id);
+        localStorage.setItem(uKey, JSON.stringify(list));
+      }
+    } catch (e) {
+      console.warn("[Itinerary] Failed to save trip to local history:", e);
+    }
+  }
+
   function executePlanning(query, origin, dest, days) {
     if (!isUserAuthenticated()) {
       openAuthModal(dest || "Your Destination", function () {
@@ -1305,6 +1347,8 @@
           sessionStorage.setItem("travelbrain_active_plan", JSON.stringify(data));
         } catch (e) {}
 
+        savePlanToHistory(dest, origin, days, query, data);
+
         var parsed = parseItineraryText(data.answer || data.itinerary, data.__meta);
         renderDashboard(parsed, data);
       })
@@ -1329,6 +1373,8 @@
               try {
                 sessionStorage.setItem("travelbrain_active_plan", JSON.stringify(data));
               } catch (e) {}
+
+              savePlanToHistory(dest, origin, days, query, data);
 
               var parsed = parseItineraryText(data.answer || data.itinerary, data.__meta);
               renderDashboard(parsed, data);
@@ -1378,6 +1424,18 @@
         renderDashboard(parsed, planResult);
       })
       .catch(function (err) {
+        // Fallback: check localStorage for saved trip details
+        try {
+          var raw = localStorage.getItem("tb_recent_trips");
+          var list = raw ? JSON.parse(raw) : [];
+          var found = list.find(function (t) { return t.id === tripId; });
+          if (found && found.destination) {
+            var q = found.query || ("Plan a " + (found.days || 5) + " day trip to " + found.destination);
+            executePlanning(q, found.origin || "", found.destination, found.days || 5);
+            return;
+          }
+        } catch (e) {}
+
         showError("Failed to load saved trip: " + err.message);
       });
   }

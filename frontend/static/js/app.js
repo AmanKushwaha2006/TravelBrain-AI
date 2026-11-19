@@ -709,6 +709,7 @@
     document.body.classList.toggle("sidebar-open", isOpen);
     if (chatSidebar) {
       if (isOpen) {
+        loadHistory();
         chatSidebar.style.visibility = "visible";
         chatSidebar.style.pointerEvents = "auto";
         chatSidebar.style.transform = "translateX(0)";
@@ -863,6 +864,15 @@
   }
 
   function checkAuth() {
+    var localUser = (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser)
+      ? window.TravelBrainAPI.getCurrentUser()
+      : null;
+    if (localUser && localUser.email) {
+      currentUser = localUser;
+      updateAuthUI();
+      loadHistory();
+    }
+
     var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
     return apiClient.fetch("/api/auth/me")
       .then(function (r) {
@@ -875,17 +885,35 @@
           updateAuthUI();
           loadHistory();
         } else {
+          var stillLocal = (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser)
+            ? window.TravelBrainAPI.getCurrentUser()
+            : null;
+          if (stillLocal && stillLocal.email) {
+            currentUser = stillLocal;
+            updateAuthUI();
+            loadHistory();
+          } else {
+            currentUser = null;
+            if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(null);
+            updateAuthUI();
+            renderHistory();
+          }
+        }
+      })
+      .catch(function () {
+        var stillLocal = (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser)
+          ? window.TravelBrainAPI.getCurrentUser()
+          : null;
+        if (stillLocal && stillLocal.email) {
+          currentUser = stillLocal;
+          updateAuthUI();
+          loadHistory();
+        } else {
           currentUser = null;
           if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(null);
           updateAuthUI();
           renderHistory();
         }
-      })
-      .catch(function () {
-        currentUser = null;
-        if (window.TravelBrainAPI) window.TravelBrainAPI.setCurrentUser(null);
-        updateAuthUI();
-        renderHistory();
       });
   }
 
@@ -1109,30 +1137,132 @@
 
   /* ---------------- Travel History Controllers ---------------- */
 
+  var STORAGE_KEY_TRIPS = "tb_recent_trips";
+
+  function getUserTripsKey() {
+    var u = currentUser || (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser());
+    if (u && (u.email || u.id)) {
+      return "tb_trips_" + (u.email || u.id);
+    }
+    return STORAGE_KEY_TRIPS;
+  }
+
+  function getLocalHistory() {
+    var items = [];
+    try {
+      var userKey = getUserTripsKey();
+      var rawUser = localStorage.getItem(userKey);
+      if (rawUser) items = JSON.parse(rawUser);
+
+      if (!items || items.length === 0) {
+        var rawGeneral = localStorage.getItem(STORAGE_KEY_TRIPS);
+        if (rawGeneral) items = JSON.parse(rawGeneral);
+      }
+    } catch (e) {
+      items = [];
+    }
+    return Array.isArray(items) ? items : [];
+  }
+
+  function saveLocalTrip(trip) {
+    if (!trip || !trip.destination) return trip;
+    var list = getLocalHistory();
+
+    // Deduplicate by id or destination
+    list = list.filter(function (t) {
+      if (trip.id && t.id === trip.id) return false;
+      if (t.destination && t.destination.toLowerCase() === trip.destination.toLowerCase()) return false;
+      return true;
+    });
+
+    var newTrip = {
+      id: trip.id || ("trip_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6)),
+      title: trip.title || ("Trip to " + trip.destination),
+      destination: trip.destination,
+      origin: trip.origin || "",
+      days: trip.days || 5,
+      query: trip.query || ("Plan a " + (trip.days || 5) + " day trip to " + trip.destination),
+      created_at: trip.created_at || new Date().toISOString()
+    };
+
+    list.unshift(newTrip);
+    if (list.length > 15) list = list.slice(0, 15);
+
+    try {
+      var str = JSON.stringify(list);
+      localStorage.setItem(STORAGE_KEY_TRIPS, str);
+      var userKey = getUserTripsKey();
+      if (userKey !== STORAGE_KEY_TRIPS) {
+        localStorage.setItem(userKey, str);
+      }
+    } catch (e) {}
+
+    historyItems = list;
+    renderHistory();
+    return newTrip;
+  }
+
+  function removeLocalTrip(tripId) {
+    if (!tripId) return;
+    var list = getLocalHistory();
+    list = list.filter(function (t) { return t.id !== tripId; });
+    try {
+      var str = JSON.stringify(list);
+      localStorage.setItem(STORAGE_KEY_TRIPS, str);
+      var userKey = getUserTripsKey();
+      if (userKey !== STORAGE_KEY_TRIPS) {
+        localStorage.setItem(userKey, str);
+      }
+    } catch (e) {}
+  }
+
   function loadHistory() {
-    if (!currentUser) {
+    var authUser = currentUser || (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser());
+    if (!authUser) {
       historyItems = [];
       renderHistory();
       return;
     }
 
+    // 1. Immediately hydrate and render from local storage
+    var localTrips = getLocalHistory();
+    historyItems = localTrips;
+    renderHistory();
+
+    // 2. Merge cloud history if available
     var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
     apiClient.fetch("/api/history")
       .then(function (r) {
         return r.ok ? r.json() : { success: false, trips: [] };
       })
       .then(function (data) {
-        if (data.success && Array.isArray(data.trips)) {
-          historyItems = data.trips;
-        } else {
-          historyItems = [];
+        if (data.success && Array.isArray(data.trips) && data.trips.length > 0) {
+          var mergedMap = {};
+          data.trips.forEach(function (t) {
+            var k = t.id || (t.destination ? t.destination.toLowerCase() : "");
+            if (k) mergedMap[k] = t;
+          });
+          localTrips.forEach(function (t) {
+            var k = t.id || (t.destination ? t.destination.toLowerCase() : "");
+            if (k && !mergedMap[k]) {
+              mergedMap[k] = t;
+            }
+          });
+          var combined = Object.values(mergedMap);
+          combined.sort(function (a, b) {
+            return new Date(b.created_at || 0) - new Date(a.created_at || 0);
+          });
+          historyItems = combined.slice(0, 15);
+          try {
+            var str = JSON.stringify(historyItems);
+            localStorage.setItem(STORAGE_KEY_TRIPS, str);
+            var uKey = getUserTripsKey();
+            if (uKey !== STORAGE_KEY_TRIPS) localStorage.setItem(uKey, str);
+          } catch (e) {}
+          renderHistory();
         }
-        renderHistory();
       })
-      .catch(function () {
-        historyItems = [];
-        renderHistory();
-      });
+      .catch(function () {});
   }
 
   function renderHistory() {
@@ -1143,8 +1273,10 @@
       historyCount.textContent = historyItems.length + " / 10";
     }
 
+    var authUser = currentUser || (window.TravelBrainAPI && window.TravelBrainAPI.getCurrentUser());
+
     // Guest state
-    if (!currentUser) {
+    if (!authUser) {
       var guestBox = el("div", "history-empty");
       guestBox.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="empty-icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>Sign in to save trips</p><small>Your generated itineraries will be saved automatically.</small>';
       var signBtn = el("button", "btn btn-soft btn-sm", "Sign In / Register");
@@ -1173,7 +1305,7 @@
       item.appendChild(tripIcon);
 
       var info = el("div", "history-item-info");
-      var title = el("div", "history-item-title", trip.title || "Travel Plan");
+      var title = el("div", "history-item-title", trip.title || ("Trip to " + (trip.destination || "Destination")));
       info.appendChild(title);
 
       var meta = el("div", "history-item-meta");
@@ -1198,40 +1330,41 @@
 
       // Click to open saved trip
       item.addEventListener("click", function () {
-        openTrip(trip.id);
+        openTrip(trip);
       });
 
       historyList.appendChild(item);
     });
   }
 
-  function openTrip(tripId) {
-    if (!tripId) return;
+  function openTrip(trip) {
+    if (!trip) return;
+    var tripId = typeof trip === "string" ? trip : trip.id;
+    var dest = (trip && trip.destination) || "";
+    var origin = (trip && trip.origin) || "";
+    var days = (trip && trip.days) || 5;
+
     activeTripId = tripId;
-    window.location.href = "/trip-plan?id=" + encodeURIComponent(tripId);
+    var targetUrl = "/trip-plan?to=" + encodeURIComponent(dest) +
+                    (origin ? "&from=" + encodeURIComponent(origin) : "") +
+                    "&days=" + encodeURIComponent(days) +
+                    (tripId ? "&id=" + encodeURIComponent(tripId) : "");
+    window.location.href = targetUrl;
   }
 
   function deleteTrip(tripId) {
     if (!tripId) return;
 
+    removeLocalTrip(tripId);
+    historyItems = historyItems.filter(function (t) { return t.id !== tripId; });
+    if (activeTripId === tripId) {
+      activeTripId = null;
+    }
+    renderHistory();
+    toast("Trip removed from history.");
+
     var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    apiClient.fetch("/api/history/" + tripId, { method: "DELETE" })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.success) {
-          historyItems = historyItems.filter(function (t) { return t.id !== tripId; });
-          if (activeTripId === tripId) {
-            activeTripId = null;
-          }
-          renderHistory();
-          toast("Trip removed from history.");
-        } else {
-          toast(data.error || "Failed to delete trip.");
-        }
-      })
-      .catch(function () {
-        toast("Error deleting trip.");
-      });
+    apiClient.fetch("/api/history/" + tripId, { method: "DELETE" }).catch(function () {});
   }
 
   /* ---------------- Message & Plan Rendering ---------------- */
@@ -1674,10 +1807,32 @@
       return;
     }
 
+    // Save searched trip directly to sidebar history
+    var savedTrip = saveLocalTrip({
+      destination: to,
+      origin: from,
+      days: parsedDays,
+      query: "Plan a " + parsedDays + " day trip to " + to + (from ? " from " + from : "")
+    });
+
+    // Also notify backend history asynchronously if available
+    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
+    apiClient.fetch("/api/history", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: "Trip to " + to,
+        destination: to,
+        query: "Plan a " + parsedDays + " day trip to " + to + (from ? " from " + from : ""),
+        result: {}
+      })
+    }).catch(function () {});
+
     // Navigate directly to dedicated itinerary route
     var targetUrl = "/trip-plan?to=" + encodeURIComponent(to) +
                     (from ? "&from=" + encodeURIComponent(from) : "") +
-                    "&days=" + encodeURIComponent(parsedDays);
+                    "&days=" + encodeURIComponent(parsedDays) +
+                    (savedTrip && savedTrip.id ? "&id=" + encodeURIComponent(savedTrip.id) : "");
     window.location.href = targetUrl;
   }
 
