@@ -347,6 +347,14 @@
   }
 
   function markUnreachable(err) {
+    var client = window.TravelBrainAPI;
+    var keys = client && client.getSessionKeys ? client.getSessionKeys() : {};
+    if (keys.groq) {
+      if (client && client.fetchConfig) {
+        client.fetchConfig().then(applyConfig);
+        return;
+      }
+    }
     config = null;
     if (statusBtn) {
       statusBtn.setAttribute("data-state", "down");
@@ -360,9 +368,11 @@
   }
 
   function refreshConfig() {
-    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    return apiClient.fetch("/api/config", { cache: "no-store" })
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
+    var apiClient = window.TravelBrainAPI;
+    var fetchPromise = apiClient && apiClient.fetchConfig
+      ? apiClient.fetchConfig()
+      : fetch("/api/config", { cache: "no-store" }).then(function (r) { return r.json(); });
+    return fetchPromise
       .then(applyConfig)
       .catch(markUnreachable);
   }

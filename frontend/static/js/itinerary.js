@@ -867,6 +867,89 @@
 
   /* ---------------- Planning Request & Pipeline ---------------- */
 
+  function generateWithDirectGroq(groqKey, query, origin, dest, days) {
+    var prompt = [
+      "You are TravelBrain AI, an elite multi-agent travel planner.",
+      "Plan a realistic " + days + "-day journey to " + dest + (origin ? " from " + origin : "") + ".",
+      "All prices, airfares, hotel tariffs, and budget estimates MUST be in Indian Rupees (₹).",
+      "",
+      "Format your entire response strictly in Markdown using the following exact section headers:",
+      "",
+      "### 1. Executive Summary & Best Time to Visit",
+      "Overview of " + dest + ", optimal season, climate advice, and cultural highlights.",
+      "",
+      "### 2. Verified Flights & Airfares (INR ₹)",
+      "| Airline | Flight Route | Departure - Arrival | Duration | Round-Trip Fare (₹) |",
+      "|---|---|---|---|---|",
+      "Include 3-4 realistic airline route options from " + (origin || "Delhi") + " to " + dest + " with prices formatted as ₹X,XXX.",
+      "",
+      "### 3. Handpicked Stays & Accommodations (INR ₹)",
+      "| Hotel / Resort | Category / Style | Neighborhood | Tariff / Night (₹) | Key Highlights |",
+      "|---|---|---|---|---|",
+      "Include 3-4 distinct hotels/resorts (Luxury, Boutique, Value) with nightly rates formatted as ₹X,XXX.",
+      "",
+      "### 4. Climate Forecast & Packing Advice",
+      "Expected temperature in °C, seasonal forecast, and essential packing checklist.",
+      "",
+      "### 5. Day-by-Day Comprehensive Itinerary",
+      "For each day from Day 1 to Day " + days + ":",
+      "#### Day X: [Title]",
+      "- **Morning (09:00 - 12:30)**: [Detailed sights, activities, estimated cost ₹X]",
+      "- **Afternoon (13:00 - 17:00)**: [Recommended lunch eatery, afternoon exploration]",
+      "- **Evening (18:00 - 21:30)**: [Sunset spot, cultural experience, dinner recommendation]",
+      "",
+      "### 6. Estimated Total Budget Breakdown (INR ₹)",
+      "| Expense Category | Estimated Cost (₹) | Pacing / Notes |",
+      "|---|---|---|",
+      "Break down Flights, Accommodation, Dining, Local Transport, Activities, and Total in ₹."
+    ].join("\n");
+
+    function callModel(modelName) {
+      return fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + groqKey,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: modelName,
+          messages: [
+            { role: "system", content: "You are TravelBrain AI, a master travel architect producing authoritative, beautifully formatted travel dossiers with tables and day-by-day schedules in Indian Rupees (₹)." },
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.3,
+          max_tokens: 3600
+        })
+      });
+    }
+
+    return callModel("openai/gpt-oss-20b")
+      .then(function (res) {
+        if (!res.ok) {
+          return callModel("llama-3.3-70b-versatile");
+        }
+        return res;
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Groq API returned HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var text = "";
+        if (data.choices && data.choices[0] && data.choices[0].message) {
+          var msg = data.choices[0].message;
+          text = (msg.content && msg.content.trim()) || (msg.reasoning && msg.reasoning.trim()) || "";
+        }
+        if (!text) throw new Error("Received empty itinerary from Groq AI.");
+        return {
+          success: true,
+          itinerary: text,
+          answer: text,
+          thread_id: "direct_groq_" + Date.now()
+        };
+      });
+  }
+
   function executePlanning(query, origin, dest, days) {
     hidePlannerScreen();
     if (loadingScreen) loadingScreen.hidden = false;
@@ -939,6 +1022,36 @@
         renderDashboard(parsed, data);
       })
       .catch(function (err) {
+        // Fall back to direct Groq planning if key exists
+        var keys = (window.TravelBrainAPI && window.TravelBrainAPI.getSessionKeys)
+          ? window.TravelBrainAPI.getSessionKeys()
+          : {};
+        var groqKey = keys.groq || sessionStorage.getItem("tb_key_groq") || localStorage.getItem("tb_key_groq");
+
+        if (groqKey) {
+          if (currentAgentLabel) currentAgentLabel.textContent = "Synthesizing master dossier via connected Groq AI…";
+          return generateWithDirectGroq(groqKey, query, origin, dest, days)
+            .then(function (data) {
+              clearInterval(timer);
+              if (pipelineBarFill) pipelineBarFill.style.width = "100%";
+
+              data.__meta = { origin: origin, destination: dest, days: days, query: query };
+              activeThreadId = data.thread_id || activeThreadId;
+              if (data.history_id) currentTripId = data.history_id;
+
+              try {
+                sessionStorage.setItem("travelbrain_active_plan", JSON.stringify(data));
+              } catch (e) {}
+
+              var parsed = parseItineraryText(data.answer || data.itinerary, data.__meta);
+              renderDashboard(parsed, data);
+            })
+            .catch(function (groqErr) {
+              clearInterval(timer);
+              showError("Direct Groq planning error: " + (groqErr.message || String(groqErr)));
+            });
+        }
+
         clearInterval(timer);
         showError(err.message, err.__kind);
       });
@@ -989,9 +1102,12 @@
     if (errorScreen) errorScreen.hidden = false;
 
     if (errorMessage) {
-      if (kind === "credentials" || /Missing credentials|GROQ_API_KEY/i.test(msg)) {
-        errorMessage.textContent = "Please configure your Groq API Key to generate travel plans.";
-        if (btnErrorSettings) btnErrorSettings.hidden = false;
+      if (kind === "credentials" || /Missing credentials|GROQ_API_KEY|unreachable|404|Failed to fetch/i.test(msg)) {
+        errorMessage.textContent = "Please connect your Groq API Key to plan and generate your travel itinerary with AI.";
+        if (btnErrorSettings) {
+          btnErrorSettings.hidden = false;
+          btnErrorSettings.textContent = "Connect Groq API Key";
+        }
       } else {
         errorMessage.textContent = msg || "An error occurred while generating your itinerary.";
       }
@@ -1205,6 +1321,17 @@
         return data;
       })
       .catch(function (err) {
+        var keys = client && client.getSessionKeys ? client.getSessionKeys() : {};
+        if (keys.groq) {
+          if (apiStatus) {
+            apiStatus.setAttribute("data-state", "ok");
+            apiStatus.innerHTML = '<span class="status-indicator" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.6);"></span>' +
+                                  '<span class="status-text">API Connected</span>';
+            apiStatus.title = "Connected to Groq AI Engine · Ready to plan";
+          }
+          updateItinConnUI("connected");
+          return;
+        }
         if (apiStatus) {
           apiStatus.setAttribute("data-state", "down");
           apiStatus.innerHTML = '<span class="status-indicator" style="background:#ef4444;box-shadow:0 0 8px rgba(239,68,68,0.6);"></span>' +
