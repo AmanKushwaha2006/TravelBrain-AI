@@ -458,8 +458,8 @@
 
   <!-- ==================== SETTINGS MODAL ==================== -->
   <div class="modal-scrim" id="settingsScrim" hidden></div>
-  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
-    <div class="modal-head">
+  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden style="max-width:580px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;">
+    <div class="modal-head" style="flex-shrink:0;">
       <div class="modal-heading">
         <h2 id="settingsTitle">AI Agent &amp; API Configuration</h2>
         <p>Connect and verify credentials for each specialized AI agent and external travel service.</p>
@@ -470,7 +470,7 @@
     </div>
 
     <!-- Live Connection Banner -->
-    <div class="settings-conn-banner" id="settingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin:16px 20px 0 20px;">
+    <div class="settings-conn-banner" id="settingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin:14px 20px 0 20px;flex-shrink:0;">
       <div style="display:flex;align-items:center;gap:10px;">
         <span class="status-indicator" id="settingsConnIndicator" style="width:10px;height:10px;border-radius:50%;background:#888;"></span>
         <div>
@@ -482,9 +482,9 @@
     </div>
 
     <!-- Providers List (Groq, Tavily, AviationStack, OpenWeather, PostgreSQL) -->
-    <div class="modal-body" id="credList"></div>
+    <div class="modal-body" id="credList" style="flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px 20px;"></div>
 
-    <div class="modal-foot">
+    <div class="modal-foot" style="flex-shrink:0;">
       <button class="btn btn-ghost btn-sm" id="settingsReset" type="button" title="Discard session keys and fall back to the server .env">Use server .env</button>
       <button class="btn btn-primary btn-sm" id="settingsSave" type="button">
         <span class="btn-label">Save &amp; Connect All</span>

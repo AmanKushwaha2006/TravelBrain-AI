@@ -438,17 +438,17 @@
 
   <!-- API Settings Modal -->
   <div class="modal-scrim" id="settingsScrim" hidden></div>
-  <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true" style="max-width:580px;">
-    <div class="settings-head">
+  <div class="settings-modal" id="settingsModal" hidden role="dialog" aria-modal="true" style="max-width:580px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;">
+    <div class="settings-head" style="flex-shrink:0;">
       <div>
         <h3 style="color:#FFFFFF;font-family:var(--font-display);font-size:1.15rem;margin:0;">AI Agent &amp; API Configuration</h3>
         <p style="font-size:0.75rem;color:var(--text-muted);margin:4px 0 0 0;">Connect and verify credentials for each specialized AI agent and external travel service.</p>
       </div>
       <button type="button" class="icon-btn-close" id="settingsClose">✕</button>
     </div>
-    <div class="settings-body" style="max-height:65vh;overflow-y:auto;">
+    <div class="settings-body" style="flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px 20px;">
       <!-- Live Status Banner -->
-      <div id="itinSettingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin-bottom:14px;">
+      <div id="itinSettingsConnBanner" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin-bottom:14px;flex-shrink:0;">
         <div style="display:flex;align-items:center;gap:8px;">
           <span class="status-indicator" id="itinConnIndicator" style="width:10px;height:10px;border-radius:50%;background:#888;"></span>
           <span id="itinConnText" style="font-size:0.8rem;color:#FFF;">Checking Providers…</span>
@@ -459,7 +459,7 @@
       <!-- Providers List (Groq, Tavily, AviationStack, OpenWeather, PostgreSQL) -->
       <div id="credList" style="display:flex;flex-direction:column;gap:12px;"></div>
     </div>
-    <div class="settings-foot" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-top:1px solid rgba(255,255,255,0.08);">
+    <div class="settings-foot" style="flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(5, 11, 20, 0.7);">
       <button type="button" class="btn-retry" id="settingsReset" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text-muted);padding:8px 14px;font-size:0.8rem;">Use server .env</button>
       <button type="button" class="btn-save-key" id="settingsSave" style="padding:8px 18px;font-size:0.85rem;">Save &amp; Connect All</button>
     </div>
