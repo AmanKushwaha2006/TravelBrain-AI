@@ -306,21 +306,57 @@
     "semantic_hash": ""
   },
   "frontend/static/js/itinerary.js": {
-    "mtime": 1795122369.8113582,
-    "seen": 1795122775.891557,
-    "ast_hash": "78c121bb7a85413467f6f09a1c40060a",
+    "mtime": 1795126224.4065185,
+    "seen": 1795126266.085368,
+    "ast_hash": "462e3853442792a164f4335c6c22bc88",
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {
-    "mtime": 1795112989.585308,
-    "seen": 1795113079.0673459,
-    "ast_hash": "16a879e2cdd5fed8038555fac1adca19",
+    "mtime": 1795125198.9646227,
+    "seen": 1795126266.085496,
+    "ast_hash": "6703e3f62b90d83e527ac2331755afd9",
     "semantic_hash": ""
   },
   "frontend/static/js/api-client.js": {
     "mtime": 1795097087.595369,
     "seen": 1795099473.0241199,
     "ast_hash": "0b10344a06e95ba45b8558aef57a2dca",
+    "semantic_hash": ""
+  },
+  "scratch/test_itinerary.py": {
+    "mtime": 1795126113.1760511,
+    "seen": 1795126266.0853784,
+    "ast_hash": "65b42cd051b275d3ba8d7a68f5216b0f",
+    "semantic_hash": ""
+  },
+  "scratch/test_parser.js": {
+    "mtime": 1795126139.7573216,
+    "seen": 1795126266.0853813,
+    "ast_hash": "ba06b20c37bfab9b620674d9f1c55b46",
+    "semantic_hash": ""
+  },
+  "scratch/test_prologue.js": {
+    "mtime": 1795126158.5910802,
+    "seen": 1795126266.0853841,
+    "ast_hash": "3ecef2bebe06163e1fcdb94f64c521a5",
+    "semantic_hash": ""
+  },
+  "scratch/test_registry.js": {
+    "mtime": 1795125399.7263272,
+    "seen": 1795126266.085387,
+    "ast_hash": "79d277c966fbe89e9fc5c13c2a5597e9",
+    "semantic_hash": ""
+  },
+  "scratch/update_itinerary_css.py": {
+    "mtime": 1795125963.9235327,
+    "seen": 1795126266.085389,
+    "ast_hash": "c382c776f9705fe4bb9e0c83a38d14ac",
+    "semantic_hash": ""
+  },
+  "scratch/update_itinerary_js.py": {
+    "mtime": 1795125742.201751,
+    "seen": 1795126266.0853908,
+    "ast_hash": "eee34c929ace2a589d269c0bcd9aa6af",
     "semantic_hash": ""
   }
 }

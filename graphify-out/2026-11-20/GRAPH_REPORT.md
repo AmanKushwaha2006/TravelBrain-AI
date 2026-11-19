@@ -1,17 +1,17 @@
-# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-11-19)
+# Graph Report - TravelBrain-Multi-Agent-AI-Travel-Planner  (2026-11-20)
 
 ## Corpus Check
-- 49 files · ~77,252 words
+- 48 files · ~76,745 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 219 file(s) not represented in the graph (top: (none) 183, .old 18, .db 3)
 
 ## Summary
-- 609 nodes · 1465 edges · 36 communities (27 shown, 9 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 85 edges (avg confidence: 0.86)
+- 604 nodes · 1455 edges · 31 communities (24 shown, 7 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 84 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5dd776f2`
+- Built from commit: `6937e663`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,7 @@
 - session.py
 - critic_agent.py
 - verify_single_key
-- local.py
+- settings.py
 - app.js
 - cache.py
 - auth.py
@@ -38,29 +38,24 @@
 - .parse
 - use_credentials
 - app.py
-- animated-content.js
+- weather_server.py
 - sessions.py
 - history.py
 - api-client.js
 - Request
-- settings.py
 - itinerary.js
-- _read
-- remote.py
-- add_no_cache_for_dev
-- get_client
 
 ## God Nodes (most connected - your core abstractions)
 1. `GLTFParser` - 31 edges
-2. `init()` - 23 edges
+2. `init()` - 22 edges
 3. `TravelState` - 18 edges
 4. `verify_single_key()` - 17 edges
 5. `get_llm()` - 17 edges
 6. `write_config()` - 16 edges
-7. `executePlanning()` - 16 edges
-8. `extract_destination()` - 16 edges
-9. `_get_auth_pool()` - 15 edges
-10. `require()` - 15 edges
+7. `extract_destination()` - 16 edges
+8. `_get_auth_pool()` - 15 edges
+9. `executePlanning()` - 15 edges
+10. `run_async()` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `travel_planner()` --uses--> `MissingCredentialsError`  [INFERRED]
@@ -77,35 +72,35 @@
 ## Import Cycles
 - None detected.
 
-## Communities (36 total, 9 thin omitted)
+## Communities (31 total, 7 thin omitted)
 
 ### Community 0 - "session.py"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (10): get_connection(), get_session_checkpointer(), get_credentials(), MissingCredentialsError, require(), resolve_aviationstack_api_key(), resolve_database_url(), resolve_groq_api_key() (+2 more)
 
 ### Community 1 - "critic_agent.py"
-Cohesion: 0.07
-Nodes (28): clean_json_output(), _compute_grade(), _compute_verdict(), critic_agent(), _dynamic_fallback_evaluation(), run_critic_evaluation(), _sanitize_json_text(), extract_destination() (+20 more)
+Cohesion: 0.06
+Nodes (30): clean_json_output(), _compute_grade(), _compute_verdict(), critic_agent(), _dynamic_fallback_evaluation(), run_critic_evaluation(), _sanitize_json_text(), extract_destination() (+22 more)
 
 ### Community 2 - "verify_single_key"
-Cohesion: 0.21
-Nodes (11): _set_session_cookie(), verify_single_key(), write_config(), new_session_id(), check_aviationstack_api_key(), check_database_url(), check_groq_api_key(), check_openweather_api_key() (+3 more)
+Cohesion: 0.25
+Nodes (9): _set_session_cookie(), verify_single_key(), write_config(), check_aviationstack_api_key(), check_database_url(), check_groq_api_key(), check_openweather_api_key(), check_tavily_api_key() (+1 more)
 
-### Community 3 - "local.py"
-Cohesion: 0.16
-Nodes (10): load_tools(), check_servers(), get_all_tools(), _aviation_call(), _aviation_call_cached(), aviation_mcp_call(), forecast_mcp_search(), _get_aviation_tools() (+2 more)
+### Community 3 - "settings.py"
+Cohesion: 0.08
+Nodes (18): async_cached(), get_database_url(), get_groq_api_key(), normalize_database_url(), _child_env(), get_client(), load_tools(), require_tools() (+10 more)
 
 ### Community 4 - "app.js"
 Cohesion: 0.12
 Nodes (47): applyConfig(), checkAuth(), clearAuthError(), closeAuthModal(), closeSettings(), deleteTrip(), el(), formatRelativeTime() (+39 more)
 
 ### Community 5 - "cache.py"
-Cohesion: 0.16
-Nodes (6): cached(), clear(), get_client(), reset_client(), _safe_url(), status()
+Cohesion: 0.12
+Nodes (13): decorator(), wrapper(), build_key(), decorator(), wrapper(), clear(), drop_client(), get_client() (+5 more)
 
 ### Community 6 - "auth.py"
-Cohesion: 0.10
-Nodes (10): authenticate_user(), create_session(), create_user(), delete_session(), get_session_user(), hash_password(), _hash_token(), verify_password() (+2 more)
+Cohesion: 0.14
+Nodes (8): authenticate_user(), create_session(), create_user(), delete_session(), get_session_user(), hash_password(), _hash_token(), verify_password()
 
 ### Community 7 - "README.md"
 Cohesion: 0.11
@@ -148,16 +143,16 @@ Cohesion: 0.22
 Nodes (3): GLTFBinaryExtension, GLTFDracoMeshCompressionExtension, GLTFMeshQuantizationExtension
 
 ### Community 22 - "use_credentials"
-Cohesion: 0.19
-Nodes (8): evaluate_plan(), EvaluateRequest, health_check(), read_config(), reset_config(), _session_id(), clear_credentials(), use_credentials()
+Cohesion: 0.21
+Nodes (7): evaluate_plan(), EvaluateRequest, health_check(), read_config(), reset_config(), _session_id(), use_credentials()
 
 ### Community 23 - "app.py"
-Cohesion: 0.09
-Nodes (10): ConfigRequest, home_head(), lifespan(), LoginRequest, SignupRequest, TravelRequest, VerifyKeyRequest, get_pool() (+2 more)
+Cohesion: 0.08
+Nodes (11): add_no_cache_for_dev(), ConfigRequest, home_head(), lifespan(), LoginRequest, SignupRequest, TravelRequest, VerifyKeyRequest (+3 more)
 
 ### Community 25 - "sessions.py"
-Cohesion: 0.30
-Nodes (6): active_session_count(), get_credentials_for(), _merge(), _prune(), store_credentials(), Credentials
+Cohesion: 0.26
+Nodes (8): active_session_count(), clear_credentials(), get_credentials_for(), _merge(), new_session_id(), _prune(), store_credentials(), Credentials
 
 ### Community 26 - "history.py"
 Cohesion: 0.20
@@ -171,41 +166,29 @@ Nodes (29): apiFetch(), buildUrl(), clearAuth(), clearSessionKeys(), directVerif
 Cohesion: 0.14
 Nodes (19): auth_me(), _clear_auth_cookie(), create_history(), _extract_destination(), _extract_title(), favicon(), _get_auth_pool(), _get_current_user() (+11 more)
 
-### Community 29 - "settings.py"
-Cohesion: 0.18
-Nodes (3): get_database_url(), get_groq_api_key(), _child_env()
-
 ### Community 31 - "itinerary.js"
 Cohesion: 0.16
-Nodes (36): cleanMarkdown(), clearAuthError(), closeAuthModal(), closeSettings(), el(), executePlanning(), generateWithDirectGroq(), handleAuthSuccess() (+28 more)
-
-### Community 32 - "_read"
-Cohesion: 0.22
-Nodes (8): decorator(), wrapper(), build_key(), decorator(), wrapper(), drop_client(), _read(), _write()
-
-### Community 33 - "remote.py"
-Cohesion: 0.27
-Nodes (4): async_cached(), require_tools(), _get_search_tool(), tavily_mcp_search()
+Nodes (35): cleanMarkdown(), clearAuthError(), closeAuthModal(), closeSettings(), el(), executePlanning(), generateWithDirectGroq(), handleAuthSuccess() (+27 more)
 
 ## Knowledge Gaps
 - **1 isolated node(s):** `travelbrain-multi-agent-ai-travel-planner`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 194 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 193 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `run_critic_evaluation()` connect `critic_agent.py` to `remote.py`, `use_credentials`, `app.py`?**
+- **Why does `run_critic_evaluation()` connect `critic_agent.py` to `use_credentials`, `app.py`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **Are the 10 inferred relationships involving `init()` (e.g. with `itinerary.js` and `closeAuthModal()`) actually correct?**
   _`init()` has 10 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `travelbrain-multi-agent-ai-travel-planner` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `session.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.1010752688172043 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
 - **Why does `GLTFParser` connect `GLTFParser` to `GLTFLoader.js`, `.loadTextureImage`, `.assignTexture`, `.getDependency`, `GLTFMaterialsPbrSpecularGlossinessExtension`, `.parse`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Are the 7 inferred relationships involving `TravelState` (e.g. with `critic_agent()` and `final_agent()`) actually correct?**
   _`TravelState` has 7 INFERRED edges - model-reasoned connections that need verification._
 - **Should `critic_agent.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.06993828974434323 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06282847587195413 - nodes in this community are weakly interconnected._

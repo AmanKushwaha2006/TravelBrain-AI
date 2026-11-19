@@ -2,7 +2,7 @@
   "0": "session.py",
   "1": "critic_agent.py",
   "2": "verify_single_key",
-  "3": "local.py",
+  "3": "settings.py",
   "4": "app.js",
   "5": "cache.py",
   "6": "auth.py",
@@ -23,16 +23,11 @@
   "21": ".parse",
   "22": "use_credentials",
   "23": "app.py",
-  "24": "animated-content.js",
+  "24": "weather_server.py",
   "25": "sessions.py",
   "26": "history.py",
   "27": "api-client.js",
   "28": "Request",
-  "29": "settings.py",
   "30": "db/__init__.py",
-  "31": "itinerary.js",
-  "32": "_read",
-  "33": "remote.py",
-  "34": "add_no_cache_for_dev",
-  "35": "get_client"
+  "31": "itinerary.js"
 }

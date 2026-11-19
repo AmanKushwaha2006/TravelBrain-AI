@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Itinerary Dashboard Stylesheet -->
   <link rel="stylesheet" href="/static/css/itinerary.css?v=1.0.0" />
@@ -268,25 +268,41 @@
     <!-- 3. DASHBOARD CONTENT -->
     <div id="dashboardContent" hidden>
 
-      <!-- SECTION 4: TRIP OVERVIEW HERO -->
-      <section class="trip-hero">
-        <div class="hero-meta-kicker">✦ Verified Travel Dossier · Indian Rupees (₹)</div>
-        <h1 class="hero-title" id="heroTitle">Your Journey to <em>Destination</em></h1>
-        <div class="hero-summary-line" id="heroSummaryLine">
-          <!-- Injected dynamically -->
-        </div>
-        <div class="hero-tags-row" id="heroTagsRow">
-          <!-- Injected dynamically -->
+      <!-- SECTION 4: MAGAZINE DESTINATION HERO -->
+      <section class="trip-hero" id="tripHero">
+        <div class="hero-cover-bg" id="heroCoverBg"></div>
+        <div class="hero-cover-overlay"></div>
+        <div class="hero-cover-content">
+          <div class="hero-meta-kicker">✦ Verified Travel Dossier · Indian Rupees (₹)</div>
+          <h1 class="hero-title" id="heroTitle">Your Journey to <em>Destination</em></h1>
+          <p class="hero-subtitle" id="heroSubtitle"></p>
+          <div class="hero-prologue" id="heroPrologue" hidden></div>
+          <div class="hero-summary-line" id="heroSummaryLine">
+            <!-- Injected dynamically -->
+          </div>
+          <div class="hero-tags-row" id="heroTagsRow">
+            <!-- Injected dynamically -->
+          </div>
+          <div class="hero-quick-jumps" id="heroQuickJumps">
+            <a href="#dayNavWrapper" class="hero-jump-pill primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+              <span>Explore Day-by-Day</span>
+            </a>
+            <a href="#highlightsSection" class="hero-jump-pill"><span>🏛️ Landmarks</span></a>
+            <a href="#foodSection" class="hero-jump-pill" id="jumpPillFood"><span>🍲 Local Food</span></a>
+            <a href="#weatherSection" class="hero-jump-pill"><span>🌤️ Weather</span></a>
+            <a href="#budgetSection" class="hero-jump-pill"><span>💰 Budget (₹)</span></a>
+          </div>
         </div>
       </section>
 
-      <!-- SECTION 5: QUICK TRAVEL SUMMARY CARDS -->
+      <!-- SECTION 5: EDITORIAL TRIP OVERVIEW BAR -->
       <section class="summary-cards-grid" id="summaryCardsGrid">
         <!-- Injected dynamically by itinerary.js -->
       </section>
 
       <!-- SECTION 8: STICKY DAY NAVIGATION TABS -->
-      <nav class="day-nav-wrapper">
+      <nav class="day-nav-wrapper" id="dayNavWrapper">
         <div class="day-nav-inner">
           <div class="day-nav-tabs" id="dayNavTabs">
             <!-- Tabs injected dynamically -->
@@ -294,7 +310,7 @@
         </div>
       </nav>
 
-      <!-- SECTION 6 & 7: DAY-BY-DAY ITINERARY TIMELINE -->
+      <!-- SECTION 6 & 7: DAY-BY-DAY ITINERARY CHAPTERS -->
       <section class="itinerary-section">
         <div class="section-title-wrap">
           <div>
@@ -308,11 +324,11 @@
         </div>
       </section>
 
-      <!-- SECTION 9: DESTINATION HIGHLIGHTS -->
+      <!-- SECTION 9: DESTINATION HIGHLIGHTS GALLERY -->
       <section class="highlights-section" id="highlightsSection">
         <div class="section-title-wrap">
           <div>
-            <div class="section-kicker">Curated Landmarks</div>
+            <div class="section-kicker">Curated Landmarks &amp; Gems</div>
             <h2 class="section-title">Destination Highlights</h2>
           </div>
         </div>
@@ -321,11 +337,24 @@
         </div>
       </section>
 
+      <!-- SECTION 9.5: LOCAL FOOD & CULINARY EXPERIENCES -->
+      <section class="food-section" id="foodSection" hidden>
+        <div class="section-title-wrap">
+          <div>
+            <div class="section-kicker">Gastronomic Culture</div>
+            <h2 class="section-title">Local Food &amp; Culinary Scene</h2>
+          </div>
+        </div>
+        <div class="food-grid" id="foodGrid">
+          <!-- Food cards injected dynamically -->
+        </div>
+      </section>
+
       <!-- SECTION 10: WEATHER & SEASONAL ADVISORY -->
       <section class="weather-container" id="weatherSection" hidden>
         <div class="section-title-wrap">
           <div>
-            <div class="section-kicker">Meteorology & Climate</div>
+            <div class="section-kicker">Meteorology &amp; Climate</div>
             <h2 class="section-title">Weather Advisory</h2>
           </div>
         </div>
