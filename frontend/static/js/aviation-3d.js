@@ -98,6 +98,21 @@
         .to(f, { x: 0.6,  y: -1.8, z: -4, rx: -0.05, ry: -0.20, rz: 0.12,  s: 0.62, duration: 1 })
         .to(f, { x: 5.2,  y: 0.4,  z: -5, rx: -0.08, ry: -0.60, rz: 0.16,  s: 0.55, duration: 1 })
         .to(f, { x: 8.8,  y: 4.6,  z: -9, rx: 0.04,  ry: -0.55, rz: 0.05,  s: 0.32, duration: 1 });
+
+      // Smoothly fade out aeroplane canvas before footer enters viewport
+      var canvasWrap = d.getElementById("canvasContainer") || d.getElementById("threeCanvas");
+      if (canvasWrap && d.querySelector(".site-footer")) {
+        g.to(canvasWrap, {
+          opacity: 0,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".site-footer",
+            start: "top 95%",
+            end: "top 65%",
+            scrub: true
+          }
+        });
+      }
     },
 
     bindEvents: function () {
