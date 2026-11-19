@@ -7,13 +7,26 @@
   },
   "nodes": [
     {
+      "id": "src_config_session_credentials",
+      "label": "Credentials",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "credentials",
+      "source_file": "src/config/session.py",
+      "source_location": "L22"
+    },
+    {
       "id": "src_config_session_missingcredentialserror",
       "label": "MissingCredentialsError",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "missingcredentialserror",
       "source_file": "src/config/session.py",
@@ -241,13 +254,39 @@
       "source_location": "L1286"
     },
     {
+      "id": "app_configrequest",
+      "label": "ConfigRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "login",
+      "file_type": "code",
+      "norm_label": "configrequest",
+      "source_file": "app.py",
+      "source_location": "L183"
+    },
+    {
+      "id": "app_evaluaterequest",
+      "label": "EvaluateRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "login",
+      "file_type": "code",
+      "norm_label": "evaluaterequest",
+      "source_file": "app.py",
+      "source_location": "L172"
+    },
+    {
       "id": "app_loginrequest",
       "label": "LoginRequest",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "loginrequest",
       "source_file": "app.py",
@@ -260,37 +299,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "signuprequest",
       "source_file": "app.py",
       "source_location": "L201"
-    },
-    {
-      "id": "app_configrequest",
-      "label": "ConfigRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "configrequest",
-      "source_file": "app.py",
-      "source_location": "L183"
-    },
-    {
-      "id": "app_evaluaterequest",
-      "label": "EvaluateRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "evaluaterequest",
-      "source_file": "app.py",
-      "source_location": "L172"
     },
     {
       "id": "app_travelrequest",
@@ -298,8 +311,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
+      "community": 22,
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "travelrequest",
       "source_file": "app.py",
@@ -311,61 +324,12 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
+      "community": 22,
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "verifykeyrequest",
       "source_file": "app.py",
       "source_location": "L196"
-    },
-    {
-      "id": "src_config_session_credentials",
-      "label": "Credentials",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "credentials",
-      "source_file": "src/config/session.py",
-      "source_location": "L22"
-    },
-    {
-      "id": "src_clients_cache_async_cached_decorator",
-      "label": "decorator()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "decorator()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L229"
-    },
-    {
-      "id": "src_clients_cache_async_cached_decorator_wrapper",
-      "label": "wrapper()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "wrapper()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L232"
-    },
-    {
-      "id": "src_clients_cache_build_key",
-      "label": "build_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "build_key()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L135"
     },
     {
       "id": "src_clients_cache_cached",
@@ -373,143 +337,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "cached()",
       "source_file": "src/clients/cache.py",
       "source_location": "L200"
-    },
-    {
-      "id": "src_clients_cache_cached_decorator",
-      "label": "decorator()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "decorator()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L203"
-    },
-    {
-      "id": "src_clients_cache_cached_decorator_wrapper",
-      "label": "wrapper()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "wrapper()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L206"
-    },
-    {
-      "id": "src_clients_cache_clear",
-      "label": "clear()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "clear()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L252"
-    },
-    {
-      "id": "src_clients_cache_drop_client",
-      "label": "drop_client()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "drop_client()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L98"
-    },
-    {
-      "id": "src_clients_cache_get_client",
-      "label": "get_client()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "get_client()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L38"
-    },
-    {
-      "id": "src_clients_cache_read",
-      "label": "_read()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "_read()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L149"
-    },
-    {
-      "id": "src_clients_cache_reset_client",
-      "label": "reset_client()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "reset_client()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L107"
-    },
-    {
-      "id": "src_clients_cache_safe_url",
-      "label": "_safe_url()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "_safe_url()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L86"
-    },
-    {
-      "id": "src_clients_cache_status",
-      "label": "status()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "status()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L116"
-    },
-    {
-      "id": "src_clients_cache_write",
-      "label": "_write()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "_write()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L177"
-    },
-    {
-      "id": "src_clients_checkpointer_get_checkpointer",
-      "label": "get_checkpointer()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "get_checkpointer()",
-      "source_file": "src/clients/checkpointer.py",
-      "source_location": "L44"
     },
     {
       "id": "src_clients_checkpointer_get_connection",
@@ -517,23 +349,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "get_connection()",
       "source_file": "src/clients/checkpointer.py",
       "source_location": "L34"
-    },
-    {
-      "id": "src_clients_checkpointer_get_pool",
-      "label": "get_pool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "get_pool()",
-      "source_file": "src/clients/checkpointer.py",
-      "source_location": "L14"
     },
     {
       "id": "src_clients_checkpointer_get_session_checkpointer",
@@ -541,7 +361,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "get_session_checkpointer()",
       "source_file": "src/clients/checkpointer.py",
@@ -553,7 +373,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "get_credentials()",
       "source_file": "src/config/session.py",
@@ -565,7 +385,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "src/config/session.py",
@@ -577,7 +397,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "require()",
       "source_file": "src/config/session.py",
@@ -589,7 +409,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "resolve_aviationstack_api_key()",
       "source_file": "src/config/session.py",
@@ -601,7 +421,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "resolve_database_url()",
       "source_file": "src/config/session.py",
@@ -613,7 +433,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "resolve_groq_api_key()",
       "source_file": "src/config/session.py",
@@ -625,7 +445,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "resolve_openweather_api_key()",
       "source_file": "src/config/session.py",
@@ -637,11 +457,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "resolve_tavily_api_key()",
       "source_file": "src/config/session.py",
       "source_location": "L77"
+    },
+    {
+      "id": "src_config_settings_get_database_url",
+      "label": "get_database_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "get_database_url()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L135"
+    },
+    {
+      "id": "src_config_settings_get_groq_api_key",
+      "label": "get_groq_api_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "get_groq_api_key()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "src_config_settings_normalize_database_url",
+      "label": "normalize_database_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "normalize_database_url()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L125"
     },
     {
       "id": "src_agents_critic_agent_clean_json_output",
@@ -810,6 +666,18 @@
       "norm_label": "weather_agent()",
       "source_file": "src/agents/weather_agent.py",
       "source_location": "L12"
+    },
+    {
+      "id": "src_clients_checkpointer_get_checkpointer",
+      "label": "get_checkpointer()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "critic_agent.py",
+      "file_type": "code",
+      "norm_label": "get_checkpointer()",
+      "source_file": "src/clients/checkpointer.py",
+      "source_location": "L44"
     },
     {
       "id": "src_clients_llm_build_llm",
@@ -1976,16 +1844,16 @@
       "source_location": "L44"
     },
     {
-      "id": "src_config_settings_normalize_database_url",
-      "label": "normalize_database_url()",
+      "id": "src_config_session_credential_status",
+      "label": "credential_status()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
       "community_name": "verify_single_key",
       "file_type": "code",
-      "norm_label": "normalize_database_url()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L125"
+      "norm_label": "credential_status()",
+      "source_file": "src/config/session.py",
+      "source_location": "L163"
     },
     {
       "id": "frontend_static_js_gltfloader_gltfmaterialspbrspecularglossinessextension_constructor",
@@ -2149,23 +2017,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "_clear_auth_cookie()",
       "source_file": "app.py",
       "source_location": "L596"
-    },
-    {
-      "id": "app_get_auth_pool",
-      "label": "_get_auth_pool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "_get_auth_pool",
-      "file_type": "code",
-      "norm_label": "_get_auth_pool()",
-      "source_file": "app.py",
-      "source_location": "L78"
     },
     {
       "id": "app_login",
@@ -2173,7 +2029,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "login()",
       "source_file": "app.py",
@@ -2185,7 +2041,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "logout()",
       "source_file": "app.py",
@@ -2197,7 +2053,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "_set_auth_cookie()",
       "source_file": "app.py",
@@ -2209,23 +2065,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "signup()",
       "source_file": "app.py",
       "source_location": "L601"
     },
     {
-      "id": "src_db_auth_authenticate_user",
-      "label": "authenticate_user()",
+      "id": "app_add_no_cache_for_dev",
+      "label": "add_no_cache_for_dev()",
       "_callable": true,
       "_origin": "ast",
-      "community": 22,
-      "community_name": "_get_auth_pool",
+      "community": 23,
+      "community_name": "app.py",
       "file_type": "code",
-      "norm_label": "authenticate_user()",
-      "source_file": "src/db/auth.py",
-      "source_location": "L154"
+      "norm_label": "add_no_cache_for_dev()",
+      "source_file": "app.py",
+      "source_location": "L138"
+    },
+    {
+      "id": "app_extract_destination",
+      "label": "_extract_destination()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "_extract_destination()",
+      "source_file": "app.py",
+      "source_location": "L573"
     },
     {
       "id": "app_extract_title",
@@ -2250,6 +2118,18 @@
       "norm_label": "lifespan()",
       "source_file": "app.py",
       "source_location": "L103"
+    },
+    {
+      "id": "src_clients_checkpointer_get_pool",
+      "label": "get_pool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "get_pool()",
+      "source_file": "src/clients/checkpointer.py",
+      "source_location": "L14"
     },
     {
       "id": "src_db_auth_cleanup_expired_sessions",
@@ -2384,84 +2264,12 @@
       "source_location": "L73"
     },
     {
-      "id": "app_favicon",
-      "label": "favicon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "favicon()",
-      "source_file": "app.py",
-      "source_location": "L782"
-    },
-    {
-      "id": "app_home",
-      "label": "home()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "home()",
-      "source_file": "app.py",
-      "source_location": "L233"
-    },
-    {
-      "id": "app_itinerary_view",
-      "label": "itinerary_view()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "itinerary_view()",
-      "source_file": "app.py",
-      "source_location": "L244"
-    },
-    {
-      "id": "app_list_history",
-      "label": "list_history()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "list_history()",
-      "source_file": "app.py",
-      "source_location": "L686"
-    },
-    {
-      "id": "app_read_history",
-      "label": "read_history()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "read_history()",
-      "source_file": "app.py",
-      "source_location": "L697"
-    },
-    {
-      "id": "app_read_public_trip",
-      "label": "read_public_trip()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "read_public_trip()",
-      "source_file": "app.py",
-      "source_location": "L711"
-    },
-    {
       "id": "src_db_history_delete_trip",
       "label": "delete_trip()",
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "code",
       "norm_label": "delete_trip()",
       "source_file": "src/db/history.py",
@@ -2473,7 +2281,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "code",
       "norm_label": "get_trip()",
       "source_file": "src/db/history.py",
@@ -2485,7 +2293,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "code",
       "norm_label": "get_user_history()",
       "source_file": "src/db/history.py",
@@ -2497,7 +2305,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "code",
       "norm_label": "save_trip()",
       "source_file": "src/db/history.py",
@@ -2513,7 +2321,7 @@
       "file_type": "code",
       "norm_label": "apifetch()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L90"
+      "source_location": "L100"
     },
     {
       "id": "frontend_static_js_api_client_buildurl",
@@ -2525,7 +2333,7 @@
       "file_type": "code",
       "norm_label": "buildurl()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L82"
+      "source_location": "L92"
     },
     {
       "id": "frontend_static_js_api_client_clearauth",
@@ -2537,7 +2345,7 @@
       "file_type": "code",
       "norm_label": "clearauth()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L77"
+      "source_location": "L87"
     },
     {
       "id": "frontend_static_js_api_client_fetchconfig",
@@ -2549,7 +2357,7 @@
       "file_type": "code",
       "norm_label": "fetchconfig()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L169"
+      "source_location": "L208"
     },
     {
       "id": "frontend_static_js_api_client_getauthtoken",
@@ -2561,7 +2369,7 @@
       "file_type": "code",
       "norm_label": "getauthtoken()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L50"
+      "source_location": "L60"
     },
     {
       "id": "frontend_static_js_api_client_getbaseurl",
@@ -2573,7 +2381,7 @@
       "file_type": "code",
       "norm_label": "getbaseurl()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L36"
+      "source_location": "L46"
     },
     {
       "id": "frontend_static_js_api_client_getcurrentuser",
@@ -2585,7 +2393,7 @@
       "file_type": "code",
       "norm_label": "getcurrentuser()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L63"
+      "source_location": "L73"
     },
     {
       "id": "frontend_static_js_api_client_normalizeurl",
@@ -2597,7 +2405,7 @@
       "file_type": "code",
       "norm_label": "normalizeurl()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L30"
+      "source_location": "L40"
     },
     {
       "id": "frontend_static_js_api_client_notifylisteners",
@@ -2609,7 +2417,7 @@
       "file_type": "code",
       "norm_label": "notifylisteners()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L111"
+      "source_location": "L121"
     },
     {
       "id": "frontend_static_js_api_client_onstatechange",
@@ -2621,7 +2429,7 @@
       "file_type": "code",
       "norm_label": "onstatechange()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L107"
+      "source_location": "L117"
     },
     {
       "id": "frontend_static_js_api_client_renderstatuspill",
@@ -2633,7 +2441,7 @@
       "file_type": "code",
       "norm_label": "renderstatuspill()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L210"
+      "source_location": "L270"
     },
     {
       "id": "frontend_static_js_api_client_resetconfig",
@@ -2645,7 +2453,19 @@
       "file_type": "code",
       "norm_label": "resetconfig()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L201"
+      "source_location": "L260"
+    },
+    {
+      "id": "frontend_static_js_api_client_safeparseresponse",
+      "label": "safeParseResponse()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "api-client.js",
+      "file_type": "code",
+      "norm_label": "safeparseresponse()",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L136"
     },
     {
       "id": "frontend_static_js_api_client_saveconfig",
@@ -2657,7 +2477,7 @@
       "file_type": "code",
       "norm_label": "saveconfig()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L189"
+      "source_location": "L252"
     },
     {
       "id": "frontend_static_js_api_client_setauthtoken",
@@ -2669,7 +2489,7 @@
       "file_type": "code",
       "norm_label": "setauthtoken()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L54"
+      "source_location": "L64"
     },
     {
       "id": "frontend_static_js_api_client_setbaseurl",
@@ -2681,7 +2501,7 @@
       "file_type": "code",
       "norm_label": "setbaseurl()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L40"
+      "source_location": "L50"
     },
     {
       "id": "frontend_static_js_api_client_setcurrentuser",
@@ -2693,7 +2513,7 @@
       "file_type": "code",
       "norm_label": "setcurrentuser()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L67"
+      "source_location": "L77"
     },
     {
       "id": "frontend_static_js_api_client_setstatus",
@@ -2705,7 +2525,7 @@
       "file_type": "code",
       "norm_label": "setstatus()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L117"
+      "source_location": "L127"
     },
     {
       "id": "frontend_static_js_api_client_testconnection",
@@ -2717,7 +2537,7 @@
       "file_type": "code",
       "norm_label": "testconnection()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L126"
+      "source_location": "L159"
     },
     {
       "id": "frontend_static_js_api_client_verifyproviderkey",
@@ -2729,7 +2549,7 @@
       "file_type": "code",
       "norm_label": "verifyproviderkey()",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L177"
+      "source_location": "L217"
     },
     {
       "id": "app_auth_me",
@@ -2756,16 +2576,28 @@
       "source_location": "L501"
     },
     {
-      "id": "app_extract_destination",
-      "label": "_extract_destination()",
+      "id": "app_favicon",
+      "label": "favicon()",
       "_callable": true,
       "_origin": "ast",
       "community": 28,
       "community_name": "Request",
       "file_type": "code",
-      "norm_label": "_extract_destination()",
+      "norm_label": "favicon()",
       "source_file": "app.py",
-      "source_location": "L573"
+      "source_location": "L782"
+    },
+    {
+      "id": "app_get_auth_pool",
+      "label": "_get_auth_pool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "_get_auth_pool()",
+      "source_file": "app.py",
+      "source_location": "L78"
     },
     {
       "id": "app_get_current_user",
@@ -2792,6 +2624,42 @@
       "source_location": "L766"
     },
     {
+      "id": "app_home",
+      "label": "home()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "home()",
+      "source_file": "app.py",
+      "source_location": "L233"
+    },
+    {
+      "id": "app_itinerary_view",
+      "label": "itinerary_view()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "itinerary_view()",
+      "source_file": "app.py",
+      "source_location": "L244"
+    },
+    {
+      "id": "app_list_history",
+      "label": "list_history()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "list_history()",
+      "source_file": "app.py",
+      "source_location": "L686"
+    },
+    {
       "id": "app_read_config",
       "label": "read_config()",
       "_callable": true,
@@ -2802,6 +2670,30 @@
       "norm_label": "read_config()",
       "source_file": "app.py",
       "source_location": "L257"
+    },
+    {
+      "id": "app_read_history",
+      "label": "read_history()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "read_history()",
+      "source_file": "app.py",
+      "source_location": "L697"
+    },
+    {
+      "id": "app_read_public_trip",
+      "label": "read_public_trip()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "read_public_trip()",
+      "source_file": "app.py",
+      "source_location": "L711"
     },
     {
       "id": "app_remove_history",
@@ -2852,18 +2744,6 @@
       "source_location": "L410"
     },
     {
-      "id": "src_config_session_credential_status",
-      "label": "credential_status()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "Request",
-      "file_type": "code",
-      "norm_label": "credential_status()",
-      "source_file": "src/config/session.py",
-      "source_location": "L163"
-    },
-    {
       "id": "src_config_session_use_credentials",
       "label": "use_credentials()",
       "_callable": true,
@@ -2876,16 +2756,28 @@
       "source_location": "L53"
     },
     {
-      "id": "app_add_no_cache_for_dev",
-      "label": "add_no_cache_for_dev()",
+      "id": "src_mcp_servers_weather_server_get_current_weather",
+      "label": "get_current_weather()",
       "_callable": true,
       "_origin": "ast",
       "community": 29,
-      "community_name": "add_no_cache_for_dev",
+      "community_name": "weather_server.py",
       "file_type": "code",
-      "norm_label": "add_no_cache_for_dev()",
-      "source_file": "app.py",
-      "source_location": "L138"
+      "norm_label": "get_current_weather()",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_mcp_servers_weather_server_get_forecast",
+      "label": "get_forecast()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "weather_server.py",
+      "file_type": "code",
+      "norm_label": "get_forecast()",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L43"
     },
     {
       "id": "src_clients_cache_async_cached",
@@ -2893,35 +2785,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "async_cached()",
       "source_file": "src/clients/cache.py",
       "source_location": "L226"
-    },
-    {
-      "id": "src_config_settings_get_database_url",
-      "label": "get_database_url()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "get_database_url()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L135"
-    },
-    {
-      "id": "src_config_settings_get_groq_api_key",
-      "label": "get_groq_api_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "get_groq_api_key()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L116"
     },
     {
       "id": "src_mcp_servers_config_child_env",
@@ -2929,7 +2797,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_child_env()",
       "source_file": "src/mcp_servers/config.py",
@@ -2941,7 +2809,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "get_client()",
       "source_file": "src/mcp_servers/config.py",
@@ -2953,7 +2821,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "load_tools()",
       "source_file": "src/mcp_servers/config.py",
@@ -2965,7 +2833,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "require_tools()",
       "source_file": "src/mcp_servers/config.py",
@@ -2977,7 +2845,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "check_servers()",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -2989,7 +2857,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "get_all_tools()",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -3001,7 +2869,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_aviation_call()",
       "source_file": "src/mcp_servers/local.py",
@@ -3013,7 +2881,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_aviation_call_cached()",
       "source_file": "src/mcp_servers/local.py",
@@ -3025,7 +2893,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "aviation_mcp_call()",
       "source_file": "src/mcp_servers/local.py",
@@ -3037,7 +2905,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "forecast_mcp_search()",
       "source_file": "src/mcp_servers/local.py",
@@ -3049,7 +2917,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_get_aviation_tools()",
       "source_file": "src/mcp_servers/local.py",
@@ -3061,7 +2929,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_get_weather_tools()",
       "source_file": "src/mcp_servers/local.py",
@@ -3073,7 +2941,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "weather_mcp_search()",
       "source_file": "src/mcp_servers/local.py",
@@ -3085,7 +2953,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "_get_search_tool()",
       "source_file": "src/mcp_servers/remote.py",
@@ -3101,7 +2969,7 @@
       "file_type": "code",
       "norm_label": "cleanmarkdown()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L124"
+      "source_location": "L135"
     },
     {
       "id": "frontend_static_js_itinerary_closesettings",
@@ -3113,7 +2981,7 @@
       "file_type": "code",
       "norm_label": "closesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1385"
+      "source_location": "L1409"
     },
     {
       "id": "frontend_static_js_itinerary_el",
@@ -3125,7 +2993,7 @@
       "file_type": "code",
       "norm_label": "el()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L108"
+      "source_location": "L119"
     },
     {
       "id": "frontend_static_js_itinerary_executeplanning",
@@ -3137,7 +3005,7 @@
       "file_type": "code",
       "norm_label": "executeplanning()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L859"
+      "source_location": "L870"
     },
     {
       "id": "frontend_static_js_itinerary_handlerefinement",
@@ -3149,7 +3017,7 @@
       "file_type": "code",
       "norm_label": "handlerefinement()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1081"
+      "source_location": "L1092"
     },
     {
       "id": "frontend_static_js_itinerary_hideplannerscreen",
@@ -3161,7 +3029,7 @@
       "file_type": "code",
       "norm_label": "hideplannerscreen()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L853"
+      "source_location": "L864"
     },
     {
       "id": "frontend_static_js_itinerary_init",
@@ -3173,7 +3041,7 @@
       "file_type": "code",
       "norm_label": "init()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1480"
+      "source_location": "L1504"
     },
     {
       "id": "frontend_static_js_itinerary_init_resumeplanning",
@@ -3185,7 +3053,7 @@
       "file_type": "code",
       "norm_label": "resumeplanning()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1640"
+      "source_location": "L1664"
     },
     {
       "id": "frontend_static_js_itinerary_loadtripbyid",
@@ -3197,7 +3065,7 @@
       "file_type": "code",
       "norm_label": "loadtripbyid()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L936"
+      "source_location": "L947"
     },
     {
       "id": "frontend_static_js_itinerary_opensettings",
@@ -3209,7 +3077,7 @@
       "file_type": "code",
       "norm_label": "opensettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1375"
+      "source_location": "L1399"
     },
     {
       "id": "frontend_static_js_itinerary_parseitinerarytext",
@@ -3221,7 +3089,7 @@
       "file_type": "code",
       "norm_label": "parseitinerarytext()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L160"
+      "source_location": "L171"
     },
     {
       "id": "frontend_static_js_itinerary_parsemarkdowntable",
@@ -3233,7 +3101,7 @@
       "file_type": "code",
       "norm_label": "parsemarkdowntable()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L141"
+      "source_location": "L152"
     },
     {
       "id": "frontend_static_js_itinerary_refreshitinconfig",
@@ -3245,7 +3113,7 @@
       "file_type": "code",
       "norm_label": "refreshitinconfig()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1167"
+      "source_location": "L1178"
     },
     {
       "id": "frontend_static_js_itinerary_rendercreds",
@@ -3257,7 +3125,7 @@
       "file_type": "code",
       "norm_label": "rendercreds()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1208"
+      "source_location": "L1219"
     },
     {
       "id": "frontend_static_js_itinerary_rendercriticcard",
@@ -3269,7 +3137,7 @@
       "file_type": "code",
       "norm_label": "rendercriticcard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1049"
+      "source_location": "L1060"
     },
     {
       "id": "frontend_static_js_itinerary_renderdashboard",
@@ -3281,7 +3149,7 @@
       "file_type": "code",
       "norm_label": "renderdashboard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L524"
+      "source_location": "L535"
     },
     {
       "id": "frontend_static_js_itinerary_rendermd",
@@ -3293,7 +3161,7 @@
       "file_type": "code",
       "norm_label": "rendermd()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L133"
+      "source_location": "L144"
     },
     {
       "id": "frontend_static_js_itinerary_resetsettings",
@@ -3305,7 +3173,7 @@
       "file_type": "code",
       "norm_label": "resetsettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1463"
+      "source_location": "L1487"
     },
     {
       "id": "frontend_static_js_itinerary_savesettings",
@@ -3317,7 +3185,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1392"
+      "source_location": "L1416"
     },
     {
       "id": "frontend_static_js_itinerary_setactivedaytab",
@@ -3329,7 +3197,7 @@
       "file_type": "code",
       "norm_label": "setactivedaytab()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L823"
+      "source_location": "L834"
     },
     {
       "id": "frontend_static_js_itinerary_showerror",
@@ -3341,7 +3209,7 @@
       "file_type": "code",
       "norm_label": "showerror()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L974"
+      "source_location": "L985"
     },
     {
       "id": "frontend_static_js_itinerary_showplannerscreen",
@@ -3353,7 +3221,7 @@
       "file_type": "code",
       "norm_label": "showplannerscreen()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L840"
+      "source_location": "L851"
     },
     {
       "id": "frontend_static_js_itinerary_toast",
@@ -3365,7 +3233,7 @@
       "file_type": "code",
       "norm_label": "toast()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L115"
+      "source_location": "L126"
     },
     {
       "id": "frontend_static_js_itinerary_triggercriticaudit",
@@ -3377,7 +3245,7 @@
       "file_type": "code",
       "norm_label": "triggercriticaudit()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L992"
+      "source_location": "L1003"
     },
     {
       "id": "frontend_static_js_itinerary_updateitinconnui",
@@ -3389,7 +3257,7 @@
       "file_type": "code",
       "norm_label": "updateitinconnui()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1152"
+      "source_location": "L1163"
     },
     {
       "id": "app_home_head",
@@ -3413,7 +3281,7 @@
       "file_type": "code",
       "norm_label": "applyconfig()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L298"
+      "source_location": "L309"
     },
     {
       "id": "frontend_static_js_app_checkauth",
@@ -3425,7 +3293,7 @@
       "file_type": "code",
       "norm_label": "checkauth()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L831"
+      "source_location": "L855"
     },
     {
       "id": "frontend_static_js_app_clearautherror",
@@ -3437,7 +3305,7 @@
       "file_type": "code",
       "norm_label": "clearautherror()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L760"
+      "source_location": "L784"
     },
     {
       "id": "frontend_static_js_app_closeauthmodal",
@@ -3449,7 +3317,7 @@
       "file_type": "code",
       "norm_label": "closeauthmodal()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L704"
+      "source_location": "L728"
     },
     {
       "id": "frontend_static_js_app_closesettings",
@@ -3461,7 +3329,7 @@
       "file_type": "code",
       "norm_label": "closesettings()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L538"
+      "source_location": "L562"
     },
     {
       "id": "frontend_static_js_app_deletetrip",
@@ -3473,7 +3341,7 @@
       "file_type": "code",
       "norm_label": "deletetrip()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1122"
+      "source_location": "L1146"
     },
     {
       "id": "frontend_static_js_app_el",
@@ -3497,7 +3365,7 @@
       "file_type": "code",
       "norm_label": "escapehtml()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1537"
+      "source_location": "L1561"
     },
     {
       "id": "frontend_static_js_app_formatrelativetime",
@@ -3509,7 +3377,7 @@
       "file_type": "code",
       "norm_label": "formatrelativetime()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L766"
+      "source_location": "L790"
     },
     {
       "id": "frontend_static_js_app_handlelogin",
@@ -3521,7 +3389,7 @@
       "file_type": "code",
       "norm_label": "handlelogin()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L858"
+      "source_location": "L882"
     },
     {
       "id": "frontend_static_js_app_handlelogout",
@@ -3533,7 +3401,7 @@
       "file_type": "code",
       "norm_label": "handlelogout()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L998"
+      "source_location": "L1022"
     },
     {
       "id": "frontend_static_js_app_handlesignup",
@@ -3545,7 +3413,7 @@
       "file_type": "code",
       "norm_label": "handlesignup()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L917"
+      "source_location": "L941"
     },
     {
       "id": "frontend_static_js_app_icon",
@@ -3593,7 +3461,7 @@
       "file_type": "code",
       "norm_label": "loadhistory()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1020"
+      "source_location": "L1044"
     },
     {
       "id": "frontend_static_js_app_markunreachable",
@@ -3605,7 +3473,7 @@
       "file_type": "code",
       "norm_label": "markunreachable()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L338"
+      "source_location": "L349"
     },
     {
       "id": "frontend_static_js_app_mdblock",
@@ -3617,7 +3485,7 @@
       "file_type": "code",
       "norm_label": "mdblock()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1155"
+      "source_location": "L1179"
     },
     {
       "id": "frontend_static_js_app_openauthmodal",
@@ -3629,7 +3497,7 @@
       "file_type": "code",
       "norm_label": "openauthmodal()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L694"
+      "source_location": "L718"
     },
     {
       "id": "frontend_static_js_app_opensettings",
@@ -3641,7 +3509,7 @@
       "file_type": "code",
       "norm_label": "opensettings()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L526"
+      "source_location": "L550"
     },
     {
       "id": "frontend_static_js_app_opentrip",
@@ -3653,7 +3521,7 @@
       "file_type": "code",
       "norm_label": "opentrip()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1116"
+      "source_location": "L1140"
     },
     {
       "id": "frontend_static_js_app_planjourney",
@@ -3665,7 +3533,7 @@
       "file_type": "code",
       "norm_label": "planjourney()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1549"
+      "source_location": "L1573"
     },
     {
       "id": "frontend_static_js_app_refreshconfig",
@@ -3677,7 +3545,7 @@
       "file_type": "code",
       "norm_label": "refreshconfig()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L351"
+      "source_location": "L362"
     },
     {
       "id": "frontend_static_js_app_rendercreds",
@@ -3689,7 +3557,7 @@
       "file_type": "code",
       "norm_label": "rendercreds()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L359"
+      "source_location": "L370"
     },
     {
       "id": "frontend_static_js_app_rendercriticevaluation",
@@ -3701,7 +3569,7 @@
       "file_type": "code",
       "norm_label": "rendercriticevaluation()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1361"
+      "source_location": "L1385"
     },
     {
       "id": "frontend_static_js_app_rendererror",
@@ -3713,7 +3581,7 @@
       "file_type": "code",
       "norm_label": "rendererror()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1426"
+      "source_location": "L1450"
     },
     {
       "id": "frontend_static_js_app_renderhistory",
@@ -3725,7 +3593,7 @@
       "file_type": "code",
       "norm_label": "renderhistory()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1046"
+      "source_location": "L1070"
     },
     {
       "id": "frontend_static_js_app_renderpipeline",
@@ -3737,7 +3605,7 @@
       "file_type": "code",
       "norm_label": "renderpipeline()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1172"
+      "source_location": "L1196"
     },
     {
       "id": "frontend_static_js_app_renderresult",
@@ -3749,7 +3617,7 @@
       "file_type": "code",
       "norm_label": "renderresult()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1233"
+      "source_location": "L1257"
     },
     {
       "id": "frontend_static_js_app_renderuser",
@@ -3761,7 +3629,7 @@
       "file_type": "code",
       "norm_label": "renderuser()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1147"
+      "source_location": "L1171"
     },
     {
       "id": "frontend_static_js_app_resetsettings",
@@ -3773,7 +3641,7 @@
       "file_type": "code",
       "norm_label": "resetsettings()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L623"
+      "source_location": "L647"
     },
     {
       "id": "frontend_static_js_app_resumependingplanifany",
@@ -3785,7 +3653,7 @@
       "file_type": "code",
       "norm_label": "resumependingplanifany()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L715"
+      "source_location": "L739"
     },
     {
       "id": "frontend_static_js_app_savecredentials",
@@ -3797,7 +3665,7 @@
       "file_type": "code",
       "norm_label": "savecredentials()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L551"
+      "source_location": "L575"
     },
     {
       "id": "frontend_static_js_app_send",
@@ -3809,7 +3677,7 @@
       "file_type": "code",
       "norm_label": "send()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1457"
+      "source_location": "L1481"
     },
     {
       "id": "frontend_static_js_app_setbusy",
@@ -3821,7 +3689,7 @@
       "file_type": "code",
       "norm_label": "setbusy()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1450"
+      "source_location": "L1474"
     },
     {
       "id": "frontend_static_js_app_setsavingconfig",
@@ -3833,7 +3701,7 @@
       "file_type": "code",
       "norm_label": "setsavingconfig()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L544"
+      "source_location": "L568"
     },
     {
       "id": "frontend_static_js_app_showautherror",
@@ -3845,7 +3713,7 @@
       "file_type": "code",
       "norm_label": "showautherror()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L754"
+      "source_location": "L778"
     },
     {
       "id": "frontend_static_js_app_startnewtrip",
@@ -3857,7 +3725,7 @@
       "file_type": "code",
       "norm_label": "startnewtrip()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1620"
+      "source_location": "L1644"
     },
     {
       "id": "frontend_static_js_app_switchauthtab",
@@ -3869,7 +3737,7 @@
       "file_type": "code",
       "norm_label": "switchauthtab()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L739"
+      "source_location": "L763"
     },
     {
       "id": "frontend_static_js_app_toast",
@@ -3893,7 +3761,7 @@
       "file_type": "code",
       "norm_label": "togglesidebar()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L673"
+      "source_location": "L697"
     },
     {
       "id": "frontend_static_js_app_totext",
@@ -3917,7 +3785,7 @@
       "file_type": "code",
       "norm_label": "updateauthui()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L785"
+      "source_location": "L809"
     },
     {
       "id": "frontend_static_js_app_updateconnectionui",
@@ -3929,7 +3797,7 @@
       "file_type": "code",
       "norm_label": "updateconnectionui()",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L265"
+      "source_location": "L276"
     },
     {
       "id": "frontend_static_js_app_updateemptystate",
@@ -3942,6 +3810,174 @@
       "norm_label": "updateemptystate()",
       "source_file": "frontend/static/js/app.js",
       "source_location": "L199"
+    },
+    {
+      "id": "src_clients_cache_async_cached_decorator",
+      "label": "decorator()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "decorator()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L229"
+    },
+    {
+      "id": "src_clients_cache_async_cached_decorator_wrapper",
+      "label": "wrapper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "wrapper()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L232"
+    },
+    {
+      "id": "src_clients_cache_build_key",
+      "label": "build_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "build_key()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L135"
+    },
+    {
+      "id": "src_clients_cache_cached_decorator",
+      "label": "decorator()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "decorator()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L203"
+    },
+    {
+      "id": "src_clients_cache_cached_decorator_wrapper",
+      "label": "wrapper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "wrapper()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L206"
+    },
+    {
+      "id": "src_clients_cache_clear",
+      "label": "clear()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "clear()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L252"
+    },
+    {
+      "id": "src_clients_cache_drop_client",
+      "label": "drop_client()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "drop_client()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L98"
+    },
+    {
+      "id": "src_clients_cache_get_client",
+      "label": "get_client()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "get_client()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L38"
+    },
+    {
+      "id": "src_clients_cache_read",
+      "label": "_read()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "_read()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L149"
+    },
+    {
+      "id": "src_clients_cache_reset_client",
+      "label": "reset_client()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "reset_client()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L107"
+    },
+    {
+      "id": "src_clients_cache_safe_url",
+      "label": "_safe_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "_safe_url()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L86"
+    },
+    {
+      "id": "src_clients_cache_status",
+      "label": "status()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "status()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "src_clients_cache_write",
+      "label": "_write()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "_write()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L177"
+    },
+    {
+      "id": "src_db_auth_authenticate_user",
+      "label": "authenticate_user()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "auth.py",
+      "file_type": "code",
+      "norm_label": "authenticate_user()",
+      "source_file": "src/db/auth.py",
+      "source_location": "L154"
     },
     {
       "id": "src_db_auth_create_session",
@@ -4026,30 +4062,6 @@
       "norm_label": "verify_password()",
       "source_file": "src/db/auth.py",
       "source_location": "L26"
-    },
-    {
-      "id": "src_mcp_servers_weather_server_get_current_weather",
-      "label": "get_current_weather()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "auth.py",
-      "file_type": "code",
-      "norm_label": "get_current_weather()",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_mcp_servers_weather_server_get_forecast",
-      "label": "get_forecast()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "auth.py",
-      "file_type": "code",
-      "norm_label": "get_forecast()",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L43"
     },
     {
       "id": "frontend_static_js_markdown_escapehtml",
@@ -4152,20 +4164,9 @@
       "label": "Connection",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "connection",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "connectionpool",
-      "label": "ConnectionPool",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "connectionpool",
       "source_file": "",
       "source_location": ""
     },
@@ -4174,20 +4175,9 @@
       "label": "PostgresSaver",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "postgressaver",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "redis",
-      "label": "Redis",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "redis",
       "source_file": "",
       "source_location": ""
     },
@@ -4196,31 +4186,9 @@
       "label": "RuntimeError",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "runtimeerror",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "src_clients_cache",
-      "label": "cache.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "cache.py",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_clients_cache_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "any",
       "source_file": "",
       "source_location": ""
     },
@@ -4229,7 +4197,7 @@
       "label": "checkpointer.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "checkpointer.py",
       "source_file": "src/clients/checkpointer.py",
@@ -4240,10 +4208,32 @@
       "label": "clients/__init__.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "clients/__init__.py",
       "source_file": "src/clients/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_clients_llm",
+      "label": "llm.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "llm.py",
+      "source_file": "src/clients/llm.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_config_init",
+      "label": "config/__init__.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "config/__init__.py",
+      "source_file": "src/config/__init__.py",
       "source_location": "L1"
     },
     {
@@ -4251,139 +4241,40 @@
       "label": "session.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "code",
       "norm_label": "session.py",
       "source_file": "src/config/session.py",
       "source_location": "L1"
     },
     {
-      "id": "src_clients_cache_rationale_1",
-      "label": "Redis cache for expensive external calls. Design notes ------------ * Redis is\u2026",
+      "id": "src_config_settings",
+      "label": "settings.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "redis cache for expensive external calls. design notes ------------ * redis is...",
-      "source_file": "src/clients/cache.py",
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "settings.py",
+      "source_file": "src/config/settings.py",
       "source_location": "L1"
-    },
-    {
-      "id": "src_clients_cache_rationale_108",
-      "label": "Force an immediate reconnect attempt. Used by tests.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "force an immediate reconnect attempt. used by tests.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L108"
-    },
-    {
-      "id": "src_clients_cache_rationale_117",
-      "label": "Human-readable cache state, for /health and diagnostics.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "human-readable cache state, for /health and diagnostics.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L117"
-    },
-    {
-      "id": "src_clients_cache_rationale_136",
-      "label": "Deterministic cache key from a function's arguments.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "deterministic cache key from a function's arguments.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L136"
-    },
-    {
-      "id": "src_clients_cache_rationale_150",
-      "label": "Return (hit, value). Never raises.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "return (hit, value). never raises.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L150"
-    },
-    {
-      "id": "src_clients_cache_rationale_178",
-      "label": "Store the value and return its JSON round-trip. Never raises.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "store the value and return its json round-trip. never raises.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L178"
     },
     {
       "id": "src_clients_cache_rationale_201",
       "label": "Cache the result of a synchronous function in Redis.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "cache the result of a synchronous function in redis.",
       "source_file": "src/clients/cache.py",
       "source_location": "L201"
     },
     {
-      "id": "src_clients_cache_rationale_253",
-      "label": "Delete cached entries for one prefix. Returns how many were removed.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "delete cached entries for one prefix. returns how many were removed.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L253"
-    },
-    {
-      "id": "src_clients_cache_rationale_39",
-      "label": "Return a shared Redis client, or None when caching is unavailable. A failed\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "return a shared redis client, or none when caching is unavailable. a failed...",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L39"
-    },
-    {
-      "id": "src_clients_cache_rationale_87",
-      "label": "Strip any password before a connection string reaches the logs.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "strip any password before a connection string reaches the logs.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L87"
-    },
-    {
-      "id": "src_clients_cache_rationale_99",
-      "label": "Discard the client so the next call reconnects. Used after hard errors.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "discard the client so the next call reconnects. used after hard errors.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L99"
-    },
-    {
       "id": "src_clients_checkpointer_rationale_1",
       "label": "PostgreSQL checkpointer used by LangGraph to persist conversation threads.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "postgresql checkpointer used by langgraph to persist conversation threads.",
       "source_file": "src/clients/checkpointer.py",
@@ -4394,7 +4285,7 @@
       "label": "Creates a standalone psycopg connection for direct queries.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "creates a standalone psycopg connection for direct queries.",
       "source_file": "src/clients/checkpointer.py",
@@ -4405,18 +4296,29 @@
       "label": "Checkpointer for whichever database URL the current session resolves to.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "checkpointer for whichever database url the current session resolves to.",
       "source_file": "src/clients/checkpointer.py",
       "source_location": "L60"
     },
     {
+      "id": "src_clients_llm_rationale_1",
+      "label": "Groq chat model, resolved per session and cached per distinct key.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "rationale",
+      "norm_label": "groq chat model, resolved per session and cached per distinct key.",
+      "source_file": "src/clients/llm.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_config_session_rationale_1",
       "label": "Per-session credentials. Keys can come from two places: * the server's .env -\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "per-session credentials. keys can come from two places: * the server's .env -...",
       "source_file": "src/config/session.py",
@@ -4427,7 +4329,7 @@
       "label": "Raised when a required key is configured in neither .env nor the session.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "raised when a required key is configured in neither .env nor the session.",
       "source_file": "src/config/session.py",
@@ -4438,11 +4340,33 @@
       "label": "Raise MissingCredentialsError listing whichever of these is absent.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "file_type": "rationale",
       "norm_label": "raise missingcredentialserror listing whichever of these is absent.",
       "source_file": "src/config/session.py",
       "source_location": "L94"
+    },
+    {
+      "id": "src_config_settings_rationale_1",
+      "label": "Central configuration. Everything that reads the environment lives here, so the\u2026",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "rationale",
+      "norm_label": "central configuration. everything that reads the environment lives here, so the...",
+      "source_file": "src/config/settings.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_config_settings_rationale_126",
+      "label": "Default to sslmode=require, which managed Postgres providers expect.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "rationale",
+      "norm_label": "default to sslmode=require, which managed postgres providers expect.",
+      "source_file": "src/config/settings.py",
+      "source_location": "L126"
     },
     {
       "id": "chatgroq",
@@ -4552,17 +4476,6 @@
       "file_type": "code",
       "norm_label": "weather_agent.py",
       "source_file": "src/agents/weather_agent.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_clients_llm",
-      "label": "llm.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "llm.py",
-      "source_file": "src/clients/llm.py",
       "source_location": "L1"
     },
     {
@@ -4852,17 +4765,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_clients_llm_rationale_1",
-      "label": "Groq chat model, resolved per session and cached per distinct key.",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "rationale",
-      "norm_label": "groq chat model, resolved per session and cached per distinct key.",
-      "source_file": "src/clients/llm.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_clients_llm_rationale_12",
       "label": "Extract clean string content from an AIMessage, supporting reasoning models and\u2026",
       "_origin": "ast",
@@ -5083,6 +4985,17 @@
       "source_location": "L1"
     },
     {
+      "id": "post",
+      "label": "post",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "file_type": "code",
+      "norm_label": "post",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "src_api_validation",
       "label": "validation.py",
       "_origin": "ast",
@@ -5127,15 +5040,15 @@
       "source_location": "L1"
     },
     {
-      "id": "src_config_settings_rationale_126",
-      "label": "Default to sslmode=require, which managed Postgres providers expect.",
+      "id": "src_config_session_rationale_164",
+      "label": "Describe what is configured and where it came from, without ever returning the\u2026",
       "_origin": "ast",
       "community": 2,
       "community_name": "verify_single_key",
       "file_type": "rationale",
-      "norm_label": "default to sslmode=require, which managed postgres providers expect.",
-      "source_file": "src/config/settings.py",
-      "source_location": "L126"
+      "norm_label": "describe what is configured and where it came from, without ever returning the...",
+      "source_file": "src/config/session.py",
+      "source_location": "L164"
     },
     {
       "id": "frontend_static_js_gltfloader_gltfmeshstandardsgmaterial_onbeforecompile",
@@ -5149,13 +5062,13 @@
       "source_location": "L1078"
     },
     {
-      "id": "post",
-      "label": "post",
+      "id": "basemodel",
+      "label": "BaseModel",
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
-      "norm_label": "post",
+      "norm_label": "basemodel",
       "source_file": "",
       "source_location": ""
     },
@@ -5164,33 +5077,22 @@
       "label": "Response",
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "code",
       "norm_label": "response",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "app_rationale_79",
-      "label": "Lazily create the auth pool from the .env DATABASE_URL.",
+      "id": "app_rationale_184",
+      "label": "None leaves a field untouched, \"\" clears it. Keys are held in server memory for\u2026",
       "_origin": "ast",
       "community": 22,
-      "community_name": "_get_auth_pool",
+      "community_name": "login",
       "file_type": "rationale",
-      "norm_label": "lazily create the auth pool from the .env database_url.",
+      "norm_label": "none leaves a field untouched, \"\" clears it. keys are held in server memory for...",
       "source_file": "app.py",
-      "source_location": "L79"
-    },
-    {
-      "id": "src_db_auth_rationale_155",
-      "label": "Verify credentials. Returns user dict or None.",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "_get_auth_pool",
-      "file_type": "rationale",
-      "norm_label": "verify credentials. returns user dict or none.",
-      "source_file": "src/db/auth.py",
-      "source_location": "L155"
+      "source_location": "L184"
     },
     {
       "id": "app",
@@ -5204,13 +5106,13 @@
       "source_location": "L1"
     },
     {
-      "id": "basemodel",
-      "label": "BaseModel",
+      "id": "connectionpool",
+      "label": "ConnectionPool",
       "_origin": "ast",
       "community": 23,
       "community_name": "app.py",
       "file_type": "code",
-      "norm_label": "basemodel",
+      "norm_label": "connectionpool",
       "source_file": "",
       "source_location": ""
     },
@@ -5226,6 +5128,17 @@
       "source_location": ""
     },
     {
+      "id": "middleware",
+      "label": "middleware",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "middleware",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "src_db_models",
       "label": "models.py",
       "_origin": "ast",
@@ -5237,15 +5150,15 @@
       "source_location": "L1"
     },
     {
-      "id": "app_rationale_184",
-      "label": "None leaves a field untouched, \"\" clears it. Keys are held in server memory for\u2026",
+      "id": "app_rationale_139",
+      "label": "Prevent aggressive browser caching for static files and templates.",
       "_origin": "ast",
       "community": 23,
       "community_name": "app.py",
       "file_type": "rationale",
-      "norm_label": "none leaves a field untouched, \"\" clears it. keys are held in server memory for...",
+      "norm_label": "prevent aggressive browser caching for static files and templates.",
       "source_file": "app.py",
-      "source_location": "L184"
+      "source_location": "L139"
     },
     {
       "id": "app_rationale_562",
@@ -5257,6 +5170,17 @@
       "norm_label": "build a short sidebar-friendly title from the user query.",
       "source_file": "app.py",
       "source_location": "L562"
+    },
+    {
+      "id": "app_rationale_574",
+      "label": "Try to pull destination city from the query.",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "try to pull destination city from the query.",
+      "source_file": "app.py",
+      "source_location": "L574"
     },
     {
       "id": "src_db_auth_rationale_110",
@@ -5358,44 +5282,22 @@
       "source_location": "L81"
     },
     {
-      "id": "get",
-      "label": "get",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "code",
-      "norm_label": "get",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "src_db_history",
       "label": "history.py",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "code",
       "norm_label": "history.py",
       "source_file": "src/db/history.py",
       "source_location": "L1"
     },
     {
-      "id": "app_rationale_712",
-      "label": "Retrieve trip by ID for sharing or direct page navigation.",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "get",
-      "file_type": "rationale",
-      "norm_label": "retrieve trip by id for sharing or direct page navigation.",
-      "source_file": "app.py",
-      "source_location": "L712"
-    },
-    {
       "id": "src_db_history_rationale_1",
       "label": "Travel history CRUD \u2014 max 10 records per user.",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "rationale",
       "norm_label": "travel history crud \u2014 max 10 records per user.",
       "source_file": "src/db/history.py",
@@ -5406,7 +5308,7 @@
       "label": "Delete a trip. Returns True if something was deleted.",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "rationale",
       "norm_label": "delete a trip. returns true if something was deleted.",
       "source_file": "src/db/history.py",
@@ -5417,7 +5319,7 @@
       "label": "Save a trip and auto-prune to keep only the newest MAX_HISTORY records. Returns\u2026",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "rationale",
       "norm_label": "save a trip and auto-prune to keep only the newest max_history records. returns...",
       "source_file": "src/db/history.py",
@@ -5428,7 +5330,7 @@
       "label": "Latest trips for the sidebar.",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "rationale",
       "norm_label": "latest trips for the sidebar.",
       "source_file": "src/db/history.py",
@@ -5439,7 +5341,7 @@
       "label": "Fetch a single trip with full result. Enforces ownership.",
       "_origin": "ast",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "file_type": "rationale",
       "norm_label": "fetch a single trip with full result. enforces ownership.",
       "source_file": "src/db/history.py",
@@ -5479,6 +5381,17 @@
       "source_location": ""
     },
     {
+      "id": "get",
+      "label": "get",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "get",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "request",
       "label": "Request",
       "_origin": "ast",
@@ -5512,15 +5425,26 @@
       "source_location": "L397"
     },
     {
-      "id": "app_rationale_574",
-      "label": "Try to pull destination city from the query.",
+      "id": "app_rationale_712",
+      "label": "Retrieve trip by ID for sharing or direct page navigation.",
       "_origin": "ast",
       "community": 28,
       "community_name": "Request",
       "file_type": "rationale",
-      "norm_label": "try to pull destination city from the query.",
+      "norm_label": "retrieve trip by id for sharing or direct page navigation.",
       "source_file": "app.py",
-      "source_location": "L574"
+      "source_location": "L712"
+    },
+    {
+      "id": "app_rationale_79",
+      "label": "Lazily create the auth pool from the .env DATABASE_URL.",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "rationale",
+      "norm_label": "lazily create the auth pool from the .env database_url.",
+      "source_file": "app.py",
+      "source_location": "L79"
     },
     {
       "id": "app_rationale_87",
@@ -5534,17 +5458,6 @@
       "source_location": "L87"
     },
     {
-      "id": "src_config_session_rationale_164",
-      "label": "Describe what is configured and where it came from, without ever returning the\u2026",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "Request",
-      "file_type": "rationale",
-      "norm_label": "describe what is configured and where it came from, without ever returning the...",
-      "source_file": "src/config/session.py",
-      "source_location": "L164"
-    },
-    {
       "id": "src_config_session_rationale_54",
       "label": "Bind session credentials for the duration of one request.",
       "_origin": "ast",
@@ -5556,66 +5469,44 @@
       "source_location": "L54"
     },
     {
-      "id": "middleware",
-      "label": "middleware",
+      "id": "src_mcp_servers_weather_server",
+      "label": "weather_server.py",
       "_origin": "ast",
       "community": 29,
-      "community_name": "add_no_cache_for_dev",
+      "community_name": "weather_server.py",
       "file_type": "code",
-      "norm_label": "middleware",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "weather_server.py",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L1"
     },
     {
-      "id": "app_rationale_139",
-      "label": "Prevent aggressive browser caching for static files and templates.",
+      "id": "tool",
+      "label": "tool",
       "_origin": "ast",
       "community": 29,
-      "community_name": "add_no_cache_for_dev",
-      "file_type": "rationale",
-      "norm_label": "prevent aggressive browser caching for static files and templates.",
-      "source_file": "app.py",
-      "source_location": "L139"
+      "community_name": "weather_server.py",
+      "file_type": "code",
+      "norm_label": "tool",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "multiservermcpclient",
       "label": "MultiServerMCPClient",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "multiservermcpclient",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "src_config_init",
-      "label": "config/__init__.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "config/__init__.py",
-      "source_file": "src/config/__init__.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_config_settings",
-      "label": "settings.py",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "settings.py",
-      "file_type": "code",
-      "norm_label": "settings.py",
-      "source_file": "src/config/settings.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_mcp_servers_config",
       "label": "config.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "config.py",
       "source_file": "src/mcp_servers/config.py",
@@ -5626,7 +5517,7 @@
       "label": "diagnostics.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "diagnostics.py",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -5637,7 +5528,7 @@
       "label": "mcp_servers/__init__.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "mcp_servers/__init__.py",
       "source_file": "src/mcp_servers/__init__.py",
@@ -5648,7 +5539,7 @@
       "label": "local.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "local.py",
       "source_file": "src/mcp_servers/local.py",
@@ -5659,7 +5550,7 @@
       "label": "remote.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "code",
       "norm_label": "remote.py",
       "source_file": "src/mcp_servers/remote.py",
@@ -5670,29 +5561,18 @@
       "label": "Cache the result of an async function in Redis.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "cache the result of an async function in redis.",
       "source_file": "src/clients/cache.py",
       "source_location": "L227"
     },
     {
-      "id": "src_config_settings_rationale_1",
-      "label": "Central configuration. Everything that reads the environment lives here, so the\u2026",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "settings.py",
-      "file_type": "rationale",
-      "norm_label": "central configuration. everything that reads the environment lives here, so the...",
-      "source_file": "src/config/settings.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_mcp_servers_config_rationale_1",
       "label": "MCP server registry, split by where the server actually runs. REMOTE servers\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "mcp server registry, split by where the server actually runs. remote servers...",
       "source_file": "src/mcp_servers/config.py",
@@ -5703,7 +5583,7 @@
       "label": "Load one server's tools as {name: tool}. Deliberately loads a single server at\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "load one server's tools as {name: tool}. deliberately loads a single server at...",
       "source_file": "src/mcp_servers/config.py",
@@ -5714,7 +5594,7 @@
       "label": "Raise a readable error when a server is missing expected tools.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "raise a readable error when a server is missing expected tools.",
       "source_file": "src/mcp_servers/config.py",
@@ -5725,7 +5605,7 @@
       "label": "Full copy of the current environment plus explicit overrides. stdio servers are\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "full copy of the current environment plus explicit overrides. stdio servers are...",
       "source_file": "src/mcp_servers/config.py",
@@ -5736,7 +5616,7 @@
       "label": "Shared client covering every configured server.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "shared client covering every configured server.",
       "source_file": "src/mcp_servers/config.py",
@@ -5747,7 +5627,7 @@
       "label": "Connectivity checks for every configured MCP server.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "connectivity checks for every configured mcp server.",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -5758,7 +5638,7 @@
       "label": "Try each server independently and report what it exposes. Returns {server_name:\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "try each server independently and report what it exposes. returns {server_name:...",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -5769,7 +5649,7 @@
       "label": "Flat list of every tool object across all reachable servers.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "flat list of every tool object across all reachable servers.",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -5780,7 +5660,7 @@
       "label": "MCP integration layer. config.py server registry, split into REMOTE_SERVERS /\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "mcp integration layer. config.py server registry, split into remote_servers /...",
       "source_file": "src/mcp_servers/__init__.py",
@@ -5791,7 +5671,7 @@
       "label": "Local MCP servers, spawned as stdio child processes. * aviationstack - third\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "local mcp servers, spawned as stdio child processes. * aviationstack - third...",
       "source_file": "src/mcp_servers/local.py",
@@ -5802,7 +5682,7 @@
       "label": "Current conditions. Short TTL, because this genuinely changes.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "current conditions. short ttl, because this genuinely changes.",
       "source_file": "src/mcp_servers/local.py",
@@ -5813,7 +5693,7 @@
       "label": "Multi-day forecast. OpenWeather only refreshes this hourly anyway.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "multi-day forecast. openweather only refreshes this hourly anyway.",
       "source_file": "src/mcp_servers/local.py",
@@ -5824,7 +5704,7 @@
       "label": "Call an AviationStack tool. Reference lookups (airports, airlines) are cached\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "call an aviationstack tool. reference lookups (airports, airlines) are cached...",
       "source_file": "src/mcp_servers/local.py",
@@ -5835,7 +5715,7 @@
       "label": "Remote MCP servers, reached over HTTP. Currently: Tavily (hotel / general web\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "remote mcp servers, reached over http. currently: tavily (hotel / general web...",
       "source_file": "src/mcp_servers/remote.py",
@@ -5846,7 +5726,7 @@
       "label": "Connect to Tavily once and keep the search tool handle.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "file_type": "rationale",
       "norm_label": "connect to tavily once and keep the search tool handle.",
       "source_file": "src/mcp_servers/remote.py",
@@ -5908,6 +5788,149 @@
       "source_location": "L1"
     },
     {
+      "id": "redis",
+      "label": "Redis",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "redis",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_clients_cache",
+      "label": "cache.py",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "cache.py",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_clients_cache_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "src_clients_cache_rationale_1",
+      "label": "Redis cache for expensive external calls. Design notes ------------ * Redis is\u2026",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "redis cache for expensive external calls. design notes ------------ * redis is...",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_clients_cache_rationale_108",
+      "label": "Force an immediate reconnect attempt. Used by tests.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "force an immediate reconnect attempt. used by tests.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L108"
+    },
+    {
+      "id": "src_clients_cache_rationale_117",
+      "label": "Human-readable cache state, for /health and diagnostics.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "human-readable cache state, for /health and diagnostics.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L117"
+    },
+    {
+      "id": "src_clients_cache_rationale_136",
+      "label": "Deterministic cache key from a function's arguments.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "deterministic cache key from a function's arguments.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L136"
+    },
+    {
+      "id": "src_clients_cache_rationale_150",
+      "label": "Return (hit, value). Never raises.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "return (hit, value). never raises.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L150"
+    },
+    {
+      "id": "src_clients_cache_rationale_178",
+      "label": "Store the value and return its JSON round-trip. Never raises.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "store the value and return its json round-trip. never raises.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L178"
+    },
+    {
+      "id": "src_clients_cache_rationale_253",
+      "label": "Delete cached entries for one prefix. Returns how many were removed.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "delete cached entries for one prefix. returns how many were removed.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L253"
+    },
+    {
+      "id": "src_clients_cache_rationale_39",
+      "label": "Return a shared Redis client, or None when caching is unavailable. A failed\u2026",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "return a shared redis client, or none when caching is unavailable. a failed...",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "src_clients_cache_rationale_87",
+      "label": "Strip any password before a connection string reaches the logs.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "strip any password before a connection string reaches the logs.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L87"
+    },
+    {
+      "id": "src_clients_cache_rationale_99",
+      "label": "Discard the client so the next call reconnects. Used after hard errors.",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "cache.py",
+      "file_type": "rationale",
+      "norm_label": "discard the client so the next call reconnects. used after hard errors.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L99"
+    },
+    {
       "id": "src_db_auth",
       "label": "auth.py",
       "_origin": "ast",
@@ -5917,28 +5940,6 @@
       "norm_label": "auth.py",
       "source_file": "src/db/auth.py",
       "source_location": "L1"
-    },
-    {
-      "id": "src_mcp_servers_weather_server",
-      "label": "weather_server.py",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "auth.py",
-      "file_type": "code",
-      "norm_label": "weather_server.py",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tool",
-      "label": "tool",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "auth.py",
-      "file_type": "code",
-      "norm_label": "tool",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "src_db_auth_rationale_1",
@@ -5961,6 +5962,17 @@
       "norm_label": "create a new user. raises valueerror on duplicate email. returns user dict (no...",
       "source_file": "src/db/auth.py",
       "source_location": "L122"
+    },
+    {
+      "id": "src_db_auth_rationale_155",
+      "label": "Verify credentials. Returns user dict or None.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "auth.py",
+      "file_type": "rationale",
+      "norm_label": "verify credentials. returns user dict or none.",
+      "source_file": "src/db/auth.py",
+      "source_location": "L155"
     },
     {
       "id": "src_db_auth_rationale_18",
@@ -6334,10 +6346,21 @@
       "source_location": "L2"
     },
     {
+      "id": "certifi",
+      "label": "certifi",
+      "community": 0,
+      "community_name": "session.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "certifi",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "contextlib",
       "label": "contextlib",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "contextlib",
@@ -6348,7 +6371,7 @@
       "id": "contextvars",
       "label": "contextvars",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "contextvars",
@@ -6359,7 +6382,7 @@
       "id": "dataclasses",
       "label": "dataclasses",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "dataclasses",
@@ -6367,10 +6390,32 @@
       "type": "external"
     },
     {
+      "id": "functools",
+      "label": "functools",
+      "community": 0,
+      "community_name": "session.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "functools",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "langchain_groq",
+      "label": "langchain_groq",
+      "community": 0,
+      "community_name": "session.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "langchain_groq",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "langgraph_checkpoint_postgres",
       "label": "langgraph_checkpoint_postgres",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "langgraph_checkpoint_postgres",
@@ -6378,13 +6423,13 @@
       "type": "external"
     },
     {
-      "id": "logging",
-      "label": "logging",
+      "id": "pathlib",
+      "label": "pathlib",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "logging",
+      "norm_label": "pathlib",
       "source_file": "",
       "type": "external"
     },
@@ -6392,7 +6437,7 @@
       "id": "psycopg_pool",
       "label": "psycopg_pool",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "psycopg_pool",
@@ -6403,7 +6448,7 @@
       "id": "psycopg_rows",
       "label": "psycopg_rows",
       "community": 0,
-      "community_name": "cache.py",
+      "community_name": "session.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "psycopg_rows",
@@ -6422,17 +6467,6 @@
       "type": "external"
     },
     {
-      "id": "functools",
-      "label": "functools",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "functools",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "langchain_core_messages",
       "label": "langchain_core_messages",
       "community": 1,
@@ -6440,17 +6474,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "langchain_core_messages",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "langchain_groq",
-      "label": "langchain_groq",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "langchain_groq",
       "source_file": "",
       "type": "external"
     },
@@ -6620,6 +6643,17 @@
       "type": "external"
     },
     {
+      "id": "secrets",
+      "label": "secrets",
+      "community": 25,
+      "community_name": "sessions.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "secrets",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "threading",
       "label": "threading",
       "community": 25,
@@ -6645,7 +6679,7 @@
       "id": "json",
       "label": "json",
       "community": 26,
-      "community_name": "get",
+      "community_name": "history.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "json",
@@ -6653,13 +6687,24 @@
       "type": "external"
     },
     {
-      "id": "certifi",
-      "label": "certifi",
-      "community": 3,
-      "community_name": "settings.py",
+      "id": "dotenv",
+      "label": "dotenv",
+      "community": 29,
+      "community_name": "weather_server.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "certifi",
+      "norm_label": "dotenv",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "mcp_server_fastmcp",
+      "label": "mcp_server_fastmcp",
+      "community": 29,
+      "community_name": "weather_server.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "mcp_server_fastmcp",
       "source_file": "",
       "type": "external"
     },
@@ -6667,7 +6712,7 @@
       "id": "langchain_mcp_adapters_client",
       "label": "langchain_mcp_adapters_client",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "langchain_mcp_adapters_client",
@@ -6675,24 +6720,24 @@
       "type": "external"
     },
     {
-      "id": "pathlib",
-      "label": "pathlib",
+      "id": "sys",
+      "label": "sys",
       "community": 3,
-      "community_name": "settings.py",
+      "community_name": "local.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "pathlib",
+      "norm_label": "sys",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "sys",
-      "label": "sys",
-      "community": 3,
-      "community_name": "settings.py",
+      "id": "logging",
+      "label": "logging",
+      "community": 5,
+      "community_name": "cache.py",
       "external": true,
       "file_type": "concept",
-      "norm_label": "sys",
+      "norm_label": "logging",
       "source_file": "",
       "type": "external"
     },
@@ -6704,17 +6749,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "datetime",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "dotenv",
-      "label": "dotenv",
-      "community": 6,
-      "community_name": "auth.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "dotenv",
       "source_file": "",
       "type": "external"
     },
@@ -6741,17 +6775,6 @@
       "type": "external"
     },
     {
-      "id": "mcp_server_fastmcp",
-      "label": "mcp_server_fastmcp",
-      "community": 6,
-      "community_name": "auth.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "mcp_server_fastmcp",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "os",
       "label": "os",
       "community": 6,
@@ -6759,17 +6782,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "os",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "secrets",
-      "label": "secrets",
-      "community": 6,
-      "community_name": "auth.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "secrets",
       "source_file": "",
       "type": "external"
     }
@@ -7732,7 +7744,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L92",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -7744,7 +7756,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L78",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -7756,7 +7768,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L79",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -7768,7 +7780,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L170",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -7780,7 +7792,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L202",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -7792,7 +7804,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L190",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -7804,7 +7816,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L41",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -7816,7 +7828,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L47",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -7828,7 +7840,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L74",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -7840,7 +7852,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L121",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -7852,7 +7864,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L127",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -7864,7 +7876,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L128",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_api_client_testconnection",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -7876,7 +7900,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L178",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -7888,7 +7912,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L323",
+      "source_location": "L334",
       "weight": 1.0
     },
     {
@@ -7900,7 +7924,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L329",
+      "source_location": "L340",
       "weight": 1.0
     },
     {
@@ -7912,7 +7936,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L335",
+      "source_location": "L346",
       "weight": 1.0
     },
     {
@@ -7924,7 +7948,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L841",
+      "source_location": "L865",
       "weight": 1.0
     },
     {
@@ -7936,7 +7960,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L842",
+      "source_location": "L866",
       "weight": 1.0
     },
     {
@@ -7948,7 +7972,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L847",
+      "source_location": "L871",
       "weight": 1.0
     },
     {
@@ -7960,7 +7984,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L708",
+      "source_location": "L732",
       "weight": 1.0
     },
     {
@@ -7972,7 +7996,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1134",
+      "source_location": "L1158",
       "weight": 1.0
     },
     {
@@ -7984,7 +8008,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1135",
+      "source_location": "L1159",
       "weight": 1.0
     },
     {
@@ -7996,7 +8020,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L860",
+      "source_location": "L884",
       "weight": 1.0
     },
     {
@@ -8008,7 +8032,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L866",
+      "source_location": "L890",
       "weight": 1.0
     },
     {
@@ -8020,7 +8044,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L896",
+      "source_location": "L920",
       "weight": 1.0
     },
     {
@@ -8032,7 +8056,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L897",
+      "source_location": "L921",
       "weight": 1.0
     },
     {
@@ -8044,7 +8068,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L900",
+      "source_location": "L924",
       "weight": 1.0
     },
     {
@@ -8056,7 +8080,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L902",
+      "source_location": "L926",
       "weight": 1.0
     },
     {
@@ -8068,7 +8092,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L903",
+      "source_location": "L927",
       "weight": 1.0
     },
     {
@@ -8080,7 +8104,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1006",
+      "source_location": "L1030",
       "weight": 1.0
     },
     {
@@ -8092,12 +8116,72 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1007",
+      "source_location": "L1031",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_app_handlelogout",
       "target": "frontend_static_js_app_toast",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1032",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_handlesignup",
+      "target": "frontend_static_js_app_updateauthui",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1001",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_handlesignup",
+      "target": "frontend_static_js_app_closeauthmodal",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1002",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_handlesignup",
+      "target": "frontend_static_js_app_resumependingplanifany",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1005",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_handlesignup",
+      "target": "frontend_static_js_app_toast",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1007",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_handlesignup",
+      "target": "frontend_static_js_app_loadhistory",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8116,7 +8200,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L919",
+      "source_location": "L943",
       "weight": 1.0
     },
     {
@@ -8128,67 +8212,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L927",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_handlesignup",
-      "target": "frontend_static_js_app_updateauthui",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L977",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_handlesignup",
-      "target": "frontend_static_js_app_closeauthmodal",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L978",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_handlesignup",
-      "target": "frontend_static_js_app_resumependingplanifany",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L981",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_handlesignup",
-      "target": "frontend_static_js_app_toast",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L983",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_handlesignup",
-      "target": "frontend_static_js_app_loadhistory",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L984",
+      "source_location": "L951",
       "weight": 1.0
     },
     {
@@ -8200,7 +8224,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1023",
+      "source_location": "L1047",
       "weight": 1.0
     },
     {
@@ -8212,7 +8236,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L347",
+      "source_location": "L358",
       "weight": 1.0
     },
     {
@@ -8224,7 +8248,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L348",
+      "source_location": "L359",
       "weight": 1.0
     },
     {
@@ -8236,7 +8260,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1156",
+      "source_location": "L1180",
       "weight": 1.0
     },
     {
@@ -8248,7 +8272,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1157",
+      "source_location": "L1181",
       "weight": 1.0
     },
     {
@@ -8260,7 +8284,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L698",
+      "source_location": "L722",
       "weight": 1.0
     },
     {
@@ -8272,7 +8296,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L699",
+      "source_location": "L723",
       "weight": 1.0
     },
     {
@@ -8284,7 +8308,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L531",
+      "source_location": "L555",
       "weight": 1.0
     },
     {
@@ -8296,7 +8320,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L532",
+      "source_location": "L556",
       "weight": 1.0
     },
     {
@@ -8308,7 +8332,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L533",
+      "source_location": "L557",
       "weight": 1.0
     },
     {
@@ -8320,7 +8344,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1555",
+      "source_location": "L1579",
       "weight": 1.0
     },
     {
@@ -8332,7 +8356,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L454",
+      "source_location": "L465",
       "weight": 1.0
     },
     {
@@ -8344,7 +8368,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L493",
+      "source_location": "L517",
       "weight": 1.0
     },
     {
@@ -8356,7 +8380,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1363",
+      "source_location": "L1387",
       "weight": 1.0
     },
     {
@@ -8368,7 +8392,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1368",
+      "source_location": "L1392",
       "weight": 1.0
     },
     {
@@ -8380,7 +8404,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1427",
+      "source_location": "L1451",
       "weight": 1.0
     },
     {
@@ -8392,36 +8416,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1430",
+      "source_location": "L1454",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_app_renderhistory",
       "target": "frontend_static_js_app_el",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L1056",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_renderhistory",
-      "target": "frontend_static_js_app_openauthmodal",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L1060",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app_renderhistory",
-      "target": "frontend_static_js_app_icon",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -8433,6 +8433,30 @@
     },
     {
       "source": "frontend_static_js_app_renderhistory",
+      "target": "frontend_static_js_app_openauthmodal",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1084",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_renderhistory",
+      "target": "frontend_static_js_app_icon",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1104",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app_renderhistory",
       "target": "frontend_static_js_app_formatrelativetime",
       "relation": "calls",
       "_origin": "ast",
@@ -8440,7 +8464,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1092",
+      "source_location": "L1116",
       "weight": 1.0
     },
     {
@@ -8452,7 +8476,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1109",
+      "source_location": "L1133",
       "weight": 1.0
     },
     {
@@ -8464,7 +8488,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1173",
+      "source_location": "L1197",
       "weight": 1.0
     },
     {
@@ -8476,7 +8500,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1177",
+      "source_location": "L1201",
       "weight": 1.0
     },
     {
@@ -8488,7 +8512,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1234",
+      "source_location": "L1258",
       "weight": 1.0
     },
     {
@@ -8500,7 +8524,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1239",
+      "source_location": "L1263",
       "weight": 1.0
     },
     {
@@ -8512,7 +8536,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1255",
+      "source_location": "L1279",
       "weight": 1.0
     },
     {
@@ -8524,7 +8548,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1256",
+      "source_location": "L1280",
       "weight": 1.0
     },
     {
@@ -8536,7 +8560,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1326",
+      "source_location": "L1350",
       "weight": 1.0
     },
     {
@@ -8548,7 +8572,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1350",
+      "source_location": "L1374",
       "weight": 1.0
     },
     {
@@ -8560,7 +8584,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1148",
+      "source_location": "L1172",
       "weight": 1.0
     },
     {
@@ -8572,7 +8596,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L625",
+      "source_location": "L649",
       "weight": 1.0
     },
     {
@@ -8584,7 +8608,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L634",
+      "source_location": "L658",
       "weight": 1.0
     },
     {
@@ -8596,7 +8620,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L635",
+      "source_location": "L659",
       "weight": 1.0
     },
     {
@@ -8608,7 +8632,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L636",
+      "source_location": "L660",
       "weight": 1.0
     },
     {
@@ -8620,7 +8644,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L727",
+      "source_location": "L751",
       "weight": 1.0
     },
     {
@@ -8632,7 +8656,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L566",
+      "source_location": "L590",
       "weight": 1.0
     },
     {
@@ -8644,7 +8668,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L567",
+      "source_location": "L591",
       "weight": 1.0
     },
     {
@@ -8656,7 +8680,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L571",
+      "source_location": "L595",
       "weight": 1.0
     },
     {
@@ -8668,7 +8692,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L610",
+      "source_location": "L634",
       "weight": 1.0
     },
     {
@@ -8680,7 +8704,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L611",
+      "source_location": "L635",
       "weight": 1.0
     },
     {
@@ -8692,7 +8716,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1463",
+      "source_location": "L1487",
       "weight": 1.0
     },
     {
@@ -8704,7 +8728,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1464",
+      "source_location": "L1488",
       "weight": 1.0
     },
     {
@@ -8716,7 +8740,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1465",
+      "source_location": "L1489",
       "weight": 1.0
     },
     {
@@ -8728,7 +8752,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1474",
+      "source_location": "L1498",
       "weight": 1.0
     },
     {
@@ -8740,7 +8764,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1478",
+      "source_location": "L1502",
       "weight": 1.0
     },
     {
@@ -8752,7 +8776,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1479",
+      "source_location": "L1503",
       "weight": 1.0
     },
     {
@@ -8764,7 +8788,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1512",
+      "source_location": "L1536",
       "weight": 1.0
     },
     {
@@ -8776,7 +8800,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1515",
+      "source_location": "L1539",
       "weight": 1.0
     },
     {
@@ -8788,7 +8812,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1520",
+      "source_location": "L1544",
       "weight": 1.0
     },
     {
@@ -8800,7 +8824,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1529",
+      "source_location": "L1553",
       "weight": 1.0
     },
     {
@@ -8812,7 +8836,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1454",
+      "source_location": "L1478",
       "weight": 1.0
     },
     {
@@ -8824,7 +8848,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1621",
+      "source_location": "L1645",
       "weight": 1.0
     },
     {
@@ -8836,7 +8860,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1630",
+      "source_location": "L1654",
       "weight": 1.0
     },
     {
@@ -8848,7 +8872,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L740",
+      "source_location": "L764",
       "weight": 1.0
     },
     {
@@ -10228,7 +10252,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L860",
+      "source_location": "L871",
       "weight": 1.0
     },
     {
@@ -10240,7 +10264,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L927",
+      "source_location": "L938",
       "weight": 1.0
     },
     {
@@ -10252,7 +10276,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L928",
+      "source_location": "L939",
       "weight": 1.0
     },
     {
@@ -10264,7 +10288,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L932",
+      "source_location": "L943",
       "weight": 1.0
     },
     {
@@ -10276,7 +10300,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1093",
+      "source_location": "L1104",
       "weight": 1.0
     },
     {
@@ -10288,7 +10312,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1494",
+      "source_location": "L1518",
       "weight": 1.0
     },
     {
@@ -10300,7 +10324,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1535",
+      "source_location": "L1559",
       "weight": 1.0
     },
     {
@@ -10312,7 +10336,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1540",
+      "source_location": "L1564",
       "weight": 1.0
     },
     {
@@ -10324,7 +10348,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1552",
+      "source_location": "L1576",
       "weight": 1.0
     },
     {
@@ -10336,7 +10360,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1569",
+      "source_location": "L1593",
       "weight": 1.0
     },
     {
@@ -10348,7 +10372,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1597",
+      "source_location": "L1621",
       "weight": 1.0
     },
     {
@@ -10360,7 +10384,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1677",
+      "source_location": "L1701",
       "weight": 1.0
     },
     {
@@ -10372,7 +10396,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1692",
+      "source_location": "L1716",
       "weight": 1.0
     },
     {
@@ -10384,7 +10408,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1693",
+      "source_location": "L1717",
       "weight": 1.0
     },
     {
@@ -10396,7 +10420,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1648",
+      "source_location": "L1672",
       "weight": 1.0
     },
     {
@@ -10408,7 +10432,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1661",
+      "source_location": "L1685",
       "weight": 1.0
     },
     {
@@ -10420,7 +10444,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L937",
+      "source_location": "L948",
       "weight": 1.0
     },
     {
@@ -10432,7 +10456,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L966",
+      "source_location": "L977",
       "weight": 1.0
     },
     {
@@ -10444,7 +10468,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L967",
+      "source_location": "L978",
       "weight": 1.0
     },
     {
@@ -10456,7 +10480,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L970",
+      "source_location": "L981",
       "weight": 1.0
     },
     {
@@ -10468,7 +10492,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1379",
+      "source_location": "L1403",
       "weight": 1.0
     },
     {
@@ -10480,7 +10504,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1380",
+      "source_location": "L1404",
       "weight": 1.0
     },
     {
@@ -10492,7 +10516,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1381",
+      "source_location": "L1405",
       "weight": 1.0
     },
     {
@@ -10504,7 +10528,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L263",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -10516,7 +10540,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L269",
+      "source_location": "L280",
       "weight": 1.0
     },
     {
@@ -10528,7 +10552,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1190",
+      "source_location": "L1201",
       "weight": 1.0
     },
     {
@@ -10540,7 +10564,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1192",
+      "source_location": "L1203",
       "weight": 1.0
     },
     {
@@ -10552,7 +10576,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1303",
+      "source_location": "L1314",
       "weight": 1.0
     },
     {
@@ -10564,7 +10588,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1053",
+      "source_location": "L1064",
       "weight": 1.0
     },
     {
@@ -10576,7 +10600,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1071",
+      "source_location": "L1082",
       "weight": 1.0
     },
     {
@@ -10588,7 +10612,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L530",
+      "source_location": "L541",
       "weight": 1.0
     },
     {
@@ -10600,7 +10624,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L553",
+      "source_location": "L564",
       "weight": 1.0
     },
     {
@@ -10612,7 +10636,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L607",
+      "source_location": "L618",
       "weight": 1.0
     },
     {
@@ -10624,7 +10648,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L628",
+      "source_location": "L639",
       "weight": 1.0
     },
     {
@@ -10636,7 +10660,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L817",
+      "source_location": "L828",
       "weight": 1.0
     },
     {
@@ -10648,7 +10672,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1472",
+      "source_location": "L1496",
       "weight": 1.0
     },
     {
@@ -10660,7 +10684,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1473",
+      "source_location": "L1497",
       "weight": 1.0
     },
     {
@@ -10672,7 +10696,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1407",
+      "source_location": "L1431",
       "weight": 1.0
     },
     {
@@ -10684,7 +10708,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1408",
+      "source_location": "L1432",
       "weight": 1.0
     },
     {
@@ -10696,7 +10720,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1453",
+      "source_location": "L1477",
       "weight": 1.0
     },
     {
@@ -10708,7 +10732,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L975",
+      "source_location": "L986",
       "weight": 1.0
     },
     {
@@ -10720,7 +10744,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1019",
+      "source_location": "L1030",
       "weight": 1.0
     },
     {
@@ -10732,7 +10756,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1030",
+      "source_location": "L1041",
       "weight": 1.0
     },
     {
@@ -12369,6 +12393,18 @@
     },
     {
       "source": "frontend_static_js_app",
+      "target": "frontend_static_js_app_handlelogout",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1022",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app",
       "target": "frontend_static_js_app_toast",
       "relation": "contains",
       "_origin": "ast",
@@ -12388,7 +12424,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1457",
+      "source_location": "L1481",
       "weight": 1.0
     },
     {
@@ -12424,7 +12460,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L265",
+      "source_location": "L276",
       "weight": 1.0
     },
     {
@@ -12436,7 +12472,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L351",
+      "source_location": "L362",
       "weight": 1.0
     },
     {
@@ -12448,7 +12484,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L551",
+      "source_location": "L575",
       "weight": 1.0
     },
     {
@@ -12460,7 +12496,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L673",
+      "source_location": "L697",
       "weight": 1.0
     },
     {
@@ -12472,7 +12508,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L694",
+      "source_location": "L718",
       "weight": 1.0
     },
     {
@@ -12484,7 +12520,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L739",
+      "source_location": "L763",
       "weight": 1.0
     },
     {
@@ -12496,19 +12532,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L831",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app",
-      "target": "frontend_static_js_app_handlelogout",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L998",
+      "source_location": "L855",
       "weight": 1.0
     },
     {
@@ -17427,7 +17451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L111",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -17438,7 +17462,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L117",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_api_client",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -17449,7 +17484,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L30",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -17460,7 +17495,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1020",
+      "source_location": "L1044",
       "weight": 1.0
     },
     {
@@ -17471,29 +17506,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1046",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app",
-      "target": "frontend_static_js_app_opentrip",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L1116",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_app",
-      "target": "frontend_static_js_app_deletetrip",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/app.js",
-      "source_location": "L1122",
+      "source_location": "L1070",
       "weight": 1.0
     },
     {
@@ -17509,13 +17522,35 @@
     },
     {
       "source": "frontend_static_js_app",
+      "target": "frontend_static_js_app_opentrip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1140",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app",
+      "target": "frontend_static_js_app_deletetrip",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/app.js",
+      "source_location": "L1146",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_app",
       "target": "frontend_static_js_app_renderuser",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1147",
+      "source_location": "L1171",
       "weight": 1.0
     },
     {
@@ -17526,7 +17561,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1155",
+      "source_location": "L1179",
       "weight": 1.0
     },
     {
@@ -17537,7 +17572,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1172",
+      "source_location": "L1196",
       "weight": 1.0
     },
     {
@@ -17559,7 +17594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1233",
+      "source_location": "L1257",
       "weight": 1.0
     },
     {
@@ -17570,7 +17605,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1361",
+      "source_location": "L1385",
       "weight": 1.0
     },
     {
@@ -17581,7 +17616,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1426",
+      "source_location": "L1450",
       "weight": 1.0
     },
     {
@@ -17592,7 +17627,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1450",
+      "source_location": "L1474",
       "weight": 1.0
     },
     {
@@ -17614,7 +17649,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1537",
+      "source_location": "L1561",
       "weight": 1.0
     },
     {
@@ -17636,7 +17671,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L298",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -17647,7 +17682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L338",
+      "source_location": "L349",
       "weight": 1.0
     },
     {
@@ -17658,7 +17693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L359",
+      "source_location": "L370",
       "weight": 1.0
     },
     {
@@ -17669,7 +17704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L544",
+      "source_location": "L568",
       "weight": 1.0
     },
     {
@@ -17680,7 +17715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L715",
+      "source_location": "L739",
       "weight": 1.0
     },
     {
@@ -17691,7 +17726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L754",
+      "source_location": "L778",
       "weight": 1.0
     },
     {
@@ -17702,7 +17737,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L760",
+      "source_location": "L784",
       "weight": 1.0
     },
     {
@@ -17713,7 +17748,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L766",
+      "source_location": "L790",
       "weight": 1.0
     },
     {
@@ -17724,7 +17759,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L785",
+      "source_location": "L809",
       "weight": 1.0
     },
     {
@@ -18059,24 +18094,24 @@
     },
     {
       "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_triggercriticaudit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1003",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
       "target": "frontend_static_js_itinerary_rendercriticcard",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1049",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_el",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L108",
+      "source_location": "L1060",
       "weight": 1.0
     },
     {
@@ -18087,18 +18122,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1081",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_toast",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L115",
+      "source_location": "L1092",
       "weight": 1.0
     },
     {
@@ -18109,7 +18133,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1152",
+      "source_location": "L1163",
       "weight": 1.0
     },
     {
@@ -18120,7 +18144,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1167",
+      "source_location": "L1178",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_el",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -18131,7 +18166,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1208",
+      "source_location": "L1219",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_toast",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -18142,18 +18188,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L124",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_rendermd",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L133",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -18164,7 +18199,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1375",
+      "source_location": "L1399",
       "weight": 1.0
     },
     {
@@ -18175,7 +18210,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1385",
+      "source_location": "L1409",
       "weight": 1.0
     },
     {
@@ -18186,18 +18221,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1392",
+      "source_location": "L1416",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_parsemarkdowntable",
+      "target": "frontend_static_js_itinerary_rendermd",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L141",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -18208,7 +18243,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1463",
+      "source_location": "L1487",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_parsemarkdowntable",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -18219,7 +18265,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L160",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -18230,7 +18276,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L524",
+      "source_location": "L535",
       "weight": 1.0
     },
     {
@@ -18241,7 +18287,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L823",
+      "source_location": "L834",
       "weight": 1.0
     },
     {
@@ -18252,7 +18298,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L840",
+      "source_location": "L851",
       "weight": 1.0
     },
     {
@@ -18263,7 +18309,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L853",
+      "source_location": "L864",
       "weight": 1.0
     },
     {
@@ -18274,7 +18320,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L859",
+      "source_location": "L870",
       "weight": 1.0
     },
     {
@@ -18285,7 +18331,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L936",
+      "source_location": "L947",
       "weight": 1.0
     },
     {
@@ -18296,18 +18342,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L974",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_triggercriticaudit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L992",
+      "source_location": "L985",
       "weight": 1.0
     },
     {
@@ -18318,7 +18353,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1640",
+      "source_location": "L1664",
       "weight": 1.0
     },
     {
@@ -21766,6 +21801,54 @@
       "weight": 1.0
     },
     {
+      "source": "frontend_static_js_api_client_fetchconfig",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_api_client_resetconfig",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L262",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_api_client_saveconfig",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_api_client_verifyproviderkey",
+      "target": "frontend_static_js_api_client_safeparseresponse",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "frontend/static/js/api-client.js",
+      "source_location": "L241",
+      "weight": 1.0
+    },
+    {
       "source": "frontend_static_js_app",
       "target": "frontend_static_js_app_planjourney",
       "relation": "indirect_call",
@@ -21774,7 +21857,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1574",
+      "source_location": "L1598",
       "weight": 1.0
     },
     {
@@ -21786,7 +21869,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1634",
+      "source_location": "L1658",
       "weight": 1.0
     },
     {
@@ -21798,7 +21881,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1683",
+      "source_location": "L1707",
       "weight": 1.0
     },
     {
@@ -21810,7 +21893,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1690",
+      "source_location": "L1714",
       "weight": 1.0
     },
     {
@@ -21822,7 +21905,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L1691",
+      "source_location": "L1715",
       "weight": 1.0
     },
     {
@@ -21834,7 +21917,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L660",
+      "source_location": "L684",
       "weight": 1.0
     },
     {
@@ -21846,7 +21929,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L661",
+      "source_location": "L685",
       "weight": 1.0
     },
     {
@@ -21858,7 +21941,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L665",
+      "source_location": "L689",
       "weight": 1.0
     },
     {
@@ -21870,7 +21953,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L355",
+      "source_location": "L366",
       "weight": 1.0
     },
     {
@@ -21882,7 +21965,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/app.js",
-      "source_location": "L356",
+      "source_location": "L367",
       "weight": 1.0
     },
     {
@@ -21894,7 +21977,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1702",
+      "source_location": "L1726",
       "weight": 1.0
     },
     {
@@ -21906,7 +21989,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1523",
+      "source_location": "L1547",
       "weight": 1.0
     },
     {
@@ -21918,7 +22001,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1526",
+      "source_location": "L1550",
       "weight": 1.0
     },
     {
@@ -21930,7 +22013,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1528",
+      "source_location": "L1552",
       "weight": 1.0
     },
     {
@@ -21942,7 +22025,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1530",
+      "source_location": "L1554",
       "weight": 1.0
     },
     {
@@ -21954,7 +22037,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1531",
+      "source_location": "L1555",
       "weight": 1.0
     },
     {
@@ -21966,7 +22049,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1621",
+      "source_location": "L1645",
       "weight": 1.0
     },
     {
@@ -22050,7 +22133,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L247",
+      "source_location": "L307",
       "weight": 1.0
     },
     {
@@ -22062,7 +22145,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L248",
+      "source_location": "L308",
       "weight": 1.0
     },
     {
@@ -22074,7 +22157,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L249",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -22086,7 +22169,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L250",
+      "source_location": "L310",
       "weight": 1.0
     },
     {
@@ -22098,7 +22181,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L251",
+      "source_location": "L311",
       "weight": 1.0
     },
     {
@@ -22110,7 +22193,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L252",
+      "source_location": "L312",
       "weight": 1.0
     },
     {
@@ -22122,7 +22205,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L253",
+      "source_location": "L313",
       "weight": 1.0
     },
     {
@@ -22134,7 +22217,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L254",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -22146,7 +22229,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L255",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
@@ -22158,7 +22241,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L256",
+      "source_location": "L316",
       "weight": 1.0
     },
     {
@@ -22170,7 +22253,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L257",
+      "source_location": "L317",
       "weight": 1.0
     },
     {
@@ -22182,7 +22265,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L258",
+      "source_location": "L318",
       "weight": 1.0
     },
     {
@@ -22194,7 +22277,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L259",
+      "source_location": "L319",
       "weight": 1.0
     },
     {
@@ -22206,7 +22289,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L260",
+      "source_location": "L320",
       "weight": 1.0
     },
     {
@@ -22218,7 +22301,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L262",
+      "source_location": "L322",
       "weight": 1.0
     },
     {
@@ -22230,7 +22313,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "frontend/static/js/api-client.js",
-      "source_location": "L263",
+      "source_location": "L323",
       "weight": 1.0
     },
     {
@@ -22616,5 +22699,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "80598dfceb6ba96f7163c0b04a31c6db3e8d289b"
+  "built_at_commit": "d67a11763e0a16ae38f4765df466333c1f0af265"
 }

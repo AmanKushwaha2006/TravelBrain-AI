@@ -12,8 +12,18 @@
 
   var listeners = [];
 
+  // Clean up any stale/dead render url stored from previous versions
+  var storedBase = "";
+  try {
+    storedBase = localStorage.getItem(STORAGE_KEY_BASE_URL) || "";
+    if (storedBase && (storedBase.indexOf("travelbrain-api.onrender.com") !== -1 || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+      localStorage.removeItem(STORAGE_KEY_BASE_URL);
+      storedBase = "";
+    }
+  } catch (e) {}
+
   var state = {
-    baseUrl: localStorage.getItem(STORAGE_KEY_BASE_URL) || "",
+    baseUrl: storedBase,
     authToken: localStorage.getItem(STORAGE_KEY_AUTH_TOKEN) || "",
     currentUser: null,
     status: "disconnected", // 'connected' | 'connecting' | 'disconnected' | 'failed'
@@ -81,7 +91,7 @@
 
   function buildUrl(path) {
     var cleanPath = path.startsWith("/") ? path : "/" + path;
-    if (state.baseUrl) {
+    if (state.baseUrl && state.baseUrl.indexOf("travelbrain-api.onrender.com") === -1) {
       return state.baseUrl + cleanPath;
     }
     return cleanPath;
@@ -121,10 +131,39 @@
     notifyListeners();
   }
 
+  /* ---------------- Safe JSON Parser ---------------- */
+
+  function safeParseResponse(res) {
+    return res.text().then(function (text) {
+      var data = null;
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (err) {
+        var is404 = res.status === 404 || (text && text.indexOf("Not Found") !== -1);
+        var cleanMsg = is404
+          ? "API endpoint unreachable (404 Not Found). Please verify local FastAPI server is running."
+          : "Server response (" + res.status + "): " + (text ? text.slice(0, 100).trim() : "Unknown");
+        return {
+          ok: false,
+          status: res.status,
+          data: { ok: false, success: false, message: cleanMsg, error: cleanMsg }
+        };
+      }
+      var isOk = res.ok && (!data || (data.ok !== false && data.success !== false));
+      return { ok: isOk, status: res.status, data: data || {} };
+    });
+  }
+
   /* ---------------- Connection Verification ---------------- */
 
   function testConnection(targetUrl) {
     var urlToTest = typeof targetUrl === "string" ? normalizeUrl(targetUrl) : state.baseUrl;
+    if (urlToTest.indexOf("travelbrain-api.onrender.com") !== -1) {
+      urlToTest = "";
+      state.baseUrl = "";
+      try { localStorage.removeItem(STORAGE_KEY_BASE_URL); } catch (e) {}
+    }
+
     setStatus("connecting", "Connecting to " + (urlToTest || "current host") + "…");
 
     var pingPath = (urlToTest ? urlToTest : "") + "/health";
@@ -144,10 +183,10 @@
         if (timeoutId) clearTimeout(timeoutId);
         var latency = Date.now() - startTime;
         if (res.ok) {
-          return res.json().catch(function () { return { status: "ok" }; }).then(function (data) {
-            state.config = data;
+          return safeParseResponse(res).then(function (result) {
+            state.config = result.data;
             setStatus("connected", "Connected · " + latency + "ms", latency);
-            return { ok: true, latency: latency, data: data };
+            return { ok: true, latency: latency, data: result.data };
           });
         } else {
           var msg = "API responded with HTTP " + res.status;
@@ -168,21 +207,45 @@
 
   function fetchConfig() {
     return apiFetch("/api/config", { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
+      .then(safeParseResponse)
+      .then(function (result) {
+        if (!result.ok) throw new Error((result.data && result.data.message) || ("HTTP " + result.status));
+        return result.data;
       });
   }
 
   function verifyProviderKey(provider, key) {
+    var payload = {};
+    if (provider === "groq") payload.groq_api_key = key;
+    else if (provider === "tavily") payload.tavily_api_key = key;
+    else if (provider === "aviationstack") payload.aviationstack_api_key = key;
+    else if (provider === "openweather") payload.openweather_api_key = key;
+    else if (provider === "database") payload.database_url = key;
+    else payload[provider] = key;
+
+    // Send verification request to /api/config/verify-key, fallback to /api/config
     return apiFetch("/api/config/verify-key", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ provider: provider, key: key })
     }).then(function (res) {
-      return res.json().then(function (data) {
-        return { ok: res.ok && data.ok, data: data };
-      });
+      if (res.status === 404) {
+        // Fallback to /api/config
+        return apiFetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      }
+      return res;
+    }).then(safeParseResponse).then(function (result) {
+      if (!result.ok) {
+        var errDetail = (result.data && (result.data.message || (result.data.errors && (result.data.errors[payload[provider]] || Object.values(result.data.errors)[0])))) || "Verification failed";
+        return { ok: false, data: { ok: false, message: errDetail } };
+      }
+      return { ok: true, data: result.data };
+    }).catch(function (err) {
+      return { ok: false, data: { ok: false, message: err.message || "Network error" } };
     });
   }
 
@@ -191,17 +254,14 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
-    }).then(function (res) {
-      return res.json().then(function (data) {
-        return { ok: res.ok, data: data };
-      });
-    });
+    }).then(safeParseResponse);
   }
 
   function resetConfig() {
     return apiFetch("/api/config", { method: "DELETE" })
-      .then(function (res) {
-        return res.json();
+      .then(safeParseResponse)
+      .then(function (result) {
+        return result.data;
       });
   }
 

@@ -207,6 +207,17 @@
     if (sendBtn) sendBtn.disabled = !ready || busy;
   }
 
+  // Purge any stale/dead render url stored from previous versions
+  try {
+    var storedUrl = localStorage.getItem("tb_api_base_url");
+    if (storedUrl && (storedUrl.indexOf("travelbrain-api.onrender.com") !== -1 || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+      localStorage.removeItem("tb_api_base_url");
+      if (window.TravelBrainAPI && window.TravelBrainAPI.setBaseUrl) {
+        window.TravelBrainAPI.setBaseUrl("");
+      }
+    }
+  } catch (e) {}
+
   var btnTestApiConn        = $("btnTestApiConn");
   var settingsConnIndicator = $("settingsConnIndicator");
   var settingsConnState     = $("settingsConnState");
@@ -470,11 +481,24 @@
         var client = window.TravelBrainAPI;
         var verifyPromise = client && client.verifyProviderKey
           ? client.verifyProviderKey(p.id, keyVal)
-          : fetch("/api/config/verify-key", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ provider: p.id, key: keyVal })
-            }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.ok, data: d }; }); });
+          : (function () {
+              var payload = {};
+              payload[p.propKey] = keyVal;
+              return fetch("/api/config", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+              }).then(function (r) {
+                return r.text().then(function (txt) {
+                  try {
+                    var d = JSON.parse(txt);
+                    return { ok: r.ok && d.success !== false, data: d };
+                  } catch (e) {
+                    return { ok: false, data: { message: "Server response error (" + r.status + ")" } };
+                  }
+                });
+              });
+            })();
 
         verifyPromise
           .then(function (res) {
