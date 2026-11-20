@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "frontend/templates/index.html": {
-    "mtime": 1795155292.5287192,
-    "seen": 1795156335.2384288,
-    "ast_hash": "790fe963d384008745ba4ffcd114e4f6",
+    "mtime": 1795157617.4103842,
+    "seen": 1795157663.0800073,
+    "ast_hash": "63890ac68d7217b3cad62d050bb91c51",
     "semantic_hash": ""
   },
   "frontend/static/js/aviation-3d.js": {
@@ -306,15 +306,15 @@
     "semantic_hash": ""
   },
   "frontend/static/js/itinerary.js": {
-    "mtime": 1795156227.6873705,
-    "seen": 1795156335.2383742,
-    "ast_hash": "959073470658247395e37700602842af",
+    "mtime": 1795157544.9128022,
+    "seen": 1795157663.079947,
+    "ast_hash": "fd51df5fbe6428dd5244166da8bc702c",
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {
-    "mtime": 1795156140.142898,
-    "seen": 1795156335.23843,
-    "ast_hash": "6d7561b8ec87eadcdf0a4c0c6509d31b",
+    "mtime": 1795157591.9112246,
+    "seen": 1795157663.0800085,
+    "ast_hash": "cf021b809c2d8a8c89c95de06aed6f5c",
     "semantic_hash": ""
   },
   "frontend/static/js/api-client.js": {
@@ -375,6 +375,60 @@
     "mtime": 1795156218.586649,
     "seen": 1795156335.2383878,
     "ast_hash": "422e1b6769e91b327df5f988cbbb99bd",
+    "semantic_hash": ""
+  },
+  "scratch/apply_emerald_theme_and_fixes.py": {
+    "mtime": 1795157495.1721969,
+    "seen": 1795157663.0799525,
+    "ast_hash": "fa4750aaeda947756c46f5cc30f26216",
+    "semantic_hash": ""
+  },
+  "scratch/patch_itinerary_days.py": {
+    "mtime": 1795157538.1271482,
+    "seen": 1795157663.0799534,
+    "ast_hash": "ed2618e16eca3922af67389741221e71",
+    "semantic_hash": ""
+  },
+  "scratch/test_day_extractor.py": {
+    "mtime": 1795157220.8113315,
+    "seen": 1795157663.0799544,
+    "ast_hash": "cf9ccf5b000388cf714991cb5c456c49",
+    "semantic_hash": ""
+  },
+  "scratch/test_day_extractor_advanced.py": {
+    "mtime": 1795157299.9027107,
+    "seen": 1795157663.079955,
+    "ast_hash": "a4279102ea487a6654c248cce31a1ebb",
+    "semantic_hash": ""
+  },
+  "scratch/test_day_regex.py": {
+    "mtime": 1795157194.41228,
+    "seen": 1795157663.079956,
+    "ast_hash": "60534f220ce840929177f2a1b5d1a5a0",
+    "semantic_hash": ""
+  },
+  "scratch/test_full_render.py": {
+    "mtime": 1795157643.7846482,
+    "seen": 1795157663.0799568,
+    "ast_hash": "88f68b47739b46596e9e6aa83ed342ba",
+    "semantic_hash": ""
+  },
+  "scratch/test_user_sample.py": {
+    "mtime": 1795157376.8915613,
+    "seen": 1795157663.079962,
+    "ast_hash": "0652e11290abe1d4bb79eb11eb27b1ba",
+    "semantic_hash": ""
+  },
+  "scratch/transform_to_emerald_theme.py": {
+    "mtime": 1795157585.6010387,
+    "seen": 1795157663.079963,
+    "ast_hash": "8305095124de7965c87078fba1ee8a5b",
+    "semantic_hash": ""
+  },
+  "scratch/update_styles_and_index.py": {
+    "mtime": 1795157610.3763402,
+    "seen": 1795157663.0799677,
+    "ast_hash": "9a191f53d7accfcad00d2fcbe1ab3053",
     "semantic_hash": ""
   }
 }

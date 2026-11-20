@@ -1,6 +1,6 @@
 /* ============================================================
    TravelBrain AI — Generated Itinerary Dashboard Stylesheet
-   Luxury Editorial Aesthetic · Midnight Navy & Champagne Gold
+   Luxury Editorial Aesthetic · Emerald Jade & Champagne Gold
    ============================================================ */
 
 :root {
@@ -9,30 +9,38 @@
   --font-display: "Manrope", sans-serif;
   --font-mono: "DM Mono", "JetBrains Mono", monospace;
 
-  /* Palette */
-  --bg-dark: #050B14;
-  --bg-card: rgba(11, 20, 36, 0.72);
-  --bg-card-hover: rgba(16, 29, 52, 0.88);
-  --bg-card-solid: #0c1626;
-  --bg-glass: rgba(13, 24, 44, 0.55);
+  /* Palette - Luxury Emerald Jade & Warm Champagne Gold */
+  --bg-dark: #070B09;
+  --bg-card: rgba(13, 22, 18, 0.82);
+  --bg-card-hover: rgba(18, 30, 24, 0.94);
+  --bg-card-solid: #0e1814;
+  --bg-glass: rgba(14, 24, 19, 0.72);
   --bg-subtle: rgba(255, 255, 255, 0.03);
 
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-light: rgba(255, 255, 255, 0.14);
   --border-gold: rgba(212, 175, 55, 0.35);
   --border-gold-strong: rgba(212, 175, 55, 0.75);
+  --border-emerald: rgba(16, 185, 129, 0.35);
 
   --gold-primary: #D4AF37;
   --gold-light: #F3E5AB;
   --gold-glow: rgba(212, 175, 55, 0.22);
-  --blue-sky: #55B8E8;
-  --blue-glow: rgba(85, 184, 232, 0.25);
-  --coral-accent: #FFAD73;
+  
+  /* Primary Accent: Emerald Jade (Replacing Blue) */
+  --emerald-primary: #10B981;
+  --emerald-light: #34D399;
+  --emerald-glow: rgba(16, 185, 129, 0.28);
+  --emerald-deep: #064E3B;
+  --blue-sky: #10B981;
+  --blue-glow: rgba(16, 185, 129, 0.28);
+
+  --coral-accent: #FF7A59;
   --emerald: #10B981;
 
   --text-main: #FFFFFF;
-  --text-muted: #8E9BAE;
-  --text-dim: #5A6980;
+  --text-muted: #94A398;
+  --text-dim: #5C6E62;
   --text-gold: #E5C07B;
 
   --radius-sm: 8px;
@@ -72,9 +80,9 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   background-image:
-    radial-gradient(ellipse 90% 60% at 50% -15%, rgba(85, 184, 232, 0.14), transparent),
+    radial-gradient(ellipse 90% 60% at 50% -15%, rgba(16, 185, 129, 0.14), transparent),
     radial-gradient(circle 600px at 10% 25%, rgba(212, 175, 55, 0.05), transparent),
-    radial-gradient(circle 700px at 90% 70%, rgba(85, 184, 232, 0.06), transparent);
+    radial-gradient(circle 700px at 90% 70%, rgba(16, 185, 129, 0.06), transparent);
   background-attachment: fixed;
 }
 
@@ -168,7 +176,7 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  background: linear-gradient(135deg, rgba(85, 184, 232, 0.2), rgba(212, 175, 55, 0.25));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(212, 175, 55, 0.25));
   border: 1px solid var(--border-gold);
 }
 
@@ -223,14 +231,14 @@ button {
 }
 
 .action-btn.btn-new-plan {
-  background: linear-gradient(135deg, rgba(85, 184, 232, 0.15), rgba(212, 175, 55, 0.18));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(212, 175, 55, 0.18));
   border-color: var(--border-gold);
   color: var(--gold-light);
   font-weight: 600;
 }
 
 .action-btn.btn-new-plan:hover {
-  background: linear-gradient(135deg, rgba(85, 184, 232, 0.25), rgba(212, 175, 55, 0.3));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(212, 175, 55, 0.3));
   border-color: var(--gold-primary);
   color: #FFFFFF;
   box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
@@ -257,7 +265,7 @@ button {
 
 .view-toggle-btn.active {
   background: var(--gold-primary);
-  color: #050B14;
+  color: #070B09;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
 }
@@ -456,11 +464,11 @@ button {
 }
 
 .style-radio-label input:checked + span {
-  background: rgba(85, 184, 232, 0.15);
+  background: rgba(16, 185, 129, 0.15);
   border-color: var(--blue-sky);
   color: #FFFFFF;
   font-weight: 600;
-  box-shadow: 0 0 12px rgba(85, 184, 232, 0.25);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
 }
 
 .planner-actions {
@@ -479,7 +487,7 @@ button {
   padding: 14px 28px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, #D4AF37 0%, #AA8416 100%);
-  color: #050B14;
+  color: #070B09;
   font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -538,7 +546,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 1px solid rgba(85, 184, 232, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .radar-circle.c1 { width: 60px; height: 60px; }
@@ -747,7 +755,7 @@ button {
   padding: 10px 20px;
   border-radius: var(--radius-full);
   background: var(--gold-primary);
-  color: #050B14;
+  color: #070B09;
   font-weight: 600;
   font-size: 0.88rem;
   transition: all 0.2s ease;
@@ -772,7 +780,7 @@ button {
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-elevated);
-  background-color: #050B14;
+  background-color: #070B09;
 }
 
 .hero-cover-bg {
@@ -793,7 +801,7 @@ button {
 .hero-cover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(5, 11, 20, 0.4) 0%, rgba(5, 11, 20, 0.78) 50%, #050B14 100%);
+  background: linear-gradient(180deg, rgba(5, 11, 20, 0.4) 0%, rgba(5, 11, 20, 0.78) 50%, #070B09 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -944,7 +952,7 @@ button {
 
 .hero-jump-pill.primary {
   background: linear-gradient(135deg, var(--gold-primary), #B8860B);
-  color: #050B14;
+  color: #070B09;
   font-weight: 700;
   border-color: transparent;
 }
@@ -1083,7 +1091,7 @@ button {
 
 .day-tab.active {
   background: var(--gold-primary);
-  color: #050B14;
+  color: #070B09;
   font-weight: 700;
   border-color: var(--gold-primary);
   box-shadow: 0 2px 12px rgba(212, 175, 55, 0.35);
@@ -1170,7 +1178,7 @@ button {
   background: rgba(8, 16, 28, 0.82);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(85, 184, 232, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: var(--radius-xl);
   padding: 22px 24px;
   margin-bottom: 32px;
@@ -1364,7 +1372,7 @@ button {
 }
 
 .journey-node.active .journey-node-num {
-  color: #050B14;
+  color: #070B09;
   font-weight: 900;
 }
 
@@ -1421,7 +1429,7 @@ button {
 .journey-segment-line {
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, rgba(212, 175, 55, 0.4), rgba(85, 184, 232, 0.6), rgba(212, 175, 55, 0.4));
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.4), rgba(16, 185, 129, 0.6), rgba(212, 175, 55, 0.4));
   border-radius: 2px;
 }
 
@@ -1440,7 +1448,7 @@ button {
   50% {
     transform: translateX(4px);
     opacity: 1;
-    filter: drop-shadow(0 0 6px rgba(85, 184, 232, 0.8));
+    filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.8));
   }
 }
 
@@ -1448,10 +1456,17 @@ button {
 
 .day-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 26px;
   align-items: stretch;
   margin-bottom: 40px;
+  width: 100%;
+}
+
+.itinerary-day-card.fallback-card {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 100%;
 }
 
 .itinerary-day-card {
@@ -1522,7 +1537,7 @@ button {
 
 .day-card-number {
   background: linear-gradient(135deg, var(--gold-primary), #B8860B);
-  color: #050B14;
+  color: #070B09;
   font-family: var(--font-mono);
   font-weight: 800;
   font-size: 0.82rem;
@@ -1541,8 +1556,8 @@ button {
 .day-card-count-badge {
   font-size: 0.74rem;
   color: var(--blue-sky);
-  background: rgba(85, 184, 232, 0.12);
-  border: 1px solid rgba(85, 184, 232, 0.25);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   padding: 4px 10px;
   border-radius: var(--radius-full);
   font-weight: 600;
@@ -1758,7 +1773,7 @@ button {
 
 .day-number-badge {
   background: linear-gradient(135deg, var(--gold-primary), #B8860B);
-  color: #050B14;
+  color: #070B09;
   font-weight: 800;
   font-size: 0.95rem;
   padding: 8px 18px;
@@ -1795,7 +1810,7 @@ button {
   bottom: 14px;
   left: 11px;
   width: 2px;
-  background: linear-gradient(180deg, var(--gold-primary), rgba(85, 184, 232, 0.4), var(--border-subtle));
+  background: linear-gradient(180deg, var(--gold-primary), rgba(16, 185, 129, 0.4), var(--border-subtle));
   border-radius: var(--radius-full);
 }
 
@@ -1815,7 +1830,7 @@ button {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #081120;
+  background: #0A110D;
   border: 2px solid var(--gold-primary);
   display: flex;
   align-items: center;
@@ -1967,9 +1982,9 @@ button {
   letter-spacing: 0.05em;
   padding: 4px 10px;
   border-radius: var(--radius-full);
-  background: rgba(85, 184, 232, 0.12);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--blue-sky);
-  border: 1px solid rgba(85, 184, 232, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .highlight-desc {
@@ -2047,8 +2062,8 @@ button {
 
 .weather-advice-banner {
   margin-top: 24px;
-  background: rgba(85, 184, 232, 0.08);
-  border: 1px solid rgba(85, 184, 232, 0.25);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: var(--radius-md);
   padding: 14px 20px;
   color: var(--text-main);
@@ -2217,7 +2232,7 @@ button {
   width: 36px;
   height: 36px;
   border-radius: 9px;
-  background: rgba(85, 184, 232, 0.12);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--blue-sky);
   display: flex;
   align-items: center;
@@ -2312,7 +2327,7 @@ button {
 .refinement-submit-btn {
   padding: 8px 18px;
   background: var(--gold-primary);
-  color: #050B14;
+  color: #070B09;
   font-weight: 600;
   font-size: 0.85rem;
   border-radius: var(--radius-full);
@@ -2623,7 +2638,7 @@ button {
   padding: 12px;
   border-radius: var(--radius-full);
   background: var(--gold-primary);
-  color: #050B14;
+  color: #070B09;
   font-weight: 700;
   font-size: 0.92rem;
   transition: all 0.2s ease;
@@ -2762,8 +2777,8 @@ button {
 }
 
 .provider-input-group:focus-within {
-  border-color: rgba(85, 184, 232, 0.6);
-  box-shadow: 0 0 0 2px rgba(85, 184, 232, 0.15);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15);
 }
 
 .provider-key-input {
@@ -2799,9 +2814,9 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: linear-gradient(135deg, rgba(85, 184, 232, 0.18), rgba(85, 184, 232, 0.08));
-  border: 1px solid rgba(85, 184, 232, 0.4);
-  color: #55B8E8;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(16, 185, 129, 0.08));
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10B981;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 6px 12px;
@@ -2812,8 +2827,8 @@ button {
 }
 
 .btn-connect-provider:hover {
-  background: #55B8E8;
-  color: #050B14;
+  background: #10B981;
+  color: #070B09;
 }
 
 .btn-connect-provider.is-busy {
@@ -2920,8 +2935,8 @@ button {
 }
 
 .auth-tab.active {
-  color: #55B8E8;
-  border-bottom-color: #55B8E8;
+  color: #10B981;
+  border-bottom-color: #10B981;
   font-weight: 700;
 }
 
@@ -2970,7 +2985,7 @@ button {
 }
 
 .auth-input:focus {
-  border-color: #55B8E8;
+  border-color: #10B981;
 }
 
 .password-input-wrap {
@@ -2998,7 +3013,7 @@ button {
 }
 
 .pw-toggle-btn:hover {
-  color: #55B8E8;
+  color: #10B981;
 }
 
 .auth-actions .btn-block {
@@ -3008,7 +3023,7 @@ button {
   font-weight: 700;
   border-radius: 8px;
   border: none;
-  background: linear-gradient(135deg, #55B8E8, #2563EB);
+  background: linear-gradient(135deg, #10B981, #2563EB);
   color: #FFFFFF;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -3026,7 +3041,7 @@ button {
 }
 
 .auth-switch-text a {
-  color: #55B8E8;
+  color: #10B981;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -3058,7 +3073,7 @@ button {
 .site-footer {
   position: relative;
   z-index: 10;
-  background: linear-gradient(180deg, rgba(3, 10, 19, 0.9) 0%, #030810 100%);
+  background: linear-gradient(180deg, rgba(3, 10, 19, 0.9) 0%, #070B09 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 50px 6vw 24px;
   color: rgba(255, 255, 255, 0.7);
@@ -3110,9 +3125,9 @@ button {
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 6px;
-  background: rgba(85, 184, 232, 0.15);
-  border: 1px solid rgba(85, 184, 232, 0.35);
-  color: #55B8E8;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10B981;
   margin-left: 4px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -3172,7 +3187,7 @@ button {
 }
 
 .footer-links a:hover {
-  color: #55B8E8;
+  color: #10B981;
   transform: translateX(4px);
   display: inline-block;
 }
@@ -3192,11 +3207,11 @@ button {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #D4AF37, #55B8E8);
+  background: linear-gradient(135deg, #D4AF37, #10B981);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #050B14;
+  color: #070B09;
   font-weight: 800;
   font-size: 0.88rem;
   flex-shrink: 0;
@@ -3379,7 +3394,7 @@ button {
   width: 100%;
   height: 190px;
   overflow: hidden;
-  background: #0c1626;
+  background: #0E1814;
 }
 
 .highlight-img {
@@ -3451,7 +3466,7 @@ button {
   width: 100%;
   height: 180px;
   overflow: hidden;
-  background: #0c1626;
+  background: #0E1814;
 }
 
 .food-img {
@@ -3560,7 +3575,7 @@ button {
   top: 2px;
   width: 4px;
   height: 9px;
-  border: solid #050B14;
+  border: solid #070B09;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -3618,7 +3633,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   padding: 10px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(85, 184, 232, 0.1);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(16, 185, 129, 0.1);
   z-index: 1050;
   display: flex;
   flex-direction: column;
@@ -3642,8 +3657,8 @@ button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #D4AF37, #55B8E8);
-  color: #050B14;
+  background: linear-gradient(135deg, #D4AF37, #10B981);
+  color: #070B09;
   font-weight: 800;
   font-size: 0.88rem;
   display: flex;
@@ -3706,7 +3721,7 @@ button {
 }
 
 .user-dropdown-item svg {
-  color: var(--blue-sky, #55B8E8);
+  color: var(--blue-sky, #10B981);
   flex-shrink: 0;
 }
 
