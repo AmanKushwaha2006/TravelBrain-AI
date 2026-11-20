@@ -241,19 +241,6 @@
       "source_location": "L1286"
     },
     {
-      "id": "app_evaluaterequest",
-      "label": "EvaluateRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "evaluaterequest",
-      "source_file": "app.py",
-      "source_location": "L171"
-    },
-    {
       "id": "src_config_session_credentials",
       "label": "Credentials",
       "_callable": true,
@@ -278,6 +265,19 @@
       "norm_label": "configrequest",
       "source_file": "app.py",
       "source_location": "L182"
+    },
+    {
+      "id": "app_evaluaterequest",
+      "label": "EvaluateRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "evaluaterequest",
+      "source_file": "app.py",
+      "source_location": "L171"
     },
     {
       "id": "app_loginrequest",
@@ -330,6 +330,18 @@
       "norm_label": "verifykeyrequest",
       "source_file": "app.py",
       "source_location": "L195"
+    },
+    {
+      "id": "src_clients_checkpointer_get_connection",
+      "label": "get_connection()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "get_connection()",
+      "source_file": "src/clients/checkpointer.py",
+      "source_location": "L34"
     },
     {
       "id": "src_clients_checkpointer_get_session_checkpointer",
@@ -438,66 +450,6 @@
       "norm_label": "resolve_tavily_api_key()",
       "source_file": "src/config/session.py",
       "source_location": "L77"
-    },
-    {
-      "id": "src_config_settings_get_database_url",
-      "label": "get_database_url()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "get_database_url()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L135"
-    },
-    {
-      "id": "src_config_settings_get_groq_api_key",
-      "label": "get_groq_api_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "get_groq_api_key()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L116"
-    },
-    {
-      "id": "src_config_settings_normalize_database_url",
-      "label": "normalize_database_url()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "normalize_database_url()",
-      "source_file": "src/config/settings.py",
-      "source_location": "L125"
-    },
-    {
-      "id": "src_mcp_servers_weather_server_get_current_weather",
-      "label": "get_current_weather()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "get_current_weather()",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_mcp_servers_weather_server_get_forecast",
-      "label": "get_forecast()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "get_forecast()",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L43"
     },
     {
       "id": "src_agents_critic_agent_clean_json_output",
@@ -666,6 +618,18 @@
       "norm_label": "weather_agent()",
       "source_file": "src/agents/weather_agent.py",
       "source_location": "L12"
+    },
+    {
+      "id": "src_clients_cache_cached",
+      "label": "cached()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "critic_agent.py",
+      "file_type": "code",
+      "norm_label": "cached()",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L200"
     },
     {
       "id": "src_clients_checkpointer_get_checkpointer",
@@ -1856,16 +1820,28 @@
       "source_location": "L44"
     },
     {
-      "id": "src_config_session_credential_status",
-      "label": "credential_status()",
+      "id": "src_mcp_servers_weather_server_get_current_weather",
+      "label": "get_current_weather()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
       "community_name": "verify_single_key",
       "file_type": "code",
-      "norm_label": "credential_status()",
-      "source_file": "src/config/session.py",
-      "source_location": "L163"
+      "norm_label": "get_current_weather()",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_mcp_servers_weather_server_get_forecast",
+      "label": "get_forecast()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "file_type": "code",
+      "norm_label": "get_forecast()",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L43"
     },
     {
       "id": "frontend_static_js_gltfloader_gltfmaterialspbrspecularglossinessextension_constructor",
@@ -2024,66 +2000,6 @@
       "source_location": "L1772"
     },
     {
-      "id": "app_evaluate_plan",
-      "label": "evaluate_plan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "evaluate_plan()",
-      "source_file": "app.py",
-      "source_location": "L500"
-    },
-    {
-      "id": "app_health_check",
-      "label": "health_check()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "health_check()",
-      "source_file": "app.py",
-      "source_location": "L799"
-    },
-    {
-      "id": "app_read_config",
-      "label": "read_config()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "read_config()",
-      "source_file": "app.py",
-      "source_location": "L256"
-    },
-    {
-      "id": "app_reset_config",
-      "label": "reset_config()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "reset_config()",
-      "source_file": "app.py",
-      "source_location": "L395"
-    },
-    {
-      "id": "app_session_id",
-      "label": "_session_id()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "_session_id()",
-      "source_file": "app.py",
-      "source_location": "L213"
-    },
-    {
       "id": "src_api_sessions_active_session_count",
       "label": "active_session_count()",
       "_callable": true,
@@ -2094,18 +2010,6 @@
       "norm_label": "active_session_count()",
       "source_file": "src/api/sessions.py",
       "source_location": "L151"
-    },
-    {
-      "id": "src_api_sessions_clear_credentials",
-      "label": "clear_credentials()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "clear_credentials()",
-      "source_file": "src/api/sessions.py",
-      "source_location": "L143"
     },
     {
       "id": "src_api_sessions_get_credentials_for",
@@ -2156,16 +2060,16 @@
       "source_location": "L73"
     },
     {
-      "id": "src_config_session_use_credentials",
-      "label": "use_credentials()",
+      "id": "app_add_no_cache_for_dev",
+      "label": "add_no_cache_for_dev()",
       "_callable": true,
       "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
+      "community": 23,
+      "community_name": "app.py",
       "file_type": "code",
-      "norm_label": "use_credentials()",
-      "source_file": "src/config/session.py",
-      "source_location": "L53"
+      "norm_label": "add_no_cache_for_dev()",
+      "source_file": "app.py",
+      "source_location": "L139"
     },
     {
       "id": "app_clear_auth_cookie",
@@ -2180,6 +2084,30 @@
       "source_location": "L595"
     },
     {
+      "id": "app_evaluate_plan",
+      "label": "evaluate_plan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "evaluate_plan()",
+      "source_file": "app.py",
+      "source_location": "L500"
+    },
+    {
+      "id": "app_favicon",
+      "label": "favicon()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "favicon()",
+      "source_file": "app.py",
+      "source_location": "L815"
+    },
+    {
       "id": "app_lifespan",
       "label": "lifespan()",
       "_callable": true,
@@ -2192,16 +2120,16 @@
       "source_location": "L104"
     },
     {
-      "id": "app_logout",
-      "label": "logout()",
+      "id": "app_login",
+      "label": "login()",
       "_callable": true,
       "_origin": "ast",
       "community": 23,
       "community_name": "app.py",
       "file_type": "code",
-      "norm_label": "logout()",
+      "norm_label": "login()",
       "source_file": "app.py",
-      "source_location": "L658"
+      "source_location": "L636"
     },
     {
       "id": "app_set_auth_cookie",
@@ -2240,18 +2168,6 @@
       "source_location": "L109"
     },
     {
-      "id": "src_db_auth_delete_session",
-      "label": "delete_session()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "delete_session()",
-      "source_file": "src/db/auth.py",
-      "source_location": "L97"
-    },
-    {
       "id": "src_db_models_init_auth_tables",
       "label": "init_auth_tables()",
       "_callable": true,
@@ -2288,16 +2204,64 @@
       "source_location": "L19"
     },
     {
-      "id": "app_add_no_cache_for_dev",
-      "label": "add_no_cache_for_dev()",
+      "id": "app_health_check",
+      "label": "health_check()",
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "add_no_cache_for_dev",
+      "community_name": "use_credentials",
       "file_type": "code",
-      "norm_label": "add_no_cache_for_dev()",
+      "norm_label": "health_check()",
       "source_file": "app.py",
-      "source_location": "L139"
+      "source_location": "L799"
+    },
+    {
+      "id": "app_reset_config",
+      "label": "reset_config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "code",
+      "norm_label": "reset_config()",
+      "source_file": "app.py",
+      "source_location": "L395"
+    },
+    {
+      "id": "src_api_sessions_clear_credentials",
+      "label": "clear_credentials()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "code",
+      "norm_label": "clear_credentials()",
+      "source_file": "src/api/sessions.py",
+      "source_location": "L143"
+    },
+    {
+      "id": "src_config_session_credential_status",
+      "label": "credential_status()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "code",
+      "norm_label": "credential_status()",
+      "source_file": "src/config/session.py",
+      "source_location": "L163"
+    },
+    {
+      "id": "src_config_session_use_credentials",
+      "label": "use_credentials()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "code",
+      "norm_label": "use_credentials()",
+      "source_file": "src/config/session.py",
+      "source_location": "L53"
     },
     {
       "id": "src_db_history_delete_trip",
@@ -2792,18 +2756,6 @@
       "source_location": "L560"
     },
     {
-      "id": "app_favicon",
-      "label": "favicon()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "Request",
-      "file_type": "code",
-      "norm_label": "favicon()",
-      "source_file": "app.py",
-      "source_location": "L815"
-    },
-    {
       "id": "app_get_auth_pool",
       "label": "_get_auth_pool()",
       "_callable": true,
@@ -2864,16 +2816,28 @@
       "source_location": "L685"
     },
     {
-      "id": "app_login",
-      "label": "login()",
+      "id": "app_logout",
+      "label": "logout()",
       "_callable": true,
       "_origin": "ast",
       "community": 28,
       "community_name": "Request",
       "file_type": "code",
-      "norm_label": "login()",
+      "norm_label": "logout()",
       "source_file": "app.py",
-      "source_location": "L636"
+      "source_location": "L658"
+    },
+    {
+      "id": "app_read_config",
+      "label": "read_config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "code",
+      "norm_label": "read_config()",
+      "source_file": "app.py",
+      "source_location": "L256"
     },
     {
       "id": "app_read_history",
@@ -2912,16 +2876,16 @@
       "source_location": "L777"
     },
     {
-      "id": "app_signup",
-      "label": "signup()",
+      "id": "app_session_id",
+      "label": "_session_id()",
       "_callable": true,
       "_origin": "ast",
       "community": 28,
       "community_name": "Request",
       "file_type": "code",
-      "norm_label": "signup()",
+      "norm_label": "_session_id()",
       "source_file": "app.py",
-      "source_location": "L600"
+      "source_location": "L213"
     },
     {
       "id": "app_travel_planner",
@@ -2953,11 +2917,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "async_cached()",
       "source_file": "src/clients/cache.py",
       "source_location": "L226"
+    },
+    {
+      "id": "src_config_settings_get_database_url",
+      "label": "get_database_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "get_database_url()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L135"
+    },
+    {
+      "id": "src_config_settings_get_groq_api_key",
+      "label": "get_groq_api_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "get_groq_api_key()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "src_config_settings_normalize_database_url",
+      "label": "normalize_database_url()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "normalize_database_url()",
+      "source_file": "src/config/settings.py",
+      "source_location": "L125"
     },
     {
       "id": "src_mcp_servers_config_child_env",
@@ -2965,7 +2965,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_child_env()",
       "source_file": "src/mcp_servers/config.py",
@@ -2977,7 +2977,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "get_client()",
       "source_file": "src/mcp_servers/config.py",
@@ -2989,7 +2989,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "load_tools()",
       "source_file": "src/mcp_servers/config.py",
@@ -3001,7 +3001,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "require_tools()",
       "source_file": "src/mcp_servers/config.py",
@@ -3013,7 +3013,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "check_servers()",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -3025,7 +3025,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "get_all_tools()",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -3037,7 +3037,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_aviation_call()",
       "source_file": "src/mcp_servers/local.py",
@@ -3049,7 +3049,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_aviation_call_cached()",
       "source_file": "src/mcp_servers/local.py",
@@ -3061,7 +3061,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "aviation_mcp_call()",
       "source_file": "src/mcp_servers/local.py",
@@ -3073,7 +3073,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "forecast_mcp_search()",
       "source_file": "src/mcp_servers/local.py",
@@ -3085,7 +3085,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_get_aviation_tools()",
       "source_file": "src/mcp_servers/local.py",
@@ -3097,7 +3097,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_get_weather_tools()",
       "source_file": "src/mcp_servers/local.py",
@@ -3109,7 +3109,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "weather_mcp_search()",
       "source_file": "src/mcp_servers/local.py",
@@ -3121,7 +3121,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "_get_search_tool()",
       "source_file": "src/mcp_servers/remote.py",
@@ -3137,7 +3137,7 @@
       "file_type": "code",
       "norm_label": "cleanmarkdown()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L175"
+      "source_location": "L180"
     },
     {
       "id": "frontend_static_js_itinerary_clearautherror",
@@ -3149,7 +3149,7 @@
       "file_type": "code",
       "norm_label": "clearautherror()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1343"
+      "source_location": "L1518"
     },
     {
       "id": "frontend_static_js_itinerary_closeauthmodal",
@@ -3161,7 +3161,7 @@
       "file_type": "code",
       "norm_label": "closeauthmodal()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1314"
+      "source_location": "L1489"
     },
     {
       "id": "frontend_static_js_itinerary_closesettings",
@@ -3173,7 +3173,7 @@
       "file_type": "code",
       "norm_label": "closesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2278"
+      "source_location": "L2453"
     },
     {
       "id": "frontend_static_js_itinerary_el",
@@ -3185,7 +3185,7 @@
       "file_type": "code",
       "norm_label": "el()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L159"
+      "source_location": "L164"
     },
     {
       "id": "frontend_static_js_itinerary_executeplanning",
@@ -3197,7 +3197,19 @@
       "file_type": "code",
       "norm_label": "executeplanning()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1672"
+      "source_location": "L1847"
+    },
+    {
+      "id": "frontend_static_js_itinerary_focusdaycard",
+      "label": "focusDayCard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "itinerary.js",
+      "file_type": "code",
+      "norm_label": "focusdaycard()",
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1321"
     },
     {
       "id": "frontend_static_js_itinerary_generatewithdirectgroq",
@@ -3209,7 +3221,7 @@
       "file_type": "code",
       "norm_label": "generatewithdirectgroq()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1547"
+      "source_location": "L1722"
     },
     {
       "id": "frontend_static_js_itinerary_generatewithdirectgroq_callmodel",
@@ -3221,7 +3233,7 @@
       "file_type": "code",
       "norm_label": "callmodel()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1584"
+      "source_location": "L1759"
     },
     {
       "id": "frontend_static_js_itinerary_getdestinationphoto",
@@ -3233,7 +3245,7 @@
       "file_type": "code",
       "norm_label": "getdestinationphoto()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L268"
+      "source_location": "L273"
     },
     {
       "id": "frontend_static_js_itinerary_getloggedinuser",
@@ -3245,7 +3257,7 @@
       "file_type": "code",
       "norm_label": "getloggedinuser()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1208"
+      "source_location": "L1383"
     },
     {
       "id": "frontend_static_js_itinerary_handleauthsuccess",
@@ -3257,7 +3269,7 @@
       "file_type": "code",
       "norm_label": "handleauthsuccess()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1349"
+      "source_location": "L1524"
     },
     {
       "id": "frontend_static_js_itinerary_handleloginsubmit",
@@ -3269,7 +3281,7 @@
       "file_type": "code",
       "norm_label": "handleloginsubmit()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1378"
+      "source_location": "L1553"
     },
     {
       "id": "frontend_static_js_itinerary_handlelogout",
@@ -3281,7 +3293,7 @@
       "file_type": "code",
       "norm_label": "handlelogout()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1252"
+      "source_location": "L1427"
     },
     {
       "id": "frontend_static_js_itinerary_handlerefinement",
@@ -3293,7 +3305,7 @@
       "file_type": "code",
       "norm_label": "handlerefinement()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1950"
+      "source_location": "L2125"
     },
     {
       "id": "frontend_static_js_itinerary_handlesignupsubmit",
@@ -3305,7 +3317,7 @@
       "file_type": "code",
       "norm_label": "handlesignupsubmit()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1446"
+      "source_location": "L1621"
     },
     {
       "id": "frontend_static_js_itinerary_hideplannerscreen",
@@ -3317,7 +3329,7 @@
       "file_type": "code",
       "norm_label": "hideplannerscreen()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1541"
+      "source_location": "L1716"
     },
     {
       "id": "frontend_static_js_itinerary_init",
@@ -3329,7 +3341,7 @@
       "file_type": "code",
       "norm_label": "init()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2373"
+      "source_location": "L2548"
     },
     {
       "id": "frontend_static_js_itinerary_isuserauthenticated",
@@ -3341,7 +3353,7 @@
       "file_type": "code",
       "norm_label": "isuserauthenticated()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1273"
+      "source_location": "L1448"
     },
     {
       "id": "frontend_static_js_itinerary_loadtripbyid",
@@ -3353,7 +3365,7 @@
       "file_type": "code",
       "norm_label": "loadtripbyid()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1790"
+      "source_location": "L1965"
     },
     {
       "id": "frontend_static_js_itinerary_openauthmodal",
@@ -3365,7 +3377,7 @@
       "file_type": "code",
       "norm_label": "openauthmodal()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1287"
+      "source_location": "L1462"
     },
     {
       "id": "frontend_static_js_itinerary_opensettings",
@@ -3377,7 +3389,7 @@
       "file_type": "code",
       "norm_label": "opensettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2268"
+      "source_location": "L2443"
     },
     {
       "id": "frontend_static_js_itinerary_parseitinerarytext",
@@ -3389,7 +3401,7 @@
       "file_type": "code",
       "norm_label": "parseitinerarytext()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L295"
+      "source_location": "L300"
     },
     {
       "id": "frontend_static_js_itinerary_parsemarkdowntable",
@@ -3401,7 +3413,7 @@
       "file_type": "code",
       "norm_label": "parsemarkdowntable()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L192"
+      "source_location": "L197"
     },
     {
       "id": "frontend_static_js_itinerary_refreshitinconfig",
@@ -3413,7 +3425,7 @@
       "file_type": "code",
       "norm_label": "refreshitinconfig()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2036"
+      "source_location": "L2211"
     },
     {
       "id": "frontend_static_js_itinerary_rendercreds",
@@ -3425,7 +3437,7 @@
       "file_type": "code",
       "norm_label": "rendercreds()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2088"
+      "source_location": "L2263"
     },
     {
       "id": "frontend_static_js_itinerary_rendercriticcard",
@@ -3437,7 +3449,7 @@
       "file_type": "code",
       "norm_label": "rendercriticcard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1918"
+      "source_location": "L2093"
     },
     {
       "id": "frontend_static_js_itinerary_renderdashboard",
@@ -3449,7 +3461,7 @@
       "file_type": "code",
       "norm_label": "renderdashboard()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L770"
+      "source_location": "L775"
     },
     {
       "id": "frontend_static_js_itinerary_rendermd",
@@ -3461,7 +3473,7 @@
       "file_type": "code",
       "norm_label": "rendermd()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L184"
+      "source_location": "L189"
     },
     {
       "id": "frontend_static_js_itinerary_resetsettings",
@@ -3473,7 +3485,7 @@
       "file_type": "code",
       "norm_label": "resetsettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2356"
+      "source_location": "L2531"
     },
     {
       "id": "frontend_static_js_itinerary_saveplantohistory",
@@ -3485,7 +3497,7 @@
       "file_type": "code",
       "norm_label": "saveplantohistory()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1630"
+      "source_location": "L1805"
     },
     {
       "id": "frontend_static_js_itinerary_savesettings",
@@ -3497,7 +3509,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2285"
+      "source_location": "L2460"
     },
     {
       "id": "frontend_static_js_itinerary_setactivedaytab",
@@ -3509,7 +3521,7 @@
       "file_type": "code",
       "norm_label": "setactivedaytab()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1191"
+      "source_location": "L1352"
     },
     {
       "id": "frontend_static_js_itinerary_showautherror",
@@ -3521,7 +3533,7 @@
       "file_type": "code",
       "norm_label": "showautherror()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1337"
+      "source_location": "L1512"
     },
     {
       "id": "frontend_static_js_itinerary_showerror",
@@ -3533,7 +3545,7 @@
       "file_type": "code",
       "norm_label": "showerror()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1840"
+      "source_location": "L2015"
     },
     {
       "id": "frontend_static_js_itinerary_showplannerscreen",
@@ -3545,7 +3557,7 @@
       "file_type": "code",
       "norm_label": "showplannerscreen()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1528"
+      "source_location": "L1703"
     },
     {
       "id": "frontend_static_js_itinerary_switchauthtab",
@@ -3557,7 +3569,7 @@
       "file_type": "code",
       "norm_label": "switchauthtab()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1320"
+      "source_location": "L1495"
     },
     {
       "id": "frontend_static_js_itinerary_toast",
@@ -3569,7 +3581,7 @@
       "file_type": "code",
       "norm_label": "toast()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L166"
+      "source_location": "L171"
     },
     {
       "id": "frontend_static_js_itinerary_triggercriticaudit",
@@ -3581,7 +3593,7 @@
       "file_type": "code",
       "norm_label": "triggercriticaudit()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1861"
+      "source_location": "L2036"
     },
     {
       "id": "frontend_static_js_itinerary_updateitinauthui",
@@ -3593,7 +3605,7 @@
       "file_type": "code",
       "norm_label": "updateitinauthui()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1222"
+      "source_location": "L1397"
     },
     {
       "id": "frontend_static_js_itinerary_updateitinconnui",
@@ -3605,7 +3617,7 @@
       "file_type": "code",
       "norm_label": "updateitinconnui()",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2021"
+      "source_location": "L2196"
     },
     {
       "id": "app_home_head",
@@ -4232,18 +4244,6 @@
       "source_location": "L135"
     },
     {
-      "id": "src_clients_cache_cached",
-      "label": "cached()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "cached()",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L200"
-    },
-    {
       "id": "src_clients_cache_cached_decorator",
       "label": "decorator()",
       "_callable": true,
@@ -4364,16 +4364,16 @@
       "source_location": "L177"
     },
     {
-      "id": "src_clients_checkpointer_get_connection",
-      "label": "get_connection()",
+      "id": "app_signup",
+      "label": "signup()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
+      "community": 6,
+      "community_name": "auth.py",
       "file_type": "code",
-      "norm_label": "get_connection()",
-      "source_file": "src/clients/checkpointer.py",
-      "source_location": "L34"
+      "norm_label": "signup()",
+      "source_file": "app.py",
+      "source_location": "L600"
     },
     {
       "id": "src_db_auth_authenticate_user",
@@ -4410,6 +4410,18 @@
       "norm_label": "create_user()",
       "source_file": "src/db/auth.py",
       "source_location": "L121"
+    },
+    {
+      "id": "src_db_auth_delete_session",
+      "label": "delete_session()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "auth.py",
+      "file_type": "code",
+      "norm_label": "delete_session()",
+      "source_file": "src/db/auth.py",
+      "source_location": "L97"
     },
     {
       "id": "src_db_auth_get_session_user",
@@ -4556,6 +4568,17 @@
       "source_location": "L72"
     },
     {
+      "id": "connection",
+      "label": "Connection",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "code",
+      "norm_label": "connection",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "postgressaver",
       "label": "PostgresSaver",
       "_origin": "ast",
@@ -4589,17 +4612,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_config_init",
-      "label": "config/__init__.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "config/__init__.py",
-      "source_file": "src/config/__init__.py",
-      "source_location": "L1"
-    },
-    {
       "id": "src_config_session",
       "label": "session.py",
       "_origin": "ast",
@@ -4611,39 +4623,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_config_settings",
-      "label": "settings.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "settings.py",
-      "source_file": "src/config/settings.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_mcp_servers_weather_server",
-      "label": "weather_server.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "weather_server.py",
-      "source_file": "src/mcp_servers/weather_server.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tool",
-      "label": "tool",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "code",
-      "norm_label": "tool",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "src_clients_checkpointer_rationale_1",
       "label": "PostgreSQL checkpointer used by LangGraph to persist conversation threads.",
       "_origin": "ast",
@@ -4653,6 +4632,17 @@
       "norm_label": "postgresql checkpointer used by langgraph to persist conversation threads.",
       "source_file": "src/clients/checkpointer.py",
       "source_location": "L1"
+    },
+    {
+      "id": "src_clients_checkpointer_rationale_35",
+      "label": "Creates a standalone psycopg connection for direct queries.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "session.py",
+      "file_type": "rationale",
+      "norm_label": "creates a standalone psycopg connection for direct queries.",
+      "source_file": "src/clients/checkpointer.py",
+      "source_location": "L35"
     },
     {
       "id": "src_clients_checkpointer_rationale_60",
@@ -4699,28 +4689,6 @@
       "source_location": "L94"
     },
     {
-      "id": "src_config_settings_rationale_1",
-      "label": "Central configuration. Everything that reads the environment lives here, so the\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "rationale",
-      "norm_label": "central configuration. everything that reads the environment lives here, so the...",
-      "source_file": "src/config/settings.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_config_settings_rationale_126",
-      "label": "Default to sslmode=require, which managed Postgres providers expect.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "session.py",
-      "file_type": "rationale",
-      "norm_label": "default to sslmode=require, which managed postgres providers expect.",
-      "source_file": "src/config/settings.py",
-      "source_location": "L126"
-    },
-    {
       "id": "chatgroq",
       "label": "ChatGroq",
       "_origin": "ast",
@@ -4751,17 +4719,6 @@
       "file_type": "code",
       "norm_label": "update_itinerary_css.py",
       "source_file": "scratch/update_itinerary_css.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "scratch_update_itinerary_js",
-      "label": "update_itinerary_js.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "critic_agent.py",
-      "file_type": "code",
-      "norm_label": "update_itinerary_js.py",
-      "source_file": "scratch/update_itinerary_js.py",
       "source_location": "L1"
     },
     {
@@ -4861,6 +4818,17 @@
       "file_type": "code",
       "norm_label": "weather_agent.py",
       "source_file": "src/agents/weather_agent.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_clients_init",
+      "label": "clients/__init__.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "critic_agent.py",
+      "file_type": "code",
+      "norm_label": "clients/__init__.py",
+      "source_file": "src/clients/__init__.py",
       "source_location": "L1"
     },
     {
@@ -5161,6 +5129,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_clients_cache_rationale_201",
+      "label": "Cache the result of a synchronous function in Redis.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "critic_agent.py",
+      "file_type": "rationale",
+      "norm_label": "cache the result of a synchronous function in redis.",
+      "source_file": "src/clients/cache.py",
+      "source_location": "L201"
+    },
+    {
       "id": "src_clients_llm_rationale_1",
       "label": "Groq chat model, resolved per session and cached per distinct key.",
       "_origin": "ast",
@@ -5414,6 +5393,28 @@
       "source_location": "L1"
     },
     {
+      "id": "src_mcp_servers_weather_server",
+      "label": "weather_server.py",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "file_type": "code",
+      "norm_label": "weather_server.py",
+      "source_file": "src/mcp_servers/weather_server.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tool",
+      "label": "tool",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "file_type": "code",
+      "norm_label": "tool",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "app_rationale_267",
       "label": "Store credentials for this browser session. Each supplied value is checked\u2026",
       "_origin": "ast",
@@ -5447,17 +5448,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_config_session_rationale_164",
-      "label": "Describe what is configured and where it came from, without ever returning the\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "verify_single_key",
-      "file_type": "rationale",
-      "norm_label": "describe what is configured and where it came from, without ever returning the...",
-      "source_file": "src/config/session.py",
-      "source_location": "L164"
-    },
-    {
       "id": "frontend_static_js_gltfloader_gltfmeshstandardsgmaterial_onbeforecompile",
       "label": ".onBeforeCompile()",
       "_origin": "ast",
@@ -5469,28 +5459,6 @@
       "source_location": "L1078"
     },
     {
-      "id": "api_route",
-      "label": "api_route",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "api_route",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "delete",
-      "label": "delete",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "code",
-      "norm_label": "delete",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "src_api_sessions",
       "label": "sessions.py",
       "_origin": "ast",
@@ -5500,28 +5468,6 @@
       "norm_label": "sessions.py",
       "source_file": "src/api/sessions.py",
       "source_location": "L1"
-    },
-    {
-      "id": "app_rationale_257",
-      "label": "What is configured, and where it came from. Never returns a secret.",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "rationale",
-      "norm_label": "what is configured, and where it came from. never returns a secret.",
-      "source_file": "app.py",
-      "source_location": "L257"
-    },
-    {
-      "id": "app_rationale_396",
-      "label": "Drop session keys and fall back to whatever the server's .env has.",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "rationale",
-      "norm_label": "drop session keys and fall back to whatever the server's .env has.",
-      "source_file": "app.py",
-      "source_location": "L396"
     },
     {
       "id": "src_api_sessions_rationale_1",
@@ -5555,17 +5501,6 @@
       "norm_label": "merge new values into the session. passing none leaves a field untouched;...",
       "source_file": "src/api/sessions.py",
       "source_location": "L81"
-    },
-    {
-      "id": "src_config_session_rationale_54",
-      "label": "Bind session credentials for the duration of one request.",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "sessions.py",
-      "file_type": "rationale",
-      "norm_label": "bind session credentials for the duration of one request.",
-      "source_file": "src/config/session.py",
-      "source_location": "L54"
     },
     {
       "id": "app",
@@ -5612,6 +5547,17 @@
       "source_location": ""
     },
     {
+      "id": "middleware",
+      "label": "middleware",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "middleware",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "response",
       "label": "Response",
       "_origin": "ast",
@@ -5634,6 +5580,17 @@
       "source_location": "L1"
     },
     {
+      "id": "app_rationale_140",
+      "label": "Prevent aggressive browser caching for static files and templates.",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "prevent aggressive browser caching for static files and templates.",
+      "source_file": "app.py",
+      "source_location": "L140"
+    },
+    {
       "id": "app_rationale_183",
       "label": "None leaves a field untouched, \"\" clears it. Keys are held in server memory for\u2026",
       "_origin": "ast",
@@ -5654,17 +5611,6 @@
       "norm_label": "delete expired sessions. returns count deleted.",
       "source_file": "src/db/auth.py",
       "source_location": "L110"
-    },
-    {
-      "id": "src_db_auth_rationale_98",
-      "label": "Invalidate a session by raw token.",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "invalidate a session by raw token.",
-      "source_file": "src/db/auth.py",
-      "source_location": "L98"
     },
     {
       "id": "src_db_models_rationale_1",
@@ -5766,26 +5712,59 @@
       "source_location": "L1"
     },
     {
-      "id": "middleware",
-      "label": "middleware",
+      "id": "api_route",
+      "label": "api_route",
       "_origin": "ast",
       "community": 25,
-      "community_name": "add_no_cache_for_dev",
+      "community_name": "use_credentials",
       "file_type": "code",
-      "norm_label": "middleware",
+      "norm_label": "api_route",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "app_rationale_140",
-      "label": "Prevent aggressive browser caching for static files and templates.",
+      "id": "delete",
+      "label": "delete",
       "_origin": "ast",
       "community": 25,
-      "community_name": "add_no_cache_for_dev",
+      "community_name": "use_credentials",
+      "file_type": "code",
+      "norm_label": "delete",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "app_rationale_396",
+      "label": "Drop session keys and fall back to whatever the server's .env has.",
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
       "file_type": "rationale",
-      "norm_label": "prevent aggressive browser caching for static files and templates.",
+      "norm_label": "drop session keys and fall back to whatever the server's .env has.",
       "source_file": "app.py",
-      "source_location": "L140"
+      "source_location": "L396"
+    },
+    {
+      "id": "src_config_session_rationale_164",
+      "label": "Describe what is configured and where it came from, without ever returning the\u2026",
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "rationale",
+      "norm_label": "describe what is configured and where it came from, without ever returning the...",
+      "source_file": "src/config/session.py",
+      "source_location": "L164"
+    },
+    {
+      "id": "src_config_session_rationale_54",
+      "label": "Bind session credentials for the duration of one request.",
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "use_credentials",
+      "file_type": "rationale",
+      "norm_label": "bind session credentials for the duration of one request.",
+      "source_file": "src/config/session.py",
+      "source_location": "L54"
     },
     {
       "id": "src_db_history",
@@ -5898,6 +5877,17 @@
       "source_location": ""
     },
     {
+      "id": "app_rationale_257",
+      "label": "What is configured, and where it came from. Never returns a secret.",
+      "_origin": "ast",
+      "community": 28,
+      "community_name": "Request",
+      "file_type": "rationale",
+      "norm_label": "what is configured, and where it came from. never returns a secret.",
+      "source_file": "app.py",
+      "source_location": "L257"
+    },
+    {
       "id": "app_rationale_561",
       "label": "Build a short sidebar-friendly title from the user query.",
       "_origin": "ast",
@@ -5968,18 +5958,40 @@
       "label": "MultiServerMCPClient",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "multiservermcpclient",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "src_config_init",
+      "label": "config/__init__.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "config/__init__.py",
+      "source_file": "src/config/__init__.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_config_settings",
+      "label": "settings.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "code",
+      "norm_label": "settings.py",
+      "source_file": "src/config/settings.py",
+      "source_location": "L1"
+    },
+    {
       "id": "src_mcp_servers_config",
       "label": "config.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "config.py",
       "source_file": "src/mcp_servers/config.py",
@@ -5990,7 +6002,7 @@
       "label": "diagnostics.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "diagnostics.py",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -6001,7 +6013,7 @@
       "label": "mcp_servers/__init__.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "mcp_servers/__init__.py",
       "source_file": "src/mcp_servers/__init__.py",
@@ -6012,7 +6024,7 @@
       "label": "local.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "local.py",
       "source_file": "src/mcp_servers/local.py",
@@ -6023,7 +6035,7 @@
       "label": "remote.py",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "code",
       "norm_label": "remote.py",
       "source_file": "src/mcp_servers/remote.py",
@@ -6034,18 +6046,40 @@
       "label": "Cache the result of an async function in Redis.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "cache the result of an async function in redis.",
       "source_file": "src/clients/cache.py",
       "source_location": "L227"
     },
     {
+      "id": "src_config_settings_rationale_1",
+      "label": "Central configuration. Everything that reads the environment lives here, so the\u2026",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "rationale",
+      "norm_label": "central configuration. everything that reads the environment lives here, so the...",
+      "source_file": "src/config/settings.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_config_settings_rationale_126",
+      "label": "Default to sslmode=require, which managed Postgres providers expect.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "settings.py",
+      "file_type": "rationale",
+      "norm_label": "default to sslmode=require, which managed postgres providers expect.",
+      "source_file": "src/config/settings.py",
+      "source_location": "L126"
+    },
+    {
       "id": "src_mcp_servers_config_rationale_1",
       "label": "MCP server registry, split by where the server actually runs. REMOTE servers\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "mcp server registry, split by where the server actually runs. remote servers...",
       "source_file": "src/mcp_servers/config.py",
@@ -6056,7 +6090,7 @@
       "label": "Load one server's tools as {name: tool}. Deliberately loads a single server at\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "load one server's tools as {name: tool}. deliberately loads a single server at...",
       "source_file": "src/mcp_servers/config.py",
@@ -6067,7 +6101,7 @@
       "label": "Raise a readable error when a server is missing expected tools.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "raise a readable error when a server is missing expected tools.",
       "source_file": "src/mcp_servers/config.py",
@@ -6078,7 +6112,7 @@
       "label": "Full copy of the current environment plus explicit overrides. stdio servers are\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "full copy of the current environment plus explicit overrides. stdio servers are...",
       "source_file": "src/mcp_servers/config.py",
@@ -6089,7 +6123,7 @@
       "label": "Shared client covering every configured server.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "shared client covering every configured server.",
       "source_file": "src/mcp_servers/config.py",
@@ -6100,7 +6134,7 @@
       "label": "Connectivity checks for every configured MCP server.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "connectivity checks for every configured mcp server.",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -6111,7 +6145,7 @@
       "label": "Try each server independently and report what it exposes. Returns {server_name:\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "try each server independently and report what it exposes. returns {server_name:...",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -6122,7 +6156,7 @@
       "label": "Flat list of every tool object across all reachable servers.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "flat list of every tool object across all reachable servers.",
       "source_file": "src/mcp_servers/diagnostics.py",
@@ -6133,7 +6167,7 @@
       "label": "MCP integration layer. config.py server registry, split into REMOTE_SERVERS /\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "mcp integration layer. config.py server registry, split into remote_servers /...",
       "source_file": "src/mcp_servers/__init__.py",
@@ -6144,7 +6178,7 @@
       "label": "Local MCP servers, spawned as stdio child processes. * aviationstack - third\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "local mcp servers, spawned as stdio child processes. * aviationstack - third...",
       "source_file": "src/mcp_servers/local.py",
@@ -6155,7 +6189,7 @@
       "label": "Current conditions. Short TTL, because this genuinely changes.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "current conditions. short ttl, because this genuinely changes.",
       "source_file": "src/mcp_servers/local.py",
@@ -6166,7 +6200,7 @@
       "label": "Multi-day forecast. OpenWeather only refreshes this hourly anyway.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "multi-day forecast. openweather only refreshes this hourly anyway.",
       "source_file": "src/mcp_servers/local.py",
@@ -6177,7 +6211,7 @@
       "label": "Call an AviationStack tool. Reference lookups (airports, airlines) are cached\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "call an aviationstack tool. reference lookups (airports, airlines) are cached...",
       "source_file": "src/mcp_servers/local.py",
@@ -6188,7 +6222,7 @@
       "label": "Remote MCP servers, reached over HTTP. Currently: Tavily (hotel / general web\u2026",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "remote mcp servers, reached over http. currently: tavily (hotel / general web...",
       "source_file": "src/mcp_servers/remote.py",
@@ -6199,7 +6233,7 @@
       "label": "Connect to Tavily once and keep the search tool handle.",
       "_origin": "ast",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "file_type": "rationale",
       "norm_label": "connect to tavily once and keep the search tool handle.",
       "source_file": "src/mcp_servers/remote.py",
@@ -6250,6 +6284,72 @@
       "source_location": "L792"
     },
     {
+      "id": "scratch_apply_day_cards_and_graph",
+      "label": "apply_day_cards_and_graph.py",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "code",
+      "norm_label": "apply_day_cards_and_graph.py",
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "scratch_update_itinerary_css_cards",
+      "label": "update_itinerary_css_cards.py",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "code",
+      "norm_label": "update_itinerary_css_cards.py",
+      "source_file": "scratch/update_itinerary_css_cards.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "scratch_update_itinerary_js_cards",
+      "label": "update_itinerary_js_cards.py",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "code",
+      "norm_label": "update_itinerary_js_cards.py",
+      "source_file": "scratch/update_itinerary_js_cards.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "scratch_apply_day_cards_and_graph_rationale_2",
+      "label": "Script to update Itinerary HTML, JS, and CSS with Journey Flow Graph and Day\u2026",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "rationale",
+      "norm_label": "script to update itinerary html, js, and css with journey flow graph and day...",
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L2"
+    },
+    {
+      "id": "scratch_update_itinerary_css_cards_rationale_2",
+      "label": "Update frontend/static/css/itinerary.css with Journey Route Graph & Day Cards\u2026",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "rationale",
+      "norm_label": "update frontend/static/css/itinerary.css with journey route graph & day cards...",
+      "source_file": "scratch/update_itinerary_css_cards.py",
+      "source_location": "L2"
+    },
+    {
+      "id": "scratch_update_itinerary_js_cards_rationale_2",
+      "label": "Update frontend/static/js/itinerary.js with Journey Flow Graph & Day Cards Grid.",
+      "_origin": "ast",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "file_type": "rationale",
+      "norm_label": "update frontend/static/js/itinerary.js with journey flow graph & day cards grid.",
+      "source_file": "scratch/update_itinerary_js_cards.py",
+      "source_location": "L2"
+    },
+    {
       "id": "frontend_static_js_app",
       "label": "app.js",
       "_origin": "ast",
@@ -6259,17 +6359,6 @@
       "norm_label": "app.js",
       "source_file": "frontend/static/js/app.js",
       "source_location": "L1"
-    },
-    {
-      "id": "connection",
-      "label": "Connection",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "connection",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "redis",
@@ -6303,17 +6392,6 @@
       "norm_label": "any",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "src_clients_init",
-      "label": "clients/__init__.py",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
-      "file_type": "code",
-      "norm_label": "clients/__init__.py",
-      "source_file": "src/clients/__init__.py",
-      "source_location": "L1"
     },
     {
       "id": "src_clients_cache_rationale_1",
@@ -6382,17 +6460,6 @@
       "source_location": "L178"
     },
     {
-      "id": "src_clients_cache_rationale_201",
-      "label": "Cache the result of a synchronous function in Redis.",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "cache the result of a synchronous function in redis.",
-      "source_file": "src/clients/cache.py",
-      "source_location": "L201"
-    },
-    {
       "id": "src_clients_cache_rationale_253",
       "label": "Delete cached entries for one prefix. Returns how many were removed.",
       "_origin": "ast",
@@ -6437,15 +6504,15 @@
       "source_location": "L99"
     },
     {
-      "id": "src_clients_checkpointer_rationale_35",
-      "label": "Creates a standalone psycopg connection for direct queries.",
+      "id": "scratch_update_itinerary_js",
+      "label": "update_itinerary_js.py",
       "_origin": "ast",
-      "community": 5,
-      "community_name": "cache.py",
-      "file_type": "rationale",
-      "norm_label": "creates a standalone psycopg connection for direct queries.",
-      "source_file": "src/clients/checkpointer.py",
-      "source_location": "L35"
+      "community": 6,
+      "community_name": "auth.py",
+      "file_type": "code",
+      "norm_label": "update_itinerary_js.py",
+      "source_file": "scratch/update_itinerary_js.py",
+      "source_location": "L1"
     },
     {
       "id": "src_db_auth",
@@ -6534,6 +6601,17 @@
       "norm_label": "look up user by raw token. returns user dict or none.",
       "source_file": "src/db/auth.py",
       "source_location": "L68"
+    },
+    {
+      "id": "src_db_auth_rationale_98",
+      "label": "Invalidate a session by raw token.",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "auth.py",
+      "file_type": "rationale",
+      "norm_label": "invalidate a session by raw token.",
+      "source_file": "src/db/auth.py",
+      "source_location": "L98"
     },
     {
       "id": "readme",
@@ -6852,17 +6930,6 @@
       "source_location": "L2"
     },
     {
-      "id": "certifi",
-      "label": "certifi",
-      "community": 0,
-      "community_name": "session.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "certifi",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "contextlib",
       "label": "contextlib",
       "community": 0,
@@ -6896,17 +6963,6 @@
       "type": "external"
     },
     {
-      "id": "dotenv",
-      "label": "dotenv",
-      "community": 0,
-      "community_name": "session.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "dotenv",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "langgraph_checkpoint_postgres",
       "label": "langgraph_checkpoint_postgres",
       "community": 0,
@@ -6914,28 +6970,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "langgraph_checkpoint_postgres",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "mcp_server_fastmcp",
-      "label": "mcp_server_fastmcp",
-      "community": 0,
-      "community_name": "session.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "mcp_server_fastmcp",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "pathlib",
-      "label": "pathlib",
-      "community": 0,
-      "community_name": "session.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "pathlib",
       "source_file": "",
       "type": "external"
     },
@@ -7068,6 +7102,28 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "uuid",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "dotenv",
+      "label": "dotenv",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "dotenv",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "mcp_server_fastmcp",
+      "label": "mcp_server_fastmcp",
+      "community": 2,
+      "community_name": "verify_single_key",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "mcp_server_fastmcp",
       "source_file": "",
       "type": "external"
     },
@@ -7237,10 +7293,21 @@
       "type": "external"
     },
     {
+      "id": "certifi",
+      "label": "certifi",
+      "community": 3,
+      "community_name": "settings.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "certifi",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "langchain_mcp_adapters_client",
       "label": "langchain_mcp_adapters_client",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "langchain_mcp_adapters_client",
@@ -7248,13 +7315,35 @@
       "type": "external"
     },
     {
+      "id": "pathlib",
+      "label": "pathlib",
+      "community": 3,
+      "community_name": "settings.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "pathlib",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "sys",
       "label": "sys",
       "community": 3,
-      "community_name": "local.py",
+      "community_name": "settings.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "sys",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "shutil",
+      "label": "shutil",
+      "community": 33,
+      "community_name": "apply_day_cards_and_graph.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "shutil",
       "source_file": "",
       "type": "external"
     },
@@ -11379,7 +11468,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1317",
+      "source_location": "L1492",
       "weight": 1.0
     },
     {
@@ -11391,7 +11480,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1673",
+      "source_location": "L1848",
       "weight": 1.0
     },
     {
@@ -11403,7 +11492,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1674",
+      "source_location": "L1849",
       "weight": 1.0
     },
     {
@@ -11415,7 +11504,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1675",
+      "source_location": "L1850",
       "weight": 1.0
     },
     {
@@ -11427,7 +11516,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1680",
+      "source_location": "L1855",
       "weight": 1.0
     },
     {
@@ -11439,7 +11528,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1747",
+      "source_location": "L1922",
       "weight": 1.0
     },
     {
@@ -11451,7 +11540,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1749",
+      "source_location": "L1924",
       "weight": 1.0
     },
     {
@@ -11463,7 +11552,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1750",
+      "source_location": "L1925",
       "weight": 1.0
     },
     {
@@ -11475,7 +11564,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1761",
+      "source_location": "L1936",
       "weight": 1.0
     },
     {
@@ -11487,7 +11576,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1781",
+      "source_location": "L1956",
       "weight": 1.0
     },
     {
@@ -11499,7 +11588,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1361",
+      "source_location": "L1536",
       "weight": 1.0
     },
     {
@@ -11511,7 +11600,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1362",
+      "source_location": "L1537",
       "weight": 1.0
     },
     {
@@ -11523,7 +11612,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1363",
+      "source_location": "L1538",
       "weight": 1.0
     },
     {
@@ -11535,7 +11624,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1374",
+      "source_location": "L1549",
       "weight": 1.0
     },
     {
@@ -11547,7 +11636,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1380",
+      "source_location": "L1555",
       "weight": 1.0
     },
     {
@@ -11559,7 +11648,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1386",
+      "source_location": "L1561",
       "weight": 1.0
     },
     {
@@ -11571,7 +11660,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1422",
+      "source_location": "L1597",
       "weight": 1.0
     },
     {
@@ -11583,7 +11672,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1266",
+      "source_location": "L1441",
       "weight": 1.0
     },
     {
@@ -11595,7 +11684,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1267",
+      "source_location": "L1442",
       "weight": 1.0
     },
     {
@@ -11607,7 +11696,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1962",
+      "source_location": "L2137",
       "weight": 1.0
     },
     {
@@ -11619,7 +11708,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1448",
+      "source_location": "L1623",
       "weight": 1.0
     },
     {
@@ -11631,7 +11720,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1456",
+      "source_location": "L1631",
       "weight": 1.0
     },
     {
@@ -11643,7 +11732,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1502",
+      "source_location": "L1677",
       "weight": 1.0
     },
     {
@@ -11655,7 +11744,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2387",
+      "source_location": "L2562",
       "weight": 1.0
     },
     {
@@ -11667,7 +11756,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2428",
+      "source_location": "L2603",
       "weight": 1.0
     },
     {
@@ -11679,7 +11768,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2433",
+      "source_location": "L2608",
       "weight": 1.0
     },
     {
@@ -11691,7 +11780,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2445",
+      "source_location": "L2620",
       "weight": 1.0
     },
     {
@@ -11703,7 +11792,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2462",
+      "source_location": "L2639",
       "weight": 1.0
     },
     {
@@ -11715,7 +11804,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2490",
+      "source_location": "L2667",
       "weight": 1.0
     },
     {
@@ -11727,7 +11816,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2530",
+      "source_location": "L2707",
       "weight": 1.0
     },
     {
@@ -11739,7 +11828,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2538",
+      "source_location": "L2715",
       "weight": 1.0
     },
     {
@@ -11751,7 +11840,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2542",
+      "source_location": "L2719",
       "weight": 1.0
     },
     {
@@ -11763,7 +11852,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2549",
+      "source_location": "L2726",
       "weight": 1.0
     },
     {
@@ -11775,7 +11864,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2564",
+      "source_location": "L2741",
       "weight": 1.0
     },
     {
@@ -11787,7 +11876,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2598",
+      "source_location": "L2775",
       "weight": 1.0
     },
     {
@@ -11799,7 +11888,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2604",
+      "source_location": "L2781",
       "weight": 1.0
     },
     {
@@ -11811,7 +11900,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2619",
+      "source_location": "L2796",
       "weight": 1.0
     },
     {
@@ -11823,7 +11912,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2620",
+      "source_location": "L2797",
       "weight": 1.0
     },
     {
@@ -11835,7 +11924,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1791",
+      "source_location": "L1966",
       "weight": 1.0
     },
     {
@@ -11847,7 +11936,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1820",
+      "source_location": "L1995",
       "weight": 1.0
     },
     {
@@ -11859,7 +11948,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1821",
+      "source_location": "L1996",
       "weight": 1.0
     },
     {
@@ -11871,7 +11960,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1831",
+      "source_location": "L2006",
       "weight": 1.0
     },
     {
@@ -11883,7 +11972,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1836",
+      "source_location": "L2011",
       "weight": 1.0
     },
     {
@@ -11895,7 +11984,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1303",
+      "source_location": "L1478",
       "weight": 1.0
     },
     {
@@ -11907,7 +11996,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1304",
+      "source_location": "L1479",
       "weight": 1.0
     },
     {
@@ -11919,7 +12008,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2272",
+      "source_location": "L2447",
       "weight": 1.0
     },
     {
@@ -11931,7 +12020,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2273",
+      "source_location": "L2448",
       "weight": 1.0
     },
     {
@@ -11943,7 +12032,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2274",
+      "source_location": "L2449",
       "weight": 1.0
     },
     {
@@ -11955,7 +12044,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L425",
+      "source_location": "L430",
       "weight": 1.0
     },
     {
@@ -11967,7 +12056,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L451",
+      "source_location": "L456",
       "weight": 1.0
     },
     {
@@ -11979,7 +12068,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2059",
+      "source_location": "L2234",
       "weight": 1.0
     },
     {
@@ -11991,7 +12080,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2061",
+      "source_location": "L2236",
       "weight": 1.0
     },
     {
@@ -12003,7 +12092,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2183",
+      "source_location": "L2358",
       "weight": 1.0
     },
     {
@@ -12015,7 +12104,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1922",
+      "source_location": "L2097",
       "weight": 1.0
     },
     {
@@ -12027,7 +12116,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1940",
+      "source_location": "L2115",
       "weight": 1.0
     },
     {
@@ -12039,7 +12128,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1185",
+      "source_location": "L1315",
       "weight": 1.0
     },
     {
@@ -12051,7 +12140,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L774",
+      "source_location": "L779",
       "weight": 1.0
     },
     {
@@ -12063,7 +12152,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L782",
+      "source_location": "L787",
       "weight": 1.0
     },
     {
@@ -12075,7 +12164,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L823",
+      "source_location": "L828",
       "weight": 1.0
     },
     {
@@ -12087,7 +12176,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L906",
+      "source_location": "L912",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary_renderdashboard",
+      "target": "frontend_static_js_itinerary_focusdaycard",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L960",
       "weight": 1.0
     },
     {
@@ -12099,7 +12200,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L926",
+      "source_location": "L990",
       "weight": 1.0
     },
     {
@@ -12111,7 +12212,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2365",
+      "source_location": "L2540",
       "weight": 1.0
     },
     {
@@ -12123,7 +12224,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2366",
+      "source_location": "L2541",
       "weight": 1.0
     },
     {
@@ -12135,7 +12236,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2300",
+      "source_location": "L2475",
       "weight": 1.0
     },
     {
@@ -12147,7 +12248,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2301",
+      "source_location": "L2476",
       "weight": 1.0
     },
     {
@@ -12159,7 +12260,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2346",
+      "source_location": "L2521",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary_setactivedaytab",
+      "target": "frontend_static_js_itinerary_focusdaycard",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1371",
       "weight": 1.0
     },
     {
@@ -12171,7 +12284,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1841",
+      "source_location": "L2016",
       "weight": 1.0
     },
     {
@@ -12183,7 +12296,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1321",
+      "source_location": "L1496",
       "weight": 1.0
     },
     {
@@ -12195,7 +12308,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1888",
+      "source_location": "L2063",
       "weight": 1.0
     },
     {
@@ -12207,7 +12320,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1899",
+      "source_location": "L2074",
       "weight": 1.0
     },
     {
@@ -12219,7 +12332,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1223",
+      "source_location": "L1398",
       "weight": 1.0
     },
     {
@@ -14055,7 +14168,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1584",
+      "source_location": "L1759",
       "weight": 1.0
     },
     {
@@ -15079,6 +15192,42 @@
       "weight": 1.0
     },
     {
+      "source": "scratch_apply_day_cards_and_graph",
+      "target": "re",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_apply_day_cards_and_graph",
+      "target": "os",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_apply_day_cards_and_graph",
+      "target": "shutil",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
       "source": "scratch_test_itinerary",
       "target": "html_parser",
       "relation": "imports",
@@ -15115,6 +15264,30 @@
       "weight": 1.0
     },
     {
+      "source": "scratch_update_itinerary_css_cards",
+      "target": "os",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/update_itinerary_css_cards.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_update_itinerary_css_cards",
+      "target": "shutil",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/update_itinerary_css_cards.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "scratch_update_itinerary_js",
       "target": "re",
       "relation": "imports",
@@ -15136,6 +15309,30 @@
       "context": "import",
       "source_file": "scratch/update_itinerary_js.py",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_update_itinerary_js_cards",
+      "target": "os",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/update_itinerary_js_cards.py",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_update_itinerary_js_cards",
+      "target": "shutil",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scratch/update_itinerary_js_cards.py",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -19765,13 +19962,24 @@
     },
     {
       "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_focusdaycard",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1321",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
       "target": "frontend_static_js_itinerary_setactivedaytab",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1191",
+      "source_location": "L1352",
       "weight": 1.0
     },
     {
@@ -19782,7 +19990,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1208",
+      "source_location": "L1383",
       "weight": 1.0
     },
     {
@@ -19793,7 +20001,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1222",
+      "source_location": "L1397",
       "weight": 1.0
     },
     {
@@ -19804,7 +20012,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1252",
+      "source_location": "L1427",
       "weight": 1.0
     },
     {
@@ -19815,7 +20023,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1273",
+      "source_location": "L1448",
       "weight": 1.0
     },
     {
@@ -19826,7 +20034,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1287",
+      "source_location": "L1462",
       "weight": 1.0
     },
     {
@@ -19837,7 +20045,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1314",
+      "source_location": "L1489",
       "weight": 1.0
     },
     {
@@ -19848,7 +20056,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1320",
+      "source_location": "L1495",
       "weight": 1.0
     },
     {
@@ -19859,7 +20067,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1337",
+      "source_location": "L1512",
       "weight": 1.0
     },
     {
@@ -19870,7 +20078,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1343",
+      "source_location": "L1518",
       "weight": 1.0
     },
     {
@@ -19881,7 +20089,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1349",
+      "source_location": "L1524",
       "weight": 1.0
     },
     {
@@ -19892,7 +20100,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1378",
+      "source_location": "L1553",
       "weight": 1.0
     },
     {
@@ -19903,40 +20111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1446",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_showplannerscreen",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1528",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_hideplannerscreen",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1541",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_generatewithdirectgroq",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1547",
+      "source_location": "L1621",
       "weight": 1.0
     },
     {
@@ -19947,18 +20122,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L159",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_saveplantohistory",
+      "target": "frontend_static_js_itinerary_showplannerscreen",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1630",
+      "source_location": "L1703",
       "weight": 1.0
     },
     {
@@ -19969,18 +20144,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L166",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_executeplanning",
+      "target": "frontend_static_js_itinerary_hideplannerscreen",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1672",
+      "source_location": "L1716",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_generatewithdirectgroq",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1722",
       "weight": 1.0
     },
     {
@@ -19991,18 +20177,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L175",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_loadtripbyid",
+      "target": "frontend_static_js_itinerary_saveplantohistory",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1790",
+      "source_location": "L1805",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_executeplanning",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L1847",
       "weight": 1.0
     },
     {
@@ -20013,40 +20210,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L184",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_showerror",
+      "target": "frontend_static_js_itinerary_loadtripbyid",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1840",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_triggercriticaudit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1861",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_rendercriticcard",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1918",
+      "source_location": "L1965",
       "weight": 1.0
     },
     {
@@ -20057,34 +20232,23 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L192",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_handlerefinement",
+      "target": "frontend_static_js_itinerary_showerror",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L1950",
+      "source_location": "L2015",
       "weight": 1.0
     },
     {
       "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_updateitinconnui",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2021",
-      "weight": 1.0
-    },
-    {
-      "source": "frontend_static_js_itinerary",
-      "target": "frontend_static_js_itinerary_refreshitinconfig",
+      "target": "frontend_static_js_itinerary_triggercriticaudit",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -20095,13 +20259,57 @@
     },
     {
       "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_rendercriticcard",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L2093",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_handlerefinement",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L2125",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_updateitinconnui",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L2196",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
+      "target": "frontend_static_js_itinerary_refreshitinconfig",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/static/js/itinerary.js",
+      "source_location": "L2211",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_static_js_itinerary",
       "target": "frontend_static_js_itinerary_rendercreds",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2088",
+      "source_location": "L2263",
       "weight": 1.0
     },
     {
@@ -20112,7 +20320,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2268",
+      "source_location": "L2443",
       "weight": 1.0
     },
     {
@@ -20123,7 +20331,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2278",
+      "source_location": "L2453",
       "weight": 1.0
     },
     {
@@ -20134,7 +20342,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2285",
+      "source_location": "L2460",
       "weight": 1.0
     },
     {
@@ -20145,7 +20353,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2356",
+      "source_location": "L2531",
       "weight": 1.0
     },
     {
@@ -20156,7 +20364,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L268",
+      "source_location": "L273",
       "weight": 1.0
     },
     {
@@ -20167,7 +20375,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L295",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -20178,7 +20386,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L770",
+      "source_location": "L775",
       "weight": 1.0
     },
     {
@@ -22745,6 +22953,39 @@
       "weight": 1.0
     },
     {
+      "source": "scratch_apply_day_cards_and_graph_rationale_2",
+      "target": "scratch_apply_day_cards_and_graph",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scratch/apply_day_cards_and_graph.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_update_itinerary_css_cards_rationale_2",
+      "target": "scratch_update_itinerary_css_cards",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scratch/update_itinerary_css_cards.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scratch_update_itinerary_js_cards_rationale_2",
+      "target": "scratch_update_itinerary_js_cards",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scratch/update_itinerary_js_cards.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "src_agents_critic_agent_rationale_1",
       "target": "src_agents_critic_agent",
       "relation": "rationale_for",
@@ -23878,7 +24119,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2629",
+      "source_location": "L2806",
       "weight": 1.0
     },
     {
@@ -23890,7 +24131,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2416",
+      "source_location": "L2591",
       "weight": 1.0
     },
     {
@@ -23902,7 +24143,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2419",
+      "source_location": "L2594",
       "weight": 1.0
     },
     {
@@ -23914,7 +24155,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2421",
+      "source_location": "L2596",
       "weight": 1.0
     },
     {
@@ -23926,7 +24167,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2423",
+      "source_location": "L2598",
       "weight": 1.0
     },
     {
@@ -23938,7 +24179,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2424",
+      "source_location": "L2599",
       "weight": 1.0
     },
     {
@@ -23950,7 +24191,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2514",
+      "source_location": "L2691",
       "weight": 1.0
     },
     {
@@ -23962,7 +24203,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2528",
+      "source_location": "L2705",
       "weight": 1.0
     },
     {
@@ -23974,7 +24215,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2529",
+      "source_location": "L2706",
       "weight": 1.0
     },
     {
@@ -23986,7 +24227,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "frontend/static/js/itinerary.js",
-      "source_location": "L2534",
+      "source_location": "L2711",
       "weight": 1.0
     },
     {
@@ -24720,5 +24961,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0cc26fd13330ab8cd4bd4d5e9dad2a68922702bb"
+  "built_at_commit": "42461654fbadf2b2be2c0e50e6cf31667247ad3d"
 }

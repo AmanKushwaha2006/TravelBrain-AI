@@ -6,9 +6,9 @@
     "semantic_hash": ""
   },
   "frontend/static/js/app.js": {
-    "mtime": 1795122369.6516478,
-    "seen": 1795122775.8915524,
-    "ast_hash": "617417779d335388c63223107500fafa",
+    "mtime": 1795154979.36097,
+    "seen": 1795155265.3951867,
+    "ast_hash": "f2fdd8f120b697efe6aad1621dece659",
     "semantic_hash": ""
   },
   "frontend/static/js/markdown.js": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "frontend/templates/index.html": {
-    "mtime": 1795127493.0534306,
-    "seen": 1795127607.900905,
-    "ast_hash": "f9d74c33fc432b06b2b0fd71c4e00934",
+    "mtime": 1795154872.5804758,
+    "seen": 1795155265.3952813,
+    "ast_hash": "790fe963d384008745ba4ffcd114e4f6",
     "semantic_hash": ""
   },
   "frontend/static/js/aviation-3d.js": {
@@ -306,21 +306,21 @@
     "semantic_hash": ""
   },
   "frontend/static/js/itinerary.js": {
-    "mtime": 1795126721.1980076,
-    "seen": 1795127607.9007456,
-    "ast_hash": "462e3853442792a164f4335c6c22bc88",
+    "mtime": 1795155188.7202263,
+    "seen": 1795155265.395192,
+    "ast_hash": "558fcb0857698ba423366fb8ca882e17",
     "semantic_hash": ""
   },
   "frontend/templates/itinerary.html": {
-    "mtime": 1795126721.3711283,
-    "seen": 1795127607.9009078,
-    "ast_hash": "6703e3f62b90d83e527ac2331755afd9",
+    "mtime": 1795155007.091596,
+    "seen": 1795155265.3952832,
+    "ast_hash": "589dd959e7d6e6c7fda4c50e6c970c55",
     "semantic_hash": ""
   },
   "frontend/static/js/api-client.js": {
-    "mtime": 1795097087.595369,
-    "seen": 1795099473.0241199,
-    "ast_hash": "0b10344a06e95ba45b8558aef57a2dca",
+    "mtime": 1795154843.2629206,
+    "seen": 1795155265.3951828,
+    "ast_hash": "170d150c891893dc16c05843ec318cad",
     "semantic_hash": ""
   },
   "scratch/test_itinerary.py": {

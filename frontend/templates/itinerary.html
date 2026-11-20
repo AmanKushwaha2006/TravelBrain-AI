@@ -348,17 +348,41 @@
         </div>
       </nav>
 
-      <!-- SECTION 6 & 7: DAY-BY-DAY ITINERARY CHAPTERS -->
-      <section class="itinerary-section">
+      <!-- SECTION 6 & 7: DAY-BY-DAY ITINERARY CARDS & JOURNEY FLOW GRAPH -->
+      <section class="itinerary-section" id="itinerarySection">
         <div class="section-title-wrap">
           <div>
-            <div class="section-kicker">Chronological Timeline</div>
-            <h2 class="section-title">Day-by-Day Itinerary</h2>
+            <div class="section-kicker">Chronological Journey Architecture</div>
+            <h2 class="section-title">Day-by-Day Journey Flow</h2>
+          </div>
+          <div class="itinerary-graph-legend">
+            <span class="legend-item"><span class="legend-dot active"></span> Active Milestone</span>
+            <span class="legend-item"><span class="legend-line"></span> Route Connection</span>
+            <span class="legend-item"><span class="legend-badge">₹ INR</span> Verified Costs</span>
           </div>
         </div>
 
-        <div id="daysContainer">
-          <!-- Day blocks and activity timeline injected dynamically -->
+        <!-- Visual Journey Route Graph (Horizontal Milestone Track) -->
+        <div class="journey-graph-card" id="journeyGraphCard">
+          <div class="journey-graph-header">
+            <div class="journey-graph-meta">
+              <span class="journey-graph-tag">✦ ROUTE TIMELINE GRAPH</span>
+              <span class="journey-graph-count" id="journeyGraphCount">Day-by-Day Progression</span>
+            </div>
+            <div class="journey-graph-controls">
+              <button type="button" class="btn-graph-view active" id="btnViewAllDays" title="Show all cards">All Day Cards</button>
+            </div>
+          </div>
+          <div class="journey-flow-track-wrap" id="journeyFlowTrackWrap">
+            <div class="journey-flow-track" id="journeyFlowTrack">
+              <!-- Dynamically populated day nodes with connecting graph lines -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Day Cards Grid (Cards wise show karo, jitne din utne cards) -->
+        <div class="day-cards-grid" id="daysContainer">
+          <!-- Individual Day Cards injected dynamically -->
         </div>
       </section>
 
