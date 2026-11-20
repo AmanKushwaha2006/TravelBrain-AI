@@ -102,6 +102,26 @@
     setCurrentUser(null);
   }
 
+  function logout() {
+    clearAuth();
+    try {
+      localStorage.removeItem(STORAGE_KEY_AUTH_TOKEN);
+      localStorage.removeItem(STORAGE_KEY_USER);
+      sessionStorage.removeItem(STORAGE_KEY_AUTH_TOKEN);
+      sessionStorage.removeItem(STORAGE_KEY_USER);
+    } catch (e) {}
+
+    return apiFetch("/api/auth/logout", {
+      method: "POST"
+    })
+    .catch(function () {
+      return { ok: true, data: { success: true } };
+    })
+    .finally(function () {
+      notifyListeners();
+    });
+  }
+
   function buildUrl(path) {
     var cleanPath = path.startsWith("/") ? path : "/" + path;
     if (state.baseUrl && state.baseUrl.indexOf("travelbrain-api.onrender.com") === -1) {
@@ -647,6 +667,7 @@
     setCurrentUser: setCurrentUser,
     isAuthenticated: isAuthenticated,
     clearAuth: clearAuth,
+    logout: logout,
     fetch: apiFetch,
     buildUrl: buildUrl,
     testConnection: testConnection,

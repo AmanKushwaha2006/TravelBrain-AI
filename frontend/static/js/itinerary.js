@@ -34,6 +34,14 @@
   var viewDossierBtn      = $("viewDossierBtn");
   var settingsBtn         = $("settingsBtn");
   var btnNewTripModal     = $("btnNewTripModal");
+  var navAuthBtn          = $("navAuthBtn");
+  var navAuthText         = $("navAuthText");
+  var userMenuWrap        = $("userMenuWrap");
+  var userDropdownMenu    = $("userDropdownMenu");
+  var dropdownUserAvatar  = $("dropdownUserAvatar");
+  var dropdownUserName    = $("dropdownUserName");
+  var dropdownUserEmail   = $("dropdownUserEmail");
+  var dropdownLogoutBtn   = $("dropdownLogoutBtn");
 
   // Planner Screen
   var planJourneySection  = $("planJourneySection");
@@ -1197,6 +1205,71 @@
 
   /* ---------------- Authentication Manager ---------------- */
 
+  function getLoggedInUser() {
+    var client = window.TravelBrainAPI;
+    if (client && client.getCurrentUser) {
+      var u = client.getCurrentUser();
+      if (u && (u.email || u.id)) return u;
+    }
+    try {
+      var raw = localStorage.getItem("tb_auth_user") || sessionStorage.getItem("tb_auth_user");
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function updateItinAuthUI() {
+    var user = getLoggedInUser();
+    if (user) {
+      var initial = (user.name || "U").trim().charAt(0).toUpperCase();
+      if (dropdownUserAvatar) dropdownUserAvatar.textContent = initial;
+      if (dropdownUserName) dropdownUserName.textContent = user.name || "Traveler";
+      if (dropdownUserEmail) dropdownUserEmail.textContent = user.email || "";
+
+      if (navAuthBtn) {
+        navAuthBtn.classList.add("is-logged-in");
+        navAuthBtn.title = "Logged in as " + (user.name || user.email) + " — click for options";
+      }
+      if (navAuthText) {
+        var firstName = (user.name || user.email || "User").split(" ")[0];
+        navAuthText.textContent = firstName;
+      }
+    } else {
+      if (navAuthBtn) {
+        navAuthBtn.classList.remove("is-logged-in");
+        navAuthBtn.title = "Sign In or Register";
+      }
+      if (navAuthText) {
+        navAuthText.textContent = "Sign In";
+      }
+      if (userDropdownMenu) {
+        userDropdownMenu.hidden = true;
+      }
+    }
+  }
+
+  function handleLogout() {
+    if (userDropdownMenu) userDropdownMenu.hidden = true;
+    var logoutCall = (window.TravelBrainAPI && typeof window.TravelBrainAPI.logout === "function")
+      ? window.TravelBrainAPI.logout()
+      : fetch("/api/auth/logout", { method: "POST" });
+
+    logoutCall.finally(function () {
+      try {
+        localStorage.removeItem("tb_auth_user");
+        localStorage.removeItem("tb_auth_token");
+        sessionStorage.removeItem("tb_auth_user");
+        sessionStorage.removeItem("tb_auth_token");
+      } catch (e) {}
+      if (window.TravelBrainAPI) window.TravelBrainAPI.clearAuth();
+      updateItinAuthUI();
+      toast("Logged out successfully.");
+      window.location.href = "/";
+    });
+  }
+  window.handleLogout = handleLogout;
+
   function isUserAuthenticated() {
     var client = window.TravelBrainAPI;
     if (client && typeof client.isAuthenticated === "function") {
@@ -1286,6 +1359,7 @@
     }
 
     closeAuthModal();
+    updateItinAuthUI();
     toast("Welcome back, " + (user.name || user.email || "Traveler") + "!");
 
     if (typeof pendingAuthCallback === "function") {
@@ -2459,6 +2533,37 @@
     if (switchToLogin) switchToLogin.addEventListener("click", function () { switchAuthTab("login"); });
     if (authClose) authClose.addEventListener("click", closeAuthModal);
     if (authScrim) authScrim.addEventListener("click", closeAuthModal);
+
+    // Wire up User Menu & Logout Controls
+    updateItinAuthUI();
+
+    if (navAuthBtn) {
+      navAuthBtn.addEventListener("click", function (e) {
+        var user = getLoggedInUser();
+        if (user) {
+          e.stopPropagation();
+          if (userDropdownMenu) {
+            userDropdownMenu.hidden = !userDropdownMenu.hidden;
+          }
+        } else {
+          openAuthModal();
+        }
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      if (userDropdownMenu && !userDropdownMenu.hidden) {
+        if (userMenuWrap && !userMenuWrap.contains(e.target)) {
+          userDropdownMenu.hidden = true;
+        }
+      }
+    });
+
+    if (dropdownLogoutBtn) {
+      dropdownLogoutBtn.addEventListener("click", function () {
+        handleLogout();
+      });
+    }
 
     // Password visibility toggle
     document.querySelectorAll(".pw-toggle-btn").forEach(function (btn) {

@@ -2,9 +2,9 @@
   "0": "session.py",
   "1": "critic_agent.py",
   "2": "verify_single_key",
-  "3": "settings.py",
+  "3": "local.py",
   "4": "app.js",
-  "5": "get_client",
+  "5": "cache.py",
   "6": "auth.py",
   "7": "README.md",
   "8": "render",
@@ -21,7 +21,7 @@
   "19": ".getDependency",
   "20": "GLTFMaterialsPbrSpecularGlossinessExtension",
   "21": ".parse",
-  "22": "evaluate_plan",
+  "22": "sessions.py",
   "23": "app.py",
   "24": "test_parser.js",
   "25": "add_no_cache_for_dev",
@@ -30,5 +30,6 @@
   "28": "Request",
   "29": "test_registry.js",
   "30": "db/__init__.py",
-  "31": "itinerary.js"
+  "31": "itinerary.js",
+  "32": "home_head"
 }

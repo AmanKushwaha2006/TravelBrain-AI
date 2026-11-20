@@ -102,6 +102,44 @@
           <span class="status-action"></span>
         </button>
 
+        <!-- User Profile & Log Out Dropdown -->
+        <div class="user-menu-wrap" id="userMenuWrap">
+          <button class="action-btn btn-nav-auth" id="navAuthBtn" type="button" title="Sign In or User Profile">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="user-ico">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span class="auth-btn-text" id="navAuthText">Sign In</span>
+          </button>
+
+          <!-- Dropdown Menu when Logged In -->
+          <div class="user-dropdown-menu" id="userDropdownMenu" hidden>
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar" id="dropdownUserAvatar">U</div>
+              <div class="user-dropdown-info">
+                <span class="user-dropdown-name" id="dropdownUserName">Traveler</span>
+                <span class="user-dropdown-email" id="dropdownUserEmail">user@example.com</span>
+              </div>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <a href="/" class="user-dropdown-item" id="dropdownHomeBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              <span>Back to Home</span>
+            </a>
+            <button type="button" class="user-dropdown-item user-dropdown-logout" id="dropdownLogoutBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              <span>Log Out</span>
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </div>

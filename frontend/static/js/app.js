@@ -66,6 +66,13 @@
   var navAuthBtn        = $("navAuthBtn");
   var navAuthText       = $("navAuthText");
   var mAuth             = $("mAuth");
+  var userMenuWrap      = $("userMenuWrap");
+  var userDropdownMenu  = $("userDropdownMenu");
+  var dropdownUserAvatar = $("dropdownUserAvatar");
+  var dropdownUserName  = $("dropdownUserName");
+  var dropdownUserEmail = $("dropdownUserEmail");
+  var dropdownTripsBtn  = $("dropdownTripsBtn");
+  var dropdownLogoutBtn = $("dropdownLogoutBtn");
 
   var authModal         = $("authModal");
   var authScrim         = $("authScrim");
@@ -829,9 +836,13 @@
         sidebarAuthActionBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
       }
 
+      if (dropdownUserAvatar) dropdownUserAvatar.textContent = initial;
+      if (dropdownUserName) dropdownUserName.textContent = currentUser.name;
+      if (dropdownUserEmail) dropdownUserEmail.textContent = currentUser.email || "";
+
       if (navAuthBtn) {
         navAuthBtn.classList.add("is-logged-in");
-        navAuthBtn.title = "Logged in as " + currentUser.name + " — click to log out";
+        navAuthBtn.title = "Logged in as " + currentUser.name + " — click for options";
       }
       if (navAuthText) {
         var firstName = currentUser.name.split(" ")[0];
@@ -853,6 +864,9 @@
       if (navAuthBtn) {
         navAuthBtn.classList.remove("is-logged-in");
         navAuthBtn.title = "Sign In or Register";
+      }
+      if (userDropdownMenu) {
+        userDropdownMenu.hidden = true;
       }
       if (navAuthText) {
         navAuthText.textContent = "Sign In";
@@ -1116,24 +1130,29 @@
   }
 
   function handleLogout() {
-    var apiClient = window.TravelBrainAPI || { fetch: window.fetch.bind(window) };
-    apiClient.fetch("/api/auth/logout", { method: "POST" })
-      .then(function () {
+    if (userDropdownMenu) userDropdownMenu.hidden = true;
+    var logoutCall = (window.TravelBrainAPI && typeof window.TravelBrainAPI.logout === "function")
+      ? window.TravelBrainAPI.logout()
+      : (window.TravelBrainAPI || { fetch: window.fetch.bind(window) }).fetch("/api/auth/logout", { method: "POST" });
+
+    logoutCall
+      .finally(function () {
         currentUser = null;
         if (window.TravelBrainAPI) window.TravelBrainAPI.clearAuth();
+        try {
+          localStorage.removeItem("tb_auth_user");
+          localStorage.removeItem("tb_auth_token");
+          sessionStorage.removeItem("tb_auth_user");
+          sessionStorage.removeItem("tb_auth_token");
+        } catch (e) {}
         activeTripId = null;
         historyItems = [];
         updateAuthUI();
         renderHistory();
         toast("Logged out successfully.");
-      })
-      .catch(function () {
-        currentUser = null;
-        if (window.TravelBrainAPI) window.TravelBrainAPI.clearAuth();
-        updateAuthUI();
-        renderHistory();
       });
   }
+  window.handleLogout = handleLogout;
 
   /* ---------------- Travel History Controllers ---------------- */
 
@@ -1906,13 +1925,38 @@
 
   // Auth Button Listeners
   if (navAuthBtn) {
-    navAuthBtn.addEventListener("click", function () {
+    navAuthBtn.addEventListener("click", function (e) {
       if (currentUser) {
-        // Toggle sidebar or prompt logout
-        toggleSidebar(true);
+        e.stopPropagation();
+        if (userDropdownMenu) {
+          userDropdownMenu.hidden = !userDropdownMenu.hidden;
+        }
       } else {
         openAuthModal("login");
       }
+    });
+  }
+
+  // Close user dropdown when clicking outside
+  document.addEventListener("click", function (e) {
+    if (userDropdownMenu && !userDropdownMenu.hidden) {
+      if (userMenuWrap && !userMenuWrap.contains(e.target)) {
+        userDropdownMenu.hidden = true;
+      }
+    }
+  });
+
+  if (dropdownTripsBtn) {
+    dropdownTripsBtn.addEventListener("click", function () {
+      if (userDropdownMenu) userDropdownMenu.hidden = true;
+      toggleSidebar(true);
+    });
+  }
+
+  if (dropdownLogoutBtn) {
+    dropdownLogoutBtn.addEventListener("click", function () {
+      if (userDropdownMenu) userDropdownMenu.hidden = true;
+      handleLogout();
     });
   }
   if (mAuth) {
